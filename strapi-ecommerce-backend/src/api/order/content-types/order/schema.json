@@ -10,7 +10,7 @@
     "draftAndPublish": true
   },
   "pluginOptions": {},
-  
+
   "attributes": {
     "title": {
       "type": "string"
@@ -18,27 +18,23 @@
     "sub_title": {
       "type": "text"
     },
-    "description": {
-      "type": "richtext"
-    },
+
     "uuid": {
       "type": "string"
     },
     "image": {
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ],
       "type": "media",
-      "multiple": true
+      "multiple": true,
+      "required": false,
+      "allowedTypes": ["images", "files", "videos", "audios"]
     },
     "slug": {
       "type": "uid",
       "targetField": "title"
     },
-    "isfeature": {
-      "type": "boolean"
-    }}
+
+    "price": {
+      "type": "decimal"
+    }
+  }
 }
