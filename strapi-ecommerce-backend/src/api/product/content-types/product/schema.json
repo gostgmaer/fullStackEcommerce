@@ -48,6 +48,12 @@
     "saleprice": {
       "type": "decimal",
       "default": 20.5
+    },
+    "specifications": {
+      "type": "json"
+    },
+    "istrending": {
+      "type": "boolean"
     }
   }
 }
