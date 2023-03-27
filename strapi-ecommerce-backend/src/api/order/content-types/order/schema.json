@@ -10,7 +10,6 @@
     "draftAndPublish": true
   },
   "pluginOptions": {},
-
   "attributes": {
     "title": {
       "type": "string"
@@ -18,7 +17,6 @@
     "sub_title": {
       "type": "text"
     },
-
     "uuid": {
       "type": "string"
     },
@@ -26,15 +24,25 @@
       "type": "media",
       "multiple": true,
       "required": false,
-      "allowedTypes": ["images", "files", "videos", "audios"]
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     },
     "slug": {
       "type": "uid",
       "targetField": "title"
     },
-
     "price": {
       "type": "decimal"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "orders"
     }
   }
 }

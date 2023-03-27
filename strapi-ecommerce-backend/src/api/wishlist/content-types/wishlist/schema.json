@@ -13,6 +13,40 @@
   "attributes": {
     "title": {
       "type": "string"
+    },
+    "sub_title": {
+      "type": "text"
+    },
+    "uuid": {
+      "type": "string"
+    },
+    "image": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title"
+    },
+    "price": {
+      "type": "decimal"
+    },
+    "saleprice": {
+      "type": "decimal",
+      "default": 20.5
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "wishlists"
     }
   }
 }
