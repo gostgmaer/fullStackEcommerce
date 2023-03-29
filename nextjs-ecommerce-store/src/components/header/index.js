@@ -4,6 +4,7 @@ import {
   LocalMall,
   LocalShipping,
   Logout,
+  Person,
   PersonAdd,
   Settings,
 } from "@mui/icons-material";
@@ -20,22 +21,38 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import Wrapper from "./Wrapper";
+import { useSession, signIn, signOut } from "next-auth/react";
+import { useAuthContext } from "@/context/AuthContext";
 
 function Header(props) {
   const [show, setShow] = useState("translate-y-0");
+  const { logoutHandler } = useAuthContext();
   const [anchorEl, setAnchorEl] = useState(null);
-  const route = useRouter()
+  const route = useRouter();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = (e) => {
-    console.log(e);
-   if(e.target.innerText){
-    route.push(`${e.target.innerText.toLowerCase()}`)
-   }
+    if (e.target.innerText) {
+      route.push(`${e.target.innerText.replace(" ", "-").toLowerCase()}`);
+    }
+  };
+  const handleCLosemenu = () => {};
+
+  const session = useSession();
+  console.log(session);
+  //console.log(session);
+
+  const handleLogoutHandler = (e) => {
+    try {
+      signOut({ redirect: true, callbackUrl: "http://localhost:3000/" });
+    } catch (error) {
+      console.log(error);
+    }
+
     setAnchorEl(null);
   };
 
@@ -55,34 +72,48 @@ function Header(props) {
 
         <Box className=" flex gap-2 items-center">
           <div className="favirite">
-            <IconButton>
+            <IconButton color="error" onClick={() => route.push("/wishlist")}>
               <Badge badgeContent={8} color="info">
                 <Favorite />
               </Badge>
             </IconButton>
           </div>
           <div className="cart">
-            <IconButton>
-              <Badge badgeContent={4} color='info'>
+            <IconButton color="warning">
+              <Badge badgeContent={4} color="info">
                 <LocalMall />
               </Badge>
             </IconButton>
           </div>
-          <IconButton
-            onClick={handleClick}
-            size="small"
-            aria-controls={open ? "account-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-          >
-            <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
-          </IconButton>
+
+          {session?.data ? (
+            <IconButton
+              onClick={handleClick}
+              size="small"
+              aria-controls={open ? "account-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+            >
+              <Avatar
+                sx={{ width: 32, height: 32 }}
+                src={session.data.user.image}
+              ></Avatar>
+            </IconButton>
+          ) : (
+            <Fragment>
+              <div className="login">
+                <IconButton onClick={() => signIn()}>
+                  <Person />
+                </IconButton>
+              </div>
+            </Fragment>
+          )}
           <Menu
             anchorEl={anchorEl}
             id="account-menu"
             open={open}
-            onClose={handleClose}
-            onClick={handleClose}
+            onClose={() => setAnchorEl(null)}
+            onClick={() => setAnchorEl(null)}
             PaperProps={{
               elevation: 0,
               sx: {
@@ -113,7 +144,8 @@ function Header(props) {
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
             <MenuItem onClick={handleClose}>
-              <Avatar /> My account
+              <Avatar />
+              My account
             </MenuItem>
             <Divider />
 
@@ -123,7 +155,7 @@ function Header(props) {
               </ListItemIcon>
               dashboard
             </MenuItem>
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={handleLogoutHandler}>
               <ListItemIcon>
                 <Logout fontSize="small" />
               </ListItemIcon>
