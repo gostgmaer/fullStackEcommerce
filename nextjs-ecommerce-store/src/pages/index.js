@@ -1,24 +1,10 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
-import { data } from '@/assets/mock/mock'
-import MuiModal from '@/layout/modal'
 import Layout from '@/layout'
 import { useSession } from 'next-auth/react'
-
-const inter = Inter({ subsets: ['latin'] })
-
-// data.forEach(element => {
-//  // element['newspec']=JSON.stringify(element.specifications)
-//   element['newspec']= JSON.parse(element.specifications)
-// });
-
-
 export default function Home() {
 
   const {data,status} =  useSession()
-  console.log(data,status);
+
 
   return (
     <>

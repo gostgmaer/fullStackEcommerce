@@ -3,6 +3,7 @@ import {
   Favorite,
   LocalMall,
   LocalShipping,
+  Login,
   Logout,
   Person,
   PersonAdd,
@@ -43,7 +44,7 @@ function Header(props) {
   const handleCLosemenu = () => {};
 
   const session = useSession();
-  console.log(session);
+
   //console.log(session);
 
   const handleLogoutHandler = (e) => {
@@ -103,7 +104,7 @@ function Header(props) {
             <Fragment>
               <div className="login">
                 <IconButton onClick={() => signIn()}>
-                  <Person />
+                  <Login />
                 </IconButton>
               </div>
             </Fragment>

@@ -43,7 +43,7 @@ const AuthProvider = ({ children }) => {
 
   const protectedRouteCheck = async () => {
     const session = await getSession();
-    console.log(session);
+   
     if (!session) {
       signIn();
     } else {
