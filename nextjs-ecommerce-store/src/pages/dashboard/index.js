@@ -15,11 +15,11 @@ export default Dashboard;
 
 export const getServerSideProps = async (ctx) => {
   const session = await getSession(ctx);
-  console.log(session);
+  // console.log(session);
   if (!session) {
     return {
       redirect: {
-        destination: `/auth/signin?callbackUrl=${appBaseUrl}dashboard`,
+        destination: `/auth/signin?callbackUrl=${appBaseUrl}/dashboard`,
         parmanent: false,
       },
     };

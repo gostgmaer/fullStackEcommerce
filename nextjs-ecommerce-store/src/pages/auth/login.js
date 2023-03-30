@@ -223,7 +223,7 @@ function login() {
                 </LoadingButton>
                 <Grid container>
                   <Grid item xs>
-                    <Link href="#">Forgot password?</Link>
+                    <Link href="/auth/forget-passwrod">Forgot password?</Link>
                   </Grid>
                   <Grid item>
                     <Link href="#">{"Don't have an account? Sign Up"}</Link>

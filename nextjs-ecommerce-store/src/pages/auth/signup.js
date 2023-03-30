@@ -18,7 +18,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Copyright, LockOutlined, Save, SaveAlt } from "@mui/icons-material";
+import { Check, Copyright, LockOutlined, Save, SaveAlt } from "@mui/icons-material";
 import Link from "next/link";
 import { Formik } from "formik";
 
@@ -65,14 +65,27 @@ const SignUp = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container
+      component="main"
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "flexStart",
+        flexDirection: "column",
+        justifyContent: "center",
+      }}
+      maxWidth="sm"
+    >
       <Box
         sx={{
-          marginTop: 8,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          justifyContent: "center",
         }}
+        borderRadius={3}
+        p={2}
+        boxShadow={" 0px 0px 20px 0 rgba(0,0,0,0.15)"}
       >
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOutlined />
@@ -86,6 +99,7 @@ const SignUp = () => {
             lastName: "",
             email: "",
             password: "",
+            confirmpassword: "",
           }}
           onSubmit={(values) => {
             onFinish(values);
@@ -105,7 +119,13 @@ const SignUp = () => {
               component="form"
               noValidate
               onSubmit={handleSubmit}
-              sx={{ mt: 3 }}
+              sx={{
+                mt: 3,
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+                alignItems: "flex-start",
+              }}
             >
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
@@ -159,35 +179,55 @@ const SignUp = () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox value="allowExtraEmails" color="primary" />
-                    }
-                    label="I want to receive inspiration, marketing promotions and updates via email."
+                  <TextField
+                    required
+                    fullWidth
+                    name="confirmpassword"
+                    label="Confirm Password"
+                    onChange={handleChange}
+                    value={values.confirmpassword}
+                    type="password"
+                    id="confirmpassword"
+                    autoComplete="new-password"
                   />
                 </Grid>
               </Grid>
-
+              <Grid item xs={12}>
+                <FormControlLabel
+                  sx={{
+                    fontSize: 12,
+                    "&.MuiFormControlLabel-root": {
+                      margin: 0,
+                      "&.MuiFormControlLabel-label": { fontSize: 12 },
+                    },
+                  }}
+                  control={
+                    <Checkbox value="allowExtraEmails" color="primary" />
+                  }
+                  label="I want to receive inspiration, marketing promotions and updates via email."
+                />
+              </Grid>
               <LoadingButton
                 loading={isLoading}
                 loadingPosition="start"
+                fullWidth
+                size="large"
                 type="submit"
-                startIcon={<SaveAlt />}
+                startIcon={<Check />}
                 variant="outlined"
               >
                 Sign Up
               </LoadingButton>
-              <Grid container justifyContent="flex-end">
-                <Grid item>
-                  "Already have an account?
-                  <Link href="/auth/signin">Sign Up</Link>
-                </Grid>
-              </Grid>
             </Box>
           )}
         </Formik>
+        <Grid container mt={5} justifyContent="flex-end">
+          <Grid item>
+            Already have an account?
+            <Link href="/auth/signin"> Sign in</Link>
+          </Grid>
+        </Grid>
       </Box>
-      <Copyright sx={{ mt: 5 }} />
     </Container>
   );
 };

@@ -3,9 +3,11 @@ import {
   Favorite,
   LocalMall,
   LocalShipping,
+  Login,
   Logout,
   Person,
   PersonAdd,
+  Search,
   Settings,
 } from "@mui/icons-material";
 import {
@@ -14,9 +16,11 @@ import {
   Box,
   Divider,
   IconButton,
+  InputBase,
   ListItemIcon,
   Menu,
   MenuItem,
+  Paper,
   Tooltip,
 } from "@mui/material";
 import Link from "next/link";
@@ -24,12 +28,13 @@ import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
 import Wrapper from "./Wrapper";
 import { useSession, signIn, signOut } from "next-auth/react";
-import { useAuthContext } from "@/context/AuthContext";
+import { useGlobalContext } from "@/context/globalContext";
 
 function Header(props) {
   const [show, setShow] = useState("translate-y-0");
-  const { logoutHandler } = useAuthContext();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [showFIeld, setShowFIeld] = useState(false);
+  const { state, setState } = useGlobalContext();
   const route = useRouter();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -43,7 +48,7 @@ function Header(props) {
   const handleCLosemenu = () => {};
 
   const session = useSession();
-  console.log(session);
+
   //console.log(session);
 
   const handleLogoutHandler = (e) => {
@@ -61,14 +66,49 @@ function Header(props) {
       className={` w-full h-12 bg-gray-100 md:h-16 justify-between flex items-center sticky top-0 transition-transform duration-75 ${show}`}
     >
       <Wrapper className={" flex items-center justify-between"}>
-        <div className="logo">
-          <span>logo</span>
-        </div>
-        <div className="items gap-3 flex items-center">
-          <Link href={"/"}>Shop</Link>
-          <Link href={"/"}>category</Link>
-          <Link href={"/"}>profile</Link>
-        </div>
+        <Box
+          sx={{ display: "flex", gap: 5, alignItems: "center" }}
+          className="leftSide"
+        >
+          <div className="logo">
+            <span>LOGO</span>
+          </div>
+          <div className="items gap-3 flex items-center">
+            <Link href={"/"}>Home</Link>
+            <Link href={"/shop"}>Shop</Link>
+            <Link href={"/category"}>category</Link>
+          </div>
+        </Box>
+
+        <Paper
+          component="form"
+          sx={{
+            p: "2px 4px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            boxShadow: "none",
+
+            bgcolor: "transparent",
+            border: "none",
+          }}
+        >
+          {showFIeld && (
+            <InputBase
+              sx={{ ml: 1, flex: 1 }}
+              placeholder="Search products"
+              inputProps={{ "aria-label": "Search Product" }}
+            />
+          )}
+          <IconButton
+            onClick={() => setShowFIeld(!showFIeld)}
+            type="button"
+            sx={{ p: "10px" }}
+            aria-label="search"
+          >
+            <Search />
+          </IconButton>
+        </Paper>
 
         <Box className=" flex gap-2 items-center">
           <div className="favirite">
@@ -79,7 +119,7 @@ function Header(props) {
             </IconButton>
           </div>
           <div className="cart">
-            <IconButton color="warning">
+            <IconButton onClick={() => setState(true)} color="warning">
               <Badge badgeContent={4} color="info">
                 <LocalMall />
               </Badge>
@@ -103,7 +143,7 @@ function Header(props) {
             <Fragment>
               <div className="login">
                 <IconButton onClick={() => signIn()}>
-                  <Person />
+                  <Login />
                 </IconButton>
               </div>
             </Fragment>

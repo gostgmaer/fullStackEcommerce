@@ -11,6 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
+import { useGlobalContext } from "@/context/globalContext";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -21,67 +22,27 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-function BootstrapDialogTitle(props) {
-  const { children, onClose, ...other } = props;
-
-  return (
-    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-      {children}
-      {onClose ? (
-        <IconButton
-          aria-label="close"
-          onClick={onClose}
-          sx={{
-            position: "absolute",
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <Close />
-        </IconButton>
-      ) : null}
-    </DialogTitle>
-  );
-}
-
-BootstrapDialogTitle.propTypes = {
-  children: PropTypes.node,
-  onClose: PropTypes.func.isRequired,
-};
-
-export default function MuiModal({  }) {
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+export default function MuiModal({ heading,Content}) {
+  const { openModal, setOpenModal } = useGlobalContext();
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open dialog
-      </Button>
       <BootstrapDialog
-       
         aria-labelledby="customized-dialog-title"
-        open={open}
+        // className={class?class:''}
+        open={openModal}
       >
-        <BootstrapDialogTitle
-          id="customized-dialog-title"
-          onClose={handleClose}
-        >
-          Modal title
-        </BootstrapDialogTitle>
+        <DialogTitle sx={{ m: 0, p: 2 }}>
+          {heading ? heading.title : "Modal Heading for web"}
+          <IconButton aria-label="close" onClick={() => setOpenModal(false)}>
+            {heading ? heading.icon : <Close />}
+          </IconButton>
+        </DialogTitle>
+
         <DialogContent dividers>
-         
+          {Content ? Content : "No Data Found Found"}
         </DialogContent>
-        <DialogActions>
-        
-        </DialogActions>
+        <DialogActions></DialogActions>
       </BootstrapDialog>
     </div>
   );
