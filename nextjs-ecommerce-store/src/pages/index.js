@@ -1,6 +1,16 @@
 import Head from 'next/head'
 import Layout from '@/layout'
 import { useSession } from 'next-auth/react'
+import TemporaryDrawer from '@/components/cart'
+import MuiModal from '@/layout/modal'
+import Sectionone from '@/components/homecomponents/Herosection'
+import CategoryList from '@/components/homecomponents/CategoryListsection'
+import FlashDeal from '@/components/homecomponents/Flashdealsection'
+import Elementlist from '@/components/elements/Elementlist'
+import Productcard from '@/components/elements/Productcard'
+import { FeaturedPlayList, PlayArrow } from '@mui/icons-material'
+import ModeForYou from '@/components/homecomponents/ModeForYou'
+import Footersection from '@/components/homecomponents/Footersection'
 export default function Home() {
 
   const {data,status} =  useSession()
@@ -15,7 +25,16 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
      <Layout>
-      <div>This is Home Ellements</div>
+      <Sectionone/>
+      <FlashDeal/>
+      <Elementlist title={'Feature Product'} icon=<PlayArrow/>>
+         {Array.from(Array(12).keys()).map((item) => (
+              <Productcard key={item} />
+            ))}
+      </Elementlist>
+      <CategoryList/>
+      <ModeForYou/>
+      <Footersection/>
      </Layout>
     </>
   )

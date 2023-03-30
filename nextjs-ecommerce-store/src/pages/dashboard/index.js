@@ -19,7 +19,7 @@ export const getServerSideProps = async (ctx) => {
   if (!session) {
     return {
       redirect: {
-        destination: `/auth/signin?callbackUrl=${appBaseUrl}dashboard`,
+        destination: `/auth/signin?callbackUrl=${appBaseUrl}/dashboard`,
         parmanent: false,
       },
     };

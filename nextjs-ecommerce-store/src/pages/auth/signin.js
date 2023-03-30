@@ -32,6 +32,7 @@ import {
 } from "@mui/icons-material";
 import Link from "next/link";
 import { LoadingButton } from "@mui/lab";
+import { appBaseUrl } from "@/utils/config";
 
 export default function Signin({ providers, loginError }) {
   const router = useRouter();
@@ -69,17 +70,20 @@ export default function Signin({ providers, loginError }) {
     setloading(true);
     await signIn("credentials", {
       redirect: true,
-      callbackUrl: `${router.query.callbackUrl}`,
+      callbackUrl: `${
+        router.query.callbackUrl ? router.query.callbackUrl : appBaseUrl
+      }`,
       email: values.email,
       password: values.password,
     });
     setloading(false);
   };
 
+  const newpArray = Object.values(providers);
+
   return (
     <>
       <Head>
-        <link rel="shortcut icon" href="/favicon.ico" />
         <title>Login</title>
       </Head>
 
@@ -195,6 +199,7 @@ export default function Signin({ providers, loginError }) {
                     type="button"
                     loading={loading}
                     loadingPosition="start"
+                    startIcon=<Save />
                     tabIndex={3}
                     fullWidth
                     size="large"
@@ -210,7 +215,6 @@ export default function Signin({ providers, loginError }) {
             </form>
           </Grid>
           <Grid
-            spacing={2}
             sx={{
               display: "flex",
               alignItems: "flex-start",
@@ -223,9 +227,19 @@ export default function Signin({ providers, loginError }) {
             xs={12}
           >
             <Grid item xs textAlign="left">
-              <Link href="#">Forgot password?</Link>
+              <Link href="/auth/forget-passwrod">Forgot password?</Link>
             </Grid>
-            <Grid xs={12} item textAlign="right">
+            <Grid
+              xs={12}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+
+                gap: 1,
+              }}
+              item
+              textAlign="right"
+            >
               Don't have an account?
               <Link href="/auth/signup">Sign Up</Link>
             </Grid>
@@ -233,31 +247,33 @@ export default function Signin({ providers, loginError }) {
 
           <Grid item xs={12}>
             <form noValidate>
-              {providers && (
+              {newpArray && (
                 <Stack spacing={2} sx={{ mt: 8 }}>
-                  {Object.values(providers)?.map((provider, index) => {
-                    return (
-                      <>
-                        {provider.name !== "Email and Password" && (
-                          <div key={index}>
-                            <Button
-                              size="large"
-                              variant="outlined"
-                              fullWidth
-                              onClick={() =>
-                                signIn(provider.id, {
-                                  redirect: true,
-                                  callbackUrl: `${router.query.callbackUrl}`,
-                                })
-                              }
-                            >
-                              Sign in with {provider.name}
-                            </Button>
-                          </div>
-                        )}
-                      </>
-                    );
-                  })}
+                  {newpArray
+                    .filter((item) => item.id  !== "credentials")
+                    ?.map((provider, index) => {
+                      return (
+                        <div key={index}>
+                          <Button
+                            size="large"
+                            variant="outlined"
+                            fullWidth
+                            onClick={() =>
+                              signIn(provider.id, {
+                                redirect: true,
+                                callbackUrl: `${
+                                  router.query.callbackUrl
+                                    ? router.query.callbackUrl
+                                    : appBaseUrl
+                                }`,
+                              })
+                            }
+                          >
+                            Sign in with {provider.name}
+                          </Button>
+                        </div>
+                      );
+                    })}
                 </Stack>
               )}
             </form>

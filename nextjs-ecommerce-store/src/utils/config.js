@@ -5,7 +5,7 @@ export const GOOGLE_CLIENT_ID =
 export const GOOGLE_CLIENT_SECRET = "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";
 export const FACEBOOK_CLIENT_ID = "";
 export const FACEBOOK_CLIENT_SECRET = "";
-export const appBaseUrl = "http://localhost:3000/";
+export const appBaseUrl = "http://localhost:3000";
 export const DBpass = "user123Pass";
 export const DBusername = "kishor81160";
 export const DbURL = `mongodb+srv://${DBusername}:${DBpass}@cluster0.884ticn.mongodb.net/userdata?retryWrites=true&w=majority`;
