@@ -1,0 +1,7 @@
+.product-card-content{
+    &:hover{
+        .actionIcons{
+            display: flex;
+        }
+    }
+}

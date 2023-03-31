@@ -9,10 +9,11 @@ import { Box, Button, colors, Grid, Typography } from "@mui/material";
 import Smallproductcard from "../elements/Smallproductcard";
 import "swiper/css";
 import "swiper/css/navigation";
-import { Navigation } from "swiper";
+import SwiperCode, { Autoplay, Pagination, Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 const DiscountSlider = () => {
+  SwiperCode.use([Autoplay]);
   return (
     <Box p={3} component={"section"}>
       <Box sx={{ width: "100%", mt: 0 }}>
@@ -52,10 +53,13 @@ const DiscountSlider = () => {
             <Swiper
               slidesPerView={6}
               spaceBetween={8}
-              style={{padding:'10px 0'}}
+              style={{ padding: "10px 0" }}
               rewind={true}
               navigation={true}
-              modules={[Navigation]}
+             
+              loop
+              autoplay={{ delay: 2500 }}
+              modules={[Navigation, Pagination]}
               className="mySwiper"
             >
               {Array.from(Array(12).keys()).map((item) => (

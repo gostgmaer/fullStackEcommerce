@@ -2,6 +2,7 @@
 import { AuthProvider } from "@/context/AuthContext";
 import { AppProvider } from "@/context/globalContext";
 import "@/styles/globals.css";
+
 import { CssBaseline } from "@mui/material";
 import { SessionProvider } from "next-auth/react";
 import NextNProgress from "nextjs-progressbar";

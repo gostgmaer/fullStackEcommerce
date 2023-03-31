@@ -9,11 +9,12 @@ import {
 import { Box, Button, colors, Grid, Typography } from "@mui/material";
 import "swiper/css";
 import "swiper/css/navigation";
-import { Navigation } from "swiper";
+import SwiperCode, { Autoplay, Pagination, Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Productcard from "../elements/Productcard";
 
 const FlashDeal = () => {
+  SwiperCode.use([Autoplay]);
   return (
     <Box p={3} component={"section"}>
       <Box sx={{ width: "100%", mt: 0 }}>
@@ -31,7 +32,6 @@ const FlashDeal = () => {
             sx={{
               display: "flex",
               gap: 1,
-
               alignItems: "center",
             }}
           >
@@ -53,16 +53,17 @@ const FlashDeal = () => {
             <Swiper
               slidesPerView={5}
               spaceBetween={8}
-            style={{padding:'10px 0'}}
+              style={{ padding: "10px 0" }}
               rewind={true}
-             
               navigation={true}
+              loop
+              autoplay={{ delay: 3000 }}
               modules={[Navigation]}
               className="mySwiper"
             >
               {Array.from(Array(12).keys()).map((item) => (
                 <SwiperSlide key={item}>
-                  <Productcard  size={12}/>
+                  <Productcard size={12} />
                 </SwiperSlide>
               ))}
             </Swiper>

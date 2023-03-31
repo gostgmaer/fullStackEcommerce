@@ -10,8 +10,15 @@ const Layout = ({ children }) => {
   return (
     <Fragment>
       <Header />
-      <Box className="elements" minHeight={'100vh'} sx={{ width: "100%",display:'flex',flexDirection:'column',gap:1 }}> {children}</Box>
-      
+      <Box
+        className="elements"
+        minHeight={"100vh"}
+        sx={{ width: "100%", display: "flex", flexDirection: "column", gap: 1 }}
+      >
+    
+        {children}
+      </Box>
+
       <Footer />
       <SwipeableTemporaryDrawer />
     </Fragment>
