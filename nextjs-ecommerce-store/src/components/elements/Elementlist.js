@@ -43,6 +43,7 @@ const Elementlist = ({ children, title, icon }) => {
         <Box sx={{ flexGrow: 1 }}>
           <Grid
             container
+            item
             gap={"10px"}
             justifyContent="space-between"
             p="0"

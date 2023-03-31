@@ -34,6 +34,7 @@ const Productcard = ({ size }) => {
 
   return (
     <Grid
+    item
       xs={size ? size : 3}
       sx={{
         "& .MuiPaper-rounded:hover": {
@@ -43,8 +44,8 @@ const Productcard = ({ size }) => {
     >
       <Item>
         <Card sx={{ maxWidth: 345 }}>
-          <CardContent
-            sx={{ position: "relative", padding: 0, cursor: "pointer" }}
+          <CardContent className="product-card-content"
+            sx={{ position: "relative", padding: 0, cursor: "pointer", }}
           >
             <Typography
               sx={{
@@ -68,10 +69,11 @@ const Productcard = ({ size }) => {
               image="/assets/images/pexels-wendy-wei-14411099.jpg"
             />
 
-            <Box
+            <Box className="actionIcons"
               sx={{
                 position: "absolute",
-                display: "flex",
+                
+                display: "none",
                 flexDirection: "column",
                 gap: 1,
                 top: 20,
