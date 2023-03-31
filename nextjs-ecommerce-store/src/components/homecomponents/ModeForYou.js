@@ -7,7 +7,7 @@ const ModeForYou = () => {
     <Fragment>
     <Elementlist title={"More For You"} icon={undefined}>
       {Array.from(Array(8).keys()).map((item) => (
-        <Productcard key={item} />
+        <Productcard key={item} size={undefined} />
       ))}
     </Elementlist>
   </Fragment>

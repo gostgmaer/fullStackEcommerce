@@ -76,7 +76,7 @@ function Header(props) {
           <div className="items gap-3 flex items-center">
             <Link href={"/"}>Home</Link>
             <Link href={"/shop"}>Shop</Link>
-            <Link href={"/category"}>category</Link>
+            <Link href={"/categories"}>Categories</Link>
           </div>
         </Box>
 

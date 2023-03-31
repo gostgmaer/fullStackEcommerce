@@ -23,7 +23,7 @@ import {
   Typography,
 } from "@mui/material";
 
-const Productcard = () => {
+const Productcard = ({ size }) => {
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
     ...theme.typography.body2,
@@ -34,7 +34,7 @@ const Productcard = () => {
 
   return (
     <Grid
-      xs={3}
+      xs={size ? size : 3}
       sx={{
         "& .MuiPaper-rounded:hover": {
           boxShadow: "0px 6px 10px rgba(3, 0, 71, 0.09)",
@@ -85,7 +85,7 @@ const Productcard = () => {
                 <FavoriteOutlined />
               </IconButton>
             </Box>
-            <Box mt={2}>
+            <Box mt={2} px={1}>
               <Typography gutterBottom variant="h6">
                 This is a Product Title
               </Typography>
