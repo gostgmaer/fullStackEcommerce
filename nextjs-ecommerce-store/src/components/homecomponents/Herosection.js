@@ -52,7 +52,7 @@ const Sectionone = () => {
             columns={12.6}
           >
             {Array.from(Array(12).keys()).map((item) => (
-              <Productcard key={item} />
+              <Productcard key={item} size={undefined} />
             ))}
           </Grid>
         </Box>

@@ -1,19 +1,18 @@
 import {
   ArrowRight,
   CardGiftcard,
-  FlashOn,
   Gif,
   GifBoxTwoTone,
   NewReleases,
 } from "@mui/icons-material";
 import { Box, Button, colors, Grid, Typography } from "@mui/material";
+import Smallproductcard from "../elements/Smallproductcard";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import Productcard from "../elements/Productcard";
 
-const FlashDeal = () => {
+const DiscountSlider = () => {
   return (
     <Box p={3} component={"section"}>
       <Box sx={{ width: "100%", mt: 0 }}>
@@ -21,7 +20,7 @@ const FlashDeal = () => {
           sx={{
             flexGrow: 1,
             display: "flex",
-            py: 2,
+            py: 1,
             justifyContent: "space-between",
             alignItems: "center",
           }}
@@ -35,7 +34,7 @@ const FlashDeal = () => {
               alignItems: "center",
             }}
           >
-            <FlashOn /> Flash Deal
+            <CardGiftcard /> Big Dscount
           </Typography>
           <Button variant="text" endIcon={<ArrowRight />}>
             View all
@@ -47,22 +46,21 @@ const FlashDeal = () => {
             gap={"10px"}
             justifyContent="space-between"
             width="100%"
-            m=""
+            m="0"
             columns={12}
           >
             <Swiper
-              slidesPerView={5}
+              slidesPerView={6}
               spaceBetween={8}
-            style={{padding:'10px 0'}}
+              style={{padding:'10px 0'}}
               rewind={true}
-             
               navigation={true}
               modules={[Navigation]}
               className="mySwiper"
             >
               {Array.from(Array(12).keys()).map((item) => (
                 <SwiperSlide key={item}>
-                  <Productcard  size={12}/>
+                  <Smallproductcard height={null} size={12} issale={true} />
                 </SwiperSlide>
               ))}
             </Swiper>
@@ -73,4 +71,4 @@ const FlashDeal = () => {
   );
 };
 
-export default FlashDeal;
+export default DiscountSlider;

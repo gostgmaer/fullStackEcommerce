@@ -10,8 +10,8 @@ import { Fragment } from "react";
 import Productcard from "./Productcard";
 const Elementlist = ({ children, title, icon }) => {
   return (
-    <Box  p={2} component={"section"}>
-      <Box sx={{ width: "100%", mt: 2 }}>
+    <Box  p={3} component={"section"}>
+      <Box sx={{ width: "100%", mt: 0 }}>
         <Box
           sx={{
             flexGrow: 1,
@@ -21,7 +21,13 @@ const Elementlist = ({ children, title, icon }) => {
             alignItems: "center",
           }}
         >
-          <Typography variant="h4">
+          <Typography   sx={{
+          
+            display: "flex",
+           gap:1,
+  
+            alignItems: "center",
+          }}  variant="h4">
             {icon ? (
               <Fragment>
                 {icon} {title}

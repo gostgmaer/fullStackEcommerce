@@ -20,7 +20,7 @@ import { Item } from "../elements/Item";
 
 const Footersection = () => {
   return (
-    <Box p={2} component={"section"}>
+    <Box p={3} component={"section"}>
       <Box sx={{ width: "100%", mt: 2 }}>
         <Box sx={{ flexGrow: 1 }}>
           <Grid
