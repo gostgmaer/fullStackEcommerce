@@ -15,8 +15,8 @@
   
   ],
   "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended","next/core-web-vitals", "next/babel"
+    "next/babel","next/core-web-vitals","eslint:recommended",
+    "plugin:react/recommended","next"
   ],
   "parserOptions": {
     "sourceType": "module",
