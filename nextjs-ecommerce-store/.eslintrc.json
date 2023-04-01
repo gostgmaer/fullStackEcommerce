@@ -3,32 +3,9 @@
 // }
 
 {
-  "env": {
-    "browser": true,
-    "commonjs": true,
-    "es6": true,
-    "node": true
-  },
-
-  "plugins": [],
   "extends": [
     "next/babel",
     "next/core-web-vitals",
-    "eslint:recommended",
-    "plugin:react/recommended",
     "next"
   ],
-  "parserOptions": {
-    "sourceType": "module",
-    "ecmaVersion": 2020
-  },
-  "settings": {
-    "react": {
-      "version": "detect"
-    }
-  },
-  "rules": {
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
-  }
 }
