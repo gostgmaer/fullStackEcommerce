@@ -22,6 +22,7 @@ import {
   styled,
   Typography,
 } from "@mui/material";
+import Link from "next/link";
 
 const CatagoryCard = () => {
   const Item = styled(Paper)(({ theme }) => ({
@@ -65,9 +66,9 @@ const CatagoryCard = () => {
               alt="green iguana"
               image="/assets/images/pexels-wendy-wei-14411099.jpg"
             />
-            <Typography gutterBottom variant="body2">
+            <Link  href={'/product/search/547154'}>
               Product Title
-            </Typography>
+            </Link>
           </CardContent>
         </Card>
       </Item>

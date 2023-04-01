@@ -1,22 +1,34 @@
 import { ArrayData } from "@/assets/mock/product";
-import { ShoppingBag } from "@mui/icons-material";
-import {
-  Box,
-  Grid,
-  Rating,
-  Typography,
-  Chip,
-  colors,
-  Button,
-} from "@mui/material";
+import { Check, ShoppingBag } from "@mui/icons-material";
+import Radio from "@mui/joy/Radio";
+import RadioGroup from "@mui/joy/RadioGroup";
+import CheckIcon from "@mui/icons-material/Check";
+// import Box from '@mui/joy/Box';
+import Checkbox from "@mui/joy/Checkbox";
+import Chip from "@mui/joy/Chip";
+// import Typography from '@mui/joy/Typography';
+import { Box, Grid, Rating, Typography, colors, Button } from "@mui/material";
 import Image from "next/image";
 import React, { useState } from "react";
+import ImageSlider from "./details/ImageSlider";
 
 const Info = () => {
-  const [selected, setSelected] = useState(true);
+  // const [selected, setSelected] = useState(true);
+  const [selected, setSelected] = useState("");
+  const [type, setType] = useState('');
+
+ 
+
   return (
     <Box width={"100%"}>
-      <Grid container alignItems={"center"} spacing={2} columns={16}>
+      <Grid
+        container
+        gap={5}
+        alignItems={"center"}
+        justifyContent={"space-between"}
+        spacing={2}
+        columns={16.5}
+      >
         <Grid
           display={"flex"}
           justifyContent={"space-between"}
@@ -26,7 +38,7 @@ const Info = () => {
           item
           xs={8}
         >
-          <Image
+          {/* <Image
             width={500}
             height={420}
             style={{ objectFit: "contain" }}
@@ -49,7 +61,8 @@ const Info = () => {
                 src="/assets/images/nike-black.png"
               ></Image>
             ))}
-          </Box>
+          </Box> */}
+          <ImageSlider />
         </Grid>
         <Grid
           display={"flex"}
@@ -95,7 +108,7 @@ const Info = () => {
                 flexDirection: "column",
               }}
             >
-              <Typography variant="subtitle1">Option:</Typography>
+              <strong>Option:</strong>
               <Box
                 sx={{
                   display: "flex",
@@ -103,14 +116,43 @@ const Info = () => {
                   gap: "10px",
                 }}
               >
-                {ArrayData.slice(0, 4).map((item) => (
-                  <Chip
-                    key={item}
-                    label="Chip"
-                    onClick={() => setSelected((s) => !s)}
-                    color={selected ? "primary" : "default"}
-                  />
-                ))}
+                <RadioGroup
+                  name="best-movie"
+                  aria-labelledby="best-movie"
+                  orientation="horizontal"
+                  sx={{ flexWrap: "wrap", gap: 1 }}
+                >
+                  {[
+                    "Star trek",
+                    "Batman",
+                    "Spider man",
+                    
+                  ].map((name) => {
+                    const checked = selected === name;
+                    return (
+                      <Chip
+                        key={name}
+                        variant={checked ? "solid" : "plain"}
+                        color={checked ? "primary" : "neutral"}
+                      >
+                        <Radio
+                          variant="outlined"
+                          color={checked ? "" : "neutral"}
+                          disableIcon
+                          overlay
+                          label={name}
+                          value={name}
+                          checked={checked}
+                          onChange={(event) => {
+                            if (event.target.checked) {
+                              setSelected(name);
+                            }
+                          }}
+                        />
+                      </Chip>
+                    );
+                  })}
+                </RadioGroup>
               </Box>
             </Box>
             <Box
@@ -121,7 +163,7 @@ const Info = () => {
                 flexDirection: "column",
               }}
             >
-              <Typography variant="subtitle1">Type:</Typography>
+              <strong>Type: </strong>
               <Box
                 sx={{
                   display: "flex",
@@ -129,22 +171,52 @@ const Info = () => {
                   gap: "10px",
                 }}
               >
-                {ArrayData.slice(0, 3).map((item) => (
-                  <Chip
-                    key={item}
-                    label="Type"
-                    onClick={() => setSelected((s) => !s)}
-                    color={selected ? "primary" : "default"}
-                  />
-                ))}
+                 <RadioGroup
+                  name="best-movie"
+                  aria-labelledby="best-movie"
+                  orientation="horizontal"
+                  sx={{ flexWrap: "wrap", gap: 1 }}
+                >
+                  {[
+                    
+                    "Thor",
+                    "The hulk",
+                  ].map((name) => {
+                    const checked = type === name;
+                    return (
+                      <Chip
+                        key={name}
+                        variant={checked ? "solid" : "plain"}
+                        color={checked ? "primary" : "neutral"}
+                      >
+                        <Radio
+                          variant="outlined"
+                          color={checked ?'' : "neutral"}
+                          disableIcon
+                          overlay
+                          label={name}
+                          value={name}
+                          checked={checked}
+                          onChange={(event) => {
+                            if (event.target.checked) {
+                              setType(name);
+                            }
+                          }}
+                        />
+                      </Chip>
+                    );
+                  })}
+                </RadioGroup>
               </Box>
             </Box>
           </Box>
 
-          <Box   display={"flex"}
-          alignItems="flex-start"
-          gap={"5px"}
-          flexDirection="column">
+          <Box
+            display={"flex"}
+            alignItems="flex-start"
+            gap={"5px"}
+            flexDirection="column"
+          >
             <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
               <Typography
                 sx={{ fontSize: "20px", fontWeight: 600 }}
