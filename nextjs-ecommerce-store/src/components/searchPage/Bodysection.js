@@ -10,6 +10,7 @@ import {
 import React from "react";
 import { array } from "yup";
 import Productcard from "../elements/Productcard";
+import Filter from "./child/Filter";
 
 const BodySection = () => {
   const [page, setPage] = React.useState(1);
@@ -18,9 +19,17 @@ const BodySection = () => {
   };
 
   return (
-    <Box p={3} display={"flex"} alignItems={'flex-start'} gap={20} component={"section"}>
-      <Box bgcolor={colors.grey[50]}></Box>
-      <Box bgcolor={colors.grey[50]}>
+    <Box
+      p={3}
+      display={"flex"}
+      alignItems={"flex-start"}
+      gap={5}
+      component={"section"}
+    >
+      <Box flex={1} bgcolor={colors.grey[50]}>
+        <Filter/>
+      </Box>
+      <Box flex={3}>
         <Box sx={{ flexGrow: 1 }}>
           <Grid
             container
@@ -33,18 +42,16 @@ const BodySection = () => {
             columns={12.6}
           >
             {Array.from(Array(24).keys()).map((item) => (
-              <Productcard key={item} size={9.5} />
+              <Productcard key={item} size={4} />
             ))}
           </Grid>
         </Box>
-        <Box>
-          <Stack spacing={2}>
+        <Box py={3}>
+          <Stack justifyContent={"space-between"} direction="row" spacing={2}>
             <Typography>
               <span>Showing</span> <span>1-24</span> of <span>4125</span>{" "}
               Products
             </Typography>
-          </Stack>
-          <Stack spacing={2}>
             <Pagination
               variant="outlined"
               count={10}
