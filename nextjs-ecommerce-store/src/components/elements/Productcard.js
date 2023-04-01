@@ -43,9 +43,11 @@ const Productcard = ({ size }) => {
       }}
     >
       <Item>
-        <Card sx={{ maxWidth: 345 }}>
+        <Card >
           <CardContent className="product-card-content"
-            sx={{ position: "relative", padding: 0, cursor: "pointer", }}
+            sx={{ position: "relative", padding: 0, cursor: "pointer",'&:hover>.actionIcons':{
+              display:'flex'
+            } }}
           >
             <Typography
               sx={{
