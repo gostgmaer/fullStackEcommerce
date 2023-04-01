@@ -23,7 +23,7 @@ import { Item } from "./Item";
 
 const Smallproductcard = ({ issale, height, size }) => {
   return (
-    <Grid xs={size ? size : 3}>
+    <Grid item xs={size ? size : 3}>
       <Item sx={{ boxShadow: "none", background: "transparent" }}>
         <CardContent
           sx={{
