@@ -1,8 +1,9 @@
 import Head from "next/head";
 import Layout from "@/layout";
 import { Box } from "@mui/material";
-import BodySection from "@/components/searchPage/bodySection";
+import BodySection from "@/components/searchPage/Bodysection";
 import FilterSection from "@/components/searchPage/Topsection";
+
 
 const SearchbyCategory = () => {
   return (
