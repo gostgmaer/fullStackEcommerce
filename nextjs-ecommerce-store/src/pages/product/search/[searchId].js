@@ -1,12 +1,10 @@
-import Info from "@/components/products/Productdetails/Info";
-import Related from "@/components/products/Productdetails/Related";
-import ProductDetails from "@/components/products/Productdetails/details";
+import Head from "next/head";
 import Layout from "@/layout";
 import { Box } from "@mui/material";
-import Head from "next/head";
-import React from "react";
+import BodySection from "@/components/searchPage/bodySection";
+import FilterSection from "@/components/searchPage/Topsection";
 
-const Index = () => {
+const SearchbyCategory = () => {
   return (
     <>
       <Head>
@@ -17,13 +15,12 @@ const Index = () => {
       </Head>
       <Layout>
         <Box p={3} component={"div"}>
-          <Info />
-          <ProductDetails />
-          <Related />
+          <FilterSection />
+          <BodySection />
         </Box>
       </Layout>
     </>
   );
 };
 
-export default Index;
+export default SearchbyCategory;
