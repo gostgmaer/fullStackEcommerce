@@ -2,7 +2,6 @@
 //   "extends": ["next/core-web-vitals", "next/babel"]
 // }
 
-
 {
   "env": {
     "browser": true,
@@ -10,13 +9,14 @@
     "es6": true,
     "node": true
   },
-  
-  "plugins": [
-  
-  ],
+
+  "plugins": [],
   "extends": [
-    "next/babel","next/core-web-vitals","eslint:recommended",
-    "plugin:react/recommended","next"
+    "next/babel",
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "next"
   ],
   "parserOptions": {
     "sourceType": "module",
