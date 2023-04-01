@@ -10,12 +10,13 @@
     "es6": true,
     "node": true
   },
+  
   "plugins": [
   
   ],
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended","next/core-web-vitals", "next/babel"
   ],
   "parserOptions": {
     "sourceType": "module",
