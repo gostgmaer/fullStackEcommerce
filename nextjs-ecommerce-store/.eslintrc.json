@@ -2,34 +2,10 @@
 //   "extends": ["next/core-web-vitals", "next/babel"]
 // }
 
-
 {
-  "env": {
-    "browser": true,
-    "commonjs": true,
-    "es6": true,
-    "node": true
-  },
-  "plugins": [
-  
-  ],
   "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-
-    "plugin:prettier/recommended"
+    "next/babel",
+    "next/core-web-vitals",
+    "next"
   ],
-  "parserOptions": {
-    "sourceType": "module",
-    "ecmaVersion": 2020
-  },
-  "settings": {
-    "react": {
-      "version": "detect"
-    }
-  },
-  "rules": {
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
-  }
 }
