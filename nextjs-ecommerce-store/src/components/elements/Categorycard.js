@@ -35,6 +35,7 @@ const CatagoryCard = () => {
 
   return (
     <Grid
+    item
       xs={2}
       sx={{
         "& .MuiPaper-rounded:hover": {

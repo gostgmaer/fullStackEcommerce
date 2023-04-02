@@ -2,13 +2,9 @@ import {
   Dashboard,
   Favorite,
   LocalMall,
-  LocalShipping,
   Login,
   Logout,
-  Person,
-  PersonAdd,
   Search,
-  Settings,
 } from "@mui/icons-material";
 import {
   Avatar,
@@ -20,15 +16,16 @@ import {
   ListItemIcon,
   Menu,
   MenuItem,
-  Paper,
-  Tooltip,
+  Stack,
+  TextField,
+  colors,
 } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
-import Wrapper from "./Wrapper";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useGlobalContext } from "@/context/globalContext";
+import { Input } from "@mui/joy";
 
 function Header(props) {
   const [show, setShow] = useState("translate-y-0");
@@ -62,55 +59,107 @@ function Header(props) {
   };
 
   return (
-    <header
+    <Box
+      component={"header"}
       className={` w-full h-12 bg-gray-100 md:h-16 justify-between flex items-center sticky top-0 transition-transform duration-75 ${show}`}
+      sx={{
+        width: "100%",
+        height: 12 * 6,
+        bgcolor: colors.grey[100],
+        justifyContent: "space-between",
+        display: "flex",
+        alignItems: "center",
+
+        position: "sticky",
+        top: 0,
+      }}
+      px={8}
     >
-      <Wrapper className={" flex items-center justify-between"}>
+      <Stack
+        direction="row"
+        justifyContent={"space-between"}
+        overflow="hidden"
+        width={"100%"}
+        className={" flex items-center justify-between"}
+      >
         <Box
+          flex={1}
           sx={{ display: "flex", gap: 5, alignItems: "center" }}
           className="leftSide"
         >
           <div className="logo">
             <span>LOGO</span>
           </div>
-          <div className="items gap-3 flex items-center">
+          <Stack
+            direction={"row"}
+            sx={{ gap: 3, alignItems: "center" }}
+            className="items gap-3 flex items-center"
+          >
             <Link href={"/"}>Home</Link>
             <Link href={"/shop"}>Shop</Link>
             <Link href={"/categories"}>Categories</Link>
-          </div>
+          </Stack>
         </Box>
 
-        <Paper
+        <Box
           component="form"
           sx={{
             p: "2px 4px",
+            flex: 1,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             boxShadow: "none",
-
+            m: "0px !important",
             bgcolor: "transparent",
             border: "none",
           }}
         >
-          {showFIeld && (
-            <InputBase
-              sx={{ ml: 1, flex: 1 }}
-              placeholder="Search products"
-              inputProps={{ "aria-label": "Search Product" }}
+          {showFIeld ? (
+            <Input
+              sx={{
+                "--Input-decoratorChildHeight": "45px",
+                pr: 0,
+                overflow: "hidden",
+              }}
+              placeholder="Search......."
+              type="text"
+              required
+              endDecorator={
+                <IconButton
+                  sx={{
+                    borderRadius: 0,
+                    "& MuiIconButton-root:hover": {
+                      color: "red",
+                      bgcolor:'blue'
+                    },
+                  }}
+                  onClick={() => setShowFIeld(!showFIeld)}
+                >
+                  <Search />
+                </IconButton>
+              }
             />
+          ) : (
+            <IconButton
+              onClick={() => setShowFIeld(!showFIeld)}
+              type="button"
+              sx={{ p: "10px" }}
+              aria-label="search"
+            >
+              <Search />
+            </IconButton>
           )}
-          <IconButton
-            onClick={() => setShowFIeld(!showFIeld)}
-            type="button"
-            sx={{ p: "10px" }}
-            aria-label="search"
-          >
-            <Search />
-          </IconButton>
-        </Paper>
+        </Box>
 
-        <Box className=" flex gap-2 items-center">
+        <Stack
+          direction={"row"}
+          justifyContent={"flex-end"}
+          flex={1}
+          gap={2}
+          sx={{ alignItems: "center" }}
+          className=" flex gap-2 items-center"
+        >
           <div className="favirite">
             <IconButton color="error" onClick={() => route.push("/wishlist")}>
               <Badge badgeContent={8} color="info">
@@ -202,9 +251,9 @@ function Header(props) {
               Logout
             </MenuItem>
           </Menu>
-        </Box>
-      </Wrapper>
-    </header>
+        </Stack>
+      </Stack>
+    </Box>
   );
 }
 
