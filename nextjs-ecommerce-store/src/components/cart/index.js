@@ -16,9 +16,12 @@ import { useGlobalContext } from "@/context/globalContext";
 import { Fragment } from "react";
 import Image from "next/image";
 import { ArrayData } from "@/assets/mock/product";
+import { useRouter } from "next/router";
 
 export default function SwipeableTemporaryDrawer() {
   const { state, setState } = useGlobalContext();
+
+  const router = useRouter();
 
   const toggleDrawer = (open) => (event) => {
     setState(open);
@@ -31,7 +34,7 @@ export default function SwipeableTemporaryDrawer() {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        height:'100vh',
+        height: "100vh",
 
         flexDirection: "column",
       }}
@@ -69,16 +72,32 @@ export default function SwipeableTemporaryDrawer() {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          width:'100%',
+          width: "100%",
           p: "10px 15px",
           flexDirection: "column",
           gap: "10px",
         }}
       >
-        <Button variant="contained" color="error" fullWidth>
+        <Button
+          onClick={() => {
+            router.push("/checkout");
+            setState(false);
+          }}
+          variant="contained"
+          color="error"
+          fullWidth
+        >
           Checkout ($54541.00)
         </Button>
-        <Button variant="outlined" color="error" fullWidth>
+        <Button
+          variant="outlined"
+          onClick={() => {
+            router.push("/cart");
+            setState(false);
+          }}
+          color="error"
+          fullWidth
+        >
           View Cart
         </Button>
       </Box>
@@ -119,14 +138,30 @@ const HascartData = (params) => {
         p: 2,
       }}
     >
-      <Stack gap={1} alignItems={"center"}>
-        <IconButton sx={{ p: 0 }} color="error">
-          <AddCircleOutline></AddCircleOutline>
-        </IconButton>
-        <span>2</span>
-        <IconButton sx={{ p: 0 }} color="error" disabled>
-          <RemoveCircleOutline></RemoveCircleOutline>
-        </IconButton>
+      <Stack
+        gap={1}
+        alignItems={"center"}
+        sx={{
+          "&>.MuiButton-outlined": {
+          p:0,
+            minHeight: 0,
+            minWidth: 0,
+            textTransform: "capitalize",
+          },
+        }}
+      >
+        <Button variant="outlined" color="error">
+          <Add></Add>
+        </Button>
+        <Typography
+          variant="body2"
+          sx={{ mx: 0.5, fontWeight: 600, fontSize: 15 }}
+        >
+          2
+        </Typography>
+        <Button variant="outlined" color="error">
+          <Remove></Remove>
+        </Button>
       </Stack>
       <Box
         display={"flex"}

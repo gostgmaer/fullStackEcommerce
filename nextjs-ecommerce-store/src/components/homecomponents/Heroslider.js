@@ -17,7 +17,7 @@ import BigSlider from "../elements/BigSlider";
 const Heroslider = () => {
   SwiperCode.use([Autoplay]);
   return (
-    <Box pt={3} component={"section"}>
+    <Box p={3} component={"section"}>
       <Box sx={{ width: "100%", mt: 0 }}>
         <Swiper
           navigation={true}
