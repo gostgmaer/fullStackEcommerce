@@ -91,9 +91,9 @@ export default function Checkout() {
                   color="error"
                   fullWidth
                   onClick={handleBack}
-                  sx={{ mt: 3, ml: 1 }}
+                  sx={{ mt: 3, ml: 1,textTransform:'capitalize' }}
                 >
-                  {`Back ${steps
+                  {`Back to ${steps
                     .filter((item, index) => index === activeStep - 1)
                     .toString()}`}
                 </Button>
@@ -102,7 +102,7 @@ export default function Checkout() {
                   fullWidth
                   variant="outlined"
                   color="error"
-                  sx={{ mt: 3, ml: 1 }}
+                  sx={{ mt: 3, ml: 1,textTransform:'capitalize' }}
                 >
                   Back to cart
                 </Button>
@@ -116,10 +116,10 @@ export default function Checkout() {
                   variant="contained"
                   color="error"
                   onClick={handleNext}
-                  sx={{ mt: 3, ml: 1 }}
+                  sx={{ mt: 3, ml: 1,textTransform:'capitalize' }}
                 >
                   {steps
-                    .filter((item, index) => index === activeStep)
+                    .filter((item, index) => index === activeStep+1)
                     .toString()}
                 </Button>
               ) : (
@@ -128,7 +128,7 @@ export default function Checkout() {
                   variant="contained"
                   color="error"
                   onClick={handlePayment}
-                  sx={{ mt: 3, ml: 1 }}
+                  sx={{ mt: 3, ml: 1,textTransform:'capitalize' }}
                 >
                   Place order
                 </Button>
