@@ -43,7 +43,7 @@ const Mainbar = () => {
   };
   const handleClose = (e) => {
     if (e.target.innerText) {
-      route.push(`${e.target.innerText.replace(" ", "-").toLowerCase()}`);
+      route.push(`/${e.target.innerText.replace(" ", "-").toLowerCase()}`);
     }
   };
 
@@ -106,8 +106,7 @@ const Mainbar = () => {
             border: "none",
           }}
         >
-          {showFIeld ? (
-            <FormControl sx={{ m: 0, width: "100%" }} variant="outlined">
+              <FormControl sx={{ m: 0, width: "100%" }} variant="outlined">
               <OutlinedInput
                 id="outlined-adornment-search"
                 size="small"
@@ -161,16 +160,6 @@ const Mainbar = () => {
                 }}
               />
             </FormControl>
-          ) : (
-            <IconButton
-              onClick={() => setShowFIeld(!showFIeld)}
-              type="button"
-              sx={{ p: "10px" }}
-              aria-label="search"
-            >
-              <Search />
-            </IconButton>
-          )}
         </Box>
 
         <Stack

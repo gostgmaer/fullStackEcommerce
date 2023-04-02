@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Layout from "@/layout";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import CategoryList from "@/components/homecomponents/CategoryListsection";
 import FlashDeal from "@/components/homecomponents/Flashdealsection";
 import ModeForYou from "@/components/homecomponents/ModeForYou";
@@ -9,10 +9,10 @@ import NewArrival from "@/components/homecomponents/NewArrival";
 import DiscountSlider from "@/components/homecomponents/DiscountSlider";
 import FeatureItems from "@/components/homecomponents/FeatureItems";
 import Heroslider from "@/components/homecomponents/Heroslider";
-export default function Home() {
+import { productData } from "@/assets/mock/product";
+export default function Home({data}) {
 
-  const { data, status } = useSession();
-
+  console.log(data);
   return (
     <>
       <Head>
@@ -34,3 +34,11 @@ export default function Home() {
     </>
   );
 }
+
+export const getServerSideProps = async (ctx) => {
+  return {
+    props: {
+      data: {result:{productData}},
+    },
+  };
+};
