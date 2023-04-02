@@ -112,7 +112,7 @@ export default function Checkout() {
 
 export const getServerSideProps = async (ctx) => {
   const session = await getSession(ctx);
- console.log(ctx);
+
   if (!session) {
     return {
       redirect: {

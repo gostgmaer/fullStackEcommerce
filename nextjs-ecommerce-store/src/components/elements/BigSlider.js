@@ -8,38 +8,40 @@ const BigSlider = () => {
     <Grid
       container
       item
-  
       sx={{
         // display: "flex",
         // mx: 10,
-         justifyContent: "space-between",
+        justifyContent: "space-between",
+        
         // alignItems: "center",
         gap: 5,
-        '&>.MuiGrid-item':{
-          display:'flex',justifyContent:'center'
-        }
+        "&>.MuiGrid-item": {
+          display: "flex",
+          justifyContent: "center",
+        },
       }}
       columns={12.6}
     >
-      <Grid item xs={6} className="images" >
+      <Grid item xs={6} className="images">
         <Link href={`/product/${245}`}>
           <Image
             src={"/assets/images/nike-black.png"}
             alt=""
             className=" rounded"
+            style={{objectFit:'contain'}}
             width={"500"}
             height={"420"}
           />
         </Link>
       </Grid>
-      <Grid item xs={6} pr={5} >
+      <Grid item xs={6} pr={6}>
         <Box
           className="title"
           sx={{
             display: "flex",
             flexDirection: "column",
             alignItems: "flex-start",
-            justifyContent:'center',
+            justifyContent: "center",
             gap: 3,
           }}
         >
