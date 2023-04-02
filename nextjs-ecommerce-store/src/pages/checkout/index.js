@@ -13,6 +13,7 @@ import {
   FormControlLabel,
   Grid,
   Paper,
+  Stack,
   Step,
   StepLabel,
   Stepper,
@@ -53,18 +54,12 @@ export default function Checkout() {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-  const route = useRouter()
+  const route = useRouter();
 
   return (
     <Layout>
-      <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
-        <Paper
-          variant="outlined"
-          sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
-        >
-          <Typography component="h1" variant="h4" align="center">
-            Checkout
-          </Typography>
+      <Box p={3} component={"div"}>
+        <Box mx={30} px={10}>
           <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
             {steps.map((label) => (
               <Step key={label}>
@@ -72,40 +67,50 @@ export default function Checkout() {
               </Step>
             ))}
           </Stepper>
-          {activeStep === steps.length ? (
-            <Fragment>
-              <Typography variant="h5" gutterBottom>
-                Thank you for your order.
-              </Typography>
-              <Typography variant="subtitle1">
-                Your order number is #2001539. We have emailed your order
-                confirmation, and will send you an update when your order has
-                shipped.
-              </Typography>
-            </Fragment>
-          ) : (
-            <Fragment>
-              {getStepContent(activeStep)}
-              <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                {activeStep !== 0 && (
-                  <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-                    Back
-                  </Button>
-                )}
-
+        </Box>
+        <Grid container direction={"row"} gap={5}>
+          <Stack
+            sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
+            direction={"column"}
+            gap={1.5}
+            flex={2}
+          >
+            {getStepContent(activeStep)}
+            <Stack
+              direction={"row"}
+              sx={{ justifyContent: "space-between", gap: 5 }}
+            >
+              {activeStep !== 0 ? (
+                <Button fullWidth onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
+                  Back
+                </Button>
+              ) : (
                 <Button
+                  fullWidth
                   variant="outlined"
-                  color="info"
-                  onClick={handleNext}
+                  color="error"
                   sx={{ mt: 3, ml: 1 }}
                 >
-                  {activeStep === steps.length - 1 ? "Place order" : "Next"}
+                  Back to cart
                 </Button>
-              </Box>
-            </Fragment>
-          )}
-        </Paper>
-      </Container>
+              )}
+
+              <Button
+                fullWidth
+                variant="contained"
+                color="error"
+                onClick={handleNext}
+                sx={{ mt: 3, ml: 1 }}
+              >
+                {activeStep === steps.length - 1
+                  ? "Place order"
+                  : "Proceed to Payment"}
+              </Button>
+            </Stack>
+          </Stack>
+          <Stack direction={"column"} gap={1} flex={0.9}></Stack>
+        </Grid>
+      </Box>
     </Layout>
   );
 }
@@ -125,7 +130,7 @@ export const getServerSideProps = async (ctx) => {
   return {
     props: {
       session,
-      data: session ? "List of 100 pro blog" : "list of free blogs",
+      data: session,
     },
   };
 };
