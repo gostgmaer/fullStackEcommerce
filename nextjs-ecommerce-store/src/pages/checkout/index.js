@@ -1,6 +1,7 @@
 import AddressForm from "@/components/checkoutform/Address";
 import PaymentForm from "@/components/checkoutform/Payment";
-import Review from "@/components/checkoutform/Review";
+import Review from "@/components/checkoutform/Preview";
+import Pricesumery from "@/components/checkoutform/Pricesumery";
 import { useAuthContext } from "@/context/AuthContext";
 import Layout from "@/layout";
 import { appBaseUrl } from "@/utils/config";
@@ -13,6 +14,7 @@ import {
   FormControlLabel,
   Grid,
   Paper,
+  Stack,
   Step,
   StepLabel,
   Stepper,
@@ -24,7 +26,7 @@ import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
 
-const steps = ["Shipping address", "Payment details", "Review your order"];
+const steps = ["Address Details", "Payment details", "Review your order"];
 
 function getStepContent(step) {
   switch (step) {
@@ -41,10 +43,10 @@ function getStepContent(step) {
 
 export default function Checkout() {
   const [activeStep, setActiveStep] = useState(0);
-  // const { protectedRouteCheck, pageLoading } = useAuthContext();
-  // useEffect(() => {
-  //   protectedRouteCheck();
-  // }, []);
+  const { protectedRouteCheck, pageLoading } = useAuthContext();
+  useEffect(() => {
+    protectedRouteCheck();
+  }, []);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -53,59 +55,96 @@ export default function Checkout() {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-  const route = useRouter()
+  const route = useRouter();
+
+  const handlePayment = (params) => {
+    console.log(params);
+  };
 
   return (
     <Layout>
-      <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
-        <Paper
-          variant="outlined"
-          sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
-        >
-          <Typography component="h1" variant="h4" align="center">
-            Checkout
-          </Typography>
-          <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+      <Box p={3} component={"div"}>
+        <Box mx={30} px={10}>
+          <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 2 }}>
             {steps.map((label) => (
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>
               </Step>
             ))}
           </Stepper>
-          {activeStep === steps.length ? (
-            <Fragment>
-              <Typography variant="h5" gutterBottom>
-                Thank you for your order.
-              </Typography>
-              <Typography variant="subtitle1">
-                Your order number is #2001539. We have emailed your order
-                confirmation, and will send you an update when your order has
-                shipped.
-              </Typography>
-            </Fragment>
-          ) : (
-            <Fragment>
-              {getStepContent(activeStep)}
-              <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                {activeStep !== 0 && (
-                  <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-                    Back
-                  </Button>
-                )}
-
+        </Box>
+        <Grid container direction={"row"} gap={5}>
+          <Stack
+            sx={{ my: { xs: 2, md: 2 } }}
+            direction={"column"}
+            gap={1.5}
+            flex={2}
+          >
+            {getStepContent(activeStep)}
+            <Stack
+              direction={"row"}
+              sx={{ justifyContent: "space-between", gap: 5 }}
+            >
+              {activeStep !== 0 ? (
                 <Button
                   variant="outlined"
-                  color="info"
-                  onClick={handleNext}
-                  sx={{ mt: 3, ml: 1 }}
+                  color="error"
+                  fullWidth
+                  onClick={handleBack}
+                  sx={{ mt: 3, ml: 1,textTransform:'capitalize' }}
                 >
-                  {activeStep === steps.length - 1 ? "Place order" : "Next"}
+                  {`Back to ${steps
+                    .filter((item, index) => index === activeStep - 1)
+                    .toString()}`}
                 </Button>
-              </Box>
-            </Fragment>
-          )}
-        </Paper>
-      </Container>
+              ) : (
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  color="error"
+                  sx={{ mt: 3, ml: 1,textTransform:'capitalize' }}
+                >
+                  Back to cart
+                </Button>
+              )}
+
+              {steps
+                .filter((item, index) => index === activeStep)
+                .toString() !== "Review your order" ? (
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="error"
+                  onClick={handleNext}
+                  sx={{ mt: 3, ml: 1,textTransform:'capitalize' }}
+                >
+                  {steps
+                    .filter((item, index) => index === activeStep+1)
+                    .toString()}
+                </Button>
+              ) : (
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="error"
+                  onClick={handlePayment}
+                  sx={{ mt: 3, ml: 1,textTransform:'capitalize' }}
+                >
+                  Place order
+                </Button>
+              )}
+            </Stack>
+          </Stack>
+          <Stack
+            direction={"column"}
+            gap={1}
+            flex={0.9}
+            sx={{ my: 2,position:'sticky',top:0}}
+          >
+            <Pricesumery />
+          </Stack>
+        </Grid>
+      </Box>
     </Layout>
   );
 }
@@ -125,7 +164,7 @@ export const getServerSideProps = async (ctx) => {
   return {
     props: {
       session,
-      data: session ? "List of 100 pro blog" : "list of free blogs",
+      data: session,
     },
   };
 };

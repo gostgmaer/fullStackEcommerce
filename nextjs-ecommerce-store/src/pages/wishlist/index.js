@@ -1,5 +1,7 @@
 import { useAuthContext } from "@/context/AuthContext";
 import Layout from "@/layout";
+import { appBaseUrl } from "@/utils/config";
+import { getSession } from "next-auth/react";
 import { useEffect } from "react";
 
 const Index = () => {
@@ -17,3 +19,25 @@ const Index = () => {
 };
 
 export default Index;
+
+
+
+export const getServerSideProps = async (ctx) => {
+  const session = await getSession(ctx);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: `/auth/signin?callbackUrl=${appBaseUrl}${ctx.resolvedUrl}`,
+        parmanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      session,
+      data: session,
+    },
+  };
+};

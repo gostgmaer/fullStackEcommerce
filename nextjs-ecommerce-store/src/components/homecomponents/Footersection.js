@@ -47,6 +47,7 @@ export default Footersection;
 export const FeatureItemscard = () => {
   return (
     <Grid
+    item
       xs={3}
       sx={{
         "& .MuiPaper-rounded:hover": {
