@@ -22,7 +22,7 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useGlobalContext } from "@/context/globalContext";
 import { Input } from "@mui/joy";
@@ -42,6 +42,17 @@ function Header(props) {
       route.push(`${e.target.innerText.replace(" ", "-").toLowerCase()}`);
     }
   };
+
+  const [scrollPosition, setScrollPosition] = useState(null);
+  const handleScroll = () => {
+    const position = window.pageYOffset;
+    setScrollPosition(position);
+    console.log(position);
+  };
+
+  useEffect(() => {
+    handleScroll();
+  }, [scrollPosition]);
   const handleCLosemenu = () => {};
 
   const session = useSession();
@@ -69,8 +80,7 @@ function Header(props) {
         justifyContent: "space-between",
         display: "flex",
         alignItems: "center",
-
-        position: "sticky",
+        position: "fixed",
         top: 0,
       }}
       px={8}
@@ -131,7 +141,7 @@ function Header(props) {
                     borderRadius: 0,
                     "& MuiIconButton-root:hover": {
                       color: "red",
-                      bgcolor:'blue'
+                      bgcolor: "blue",
                     },
                   }}
                   onClick={() => setShowFIeld(!showFIeld)}

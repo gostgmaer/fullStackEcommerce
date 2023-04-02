@@ -1,6 +1,7 @@
 import AddressForm from "@/components/checkoutform/Address";
 import PaymentForm from "@/components/checkoutform/Payment";
-import Review from "@/components/checkoutform/Review";
+import Review from "@/components/checkoutform/Preview";
+import Pricesumery from "@/components/checkoutform/Pricesumery";
 import { useAuthContext } from "@/context/AuthContext";
 import Layout from "@/layout";
 import { appBaseUrl } from "@/utils/config";
@@ -25,7 +26,7 @@ import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
 
-const steps = ["Shipping address", "Payment details", "Review your order"];
+const steps = ["Address Details", "Payment details", "Review your order"];
 
 function getStepContent(step) {
   switch (step) {
@@ -42,10 +43,10 @@ function getStepContent(step) {
 
 export default function Checkout() {
   const [activeStep, setActiveStep] = useState(0);
-  // const { protectedRouteCheck, pageLoading } = useAuthContext();
-  // useEffect(() => {
-  //   protectedRouteCheck();
-  // }, []);
+  const { protectedRouteCheck, pageLoading } = useAuthContext();
+  useEffect(() => {
+    protectedRouteCheck();
+  }, []);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -56,11 +57,15 @@ export default function Checkout() {
   };
   const route = useRouter();
 
+  const handlePayment = (params) => {
+    console.log(params);
+  };
+
   return (
     <Layout>
       <Box p={3} component={"div"}>
         <Box mx={30} px={10}>
-          <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+          <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 2 }}>
             {steps.map((label) => (
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>
@@ -70,7 +75,7 @@ export default function Checkout() {
         </Box>
         <Grid container direction={"row"} gap={5}>
           <Stack
-            sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
+            sx={{ my: { xs: 2, md: 2 } }}
             direction={"column"}
             gap={1.5}
             flex={2}
@@ -81,8 +86,16 @@ export default function Checkout() {
               sx={{ justifyContent: "space-between", gap: 5 }}
             >
               {activeStep !== 0 ? (
-                <Button fullWidth onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-                  Back
+                <Button
+                  variant="outlined"
+                  color="error"
+                  fullWidth
+                  onClick={handleBack}
+                  sx={{ mt: 3, ml: 1 }}
+                >
+                  {`Back ${steps
+                    .filter((item, index) => index === activeStep - 1)
+                    .toString()}`}
                 </Button>
               ) : (
                 <Button
@@ -95,20 +108,41 @@ export default function Checkout() {
                 </Button>
               )}
 
-              <Button
-                fullWidth
-                variant="contained"
-                color="error"
-                onClick={handleNext}
-                sx={{ mt: 3, ml: 1 }}
-              >
-                {activeStep === steps.length - 1
-                  ? "Place order"
-                  : "Proceed to Payment"}
-              </Button>
+              {steps
+                .filter((item, index) => index === activeStep)
+                .toString() !== "Review your order" ? (
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="error"
+                  onClick={handleNext}
+                  sx={{ mt: 3, ml: 1 }}
+                >
+                  {steps
+                    .filter((item, index) => index === activeStep)
+                    .toString()}
+                </Button>
+              ) : (
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="error"
+                  onClick={handlePayment}
+                  sx={{ mt: 3, ml: 1 }}
+                >
+                  Place order
+                </Button>
+              )}
             </Stack>
           </Stack>
-          <Stack direction={"column"} gap={1} flex={0.9}></Stack>
+          <Stack
+            direction={"column"}
+            gap={1}
+            flex={0.9}
+            sx={{ my: 2,position:'sticky',top:0}}
+          >
+            <Pricesumery />
+          </Stack>
         </Grid>
       </Box>
     </Layout>
