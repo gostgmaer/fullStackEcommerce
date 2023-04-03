@@ -29,18 +29,30 @@ export default function ImageSlider() {
         className="product-images-slider"
       >
         {imagesData.map((item, index) => (
-          <SwiperSlide key={index}>
+          <SwiperSlide
+            style={{
+              objectFit: "contain",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            key={index}
+          >
             <Image
               width={420}
               height={360}
-              style={{ objectFit: "contain" }}
+              style={{
+                objectFit: "contain",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
               src={item.attributes.image.large}
               alt="product images"
             />
           </SwiperSlide>
         ))}
       </Swiper>
-     
     </>
   );
 }
