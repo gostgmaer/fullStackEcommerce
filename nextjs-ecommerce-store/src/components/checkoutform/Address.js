@@ -10,18 +10,23 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
+import { Country, State, City } from "country-state-city";
 
-export default function AddressForm() {
+export default function AddressForm(props) {
   return (
     <Box display={"flex"} flexDirection={"column"} gap={4.5}>
-      <ShippingAddress></ShippingAddress>
-      <Billingaddress></Billingaddress>
+      <ShippingAddress params={props.formik}></ShippingAddress>
+      <Billingaddress params={props.formik}></Billingaddress>
     </Box>
   );
 }
 
+const configFormik = () => {};
+
 const ShippingAddress = (params) => {
+  const formik = params.params;
+
   return (
     <Paper
       variant="outlined"
@@ -31,13 +36,12 @@ const ShippingAddress = (params) => {
         <Typography variant="h6" mb={0} gutterBottom>
           Shipping Address
         </Typography>
-
         <Grid
           container
           gap={5}
           justifyContent={"space-between"}
           spacing={3}
-          columns={12.6}
+          columns={12.8}
         >
           <Grid
             item
@@ -48,24 +52,28 @@ const ShippingAddress = (params) => {
           >
             <TextField
               required
-              id="firstName"
-              name="firstName"
+              id="fname"
+              name="fname"
               label="First name"
               size="small"
               fullWidth
-              autoComplete="given-name"
+              autoComplete="fname"
               variant="outlined"
+              onChange={formik.handleChange}
+              value={formik.values.fname}
             />
             <TextField
               required
-              id="emailaddress"
-              name="emailaddress"
+              id="email"
+              name="email"
               label="Email Address"
-              placeholder="info@mail.com"
               size="small"
+              type="email"
               fullWidth
               autoComplete="email-address"
               variant="outlined"
+              onChange={formik.handleChange}
+              value={formik.values.email}
             />
             <TextField
               required
@@ -73,6 +81,8 @@ const ShippingAddress = (params) => {
               name="company"
               label="Company"
               size="small"
+              onChange={formik.handleChange}
+              value={formik.values.company}
               fullWidth
               autoComplete="company-name"
               variant="outlined"
@@ -81,37 +91,16 @@ const ShippingAddress = (params) => {
               required
               id="address1"
               name="address1"
+              {...params}
               label="Address 1"
+              onChange={formik.handleChange}
+              value={formik.values.address1}
               size="small"
               fullWidth
               autoComplete="address-name"
               variant="outlined"
             />
-            <Autocomplete
-              id="country-select-autocomplete"
-              size="small"
-              options={countries}
-              autoHighlight
-              getOptionLabel={(option) => option.label}
-              renderOption={(props, option) => (
-                <Box component="li" {...props}>
-                  {option.label}
-                </Box>
-              )}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  required
-                  label="Country"
-                  id="countru"
-                  name="country"
-                  inputProps={{
-                    ...params.inputProps,
-                    autoComplete: "new-country", // disable autocomplete and autofill
-                  }}
-                />
-              )}
-            />
+           
           </Grid>
 
           <Grid
@@ -123,8 +112,10 @@ const ShippingAddress = (params) => {
           >
             <TextField
               required
-              id="lastname"
-              name="lastname"
+              id="lname"
+              name="lname"
+              onChange={formik.handleChange}
+              value={formik.values.lname}
               label="Last name"
               size="small"
               fullWidth
@@ -134,9 +125,11 @@ const ShippingAddress = (params) => {
             <TextField
               required
               type="text"
-              id="phonenumber"
-              name="phonenumber"
+              id="phone"
+              name="phone"
               label="Phone Number"
+              onChange={formik.handleChange}
+              value={formik.values.phone}
               placeholder="811424511"
               size="small"
               fullWidth
@@ -147,6 +140,8 @@ const ShippingAddress = (params) => {
               required
               id="zipcode"
               name="zipcode"
+              onChange={formik.handleChange}
+              value={formik.values.zipcode}
               label="Zip Code"
               size="small"
               fullWidth
@@ -158,36 +153,14 @@ const ShippingAddress = (params) => {
               id="address2"
               name="address2"
               label="Address 2"
+              onChange={formik.handleChange}
+              value={formik.values.address2}
               size="small"
               fullWidth
               autoComplete="address-two-name"
               variant="outlined"
             />
-            <Autocomplete
-              id="state-select-autocomplete"
-              size="small"
-              options={countries}
-              autoHighlight
-              getOptionLabel={(option) => option.label}
-              renderOption={(props, option) => (
-                <Box component="li" {...props}>
-                  {option.label}
-                </Box>
-              )}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  required
-                  label="State"
-                  id="state"
-                  name="state"
-                  inputProps={{
-                    ...params.inputProps,
-                    autoComplete: "new-state", // disable autocomplete and autofill
-                  }}
-                />
-              )}
-            />
+           
           </Grid>
         </Grid>
       </Stack>
@@ -196,6 +169,9 @@ const ShippingAddress = (params) => {
 };
 
 const Billingaddress = (params) => {
+  const formik = params.params;
+  const [isSame, setIsSame] = useState(true);
+
   return (
     <Paper
       variant="outlined"
@@ -206,15 +182,15 @@ const Billingaddress = (params) => {
           Billing Address
         </Typography>
         <FormControlLabel
-          control={<Checkbox />}
+          control={<Checkbox onChange={() => setIsSame(!isSame)} />}
           label="Same as shipping address"
         />
-        <Grid
+        {isSame&& <Grid
           container
           gap={5}
           justifyContent={"space-between"}
           spacing={3}
-          columns={12.6}
+          columns={12.8}
         >
           <Grid
             item
@@ -225,8 +201,10 @@ const Billingaddress = (params) => {
           >
             <TextField
               required
-              id="firstName"
-              name="firstName"
+              onChange={formik.handleChange}
+              value={formik.values.bfname}
+              id="bfname"
+              name="bfname"
               label="First name"
               size="small"
               fullWidth
@@ -235,8 +213,10 @@ const Billingaddress = (params) => {
             />
             <TextField
               required
-              id="emailaddress"
-              name="emailaddress"
+              onChange={formik.handleChange}
+              value={formik.values.bemail}
+              id="bemail"
+              name="bemail"
               label="Email Address"
               placeholder="info@mail.com"
               size="small"
@@ -246,8 +226,10 @@ const Billingaddress = (params) => {
             />
             <TextField
               required
-              id="company"
-              name="company"
+              onChange={formik.handleChange}
+              value={formik.values.bcompany}
+              id="bcompany"
+              name="bcompany"
               label="Company"
               size="small"
               fullWidth
@@ -256,8 +238,10 @@ const Billingaddress = (params) => {
             />
             <TextField
               required
-              id="address1"
-              name="address1"
+              onChange={formik.handleChange}
+              value={formik.values.baddress1}
+              id="baddress1"
+              name="baddress1"
               label="Address 1"
               size="small"
               fullWidth
@@ -265,30 +249,16 @@ const Billingaddress = (params) => {
               variant="outlined"
             />
             <Autocomplete
-              id="country-select-autocomplete"
-              size="small"
+              id="bcountry"
+              fullWidth
+              onChange={formik.handleChange}
+              value={formik.values.bcountry}
               options={countries}
-              autoHighlight
-              getOptionLabel={(option) => option.label}
-              renderOption={(props, option) => (
-                <Box component="li" {...props}>
-                  {option.label}
-                </Box>
-              )}
               renderInput={(params) => (
-                <TextField
-                  {...params}
-                  required
-                  label="Country"
-                  id="countru"
-                  name="country"
-                  inputProps={{
-                    ...params.inputProps,
-                    autoComplete: "new-country", // disable autocomplete and autofill
-                  }}
-                />
+                <TextField {...params} size="small" label="Country" />
               )}
             />
+           
           </Grid>
 
           <Grid
@@ -300,10 +270,12 @@ const Billingaddress = (params) => {
           >
             <TextField
               required
-              id="lastname"
-              name="lastname"
+              id="blname"
+              name="blname"
               label="Last name"
               size="small"
+              onChange={formik.handleChange}
+              value={formik.values.blname}
               fullWidth
               autoComplete="family-name"
               variant="outlined"
@@ -311,8 +283,10 @@ const Billingaddress = (params) => {
             <TextField
               required
               type="text"
-              id="phonenumber"
-              name="phonenumber"
+              onChange={formik.handleChange}
+              value={formik.values.bphone}
+              id="bphone"
+              name="bphone"
               label="Phone Number"
               placeholder="811424511"
               size="small"
@@ -322,8 +296,10 @@ const Billingaddress = (params) => {
             />
             <TextField
               required
-              id="zipcode"
-              name="zipcode"
+              onChange={formik.handleChange}
+              value={formik.values.bzipcode}
+              id="bzipcode"
+              name="bzipcode"
               label="Zip Code"
               size="small"
               fullWidth
@@ -332,8 +308,10 @@ const Billingaddress = (params) => {
             />
             <TextField
               required
-              id="address2"
-              name="address2"
+              id="baddress2"
+              name="baddress2"
+              onChange={formik.handleChange}
+              value={formik.values.baddress2}
               label="Address 2"
               size="small"
               fullWidth
@@ -341,32 +319,19 @@ const Billingaddress = (params) => {
               variant="outlined"
             />
             <Autocomplete
-              id="state-select-autocomplete"
-              size="small"
+              id="bstate"
+              onChange={formik.handleChange}
+              value={formik.values.bstate}
+              fullWidth
               options={countries}
-              autoHighlight
-              getOptionLabel={(option) => option.label}
-              renderOption={(props, option) => (
-                <Box component="li" {...props}>
-                  {option.label}
-                </Box>
-              )}
               renderInput={(params) => (
-                <TextField
-                  {...params}
-                  required
-                  label="State"
-                  id="state"
-                  name="state"
-                  inputProps={{
-                    ...params.inputProps,
-                    autoComplete: "new-state", // disable autocomplete and autofill
-                  }}
-                />
+                <TextField {...params} size="small" label="State" />
               )}
             />
+           
           </Grid>
-        </Grid>
+        </Grid>}
+       
       </Stack>
     </Paper>
   );

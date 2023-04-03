@@ -135,6 +135,7 @@ const SignUp = () => {
                     autoComplete="given-name"
                     name="firstName"
                     required
+                    size="small"
                     fullWidth
                     onChange={handleChange}
                     value={values.firstName}
@@ -146,6 +147,7 @@ const SignUp = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     required
+                    size="small"
                     fullWidth
                     onChange={handleChange}
                     value={values.lastName}
@@ -160,6 +162,7 @@ const SignUp = () => {
                     required
                     onChange={handleChange}
                     value={values.email}
+                    size="small"
                     fullWidth
                     id="email"
                     label="Email Address"
@@ -170,6 +173,7 @@ const SignUp = () => {
                 <Grid item xs={12}>
                   <TextField
                     required
+                    size="small"
                     fullWidth
                     name="password"
                     label="Password"
@@ -183,6 +187,7 @@ const SignUp = () => {
                 <Grid item xs={12}>
                   <TextField
                     required
+                    size="small"
                     fullWidth
                     name="confirmpassword"
                     label="Confirm Password"

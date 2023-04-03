@@ -43,13 +43,13 @@ const payments = [
   { name: "Expiry date", detail: "04/2024" },
 ];
 
-export default function Review() {
+export default function Review({formik}) {
   return (
     <Fragment>
      
       <List disablePadding>
         {products.map((product) => (
-          <PreviewProductcard />
+          <PreviewProductcard key={product.name} />
         ))}
       </List>
       <Grid container spacing={2}>

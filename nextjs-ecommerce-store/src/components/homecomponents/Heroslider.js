@@ -13,8 +13,10 @@ import "swiper/css/pagination";
 import SwiperCode, { Autoplay, Pagination, Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import BigSlider from "../elements/BigSlider";
+import { productData } from "@/assets/mock/product";
 
-const Heroslider = () => {
+const Heroslider = ({ data }) => {
+  console.log(data);
   SwiperCode.use([Autoplay]);
   return (
     <Box p={3} component={"section"}>
@@ -27,9 +29,9 @@ const Heroslider = () => {
           modules={[Navigation, Pagination]}
           className="mySwiper"
         >
-          {Array.from(Array(5).keys()).map((slide) => (
-            <SwiperSlide key={slide}>
-              <BigSlider />
+          {data?.map((slide) => (
+            <SwiperSlide key={slide.id}>
+              <BigSlider data={slide} />
             </SwiperSlide>
           ))}
         </Swiper>
@@ -39,3 +41,12 @@ const Heroslider = () => {
 };
 
 export default Heroslider;
+
+// export const getServerSideProps = async (ctx) => {
+
+//   return {
+//     props: {
+//       data: productData,
+//     },
+//   };
+// };

@@ -15,9 +15,7 @@ import ImageSlider from "./details/ImageSlider";
 const Info = () => {
   // const [selected, setSelected] = useState(true);
   const [selected, setSelected] = useState("");
-  const [type, setType] = useState('');
-
- 
+  const [type, setType] = useState("");
 
   return (
     <Box width={"100%"}>
@@ -27,7 +25,7 @@ const Info = () => {
         alignItems={"center"}
         justifyContent={"space-between"}
         spacing={2}
-        columns={16.5}
+        columns={16.6}
       >
         <Grid
           display={"flex"}
@@ -122,12 +120,7 @@ const Info = () => {
                   orientation="horizontal"
                   sx={{ flexWrap: "wrap", gap: 1 }}
                 >
-                  {[
-                    "Star trek",
-                    "Batman",
-                    "Spider man",
-                    
-                  ].map((name) => {
+                  {["Star trek", "Batman", "Spider man"].map((name) => {
                     const checked = selected === name;
                     return (
                       <Chip
@@ -171,17 +164,13 @@ const Info = () => {
                   gap: "10px",
                 }}
               >
-                 <RadioGroup
+                <RadioGroup
                   name="best-movie"
                   aria-labelledby="best-movie"
                   orientation="horizontal"
                   sx={{ flexWrap: "wrap", gap: 1 }}
                 >
-                  {[
-                    
-                    "Thor",
-                    "The hulk",
-                  ].map((name) => {
+                  {["Thor", "The hulk"].map((name) => {
                     const checked = type === name;
                     return (
                       <Chip
@@ -191,7 +180,7 @@ const Info = () => {
                       >
                         <Radio
                           variant="outlined"
-                          color={checked ?'' : "neutral"}
+                          color={checked ? "" : "neutral"}
                           disableIcon
                           overlay
                           label={name}

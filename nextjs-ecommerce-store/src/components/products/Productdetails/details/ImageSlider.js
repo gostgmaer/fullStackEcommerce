@@ -11,6 +11,7 @@ import "swiper/css/thumbs";
 // import required modules
 import { FreeMode, Navigation, Thumbs } from "swiper";
 import { imagesData } from "@/assets/mock/images";
+import Image from "next/image";
 
 export default function ImageSlider() {
   const [activeThumb, setActiveThumb] = useState();
@@ -29,8 +30,8 @@ export default function ImageSlider() {
       >
         {imagesData.map((item, index) => (
           <SwiperSlide key={index}>
-            <img
-              width={"100%"}
+            <Image
+              width={420}
               height={360}
               style={{ objectFit: "contain" }}
               src={item.attributes.image.large}
