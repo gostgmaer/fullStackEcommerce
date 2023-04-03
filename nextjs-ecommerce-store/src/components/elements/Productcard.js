@@ -23,7 +23,8 @@ import {
   Typography,
 } from "@mui/material";
 
-const Productcard = ({ size }) => {
+const Productcard = ({ product, size }) => {
+  
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
     ...theme.typography.body2,
@@ -34,7 +35,7 @@ const Productcard = ({ size }) => {
 
   return (
     <Grid
-    item
+      item
       xs={size ? size : 3}
       sx={{
         "& .MuiPaper-rounded:hover": {
@@ -43,11 +44,17 @@ const Productcard = ({ size }) => {
       }}
     >
       <Item>
-        <Card >
-          <CardContent className="product-card-content"
-            sx={{ position: "relative", padding: 0, cursor: "pointer",'&:hover>.actionIcons':{
-              display:'flex'
-            } }}
+        <Card>
+          <CardContent
+            className="product?-card-content"
+            sx={{
+              position: "relative",
+              padding: 0,
+              cursor: "pointer",
+              "&:hover>.actionIcons": {
+                display: "flex",
+              },
+            }}
           >
             <Typography
               sx={{
@@ -62,7 +69,7 @@ const Productcard = ({ size }) => {
               gutterBottom
               variant="body2"
             >
-              18% off
+              {product?.discount?(( 100/product?.price)*product?.discount).toFixed(2) : "18"} %
             </Typography>
             <CardMedia
               sx={{ height: "280px !important" }}
@@ -71,10 +78,11 @@ const Productcard = ({ size }) => {
               image="/assets/images/pexels-wendy-wei-14411099.jpg"
             />
 
-            <Box className="actionIcons"
+            <Box
+              className="actionIcons"
               sx={{
                 position: "absolute",
-                
+
                 display: "none",
                 flexDirection: "column",
                 gap: 1,
@@ -91,7 +99,7 @@ const Productcard = ({ size }) => {
             </Box>
             <Box mt={2} px={1}>
               <Typography gutterBottom variant="h6">
-                This is a Product Title
+                {product?.title? product?.title : " This is a product? Title"}
               </Typography>
               <Rating
                 name="half-rating-read"
@@ -104,15 +112,22 @@ const Productcard = ({ size }) => {
           <CardActions sx={{ justifyContent: "space-between" }}>
             <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
               <Typography color={colors.red[500]} variant="body2">
-                $256.00
+                ${" "}
+                {product?.discount
+                  ? product?.price.toFixed(2) - product?.discount.toFixed(2)
+                  : product?.price.toFixed(2)
+                  ? product?.price.toFixed(2)
+                  : "$275.00"}
               </Typography>
-              <Typography
-                sx={{ textDecoration: "line-through" }}
-                color={colors.grey[400]}
-                variant="body2"
-              >
-                $275.00
-              </Typography>
+              {product?.discount && (
+                <Typography
+                  sx={{ textDecoration: "line-through" }}
+                  color={colors.grey[400]}
+                  variant="body2"
+                >
+                  ${product?.price ? product?.price.toFixed(2) : "$275.00"}
+                </Typography>
+              )}
             </Box>
             <IconButton>
               <ShoppingCartOutlined />
