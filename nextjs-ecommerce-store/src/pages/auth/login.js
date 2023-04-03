@@ -54,8 +54,8 @@ function login() {
       console.log(res);
       var decoded = jwt_decode(res.data.access_token);
       console.log(decoded);
-      setUser({user:res,token:decoded });
-      console.log({user:res,token:decoded});
+      setUser({ user: res, token: decoded });
+      console.log({ user: res, token: decoded });
       window.localStorage.setItem("access_token", res.data.access_token);
       console.log(user);
     } catch (error) {
@@ -186,6 +186,7 @@ function login() {
               >
                 <TextField
                   margin="normal"
+                  size="small"
                   required
                   fullWidth
                   id="email"
@@ -199,6 +200,7 @@ function login() {
                 <TextField
                   margin="normal"
                   required
+                  size="small"
                   fullWidth
                   name="password"
                   onChange={handleChange}
@@ -229,28 +231,29 @@ function login() {
                     <Link href="#">{"Don't have an account? Sign Up"}</Link>
                   </Grid>
                 </Grid>
-              
               </Box>
             )}
           </Formik>
         </Box>
-       <Box  sx={{
+        <Box
+          sx={{
             my: 8,
             mx: 4,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-          }}>
-       <Stack direction="row" spacing={2}>
-          <Button variant="outlined" startIcon={<Google />}>
-            Google
-          </Button>
-          <Button variant="outlined" startIcon={<GitHub />}>
-            Github
-          </Button>
-        </Stack>
-       </Box>
-       <Copyright sx={{ mt: 5 }} />
+          }}
+        >
+          <Stack direction="row" spacing={2}>
+            <Button variant="outlined" startIcon={<Google />}>
+              Google
+            </Button>
+            <Button variant="outlined" startIcon={<GitHub />}>
+              Github
+            </Button>
+          </Stack>
+        </Box>
+        <Copyright sx={{ mt: 5 }} />
       </Grid>
     </Grid>
   );

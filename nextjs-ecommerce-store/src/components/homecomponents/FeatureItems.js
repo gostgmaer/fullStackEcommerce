@@ -57,7 +57,7 @@ const FeatureItems = () => {
               borderRadius={5}
               bgcolor={"white"}
               m="0"
-              columns={12.6}
+              columns={12.9}
             >
               {Array.from(Array(4).keys()).map((item) => (
                 <Smallproductcard size={null} issale={false} height={"160px"} key={item} />
@@ -101,7 +101,7 @@ const FeatureItems = () => {
               justifyContent="space-between"
               width="100%"
               m="0"
-              columns={6.1}
+              columns={6.3}
             >
               {Array.from(Array(2).keys()).map((item) => (
                 <Smallproductcard size={null} issale={false} height={"180px"} key={item} />

@@ -1,17 +1,18 @@
-
-import  { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const AppContext = createContext(null);
 
 const AppProvider = ({ children }) => {
-    const [state, setState] = useState(false);
-    const [openModal, setOpenModal] = useState(false);
+  const [state, setState] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+ 
 
+
+
+ 
 
   return (
-    <AppContext.Provider
-      value={{ state, setState,openModal, setOpenModal }}
-    >
+    <AppContext.Provider value={{ state, setState, openModal, setOpenModal }}>
       {children}
     </AppContext.Provider>
   );

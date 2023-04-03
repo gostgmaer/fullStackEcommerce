@@ -39,7 +39,7 @@ const BodySection = () => {
             p="0"
             width="100%"
             m="0"
-            columns={12.6}
+            columns={12.8}
           >
             {Array.from(Array(24).keys()).map((item) => (
               <Productcard key={item} size={4} />

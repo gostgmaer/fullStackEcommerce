@@ -10,19 +10,17 @@ import DiscountSlider from "@/components/homecomponents/DiscountSlider";
 import FeatureItems from "@/components/homecomponents/FeatureItems";
 import Heroslider from "@/components/homecomponents/Heroslider";
 import { productData } from "@/assets/mock/product";
-export default function Home({data}) {
-
-  console.log(data);
+export default function Home({ data }) {
   return (
     <>
       <Head>
         <title>Ecommerce Next App</title>
-        
+
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Heroslider />
+        <Heroslider data={data?.flashDealsData} />
         <FlashDeal />
         <FeatureItems />
         <DiscountSlider />
@@ -38,7 +36,7 @@ export default function Home({data}) {
 export const getServerSideProps = async (ctx) => {
   return {
     props: {
-      data: {result:{productData}},
+      data: productData,
     },
   };
 };

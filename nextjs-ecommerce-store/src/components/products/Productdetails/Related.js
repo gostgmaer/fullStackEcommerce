@@ -6,7 +6,7 @@ import { Box } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 
-const Related = () => {
+const Related = ({data}) => {
 
 
 const router = useRouter()
@@ -15,7 +15,7 @@ console.log(router);
   return (
     <Box sx={{ width: "100%" }} mt={5}>
       <Elementlist title={"Related Products"} icon={<ReplayOutlined />}>
-        {ArrayData.slice(4).map((item) => (
+        {data.mobileList.map((item) => (
           <Productcard key={item} size={undefined} />
         ))}
       </Elementlist>

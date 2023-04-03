@@ -1,3 +1,4 @@
+import { productData } from "@/assets/mock/product";
 import Info from "@/components/products/Productdetails/Info";
 import Related from "@/components/products/Productdetails/Related";
 import ProductDetails from "@/components/products/Productdetails/details";
@@ -7,6 +8,7 @@ import Head from "next/head";
 import React from "react";
 
 const Index = () => {
+  const data = productData.mobileList
   return (
     <>
       <Head>
@@ -19,7 +21,7 @@ const Index = () => {
         <Box p={3} component={"div"}>
           <Info />
           <ProductDetails />
-          <Related />
+          <Related data ={productData} />
         </Box>
       </Layout>
     </>

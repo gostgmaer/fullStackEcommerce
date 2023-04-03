@@ -149,6 +149,7 @@ export default function Signin({ providers, loginError }) {
                     variant="outlined"
                     required
                     tabIndex={2}
+                    size="small"
                     fullWidth
                     placeholder="user@email.com"
                     onChange={handleChange("email")}
@@ -166,6 +167,7 @@ export default function Signin({ providers, loginError }) {
                     </InputLabel>
                     <OutlinedInput
                       tabIndex={2}
+                      size="small"
                       required
                       label="Password"
                       id="outlined-adornment-password"
