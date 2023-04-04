@@ -37,7 +37,7 @@ const Left = () => {
             <Link
               href={"/wishlist"}
               style={{ color: router.pathname === "/wishlist" ? "red" : "" }}
-              className={router.pathname === "/order" ? "red" : ""}
+              className={router.pathname === "/wishlist" ? "red" : ""}
             >
               <Typography>
                 <FavoriteOutlined />{" "}
@@ -45,13 +45,19 @@ const Left = () => {
               </Typography>
               <Typography variant="body2">12</Typography>
             </Link>
-            <Box>
+            <Link
+              href={"/support-ticket"}
+              style={{
+                color: router.pathname === "/support-ticket" ? "red" : "",
+              }}
+              className={router.pathname === "/support-ticket" ? "red" : ""}
+            >
               <Typography>
                 <SupervisedUserCircle />{" "}
                 <Typography variant="body2">Support Ticket</Typography>
               </Typography>
               <Typography variant="body2">1</Typography>
-            </Box>
+            </Link>
           </Stack>
         </Stack>
         <Stack>
@@ -59,26 +65,42 @@ const Left = () => {
             ACCOUNT SETTINGS
           </Typography>
           <Stack gap={1}>
-            <Box>
+            <Link
+              href={"/profile"}
+              style={{
+                color: router.pathname === "/profile" ? "red" : "",
+              }}
+              className={router.pathname === "/profile" ? "red" : ""}
+            >
               <Typography>
                 <Person /> <Typography variant="body2">Profile Info</Typography>
               </Typography>
               <Typography variant="body2">5</Typography>
-            </Box>
-            <Box>
+            </Link>
+            <Link
+              href={"/address"}
+              style={{ color: router.pathname === "/address" ? "red" : "" }}
+              className={router.pathname === "/address" ? "red" : ""}
+            >
               <Typography>
                 <LocationCity />{" "}
                 <Typography variant="body2">Addresses</Typography>
               </Typography>
               <Typography variant="body2">2</Typography>
-            </Box>
-            <Box>
+            </Link>
+            <Link
+              href={"/payment-method"}
+              style={{
+                color: router.pathname === "/payment-method" ? "red" : "",
+              }}
+              className={router.pathname === "/payment-method" ? "red" : ""}
+            >
               <Typography>
                 <CreditCard />{" "}
                 <Typography variant="body2">Payment Methods</Typography>
               </Typography>
               <Typography variant="body2">1</Typography>
-            </Box>
+            </Link>
           </Stack>
         </Stack>
       </Paper>
