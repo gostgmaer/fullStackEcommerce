@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 
 const BigSlider = ({ data }) => {
+  console.log(data);
   return (
     <Grid
       container
@@ -22,7 +23,7 @@ const BigSlider = ({ data }) => {
       columns={12.7}
     >
       <Grid item xs={6} className="images">
-        <Link href={`/product/${data.slug}`}>
+        <Link href={`/product/${data.buttonLik}`}>
           <Image
             src={"/assets/images/nike-black.png"}
             alt=""

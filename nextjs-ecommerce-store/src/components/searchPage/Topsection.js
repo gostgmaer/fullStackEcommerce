@@ -22,10 +22,7 @@ const FilterSection = () => {
     "Newest First",
   ];
 
-  React.useEffect(() => {
-    console.log(personName);
-  }, [personName]);
-
+ 
   return (
     <Box
       p={2}

@@ -48,7 +48,7 @@ function Header(props) {
   const handleScroll = () => {
     const position = window.pageYOffset;
     setScrollPosition(position);
-    console.log(position);
+    // console.log(position);
   };
 
   useEffect(() => {

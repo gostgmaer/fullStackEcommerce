@@ -10,7 +10,7 @@ const Profile = () => {
   useEffect(() => {
     const sequrePage = async () => {
       const session = await getSession();
-      console.log(session);
+    
       if (!session) {
         signIn();
       } else {

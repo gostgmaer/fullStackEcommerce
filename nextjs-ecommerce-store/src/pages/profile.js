@@ -149,9 +149,7 @@ export async function getServerSideProps(context) {
   try {    
     const secret = process.env.NEXTAUTH_SECRET
     const token = await getToken({ req, secret })   
-    setTimeout(() => {
-      console.log('token', token)  
-    }, 1000);
+  
     
   } catch (e) {
     console.log('getServerSideProps Token Error')

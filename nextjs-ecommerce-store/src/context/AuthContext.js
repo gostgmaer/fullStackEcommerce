@@ -35,7 +35,7 @@ const AuthProvider = ({ children }) => {
   };
   useEffect(() => {
     authToken = getToken();
-    console.log(productData);
+    // console.log(productData);
   }, [authToken]);
   useEffect(() => {
     if (authToken) {

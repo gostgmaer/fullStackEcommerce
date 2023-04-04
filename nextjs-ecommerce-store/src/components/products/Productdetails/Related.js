@@ -10,7 +10,7 @@ const Related = ({data}) => {
 
 
 const router = useRouter()
-console.log(router);
+// console.log(router);
 
   return (
     <Box sx={{ width: "100%" }} mt={5}>

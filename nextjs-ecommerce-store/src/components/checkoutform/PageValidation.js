@@ -21,6 +21,7 @@ import { Fragment, useEffect, useState } from "react";
 const steps = ["Address Details", "Payment details", "Review your order"];
 
 export default function PageValidation() {
+  const router = useRouter();
   const [activeStep, setActiveStep] = useState(0);
   const { protectedRouteCheck, pageLoading } = useAuthContext();
 
@@ -52,10 +53,11 @@ export default function PageValidation() {
       expmonth: "",
       expyear: "",
       cvv: "",
+      paypalemail:''
     },
 
     onSubmit: () => {
-      console.log(formik.values);
+      
     },
   });
   function getStepContent(step) {
@@ -74,40 +76,41 @@ export default function PageValidation() {
     protectedRouteCheck();
   }, []);
 
-  const handleNext = () => {
+  const handleNext = (e) => {
+    e.preventDefault()
     setActiveStep(activeStep + 1);
   };
 
-  const handleBack = () => {
+  const handleBack = (e) => {
+    e.preventDefault()
     setActiveStep(activeStep - 1);
+  
   };
-  const route = useRouter();
 
   const handlePayment = (params) => {
-    console.log(formik);
+    console.log(formik.values);
+    router.push("order-confirmation");
   };
 
   return (
     <Box p={3} component={"div"}>
       <Stepper activeStep={activeStep} sx={{ py: 3, px: 20 }}>
-          {steps.map((label) => (
-            <Step key={label}>
-              <StepLabel>{label}</StepLabel>
-            </Step>
-          ))}
-        </Stepper>
+        {steps.map((label) => (
+          <Step key={label}>
+            <StepLabel>{label}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
 
       <Grid container direction={"row"} gap={5}>
         <Stack
           sx={{ my: { xs: 2, md: 2 } }}
           direction={"column"}
           gap={1.5}
-      
-
           flex={2}
         >
-        {/* { <AddressForm formik={formik} />} */}
-        {getStepContent(activeStep)}
+          {/* { <AddressForm formik={formik} />} */}
+          {getStepContent(activeStep)}
           <Stack
             direction={"row"}
             sx={{ justifyContent: "space-between", gap: 5 }}

@@ -22,6 +22,7 @@ import {
   styled,
   Typography,
 } from "@mui/material";
+import Link from "next/link";
 
 const Productcard = ({ product, size }) => {
   const Item = styled(Paper)(({ theme }) => ({
@@ -100,9 +101,9 @@ const Productcard = ({ product, size }) => {
               </IconButton>
             </Box>
             <Box mt={2} px={1}>
-              <Typography gutterBottom fontSize={14} variant="h6">
+              <Link href={`product/${product.slug}`}>
                 {product?.title ? product?.title : " This is a product? Title"}
-              </Typography>
+              </Link>
               <Rating
                 name="half-rating-read"
                 defaultValue={4.5}

@@ -4,6 +4,7 @@ import { leftFillNum } from "@/lib/sevice";
 import {
   Autocomplete,
   Box,
+  Button,
   Checkbox,
   Divider,
   FormControl,
@@ -25,7 +26,7 @@ import { Fragment, useEffect, useState } from "react";
 
 export default function PaymentForm({ formik }) {
   const [value, setValue] = useState("");
-  console.log(formik);
+  // console.log(formik);
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -56,10 +57,10 @@ export default function PaymentForm({ formik }) {
             label="Pay with Paypal"
           />
         </RadioGroup>
-        {value === "paypal" && <PaywithPaypal />}
+        {value === "paypal" && <PaywithPaypal formik={formik} />}
         <Divider sx={{ my: 2 }} />
       </Stack>
-      <Stack>
+      {/* <Stack>
         <RadioGroup value={value} onChange={handleChange}>
           <FormControlLabel
             value="upi"
@@ -69,7 +70,7 @@ export default function PaymentForm({ formik }) {
         </RadioGroup>
         {value === "upi" && <Paywithupi />}
         <Divider sx={{ my: 2 }} />
-      </Stack>
+      </Stack> */}
       <Stack>
         <RadioGroup value={value} onChange={handleChange}>
           <FormControlLabel
@@ -85,11 +86,6 @@ export default function PaymentForm({ formik }) {
 }
 
 const PaywithCard = ({ formik }) => {
-  const { years } = useGlobalContext();
-
-  const data =[...Array(10)].map((a,b)=> new Date().getFullYear() + b)
-  console.log(data);
-
   return (
     <Box>
       <Stack gap={2}>
@@ -134,9 +130,14 @@ const PaywithCard = ({ formik }) => {
             />
           </Grid>
 
-          <Grid item xs={12} sm={12} sx={{ display: "flex",justifyContent:'space-between ' }} gap={2}>
-          
-            <FormControl fullWidth  size="small">
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            sx={{ display: "flex", justifyContent: "space-between " }}
+            gap={2}
+          >
+            <FormControl fullWidth size="small">
               <InputLabel id="select-small-year">Card Expire Year</InputLabel>
               <Select
                 id="expyear"
@@ -146,9 +147,11 @@ const PaywithCard = ({ formik }) => {
                 value={formik.values.expyear}
                 onChange={formik.handleChange}
               >
-                {[...Array(10)].map((a,b)=> new Date().getFullYear() + b).map((item) => (
-                  <MenuItem value={item}>{item}</MenuItem>
-                ))}
+                {[...Array(10)]
+                  .map((a, b) => new Date().getFullYear() + b)
+                  .map((item) => (
+                    <MenuItem value={item}>{item}</MenuItem>
+                  ))}
               </Select>
             </FormControl>
             <FormControl fullWidth size="small">
@@ -163,40 +166,71 @@ const PaywithCard = ({ formik }) => {
               >
                 {Array.from(Array(12).keys()).map((item) => (
                   <MenuItem value={leftFillNum(item + 1, 2)}>
-                  {leftFillNum(item + 1, 2)}
+                    {leftFillNum(item + 1, 2)}
                   </MenuItem>
                 ))}
               </Select>
             </FormControl>
 
-          <Grid item xs={12}>
-          <TextField
-              required
-              id="cvv"
-              onChange={formik.handleChange}
-              value={formik.values.cvv}
-              sx={{ flex: 1 }}
-              type="number"
-              name="cvv"
-              label="CVC/CVV"
-              size="small"
-              fullWidth
-              autoComplete="cvv-number"
-              variant="outlined"
-            />
-          </Grid>
-           
+            <Grid item xs={12}>
+              <TextField
+                required
+                id="cvv"
+                onChange={formik.handleChange}
+                value={formik.values.cvv}
+                sx={{ flex: 1 }}
+                type="number"
+                name="cvv"
+                label="CVC/CVV"
+                size="small"
+                fullWidth
+                autoComplete="cvv-number"
+                variant="outlined"
+              />
+            </Grid>
           </Grid>
           <Grid item xs={12} sm={12} sx={{ display: "flex" }} gap={2}>
-            <FormControlLabel control={<Checkbox />} label="Save this Card" />
+            <Button color="error" sx={{textTransform:'capitalize',px:4}}  size="small" variant="outlined">Submit</Button>
           </Grid>
         </Grid>
       </Stack>
     </Box>
   );
 };
-const PaywithPaypal = (params) => {
-  return <Box>PaywithPaypal</Box>;
+const PaywithPaypal = ({ formik }) => {
+  return (
+    <Box>
+      <Stack gap={2}>
+        <Box></Box>
+        <Grid
+          container
+          gap={2}
+          justifyContent={"space-between"}
+          spacing={1}
+          columns={12.5}
+        >
+          <Grid item xs={8} sm={10} sx={{ display: "flex" }} gap={2}>
+            <TextField
+              required
+              id="paypalemail"
+              name="paypalemail"
+              onChange={formik.handleChange}
+              value={formik.values.paypalemail}
+              label="Paypal Email"
+              size="small"
+              fullWidth
+              autoComplete="paypalemail"
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item xs={4} sm={2} sx={{ display: "flex" }} gap={2}>
+          <Button color="error" variant='outlined' sx={{textTransform:'capitalize',px:4}}  size="small">Submit</Button>
+          </Grid>
+
+        </Grid>
+      </Stack>
+    </Box>
+  );
 };
 const Paywithupi = (params) => {
   return <Box></Box>;

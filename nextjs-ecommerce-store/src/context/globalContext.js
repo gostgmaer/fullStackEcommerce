@@ -16,7 +16,7 @@ const AppProvider = ({ children }) => {
     const data = { year: array };
 
     setYears(data);
-    console.log(years);
+    // console.log(years);
   };
 
   useEffect(() => {

@@ -20,6 +20,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Item } from "./Item";
+import Link from "next/link";
 
 const Smallproductcard = ({ issale, height, size, product }) => {
   // console.log(product);
@@ -50,9 +51,9 @@ const Smallproductcard = ({ issale, height, size, product }) => {
           </Box>
 
           <Box mt={2} px={1}>
-            <Typography fontSize={13} color={colors.grey[900]} variant="h6">
+            <Link href={`product/${product.slug}`}>
               {product?.title ? product?.title : " This is a product? Title"}
-            </Typography>
+            </Link>
           </Box>
         </CardContent>
         <CardActions
