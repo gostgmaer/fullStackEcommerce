@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 
 const BigSlider = ({ data }) => {
+  console.log(data);
   return (
     <Grid
       container
@@ -22,7 +23,7 @@ const BigSlider = ({ data }) => {
       columns={12.7}
     >
       <Grid item xs={6} className="images">
-        <Link href={`/product/${data.slug}`}>
+        <Link href={`/product/${data.buttonLik}`}>
           <Image
             src={"/assets/images/nike-black.png"}
             alt=""
@@ -46,12 +47,9 @@ const BigSlider = ({ data }) => {
         >
           <Typography variant="h3">{data.title}</Typography>
           <Typography>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Placeat
-            harum molestiae nobis laboriosam quia, natus ipsam itaque! Deleniti
-            nisi adipisci odio mollitia accusamus maxime ducimus dicta,
-            accusantium, reiciendis natus exercitationem?
+           {data.description? data.description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis lobortis consequat eu, quam etiam at quis ut convalliss."}
           </Typography>
-          <Button variant="outlined"> Show Now </Button>
+          <Button variant="outlined"> {data?.buttonText?data.buttonText:'Show Now'} </Button>
         </Box>
       </Grid>
     </Grid>

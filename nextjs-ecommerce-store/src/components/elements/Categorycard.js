@@ -1,30 +1,15 @@
 import {
-  Favorite,
-  FavoriteOutlined,
-  RemoveDoneOutlined,
-  RemoveRedEye,
-  RemoveRedEyeOutlined,
-  ShoppingCart,
-  ShoppingCartOutlined,
-} from "@mui/icons-material";
-import {
-  Box,
-  Button,
   Card,
-  CardActions,
   CardContent,
   CardMedia,
-  colors,
   Grid,
-  IconButton,
   Paper,
-  Rating,
   styled,
-  Typography,
 } from "@mui/material";
 import Link from "next/link";
 
-const CatagoryCard = () => {
+const CatagoryCard = ({ category }) => {
+  // console.log(category);
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
     ...theme.typography.body2,
@@ -35,7 +20,7 @@ const CatagoryCard = () => {
 
   return (
     <Grid
-    item
+      item
       xs={2}
       sx={{
         "& .MuiPaper-rounded:hover": {
@@ -67,8 +52,8 @@ const CatagoryCard = () => {
               alt="green iguana"
               image="/assets/images/pexels-wendy-wei-14411099.jpg"
             />
-            <Link  href={'/product/search/547154'}>
-              Product Title
+            <Link href={`/product/search/${category.slug}`}>
+              {category?.name ? category.name : "category Title"}
             </Link>
           </CardContent>
         </Card>

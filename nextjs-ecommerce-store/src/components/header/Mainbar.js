@@ -30,12 +30,14 @@ import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useGlobalContext } from "@/context/globalContext";
+import { productData } from "@/assets/mock/product";
+import MainSearchbar from "./MainSearchbar";
 
 const Mainbar = () => {
- 
+  const { state, setState } = useGlobalContext();
   const [anchorEl, setAnchorEl] = useState(null);
   const [showFIeld, setShowFIeld] = useState(false);
-  const { state, setState } = useGlobalContext();
+
   const route = useRouter();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -47,16 +49,6 @@ const Mainbar = () => {
     }
   };
 
-  const [scrollPosition, setScrollPosition] = useState(null);
-  const handleScroll = () => {
-    const position = window.pageYOffset;
-    setScrollPosition(position);
-    console.log(position);
-  };
-
-  useEffect(() => {
-    handleScroll();
-  }, [scrollPosition]);
   const handleCLosemenu = () => {};
 
   const session = useSession();
@@ -88,79 +80,10 @@ const Mainbar = () => {
           className="leftSide"
         >
           <div className="logo">
-            <Link href={'/'}>LOGO</Link>
+            <Link href={"/"}>LOGO</Link>
           </div>
         </Box>
-
-        <Box
-          component="form"
-          sx={{
-            p: "2px 4px",
-            flex: 2.5,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: "none",
-            m: "0px !important",
-            bgcolor: "transparent",
-            border: "none",
-          }}
-        >
-              <FormControl sx={{ m: 0, width: "100%" }} variant="outlined">
-              <OutlinedInput
-                id="outlined-adornment-search"
-                size="small"
-                placeholder="Searching for...."
-                color="error"
-                sx={{
-                  borderRadius: "1200px",
-                  p: 0,
-                  height: "44px",
-                  overflow: "hidden",
-                 
-                }}
-                endAdornment={
-                  <Fragment>
-                    <Button
-                      variant="contained"
-                      color="inherit"
-                      disableElevation
-                    
-                      
-                      endIcon={<KeyboardArrowDown />}
-                      sx={{
-                        display: "flex",
-                        gap: "5px",
-                        justifyContent: "center",
-                        px: 3,
-                        height: "100%",
-                        textTransform: "capitalize",
-                      
-                        borderRadius: "0 0 0 0",
-                        width: "220px",
-
-                        alignItems: "center",
-                        borderLeft: "1px solid #DAE1E7",
-                      }}
-                    >
-                      All Category
-                    </Button>
-                  </Fragment>
-
-                }
-                startAdornment={
-                  <IconButton sx={{
-                        height: "100%"}}>
-                    <Search />
-                  </IconButton>
-                }
-                aria-describedby="outlined-weight-helper-text"
-                inputProps={{
-                  "aria-label": "weight",
-                }}
-              />
-            </FormControl>
-        </Box>
+        <MainSearchbar />
 
         <Stack
           direction={"row"}
@@ -244,7 +167,7 @@ const Mainbar = () => {
           >
             <MenuItem onClick={handleClose}>
               <Avatar />
-              My account
+              profile
             </MenuItem>
             <Divider />
 
@@ -252,7 +175,7 @@ const Mainbar = () => {
               <ListItemIcon>
                 <Dashboard fontSize="small" />
               </ListItemIcon>
-              dashboard
+              Order
             </MenuItem>
             <MenuItem onClick={handleLogoutHandler}>
               <ListItemIcon>

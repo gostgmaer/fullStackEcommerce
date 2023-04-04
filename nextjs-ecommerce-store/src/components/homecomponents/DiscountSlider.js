@@ -12,7 +12,7 @@ import "swiper/css/navigation";
 import SwiperCode, { Autoplay, Pagination, Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-const DiscountSlider = () => {
+const DiscountSlider = ({data}) => {
   SwiperCode.use([Autoplay]);
   return (
     <Box p={3} component={"section"}>
@@ -62,9 +62,9 @@ const DiscountSlider = () => {
               modules={[Navigation, Pagination]}
               className="mySwiper"
             >
-              {Array.from(Array(12).keys()).map((item) => (
-                <SwiperSlide key={item}>
-                  <Smallproductcard height={null} size={12} issale={true} />
+              {data.map((item) => (
+                <SwiperSlide key={item.id}>
+                  <Smallproductcard product={item} height={null} size={12} issale={true} />
                 </SwiperSlide>
               ))}
             </Swiper>

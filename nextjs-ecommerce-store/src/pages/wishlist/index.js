@@ -1,5 +1,5 @@
 import { useAuthContext } from "@/context/AuthContext";
-import Layout from "@/layout";
+import Userlayout from "@/layout/user";
 import { appBaseUrl } from "@/utils/config";
 import { getSession } from "next-auth/react";
 import { useEffect } from "react";
@@ -12,9 +12,9 @@ const Index = () => {
   }, []);
 
   return (
-    <Layout>
+    <Userlayout>
       <div>wishlist</div>
-    </Layout>
+    </Userlayout>
   );
 };
 

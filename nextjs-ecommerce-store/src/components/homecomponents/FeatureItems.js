@@ -9,7 +9,8 @@ import {
 } from "@mui/icons-material";
 import { Box, Button, colors, Grid, Typography } from "@mui/material";
 import Smallproductcard from "../elements/Smallproductcard";
-const FeatureItems = () => {
+const FeatureItems = ({ data }) => {
+  // console.log(data);
   return (
     <Box p={3} component={"section"}>
       <Box
@@ -59,8 +60,14 @@ const FeatureItems = () => {
               m="0"
               columns={12.9}
             >
-              {Array.from(Array(4).keys()).map((item) => (
-                <Smallproductcard size={null} issale={false} height={"160px"} key={item} />
+              {data.topRatedProducts.map((item) => (
+                <Smallproductcard
+                  product={item}
+                  size={null}
+                  issale={false}
+                  height={"160px"}
+                  key={item.id}
+                />
               ))}
             </Grid>
           </Box>
@@ -103,8 +110,14 @@ const FeatureItems = () => {
               m="0"
               columns={6.3}
             >
-              {Array.from(Array(2).keys()).map((item) => (
-                <Smallproductcard size={null} issale={false} height={"180px"} key={item} />
+              {data.topRatedBrands.map((item) => (
+                <Smallproductcard
+                  product={data}
+                  size={null}
+                  issale={false}
+                  height={"180px"}
+                  key={item.id}
+                />
               ))}
             </Grid>
           </Box>

@@ -1,13 +1,14 @@
 import Layout from "@/layout";
+import Userlayout from "@/layout/user";
 import { appBaseUrl } from "@/utils/config";
 import { getSession } from "next-auth/react";
 
 const Dashboard = ({ data }) => {
   return (
-    <Layout>
+    <Userlayout>
       <div>This is a Dashboard page</div>
       <span>{data}</span>
-    </Layout>
+    </Userlayout>
   );
 };
 

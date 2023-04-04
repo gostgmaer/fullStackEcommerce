@@ -20,8 +20,10 @@ import {
   Typography,
 } from "@mui/material";
 import { Item } from "./Item";
+import Link from "next/link";
 
-const Smallproductcard = ({ issale, height, size }) => {
+const Smallproductcard = ({ issale, height, size, product }) => {
+  // console.log(product);
   return (
     <Grid item xs={size ? size : 3}>
       <Item sx={{ boxShadow: "none", background: "transparent" }}>
@@ -49,9 +51,9 @@ const Smallproductcard = ({ issale, height, size }) => {
           </Box>
 
           <Box mt={2} px={1}>
-            <Typography fontSize={16} color={colors.grey[900]} variant="h6">
-              This is a Product Title
-            </Typography>
+            <Link href={`product/${product.slug}`}>
+              {product?.title ? product?.title : " This is a product? Title"}
+            </Link>
           </Box>
         </CardContent>
         <CardActions
@@ -59,7 +61,12 @@ const Smallproductcard = ({ issale, height, size }) => {
         >
           <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
             <Typography color={colors.red[500]} variant="body2">
-              {issale ? "$256.00" : "$240.00"}
+              $
+              {product?.discount
+                ? (product?.price - product?.discount).toFixed(2)
+                : product?.price
+                ? product?.price
+                : "275.00"}
             </Typography>
             {issale && (
               <Typography
@@ -67,7 +74,7 @@ const Smallproductcard = ({ issale, height, size }) => {
                 color={colors.grey[400]}
                 variant="body2"
               >
-                $275.00
+                ${product?.price ? product?.price : "275.00"}
               </Typography>
             )}
           </Box>

@@ -51,13 +51,13 @@ function login() {
         loginheader,
         {}
       );
-      console.log(res);
+      // console.log(res);
       var decoded = jwt_decode(res.data.access_token);
-      console.log(decoded);
+      // console.log(decoded);
       setUser({ user: res, token: decoded });
-      console.log({ user: res, token: decoded });
+      // console.log({ user: res, token: decoded });
       window.localStorage.setItem("access_token", res.data.access_token);
-      console.log(user);
+      // console.log(user);
     } catch (error) {
       console.log(error);
     }
@@ -122,9 +122,9 @@ function login() {
   //   }
   // };
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+  // useEffect(() => {
+  //   console.log(user);
+  // }, [user]);
 
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>

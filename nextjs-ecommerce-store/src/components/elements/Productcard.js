@@ -22,9 +22,9 @@ import {
   styled,
   Typography,
 } from "@mui/material";
+import Link from "next/link";
 
 const Productcard = ({ product, size }) => {
-  
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
     ...theme.typography.body2,
@@ -69,7 +69,10 @@ const Productcard = ({ product, size }) => {
               gutterBottom
               variant="body2"
             >
-              {product?.discount?(( 100/product?.price)*product?.discount).toFixed(2) : "18"} %
+              {product?.discount
+                ? ((100 / product?.price) * product?.discount).toFixed(2)
+                : "18"}{" "}
+              %
             </Typography>
             <CardMedia
               sx={{ height: "280px !important" }}
@@ -98,9 +101,9 @@ const Productcard = ({ product, size }) => {
               </IconButton>
             </Box>
             <Box mt={2} px={1}>
-              <Typography gutterBottom variant="h6">
-                {product?.title? product?.title : " This is a product? Title"}
-              </Typography>
+              <Link href={`product/${product.slug}`}>
+                {product?.title ? product?.title : " This is a product? Title"}
+              </Link>
               <Rating
                 name="half-rating-read"
                 defaultValue={4.5}

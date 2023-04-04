@@ -16,7 +16,7 @@ import BigSlider from "../elements/BigSlider";
 import { productData } from "@/assets/mock/product";
 
 const Heroslider = ({ data }) => {
-  console.log(data);
+
   SwiperCode.use([Autoplay]);
   return (
     <Box p={3} component={"section"}>

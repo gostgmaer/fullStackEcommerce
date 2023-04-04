@@ -2,7 +2,7 @@ import { ArrowRight, NewReleases } from "@mui/icons-material";
 import { Box, Button, colors, Grid, Typography } from "@mui/material";
 import Smallproductcard from "../elements/Smallproductcard";
 
-const NewArrival = () => {
+const NewArrival = ({data}) => {
   return (
     <Box p={3} component={"section"}>
       <Box sx={{ width: "100%", mt: 0 }}>
@@ -42,8 +42,8 @@ const NewArrival = () => {
             m="0"
             columns={19}
           >
-            {Array.from(Array(6).keys()).map((item) => (
-              <Smallproductcard  height={null} issale={false} size={null} key={item} />
+            {data.map((item) => (
+              <Smallproductcard  height={null} issale={false} size={null} key={item.id} product={item} />
             ))}
           </Grid>
         </Box>
