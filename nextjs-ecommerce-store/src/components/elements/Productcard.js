@@ -101,7 +101,7 @@ const Productcard = ({ product, size }) => {
               </IconButton>
             </Box>
             <Box mt={2} px={1}>
-              <Link href={`product/${product.slug}`}>
+              <Link href={`/product/${product.slug}`}>
                 {product?.title ? product?.title : " This is a product? Title"}
               </Link>
               <Rating
