@@ -16,7 +16,7 @@ console.log(router);
     <Box sx={{ width: "100%" }} mt={5}>
       <Elementlist title={"Related Products"} icon={<ReplayOutlined />}>
         {data.mobileList.map((item) => (
-          <Productcard key={item.title} product={item} size={undefined} />
+          <Productcard key={item.id} product={item} size={undefined} />
         ))}
       </Elementlist>
     </Box>

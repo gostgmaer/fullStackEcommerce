@@ -13,7 +13,7 @@ import SwiperCode, { Autoplay, Pagination, Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Productcard from "../elements/Productcard";
 
-const FlashDeal = () => {
+const FlashDeal = ({data}) => {
   SwiperCode.use([Autoplay]);
   return (
     <Box p={3} component={"section"}>
@@ -61,9 +61,9 @@ const FlashDeal = () => {
               modules={[Navigation]}
               className="mySwiper"
             >
-              {Array.from(Array(12).keys()).map((item) => (
-                <SwiperSlide key={item}>
-                  <Productcard size={12} />
+              {data.map((item) => (
+                <SwiperSlide key={item.id}>
+                  <Productcard product={item} size={12} />
                 </SwiperSlide>
               ))}
             </Swiper>

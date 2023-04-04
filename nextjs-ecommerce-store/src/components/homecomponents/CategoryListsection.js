@@ -4,15 +4,15 @@ import { Fragment } from "react";
 import CatagoryCard from "../elements/Categorycard";
 import Elementlist from "../elements/Elementlist";
 
-const CategoryList = () => {
+const CategoryList = ({ data }) => {
   return (
-   <Fragment>
-    <Elementlist title={'Categories'} icon=<Category/>>
-         {Array.from(Array(12).keys()).map((item) => (
-              <CatagoryCard key={item} />
-            ))}
+    <Fragment>
+      <Elementlist title={"Categories"} icon=<Category />>
+        {data.map((item) => (
+          <CatagoryCard category={item} key={item.id} />
+        ))}
       </Elementlist>
-   </Fragment>
+    </Fragment>
   );
 };
 

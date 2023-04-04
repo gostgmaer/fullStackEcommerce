@@ -20,14 +20,14 @@ export default function Home({ data }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Heroslider data={data?.flashDealsData} />
-        <FlashDeal />
-        <FeatureItems />
-        <DiscountSlider />
-        <NewArrival />
-        <CategoryList />
-        <ModeForYou />
-        <Footersection />
+        <Heroslider data={data?.mainCarouselData} />
+        <FlashDeal data={data?.flashDealsData} />
+        <FeatureItems data={data} />
+        <DiscountSlider  data={data?.bigDiscountList} />
+        <NewArrival data={data?.newArrivalsList} />
+        <CategoryList data={data.bottomCategories} />
+        <ModeForYou data={data.moreItems} />
+        <Footersection data={data.serviceList} />
       </Layout>
     </>
   );

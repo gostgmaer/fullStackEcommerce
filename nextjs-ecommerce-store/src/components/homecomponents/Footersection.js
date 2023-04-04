@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {
   ArrowForward,
   ArrowRight,
@@ -18,7 +19,7 @@ import {
 import { Fragment } from "react";
 import { Item } from "../elements/Item";
 
-const Footersection = () => {
+const Footersection = ({ data }) => {
   return (
     <Box p={3} component={"section"}>
       <Box sx={{ width: "100%", mt: 2 }}>
@@ -32,8 +33,8 @@ const Footersection = () => {
             m="0"
             columns={12.6}
           >
-            {Array.from(Array(4).keys()).map((item) => (
-              <FeatureItemscard key={item} />
+            {data.map((item) => (
+              <FeatureItemscard data={item} key={item.id} />
             ))}
           </Grid>
         </Box>
@@ -44,10 +45,10 @@ const Footersection = () => {
 
 export default Footersection;
 
-export const FeatureItemscard = () => {
+export const FeatureItemscard = ({ data }) => {
   return (
     <Grid
-    item
+      item
       xs={3}
       sx={{
         "& .MuiPaper-rounded:hover": {
@@ -66,16 +67,16 @@ export const FeatureItemscard = () => {
               height: "280px",
               justifyContent: "center",
               flexDirection: "column",
-              gap:3,
-              textAlign:'center',
+              gap: 3,
+              textAlign: "center",
               pb: "0 !important",
               cursor: "pointer",
             }}
           >
-            <Shield style={{width:'50px',height:'50px'}} />
+            <Shield style={{ width: "50px", height: "50px" }} />
 
             <Typography gutterBottom variant="h5">
-              Worldwide Delivery
+              {data?.title ? data.title : " Worldwide Delivery"}
             </Typography>
             <Typography gutterBottom variant="body1">
               We offer competitive prices on our 100 million plus product any

@@ -1,4 +1,6 @@
 import { countries } from "@/assets/mock/staticData";
+import { useGlobalContext } from "@/context/globalContext";
+import { leftFillNum } from "@/lib/sevice";
 import {
   Autocomplete,
   Box,
@@ -8,16 +10,20 @@ import {
   FormControlLabel,
   FormLabel,
   Grid,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
   Paper,
   Radio,
   RadioGroup,
+  Select,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
-export default function PaymentForm({formik}) {
+export default function PaymentForm({ formik }) {
   const [value, setValue] = useState("");
   console.log(formik);
 
@@ -33,37 +39,56 @@ export default function PaymentForm({formik}) {
     >
       <Stack>
         <RadioGroup value={value} onChange={handleChange}>
-          <FormControlLabel value="card" control={<Radio />} label="Pay with credit card" />
+          <FormControlLabel
+            value="card"
+            control={<Radio />}
+            label="Pay with credit card"
+          />
         </RadioGroup>
         {value === "card" && <PaywithCard formik={formik} />}
-        <Divider sx={{my:2}} />
+        <Divider sx={{ my: 2 }} />
       </Stack>
       <Stack>
         <RadioGroup value={value} onChange={handleChange}>
-          <FormControlLabel value="paypal" control={<Radio />} label="Pay with Paypal" />
+          <FormControlLabel
+            value="paypal"
+            control={<Radio />}
+            label="Pay with Paypal"
+          />
         </RadioGroup>
         {value === "paypal" && <PaywithPaypal />}
-        <Divider sx={{my:2}} />
+        <Divider sx={{ my: 2 }} />
       </Stack>
       <Stack>
         <RadioGroup value={value} onChange={handleChange}>
-          <FormControlLabel value="upi" control={<Radio />} label="Pay with UPI" />
+          <FormControlLabel
+            value="upi"
+            control={<Radio />}
+            label="Pay with UPI"
+          />
         </RadioGroup>
         {value === "upi" && <Paywithupi />}
-        <Divider sx={{my:2}} />
+        <Divider sx={{ my: 2 }} />
       </Stack>
       <Stack>
         <RadioGroup value={value} onChange={handleChange}>
-          <FormControlLabel value="cod" control={<Radio />} label="Cash on Delivary" />
+          <FormControlLabel
+            value="cod"
+            control={<Radio />}
+            label="Cash on Delivary"
+          />
         </RadioGroup>
         {value === "cod" && <PayCoD />}
-   
       </Stack>
     </Paper>
   );
 }
 
-const PaywithCard = ({formik}) => {
+const PaywithCard = ({ formik }) => {
+  const { years } = useGlobalContext();
+
+  const data =[...Array(10)].map((a,b)=> new Date().getFullYear() + b)
+  console.log(data);
 
   return (
     <Box>
@@ -109,54 +134,43 @@ const PaywithCard = ({formik}) => {
             />
           </Grid>
 
-          <Grid item xs={12} sm={12} sx={{ display: "flex" }} gap={2}>
-            <Autocomplete
-              id="expmonth"
-              size="small"
-              sx={{ flex: 1 }}
-              onChange={formik.handleChange}
-              value={formik.values.expmonth}
-              options={countries}
-              autoHighlight
-              getOptionLabel={(option) => option.label}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  required
-                  label="Card Expire Month"
-                  id="expiremonth"
-                  name="expiremonth"
-                  inputProps={{
-                    ...params.inputProps,
-                    autoComplete: "new-expiremonth", // disable autocomplete and autofill
-                  }}
-                />
-              )}
-            />
-            <Autocomplete
-              id="expyear"
-              size="small"
-              sx={{ flex: 1 }}
-              options={countries}
-              onChange={formik.handleChange}
-              value={formik.values.expyear}
-              autoHighlight
-              getOptionLabel={(option) => option.label}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  required
-                  label="Card Expire Year"
-                  id="expireyear"
-                  name="expireyear"
-                  inputProps={{
-                    ...params.inputProps,
-                    autoComplete: "new-expireyear", // disable autocomplete and autofill
-                  }}
-                />
-              )}
-            />
-            <TextField
+          <Grid item xs={12} sm={12} sx={{ display: "flex",justifyContent:'space-between ' }} gap={2}>
+          
+            <FormControl fullWidth  size="small">
+              <InputLabel id="select-small-year">Card Expire Year</InputLabel>
+              <Select
+                id="expyear"
+                name="expyear"
+                label="Card Expire Year"
+                labelId="select-small-year"
+                value={formik.values.expyear}
+                onChange={formik.handleChange}
+              >
+                {[...Array(10)].map((a,b)=> new Date().getFullYear() + b).map((item) => (
+                  <MenuItem value={item}>{item}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <FormControl fullWidth size="small">
+              <InputLabel id="select-small-year">Card Expire Month</InputLabel>
+              <Select
+                id="expmonth"
+                name="expmonth"
+                label="Card Expire Month"
+                labelId="select-small-month"
+                value={formik.values.expmonth}
+                onChange={formik.handleChange}
+              >
+                {Array.from(Array(12).keys()).map((item) => (
+                  <MenuItem value={leftFillNum(item + 1, 2)}>
+                  {leftFillNum(item + 1, 2)}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+          <Grid item xs={12}>
+          <TextField
               required
               id="cvv"
               onChange={formik.handleChange}
@@ -170,6 +184,8 @@ const PaywithCard = ({formik}) => {
               autoComplete="cvv-number"
               variant="outlined"
             />
+          </Grid>
+           
           </Grid>
           <Grid item xs={12} sm={12} sx={{ display: "flex" }} gap={2}>
             <FormControlLabel control={<Checkbox />} label="Save this Card" />
