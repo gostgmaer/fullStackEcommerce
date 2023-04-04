@@ -1,9 +1,10 @@
+import Left from "@/components/Usermodule/Left";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { Box } from "@mui/material";
 import React, { Fragment } from "react";
 
-const UserDashboard = ({ children }) => {
+const Userlayout = ({ children }) => {
   return (
     <Fragment>
       <Header />
@@ -12,7 +13,8 @@ const UserDashboard = ({ children }) => {
         minHeight={"100vh"}
         sx={{ width: "100%", display: "flex", flexDirection: "column", gap: 1 }}
       >
-        {children}
+        <Left />
+      <Box>  {children}</Box>
       </Box>
 
       <Footer />
@@ -20,4 +22,4 @@ const UserDashboard = ({ children }) => {
   );
 };
 
-export default UserDashboard;
+export default Userlayout;

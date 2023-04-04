@@ -167,7 +167,7 @@ const Mainbar = () => {
           >
             <MenuItem onClick={handleClose}>
               <Avatar />
-              My account
+              profile
             </MenuItem>
             <Divider />
 
@@ -175,7 +175,7 @@ const Mainbar = () => {
               <ListItemIcon>
                 <Dashboard fontSize="small" />
               </ListItemIcon>
-              dashboard
+              Order
             </MenuItem>
             <MenuItem onClick={handleLogoutHandler}>
               <ListItemIcon>

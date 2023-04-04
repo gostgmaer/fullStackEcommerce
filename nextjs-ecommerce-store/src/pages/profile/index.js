@@ -1,4 +1,5 @@
 import Layout from "@/layout";
+import Userlayout from "@/layout/user";
 import { Backdrop, Button, CircularProgress } from "@mui/material";
 import { getSession, signIn } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -22,9 +23,9 @@ const Profile = () => {
 
  
   return (
-    <Layout>
+    <Userlayout>
       <div>This is My Account Ellements</div>
-    </Layout>
+    </Userlayout>
   );
 };
 
