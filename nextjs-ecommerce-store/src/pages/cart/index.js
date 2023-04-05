@@ -22,8 +22,11 @@ import {
 import Head from "next/head";
 import Image from "next/image";
 import { Fragment } from "react";
+import { useSelector } from "react-redux";
 
 const CartPage = () => {
+  const cartData = useSelector((state) => state["data"].cartItems);
+  const wishlist = useSelector((state) => state["data"].wishList);
   return (
     <Fragment>
       <Head>
@@ -39,13 +42,19 @@ const CartPage = () => {
             Your Cart
           </Typography>
           <Grid container direction={"row"} gap={5}>
-            <Stack direction={"column"} gap={1.5} flex={2}>
-              {ArrayData.slice(0, 4).map((item) => (
-                <CartItem key={item} />
-              ))}
-            </Stack>
-            <Stack direction={"column"} gap={1}  flex={0.9}>
-            <CartRight/>
+            {cartData.length !== 0 ? (
+              <Stack direction={"column"} gap={1.5} flex={2}>
+                {cartData?.map((item) => (
+                  <CartItem key={item} data={item} />
+                ))}
+              </Stack>
+            ) : (
+              <Stack direction={"column"} gap={1.5} flex={2}>
+                Cart is empty
+              </Stack>
+            )}
+            <Stack direction={"column"} gap={1} flex={0.9}>
+              <CartRight />
             </Stack>
           </Grid>
         </Box>
@@ -55,5 +64,3 @@ const CartPage = () => {
 };
 
 export default CartPage;
-
-

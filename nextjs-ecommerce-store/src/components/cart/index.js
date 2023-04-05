@@ -17,10 +17,15 @@ import { Fragment } from "react";
 import Image from "next/image";
 import { ArrayData } from "@/assets/mock/product";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, removefromCart, updateCart } from "@/store/cartReducer";
+import { sumWithInitial } from "@/lib/sevice";
 
 export default function SwipeableTemporaryDrawer() {
   const { state, setState } = useGlobalContext();
-
+  const cartItem = useSelector((state) => state["data"].cartItems);
+  const wishlist = useSelector((state) => state["data"].wishList);
+  console.log(sumWithInitial(cartItem));
   const router = useRouter();
 
   const toggleDrawer = (open) => (event) => {
@@ -40,7 +45,16 @@ export default function SwipeableTemporaryDrawer() {
       }}
       role="figure"
     >
-      <Box>
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+
+          flexDirection: "column",
+        }}
+      >
         <Grid
           container
           sx={{
@@ -50,23 +64,26 @@ export default function SwipeableTemporaryDrawer() {
             p: "10px 15px",
           }}
         >
-          <Typography variant="h6">Your Cart</Typography>
+          <Typography variant="h6">
+            Your Cart {cartItem?.length !== 0 && `(${cartItem.length})`}
+          </Typography>
           <IconButton color="error" onClick={toggleDrawer(false)}>
             <HighlightOffOutlined />
           </IconButton>
         </Grid>
         <Divider />
-        <Grid>
-          {ArrayData.slice(0, 4).map((item) => (
-            <Fragment key={item}>
-              {" "}
-              <HascartData />
-              <Divider></Divider>
-            </Fragment>
-          ))}
-        </Grid>
+        {cartItem.length !== 0 && (
+          <Grid>
+            {cartItem?.map((item) => (
+              <Fragment key={item.id}>
+                <HascartData data={item} />
+                <Divider></Divider>
+              </Fragment>
+            ))}
+          </Grid>
+        )}
       </Box>
-
+      {cartItem.length === 0 && <NoCartData></NoCartData>}
       <Box
         sx={{
           display: "flex",
@@ -87,7 +104,7 @@ export default function SwipeableTemporaryDrawer() {
           color="error"
           fullWidth
         >
-          Checkout ($54541.00)
+          Checkout {cartItem.length !== 0 && `($ ${sumWithInitial(cartItem).toFixed(2)})`}
         </Button>
         <Button
           variant="outlined"
@@ -128,7 +145,9 @@ const NoCartData = (params) => {
   );
 };
 
-const HascartData = (params) => {
+const HascartData = ({ data }) => {
+  const dispatch = useDispatch();
+
   return (
     <Box
       sx={{
@@ -140,32 +159,61 @@ const HascartData = (params) => {
     >
       <Stack
         gap={1}
+        flex={0.5}
         alignItems={"center"}
         sx={{
           "&>.MuiButton-outlined": {
-          p:0,
+            p: 0,
             minHeight: 0,
             minWidth: 0,
             textTransform: "capitalize",
           },
         }}
       >
-        <Button variant="outlined" color="error">
+        <IconButton
+          sx={{ border: "1px solid", padding: "0" }}
+          color="error"
+          onClick={() =>
+            dispatch(
+              addToCart({
+                id: data?.id,
+                color: data.color,
+                title: data?.title,
+                desc: data.desc,
+                image: data.image,
+                quantity: data.quantity,
+                subtotal: data["subtotal"],
+                price: data["price"],
+              })
+            )
+          }
+        >
           <Add></Add>
-        </Button>
+        </IconButton>
         <Typography
           variant="body2"
           sx={{ mx: 0.5, fontWeight: 600, fontSize: 15 }}
         >
-          2
+          {data.quantity}
         </Typography>
-        <Button variant="outlined" color="error">
+        <IconButton
+          sx={{ border: "1px solid", padding: "0" }}
+          color="error"
+          onClick={() =>
+            dispatch(
+              updateCart({
+                id: data?.id,
+              })
+            )
+          }
+        >
           <Remove></Remove>
-        </Button>
+        </IconButton>
       </Stack>
       <Box
         display={"flex"}
         gap={2}
+        flex={2.5}
         justifyContent={"space-between"}
         alignItems={"center"}
       >
@@ -176,15 +224,18 @@ const HascartData = (params) => {
           src="/assets/images/nike-black.png"
         ></Image>
         <Stack gap={0} alignItems={"flex-start"}>
-          <Typography>This is a Product Title</Typography>
-          <Typography fontSize={14} variant="body1">
-            <span>$201.00</span> x<span>1</span>
+          <Typography fontSize={14} >{data.title}</Typography>
+          <Typography fontSize={13} variant="body1">
+            <span>$ {data.price.toFixed(2)}</span> x <span>{data.quantity}</span>
           </Typography>
-          <Typography fontSize={14}>
-            <span>$ 210.00</span>
+          <Typography fontSize={13}>
+            <span>$ {data.subtotal.toFixed(2)}</span>
           </Typography>
         </Stack>
-        <IconButton color="error">
+        <IconButton
+          onClick={() => dispatch(removefromCart(data.id))}
+          color="error"
+        >
           <Close></Close>
         </IconButton>
       </Box>

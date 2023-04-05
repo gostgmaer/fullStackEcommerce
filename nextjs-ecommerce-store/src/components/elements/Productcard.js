@@ -23,15 +23,21 @@ import {
   Typography,
 } from "@mui/material";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { Item } from "./Item";
+import { addToCart } from "@/store/cartReducer";
 
 const Productcard = ({ product, size }) => {
-  const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-    ...theme.typography.body2,
-    padding: theme.spacing(0),
+  // const Item = styled(Paper)(({ theme }) => ({
+  //   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  //   ...theme.typography.body2,
+  //   padding: theme.spacing(0),
 
-    color: theme.palette.text.secondary,
-  }));
+  //   color: theme.palette.text.secondary,
+  // }));
+  // const cartItem = useSelector((state) => state["data"].cartItems);
+  // const wishlist = useSelector((state) => state["data"].wishList);
+  const dispatch = useDispatch();
 
   return (
     <Grid
@@ -132,7 +138,26 @@ const Productcard = ({ product, size }) => {
                 </Typography>
               )}
             </Box>
-            <IconButton>
+            <IconButton
+              onClick={() =>
+                dispatch(
+                  addToCart({
+                    id: product?.id,
+                    color: product.color,
+                    title: product?.title,
+                    desc: product.shortdesc,
+                    image: product.thumbnail,
+                    quantity: 1,
+                    subtotal: product["discount"]
+                      ? product["price"] - product["discount"]
+                      : product["price"],
+                    price: product["discount"]
+                      ? product["price"] - product["discount"]
+                      : product["price"],
+                  })
+                )
+              }
+            >
               <ShoppingCartOutlined />
             </IconButton>
           </CardActions>

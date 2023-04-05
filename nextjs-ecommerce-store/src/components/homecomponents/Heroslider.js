@@ -29,8 +29,8 @@ const Heroslider = ({ data }) => {
           modules={[Navigation, Pagination]}
           className="mySwiper"
         >
-          {data?.map((slide) => (
-            <SwiperSlide key={slide.id}>
+          {data?.map((slide,index) => (
+            <SwiperSlide key={index}>
               <BigSlider data={slide} />
             </SwiperSlide>
           ))}
