@@ -10,7 +10,11 @@ import DiscountSlider from "@/components/homecomponents/DiscountSlider";
 import FeatureItems from "@/components/homecomponents/FeatureItems";
 import Heroslider from "@/components/homecomponents/Heroslider";
 import { productData } from "@/assets/mock/product";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 export default function Home({ data }) {
+
+
   return (
     <>
       <Head>

@@ -12,37 +12,30 @@ import {
   Badge,
   Box,
   Divider,
-  FormControl,
-  FormHelperText,
   IconButton,
-  OutlinedInput,
-  InputAdornment,
   ListItemIcon,
   Menu,
   MenuItem,
   Stack,
-  TextField,
-  colors,
-  Button,
 } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useGlobalContext } from "@/context/globalContext";
-import { productData } from "@/assets/mock/product";
 import MainSearchbar from "./MainSearchbar";
-
+import { useDispatch, useSelector } from "react-redux";
 const Mainbar = () => {
   const { state, setState } = useGlobalContext();
   const [anchorEl, setAnchorEl] = useState(null);
-  const [showFIeld, setShowFIeld] = useState(false);
-
+  const cartItem = useSelector((state) => state["data"].cartItems);
+  const wishlist = useSelector((state) => state["data"].wishList);
   const route = useRouter();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = (e) => {
     if (e.target.innerText) {
       route.push(`/${e.target.innerText.replace(" ", "-").toLowerCase()}`);
@@ -100,13 +93,23 @@ const Mainbar = () => {
               </Badge>
             </IconButton>
           </div>
-          <div className="cart">
-            <IconButton onClick={() => setState(true)} color="warning">
-              <Badge badgeContent={4} color="info">
-                <LocalMall />
-              </Badge>
-            </IconButton>
-          </div>
+          {cartItem?.length !== 0 ? (
+            <div className="cart">
+              <IconButton onClick={() => setState(true)} color="warning">
+                <Badge badgeContent={cartItem?.length} color="info">
+                  <LocalMall />
+                </Badge>
+              </IconButton>
+            </div>
+          ) : (
+            <div className="cart">
+              <IconButton onClick={() => setState(true)} color="warning">
+                <Badge badgeContent="0" color="info">
+                  <LocalMall />
+                </Badge>
+              </IconButton>
+            </div>
+          )}
 
           {session?.data ? (
             <IconButton
