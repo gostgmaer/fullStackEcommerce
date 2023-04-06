@@ -244,7 +244,7 @@ const Info = () => {
               Stock is avaliable
             </Typography>
           </Box>
-          <Button color="error" variant="contained" endIcon={<ShoppingBag />}>
+          <Button color="error" variant="contained" endIcon={<ShoppingBag />} >
             Add to Cart
           </Button>
           <Typography

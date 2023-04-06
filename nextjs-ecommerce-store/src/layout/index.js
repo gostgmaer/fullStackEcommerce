@@ -1,4 +1,4 @@
-import SwipeableTemporaryDrawer from "@/components/cart";
+
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { Box, LinearProgress } from "@mui/material";
@@ -20,7 +20,7 @@ const Layout = ({ children }) => {
       </Box>
 
       <Footer />
-      <SwipeableTemporaryDrawer />
+     
      
     </Fragment>
   );
