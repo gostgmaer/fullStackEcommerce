@@ -63,14 +63,8 @@ const Left = () => {
           text: "My Addresses",
           icon: <LocationCity />,
           count: 3,
-        },
-        {
-          id: 3,
-          url: "/payment-method",
-          text: "Payment method",
-          icon: <CreditCard />,
-          count: "1",
-        },
+        }
+        
       ],
     },
   ];

@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removefromCart, updateCart } from "@/store/cartReducer";
 import { sumWithInitial } from "@/lib/sevice";
 
-export default function SwipeableTemporaryDrawer() {
+export default function CartBlock() {
   const { state, setState } = useGlobalContext();
   const cartItem = useSelector((state) => state["data"].cartItems);
   const wishlist = useSelector((state) => state["data"].wishList);

@@ -1,3 +1,4 @@
+import CartBlock from "@/components/cart";
 import { AuthProvider } from "@/context/AuthContext";
 import { AppProvider } from "@/context/globalContext";
 import { store } from "@/store";
@@ -24,6 +25,7 @@ export default function App({ Component, pageProps }) {
             />
 
             <Component {...pageProps}></Component>
+            <CartBlock/>
           </AuthProvider>
         </AppProvider>
       </Provider>

@@ -25,9 +25,14 @@ import {
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { Item } from "./Item";
-import { addToCart } from "@/store/cartReducer";
+import {
+  addToCart,
+  addToWishlist,
+  removeFromWishlist,
+} from "@/store/cartReducer";
 
 const Productcard = ({ product, size }) => {
+  console.log(product);
   // const Item = styled(Paper)(({ theme }) => ({
   //   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   //   ...theme.typography.body2,
@@ -35,9 +40,12 @@ const Productcard = ({ product, size }) => {
 
   //   color: theme.palette.text.secondary,
   // }));
-  // const cartItem = useSelector((state) => state["data"].cartItems);
-  // const wishlist = useSelector((state) => state["data"].wishList);
+  const cartItem = useSelector((state) => state["data"].cartItems);
+  const wishlist = useSelector((state) => state["data"].wishList);
   const dispatch = useDispatch();
+
+  const filterWishlist = wishlist?.find((item) => item.id === product.id);
+  console.log(filterWishlist);
 
   return (
     <Grid
@@ -62,24 +70,26 @@ const Productcard = ({ product, size }) => {
               },
             }}
           >
-            <Typography
-              sx={{
-                position: "absolute",
-                top: 10,
-                left: 10,
-                p: "5px 10px",
-                bgcolor: colors.red[400],
-                borderRadius: 5,
-                color: colors.grey[100],
-              }}
-              gutterBottom
-              variant="body2"
-            >
-              {product?.discount
-                ? ((100 / product?.price) * product?.discount).toFixed(2)
-                : "18"}{" "}
-              %
-            </Typography>
+            {product?.discount && (
+              <Typography
+                sx={{
+                  position: "absolute",
+                  top: 10,
+                  left: 10,
+                  p: "5px 10px",
+                  bgcolor: colors.red[400],
+                  borderRadius: 5,
+                  color: colors.grey[100],
+                }}
+                gutterBottom
+                variant="body2"
+              >
+                {product?.discount
+                  ? ((100 / product?.price) * product?.discount).toFixed(2)
+                  : "18"}{" "}
+                %
+              </Typography>
+            )}
             <CardMedia
               sx={{ height: "280px !important" }}
               component="img"
@@ -102,11 +112,42 @@ const Productcard = ({ product, size }) => {
               <IconButton>
                 <RemoveRedEyeOutlined />
               </IconButton>
-              <IconButton>
-                <FavoriteOutlined />
-              </IconButton>
+              {wishlist?.find((item) => item.id === product.id)?.id !==
+              product.id ? (
+                <IconButton
+                  onClick={() =>
+                    dispatch(
+                      addToWishlist({
+                        id: product.id,
+                        slug: product.slug,
+                        title: product.title,
+                        brand: product.brand,
+                        price: product.price,
+                        size: product.size,
+                        colors: product.colors,
+                        discount: product.discount,
+                        thumbnail: product.thumbnail,
+                        images: product.images,
+                        categories: product.categories,
+                        status: product.status,
+                        reviews: product.reviews,
+                        for: product.for,
+                      })
+                    )
+                  }
+                >
+                  <FavoriteOutlined />
+                </IconButton>
+              ) : (
+                <IconButton
+                  color="error"
+                  onClick={() => dispatch(removeFromWishlist(product.id))}
+                >
+                  <FavoriteOutlined />
+                </IconButton>
+              )}
             </Box>
-            <Box mt={2} px={1}>
+            <Box mt={2} px={1} display={'flex'} flexDirection={'column'} gap={1}>
               <Link href={`/product/${product.slug}`}>
                 {product?.title ? product?.title : " This is a product? Title"}
               </Link>

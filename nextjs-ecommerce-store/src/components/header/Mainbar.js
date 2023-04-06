@@ -88,7 +88,7 @@ const Mainbar = () => {
         >
           <div className="favirite">
             <IconButton color="error" onClick={() => route.push("/wishlist")}>
-              <Badge badgeContent={8} color="info">
+              <Badge badgeContent={wishlist?.length!==0?wishlist?.length:0} color="info">
                 <Favorite />
               </Badge>
             </IconButton>
