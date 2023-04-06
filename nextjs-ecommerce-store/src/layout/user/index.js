@@ -18,10 +18,10 @@ const Userlayout = ({ children }) => {
             justifyContent={"space-between"}
             columns={16}
           >
-            <Grid item xs={4.5}>
+            <Grid item xs={4}>
               <Left />
             </Grid>
-            <Grid item xs={11.1}>
+            <Grid item xs={11.5}>
               {children}
             </Grid>
           </Grid>

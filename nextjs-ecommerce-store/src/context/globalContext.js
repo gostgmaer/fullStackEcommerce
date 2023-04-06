@@ -9,7 +9,6 @@ const AppProvider = ({ children }) => {
   const cartItem = useSelector((state) => state["data"].cartItems);
   const wishlist = useSelector((state) => state["data"].wishList);
 
-
   useEffect(() => {
     console.log(cartItem);
     // window.localStorage.setItem('cartItem',cartItem)

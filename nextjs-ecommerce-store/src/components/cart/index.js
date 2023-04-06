@@ -83,41 +83,45 @@ export default function SwipeableTemporaryDrawer() {
           </Grid>
         )}
       </Box>
-      {cartItem.length === 0 && <NoCartData></NoCartData>}
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          width: "100%",
-          p: "10px 15px",
-          flexDirection: "column",
-          gap: "10px",
-        }}
-      >
-        <Button
-          onClick={() => {
-            router.push("/checkout");
-            setState(false);
+      {cartItem.length === 0 ? (
+        <NoCartData></NoCartData>
+      ) : (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            width: "100%",
+            p: "10px 15px",
+            flexDirection: "column",
+            gap: "10px",
           }}
-          variant="contained"
-          color="error"
-          fullWidth
         >
-          Checkout {cartItem.length !== 0 && `($ ${sumWithInitial(cartItem).toFixed(2)})`}
-        </Button>
-        <Button
-          variant="outlined"
-          onClick={() => {
-            router.push("/cart");
-            setState(false);
-          }}
-          color="error"
-          fullWidth
-        >
-          View Cart
-        </Button>
-      </Box>
+          <Button
+            onClick={() => {
+              router.push("/checkout");
+              setState(false);
+            }}
+            variant="contained"
+            color="error"
+            fullWidth
+          >
+            Checkout {`($ ${sumWithInitial(cartItem).toFixed(2)})`}
+          </Button>
+          <Button
+            variant="outlined"
+            onClick={() => {
+              router.push("/cart");
+              setState(false);
+            }}
+            color="error"
+            fullWidth
+          >
+            View Cart
+          </Button>
+        </Box>
+      )}
+      {}
     </Box>
   );
 
@@ -139,7 +143,7 @@ export default function SwipeableTemporaryDrawer() {
 
 const NoCartData = (params) => {
   return (
-    <Stack spacing={2}>
+    <Stack spacing={2} mb={35}>
       <Typography>No cart has been Add</Typography>
     </Stack>
   );
@@ -224,9 +228,10 @@ const HascartData = ({ data }) => {
           src="/assets/images/nike-black.png"
         ></Image>
         <Stack gap={0} alignItems={"flex-start"}>
-          <Typography fontSize={14} >{data.title}</Typography>
+          <Typography fontSize={14}>{data.title}</Typography>
           <Typography fontSize={13} variant="body1">
-            <span>$ {data.price.toFixed(2)}</span> x <span>{data.quantity}</span>
+            <span>$ {data.price.toFixed(2)}</span> x{" "}
+            <span>{data.quantity}</span>
           </Typography>
           <Typography fontSize={13}>
             <span>$ {data.subtotal.toFixed(2)}</span>

@@ -10,9 +10,9 @@ import NextNProgress from "nextjs-progressbar";
 import { Provider } from "react-redux";
 export default function App({ Component, pageProps }) {
   return (
-    <Provider store={store}>
-      <AppProvider>
-        <SessionProvider session={pageProps.session}>
+    <SessionProvider session={pageProps.session}>
+      <Provider store={store}>
+        <AppProvider>
           <AuthProvider>
             <CssBaseline />
             <NextNProgress
@@ -25,8 +25,8 @@ export default function App({ Component, pageProps }) {
 
             <Component {...pageProps}></Component>
           </AuthProvider>
-        </SessionProvider>
-      </AppProvider>
-    </Provider>
+        </AppProvider>
+      </Provider>
+    </SessionProvider>
   );
 }
