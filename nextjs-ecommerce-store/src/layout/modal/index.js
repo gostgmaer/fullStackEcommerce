@@ -22,7 +22,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function MuiModal({ heading,Content}) {
+export default function MuiModal({ heading, Content }) {
   const { openModal, setOpenModal } = useGlobalContext();
 
   return (

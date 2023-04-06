@@ -1,7 +1,4 @@
 import { PhotoCamera } from "@mui/icons-material";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import {
   Box,
   Button,
@@ -30,7 +27,7 @@ const ProfileupdateForm = () => {
         <Stack
           direction="row"
           sx={{
-            alignItems: "center",
+            alignItems: "flex-start",
             justifyContent: "space-between",
             m: "0!important",
             gap: 2.5,
@@ -56,7 +53,7 @@ const ProfileupdateForm = () => {
         <Grid
           container
           sx={{
-            alignItems: "center",
+            alignItems: "flex-start",
             justifyContent: "space-between",
             m: "0!important",
             gap: 2.5,

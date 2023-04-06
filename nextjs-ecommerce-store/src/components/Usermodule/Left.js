@@ -100,6 +100,7 @@ const Left = () => {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
+                    fontSize:'16px',
                     padding: "0 1rem",
                     gap: 1,
                     color: router.pathname === link.url ? "red " : "",
@@ -109,13 +110,13 @@ const Left = () => {
                   <Stack
                     direction={"row"}
                     alignItems={"center"}
-                    fontSize={"14"}
+                    fontSize={"16px"}
                     gap={0.5}
                   >
                     {link.icon}
-                    <Typography variant="caption">{link.text}</Typography>
+                    <Typography   fontSize={"16px"} variant="caption">{link.text}</Typography>
                   </Stack>
-                  <Typography variant="caption">{link.count}</Typography>
+                  <Typography   fontSize={"16px"} variant="caption">{link.count}</Typography>
                 </Link>
               ))}
             </Stack>
