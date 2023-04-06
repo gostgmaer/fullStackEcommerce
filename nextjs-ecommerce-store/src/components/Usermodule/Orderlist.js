@@ -24,16 +24,17 @@ const Orderlist = () => {
           justifyContent: "space-between",
           gap: 2,
           width: "100%",
-          fontSize: 2,
+          fontSize: '16px !important',
           py: 1,
           px: 4,
+          
         }}
       >
-        <Typography variant="body2">Order #</Typography>
-        <Typography variant="body2">Status</Typography>
-        <Typography variant="body2">Date purchased</Typography>
-        <Typography variant="body2">Total</Typography>
-        <Typography variant="body2">Action</Typography>
+        <Typography variant="body2" sx={{ flex: 1 }}>Order #</Typography>
+        <Typography variant="body2" sx={{ flex: 1 }}>Status</Typography>
+        <Typography variant="body2" sx={{ flex: 1 }}>Date purchased</Typography>
+        <Typography variant="body2" sx={{ flex: 0.5 }}>Total</Typography>
+        <Typography variant="body2" sx={{ flex: 0.5,textAlign:"end" }}>Action</Typography>
       </Stack>
       <Stack
         sx={{
@@ -58,7 +59,7 @@ const Orderlist = () => {
 export default Orderlist;
 
 const OrderItem = ({ data }) => {
-  const router = useRouter()
+  const router = useRouter();
   console.log(data);
 
   const StyleColor = {
@@ -88,22 +89,44 @@ const OrderItem = ({ data }) => {
         justifyContent: "space-between",
         gap: 2,
         width: "100%",
-        
+
         py: 1,
         px: 2,
       }}
     >
-      <Typography variant="body2">{data.id.substr(0, 8)}</Typography>
-      <Typography variant="body2" style={StyleColor}>
-        {data.status}
+      <Typography variant="body2" sx={{ flex: 1 }}>
+        {data.id.substr(0, 8)}
       </Typography>
-      <Typography variant="body2">
+      <Stack
+        sx={{ flex: 1 }}
+        direction={"row"}
+        justifyContent={"flex-start"}
+        gap={1}
+      >
+        <Typography variant="body2" style={StyleColor}>
+          {data.status}
+        </Typography>
+      </Stack>
+
+      <Typography variant="body2" sx={{ flex: 1 }}>
         {moment(data.createdAt).format("MMM Do, YYYY")}
       </Typography>
-      <Typography variant="body2">${data.totalPrice.toFixed(2)}</Typography>
-      <IconButton onClick={()=>router.push(`/order/${data.id}`)}>
-        <ArrowForward />
-      </IconButton>
+      <Typography sx={{ flex: 0.5 }} variant="body2">
+        ${data.totalPrice.toFixed(2)}
+      </Typography>
+      <Stack
+        sx={{ flex: 0.5 }}
+        direction={"row"}
+        justifyContent={"flex-end"}
+        gap={0.5}
+      >
+        <IconButton
+         
+          onClick={() => router.push(`/order/${data.id}`)}
+        >
+          <ArrowForward />
+        </IconButton>
+      </Stack>
     </Paper>
   );
 };

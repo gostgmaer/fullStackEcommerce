@@ -1,6 +1,4 @@
 import { orders } from "@/assets/mock/moreData";
-import App from "@/components/Usermodule/OrderSteaper";
-import Orderlist from "@/components/Usermodule/Orderlist";
 import Userlayout from "@/layout/user";
 import { appBaseUrl } from "@/utils/config";
 import {
@@ -15,6 +13,7 @@ import {
   Avatar,
   Box,
   Button,
+  Divider,
   IconButton,
   Paper,
   Stack,
@@ -65,6 +64,7 @@ const OrderDetails = () => {
 
         <OrderSteaper />
         <OrderedItems />
+        <AddressAndSummery />
       </Box>
     </Userlayout>
   );
@@ -174,12 +174,15 @@ const OrderedItems = (params) => {
             alt="product"
             src="/assets/images/nike-black.png"
           ></Image>
-          <Typography fontSize={"14px"}  sx={{
-            display: "flex",
-            gap: 0,
-            alignItems: "center",
-            flexDirection: "column",
-          }}>
+          <Typography
+            fontSize={"14px"}
+            sx={{
+              display: "flex",
+              gap: 0,
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
             Budi 2017
             <span style={{ fontWeight: 500 }}>$226.00 x 4</span>
           </Typography>
@@ -220,7 +223,7 @@ const OrderedItems = (params) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          gap:2,
+          gap: 2,
           p: "10px 10px",
         }}
       >
@@ -233,5 +236,86 @@ const OrderedItems = (params) => {
 };
 
 const AddressAndSummery = (params) => {
-  
-}
+  return (
+    <Box
+      display={"flex"}
+      gap={5}
+      width={"100%"}
+      alignItems={"flex-start"}
+      justifyContent={"space-between"}
+    >
+      <Paper
+        variant="outlined"
+        sx={{
+          p: "1.5rem",
+          flex: 1,
+          gap: 1,
+          boxShadow: "rgba(3, 0, 71, 0.09) 0px 1px 3px",
+        }}
+      >
+        <Typography variant="body1">Shipping Address</Typography>
+        <Stack
+          direction={"row"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
+          sx={{ mt: 2, mb: 1 }}
+        >
+          <Typography variant="body2">
+            Kelly Williams 777 Brockton Avenue, Abington MA 2351
+          </Typography>
+        </Stack>
+      </Paper>
+      <Paper
+        variant="outlined"
+        sx={{
+          p: "1.5rem",
+          gap: 2,
+          flex: 1.2,
+          boxShadow: "rgba(3, 0, 71, 0.09) 0px 1px 3px",
+        }}
+      >
+        <Typography variant="subtitle1">Total Summary</Typography>
+        <Box>
+          <Stack
+            direction={"row"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
+            sx={{ mt: 2, mb: 1 }}
+          >
+            <Typography variant="body2">Subtotal:</Typography>
+            <Typography variant="body2">$1,090.00</Typography>
+          </Stack>
+          <Stack
+            direction={"row"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
+            sx={{ mt: 2, mb: 1 }}
+          >
+            <Typography variant="body2">Shipping:</Typography>
+            <Typography variant="body2">$90.00</Typography>
+          </Stack>
+
+          <Stack
+            direction={"row"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
+            sx={{ mt: 2, mb: 1 }}
+          >
+            <Typography variant="body2">Discount:</Typography>
+            <Typography variant="body2">$14.99</Typography>
+          </Stack>
+        </Box>
+        <Divider sx={{ my: 2 }}></Divider>
+        <Stack
+          direction={"row"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
+          sx={{ mt: 2, mb: 1 }}
+        >
+          <Typography variant="body2">Total:</Typography>
+          <Typography variant="body2">$14.99</Typography>
+        </Stack>
+      </Paper>
+    </Box>
+  );
+};

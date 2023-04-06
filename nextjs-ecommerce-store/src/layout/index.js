@@ -21,6 +21,7 @@ const Layout = ({ children }) => {
 
       <Footer />
       <SwipeableTemporaryDrawer />
+     
     </Fragment>
   );
 };

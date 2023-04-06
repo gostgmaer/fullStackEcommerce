@@ -86,7 +86,8 @@ const Left = () => {
             <Typography
               textTransform={"capitalize"}
               padding="0 1rem"
-              mb={1}
+              mb={2}
+              mt={1}
               variant="h6"
             >
               {item.text}

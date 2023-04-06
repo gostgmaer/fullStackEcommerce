@@ -16,6 +16,7 @@ import { getSession, signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 const UpdateProfile = () => {
+  const route = useRouter()
   return (
     <Userlayout>
       <Box
@@ -25,6 +26,11 @@ const UpdateProfile = () => {
         gap={3}
       >
         <Box width={"100%"}>
+        <Stack
+          direction={"row"}
+          width={"100%"}
+          justifyContent={"space-between"}
+        >
           <Typography
             fontWeight={600}
             fontSize={20}
@@ -33,6 +39,15 @@ const UpdateProfile = () => {
             <Person color="error" />
             <span>My profile</span>
           </Typography>
+          <Button
+            variant="outlined"
+            sx={{ textTransform: "capitalize" }}
+            color="error"
+            onClick={()=>route.push(`/profile`)}
+          >
+            Back to Profile
+          </Button>
+        </Stack>
         </Box>
         <ProfileupdateForm></ProfileupdateForm>
       </Box>

@@ -32,7 +32,7 @@ export default function MuiModal({ heading, Content }) {
         // className={class?class:''}
         open={openModal}
       >
-        <DialogTitle sx={{ m: 0, p: 2 }}>
+        <DialogTitle sx={{ m: 0, p: 2,display:'flex',justifyContent:'space-between',alignItems:'center' }}>
           {heading ? heading.title : "Modal Heading for web"}
           <IconButton aria-label="close" onClick={() => setOpenModal(false)}>
             {heading ? heading.icon : <Close />}
@@ -42,7 +42,7 @@ export default function MuiModal({ heading, Content }) {
         <DialogContent dividers>
           {Content ? Content : "No Data Found Found"}
         </DialogContent>
-        <DialogActions></DialogActions>
+        {/* <DialogActions></DialogActions> */}
       </BootstrapDialog>
     </div>
   );
