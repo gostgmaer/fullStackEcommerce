@@ -8,9 +8,13 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 
 const ProfileupdateForm = () => {
+const [image, setImage] = useState(null);
+console.log(image);
+
+
   return (
     <Box width={"100%"}>
       <Paper
@@ -37,16 +41,12 @@ const ProfileupdateForm = () => {
           alignItems="center"
           spacing={2}
         >
-          <Button variant="contained" sx={{textTransform:'capitalize'}} color="error" component="label">
-            Upload
-            <input hidden accept="image/*" multiple type="file" />
-          </Button>
           <IconButton
             color="primary"
             aria-label="upload picture"
             component="label"
           >
-            <input hidden accept="image/*" type="file" />
+            <input onChange={(e)=>setImage(e)} hidden accept="image/*" type="file" />
             <PhotoCamera />
           </IconButton>
         </Stack>
@@ -118,16 +118,24 @@ const ProfileupdateForm = () => {
             />
           </Grid>
         </Grid>
-        <Stack sx={{
+        <Stack
+          sx={{
             alignItems: "center",
             justifyContent: "space-between",
             m: "0!important",
             gap: 2.5,
             width: "100%",
             p: 1,
-           
-          }} direction="row" alignItems="center" spacing={2}>
-          <Button variant="contained" sx={{textTransform:'capitalize'}} color="error">
+          }}
+          direction="row"
+          alignItems="center"
+          spacing={2}
+        >
+          <Button
+            variant="contained"
+            sx={{ textTransform: "capitalize" }}
+            color="error"
+          >
             Save Changes
           </Button>
         </Stack>

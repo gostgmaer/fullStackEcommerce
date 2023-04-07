@@ -75,7 +75,7 @@ const MainSearchbar = () => {
                 px: 3,
                 height: "100%",
                 textTransform: "capitalize",
-
+                background: "#F6F9FC",
                 borderRadius: "0 0 0 0",
                 width: "220px",
 
@@ -102,48 +102,45 @@ const MainSearchbar = () => {
         />
       </FormControl>
       <Menu
-      
         id="long-menu"
-        transformOrigin={{ horizontal: "right", vertical: "top" }}
-            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+        transformOrigin={{ horizontal: "left", vertical: "top" }}
+        anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
         MenuListProps={{
           "aria-labelledby": "long-button",
         }}
         PaperProps={{
           elevation: 0,
-          sx:{width:'165px',backgroundColor:'#0b0b0b25'}
-        //   sx: {
-        //     overflow: "visible",
-        //     filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-        //     mt: 1.5,
-        //     "& .MuiAvatar-root": {
-        //       width: 32,
-        //       height: 32,
-        //       ml: -0.5,
-        //       mr: 1,
-        //     },
-        //     "&:before": {
-        //       content: '""',
-        //       display: "block",
-        //       position: "absolute",
-        //       top: 0,
-        //       right: 14,
-        //       width: 10,
-        //       height: 10,
-        //       bgcolor: "background.paper",
-        //       transform: "translateY(-50%) rotate(45deg)",
-        //       zIndex: 0,
-        //     },
-        //   },
+          sx: { width: "140px", backgroundColor: "#fff" },
+          //   sx: {
+          //     overflow: "visible",
+          //     filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+          //     mt: 1.5,
+          //     "& .MuiAvatar-root": {
+          //       width: 32,
+          //       height: 32,
+          //       ml: -0.5,
+          //       mr: 1,
+          //     },
+          //     "&:before": {
+          //       content: '""',
+          //       display: "block",
+          //       position: "absolute",
+          //       top: 0,
+          //       right: 14,
+          //       width: 10,
+          //       height: 10,
+          //       bgcolor: "background.paper",
+          //       transform: "translateY(-50%) rotate(45deg)",
+          //       zIndex: 0,
+          //     },
+          //   },
         }}
         anchorEl={anchorElcate}
         open={opencate}
         onClose={() => setAnchorElcate(null)}
         onClick={() => setAnchorElcate(null)}
       >
-     { value && <MenuItem  onClick={handleMenuClick}>
-            All Category
-          </MenuItem>}
+        {value && <MenuItem onClick={handleMenuClick}>All Category</MenuItem>}
         {productData.bottomCategories.map((option) => (
           <MenuItem key={option.id} onClick={handleMenuClick}>
             {option.name}

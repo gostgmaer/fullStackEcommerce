@@ -1,11 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "categories",
+  "collectionName": "brands",
   "info": {
-    "singularName": "category",
-    "pluralName": "categories",
-    "displayName": "category",
-    "description": ""
+    "singularName": "brand",
+    "pluralName": "brands",
+    "displayName": "brand"
   },
   "options": {
     "draftAndPublish": true
@@ -15,11 +14,11 @@
     "name": {
       "type": "string"
     },
-    "icon": {
+    "type": {
       "type": "string"
     },
-    "description": {
-      "type": "richtext"
+    "slug": {
+      "type": "string"
     },
     "image": {
       "allowedTypes": [
@@ -30,10 +29,6 @@
       ],
       "type": "media",
       "multiple": false
-    },
-    "slug": {
-      "type": "uid",
-      "targetField": "name"
     }
   }
 }

@@ -29,16 +29,6 @@ export const cartSlice = createSlice({
       }
     },
     updateCart: (state, action) => {
-      // state.cartItems = state.cartItems.map((p) => {
-      //     if (p.id === action.payload.id) {
-      //         if (action.payload.key === "quantity") {
-      //             p.attributes.price =
-      //                 p.oneQuantityPrice * action.payload.val;
-      //         }
-      //         return { ...p, [action.payload.key]: action.payload.val };
-      //     }
-      //     return p;
-      // });
       const item = state.cartItems.find(
         (item) => item.id === action.payload.id
       );
