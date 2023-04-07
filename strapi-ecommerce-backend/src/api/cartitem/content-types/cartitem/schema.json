@@ -4,7 +4,8 @@
   "info": {
     "singularName": "cartitem",
     "pluralName": "cartitems",
-    "displayName": "cartitem"
+    "displayName": "cartitem",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -14,15 +15,12 @@
     "title": {
       "type": "string"
     },
-    "sub_title": {
-      "type": "text"
-    },
-    "uuid": {
+    "desc": {
       "type": "string"
     },
     "image": {
       "type": "media",
-      "multiple": true,
+      "multiple": false,
       "required": false,
       "allowedTypes": [
         "images",
@@ -43,6 +41,18 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "cartitems"
+    },
+    "subtotal": {
+      "type": "decimal"
+    },
+    "quantity": {
+      "type": "integer"
+    },
+    "colors": {
+      "type": "json"
+    },
+    "size": {
+      "type": "string"
     }
   }
 }

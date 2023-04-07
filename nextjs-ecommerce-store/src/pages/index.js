@@ -12,8 +12,20 @@ import Heroslider from "@/components/homecomponents/Heroslider";
 import { productData } from "@/assets/mock/product";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-export default function Home({ data }) {
+import MuiModal from "@/layout/modal";
+import Landingmodal from "@/components/landingmodal/Landingmodal";
+import { useGlobalContext } from "@/context/globalContext";
 
+export default function Home({ data }) {
+  const { openModal, setOpenModal } = useGlobalContext();
+  const ShowModal = (params) => {
+    setOpenModal(true);
+  };
+  useEffect(() => {
+    setTimeout(() => {
+      ShowModal();
+    }, 2000);
+  }, []);
 
   return (
     <>
@@ -27,11 +39,12 @@ export default function Home({ data }) {
         <Heroslider data={data?.mainCarouselData} />
         <FlashDeal data={data?.flashDealsData} />
         <FeatureItems data={data} />
-        <DiscountSlider  data={data?.bigDiscountList} />
+        <DiscountSlider data={data?.bigDiscountList} />
         <NewArrival data={data?.newArrivalsList} />
         <CategoryList data={data.bottomCategories} />
         <ModeForYou data={data.moreItems} />
         <Footersection data={data.serviceList} />
+        <MuiModal heading={undefined} Content={<Landingmodal />}></MuiModal>
       </Layout>
     </>
   );

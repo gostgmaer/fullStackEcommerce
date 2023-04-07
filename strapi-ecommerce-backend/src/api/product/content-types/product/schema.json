@@ -15,16 +15,13 @@
     "title": {
       "type": "string"
     },
-    "sub_title": {
-      "type": "text"
-    },
     "description": {
       "type": "richtext"
     },
-    "uuid": {
+    "brand": {
       "type": "string"
     },
-    "image": {
+    "images": {
       "type": "media",
       "multiple": true,
       "required": false,
@@ -45,7 +42,7 @@
     "price": {
       "type": "decimal"
     },
-    "saleprice": {
+    "discount": {
       "type": "decimal",
       "default": 20.5
     },
@@ -54,6 +51,32 @@
     },
     "istrending": {
       "type": "boolean"
+    },
+    "thumbnail": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "status": {
+      "type": "boolean"
+    },
+    "colors": {
+      "type": "string"
+    },
+    "color": {
+      "type": "json"
+    },
+    "review": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::review.review",
+      "mappedBy": "product"
     }
   }
 }

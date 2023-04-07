@@ -3,18 +3,21 @@ import { Box } from "@mui/material";
 import React from "react";
 import Reviews from "./children/Reviews";
 import Reviewform from "./children/Reviewform";
+import { useSession } from "next-auth/react";
 
 const Review = () => {
+  const session = useSession();
+  console.log(session);
   return (
     <Box
       className="elements"
       sx={{
         width: "100%",
-       
+
         p: 5,
       }}
     >
-       <Reviewform/>
+      {session.status==='authenticated' && <Reviewform />}
       <Box
         display={"flex"}
         alignItems={"flex-start"}
@@ -26,7 +29,6 @@ const Review = () => {
           <Reviews key={item} />
         ))}
       </Box>
-   
     </Box>
   );
 };

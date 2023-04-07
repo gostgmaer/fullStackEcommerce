@@ -10,7 +10,7 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-import { Close } from "@mui/icons-material";
+import { Close, Padding } from "@mui/icons-material";
 import { useGlobalContext } from "@/context/globalContext";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -24,26 +24,45 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 export default function MuiModal({ heading, Content }) {
   const { openModal, setOpenModal } = useGlobalContext();
+  const [fullWidth, setFullWidth] = React.useState(true);
+  const [maxWidth, setMaxWidth] = React.useState(false);
 
   return (
-    <div>
-      <BootstrapDialog
-        aria-labelledby="customized-dialog-title"
-        // className={class?class:''}
-        open={openModal}
-      >
-        <DialogTitle sx={{ m: 0, p: 2,display:'flex',justifyContent:'space-between',alignItems:'center' }}>
+    <Dialog
+      aria-labelledby="customized-dialog-title"
+      fullWidth={true}
+      maxWidth={false}
+      // className={class?class:''}
+      open={openModal}
+    >
+      {heading && (
+        <DialogTitle
+          sx={{
+            m: 0,
+            p: 2,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           {heading ? heading.title : "Modal Heading for web"}
           <IconButton aria-label="close" onClick={() => setOpenModal(false)}>
             {heading ? heading.icon : <Close />}
           </IconButton>
         </DialogTitle>
+      )}
 
-        <DialogContent dividers>
-          {Content ? Content : "No Data Found Found"}
-        </DialogContent>
-        {/* <DialogActions></DialogActions> */}
-      </BootstrapDialog>
-    </div>
+      <DialogContent
+        sx={{
+          width: "100%",
+          height:'auto',
+          padding:'0 !important'
+        }}
+        dividers
+      >
+        {Content ? Content : "No Data Found Found"}
+      </DialogContent>
+      {/* <DialogActions></DialogActions> */}
+    </Dialog>
   );
 }

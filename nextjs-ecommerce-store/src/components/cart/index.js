@@ -180,11 +180,14 @@ const HascartData = ({ data }) => {
           onClick={() =>
             dispatch(
               addToCart({
-                id: data?.id,
-                color: data.color,
-                title: data?.title,
-                desc: data.desc,
-                image: data.image,
+                id: data.id,
+                slug: data.slug,
+                title: data.title,
+                brand: data.brand,
+                size: data.size,
+                colors: data.colors,
+                desc: data.description,
+                image: data.thumbnail,
                 quantity: data.quantity,
                 subtotal: data["subtotal"],
                 price: data["price"],

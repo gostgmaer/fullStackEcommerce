@@ -1,4 +1,3 @@
-
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { Box, LinearProgress } from "@mui/material";
@@ -13,15 +12,13 @@ const Layout = ({ children }) => {
       <Box
         className="elements"
         minHeight={"100vh"}
-        sx={{ width: "100%", display: "flex", flexDirection: "column", gap: 1 }}
+        
+        sx={{ width: "100%", display: "flex", flexDirection: "column", gap: 0 }}
       >
-    
         {children}
       </Box>
 
       <Footer />
-     
-     
     </Fragment>
   );
 };

@@ -44,9 +44,6 @@ const Productcard = ({ product, size }) => {
   const wishlist = useSelector((state) => state["data"].wishList);
   const dispatch = useDispatch();
 
-  const filterWishlist = wishlist?.find((item) => item.id === product.id);
-  console.log(filterWishlist);
-
   return (
     <Grid
       item
@@ -131,7 +128,7 @@ const Productcard = ({ product, size }) => {
                         categories: product.categories,
                         status: product.status,
                         reviews: product.reviews,
-                        for: product.for,
+                        for: product?.for,
                       })
                     )
                   }
@@ -147,7 +144,13 @@ const Productcard = ({ product, size }) => {
                 </IconButton>
               )}
             </Box>
-            <Box mt={2} px={1} display={'flex'} flexDirection={'column'} gap={1}>
+            <Box
+              mt={2}
+              px={1}
+              display={"flex"}
+              flexDirection={"column"}
+              gap={1}
+            >
               <Link href={`/product/${product.slug}`}>
                 {product?.title ? product?.title : " This is a product? Title"}
               </Link>
@@ -183,10 +186,13 @@ const Productcard = ({ product, size }) => {
               onClick={() =>
                 dispatch(
                   addToCart({
-                    id: product?.id,
-                    color: product.color,
-                    title: product?.title,
-                    desc: product.shortdesc,
+                    id: product.id,
+                    slug: product.slug,
+                    title: product.title,
+                    brand: product.brand,
+                    size: product.size,
+                    colors: product.colors,
+                    desc: product.description,
                     image: product.thumbnail,
                     quantity: 1,
                     subtotal: product["discount"]

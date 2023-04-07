@@ -12,7 +12,7 @@ import Smallproductcard from "../elements/Smallproductcard";
 const FeatureItems = ({ data }) => {
   // console.log(data);
   return (
-    <Box p={3} component={"section"}>
+    <Box p={3} py={1} component={"section"}>
       <Box
         sx={{
           width: "100%",

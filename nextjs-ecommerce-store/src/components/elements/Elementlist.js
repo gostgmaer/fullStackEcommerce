@@ -10,7 +10,7 @@ import { Fragment } from "react";
 import Productcard from "./Productcard";
 const Elementlist = ({ children, title, icon }) => {
   return (
-    <Box  p={3} component={"section"}>
+    <Box  p={3} py={1} component={"section"}>
       <Box sx={{ width: "100%", mt: 0 }}>
         <Box
           sx={{

@@ -15,7 +15,7 @@ const router = useRouter()
   return (
     <Box sx={{ width: "100%" }} mt={5}>
       <Elementlist title={"Related Products"} icon={<ReplayOutlined />}>
-        {data.mobileList.map((item) => (
+        {data.mobileList.slice(0,8).map((item) => (
           <Productcard key={item.id} product={item} size={undefined} />
         ))}
       </Elementlist>
