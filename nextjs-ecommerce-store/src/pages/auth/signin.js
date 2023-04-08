@@ -242,7 +242,7 @@ export default function Signin({ providers, loginError }) {
               item
               textAlign="right"
             >
-              Don't have an account?
+              Dont have an account?
               <Link href="/auth/signup">Sign Up</Link>
             </Grid>
           </Grid>

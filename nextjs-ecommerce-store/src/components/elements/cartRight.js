@@ -11,6 +11,7 @@ import {
   Typography,
   colors,
 } from "@mui/material";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 
@@ -93,11 +94,12 @@ const CartRight = () => {
               sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
               {...props}
             >
-              <img
+              <Image
+              height={20}
                 loading="lazy"
-                width="20"
+                width={20}
                 src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
-                srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
+               
                 alt=""
               />
               {option.label} ({option.code}) +{option.phone}

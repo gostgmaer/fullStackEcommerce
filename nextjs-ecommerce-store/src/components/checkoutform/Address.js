@@ -1,4 +1,4 @@
-import { countries } from "@/assets/mock/staticData";
+
 import {
   Autocomplete,
   Box,

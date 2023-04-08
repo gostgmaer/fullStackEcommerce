@@ -150,7 +150,7 @@ const PaywithCard = ({ formik }) => {
                 {[...Array(10)]
                   .map((a, b) => new Date().getFullYear() + b)
                   .map((item) => (
-                    <MenuItem value={item}>{item}</MenuItem>
+                    <MenuItem key={item} value={item}>{item}</MenuItem>
                   ))}
               </Select>
             </FormControl>
@@ -165,7 +165,7 @@ const PaywithCard = ({ formik }) => {
                 onChange={formik.handleChange}
               >
                 {Array.from(Array(12).keys()).map((item) => (
-                  <MenuItem value={leftFillNum(item + 1, 2)}>
+                  <MenuItem key={item} value={leftFillNum(item + 1, 2)}>
                     {leftFillNum(item + 1, 2)}
                   </MenuItem>
                 ))}

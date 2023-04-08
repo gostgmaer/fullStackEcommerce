@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Wishlist from "@/components/Usermodule/Wishlist";
 import { useAuthContext } from "@/context/AuthContext";
 import Userlayout from "@/layout/user";

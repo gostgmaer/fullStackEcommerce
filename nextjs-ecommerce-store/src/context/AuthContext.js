@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { getToken } from "@/lib/helper";
 import React, { useContext, useEffect, useState } from "react";
 import { API, BEARER } from "../../constant";

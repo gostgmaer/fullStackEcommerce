@@ -53,3 +53,15 @@ export const getServerSideProps = async (ctx) => {
     },
   };
 };
+
+
+
+export async function getServerSideProps(ctx){
+
+
+  return {
+    props:{
+      data:null
+    }
+  }
+}

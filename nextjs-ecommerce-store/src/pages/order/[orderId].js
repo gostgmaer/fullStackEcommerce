@@ -319,3 +319,15 @@ const AddressAndSummery = (params) => {
     </Box>
   );
 };
+
+
+
+export async function getServerSideProps(ctx){
+
+
+  return {
+    props:{
+      data:null
+    }
+  }
+}

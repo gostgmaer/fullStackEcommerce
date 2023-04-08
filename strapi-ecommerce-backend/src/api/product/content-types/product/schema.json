@@ -77,6 +77,18 @@
       "relation": "oneToOne",
       "target": "api::review.review",
       "mappedBy": "product"
+    },
+    "cartitem": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::cartitem.cartitem",
+      "inversedBy": "products"
+    },
+    "wishlists": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::wishlist.wishlist",
+      "mappedBy": "product"
     }
   }
 }
