@@ -22,9 +22,7 @@ import { useFetcher } from "@/lib/helper";
 
 const Footersection = ({ service }) => {
   const { data, isLoading, isError } = useFetcher("products");
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+ 
 
   return (
     <Box p={3} py={1} component={"section"}>

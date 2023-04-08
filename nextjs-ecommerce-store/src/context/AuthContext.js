@@ -5,7 +5,6 @@ import { API, BEARER } from "../../constant";
 const AuthContext = React.createContext(null);
 import { useSession, signIn, signOut, getSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { productData } from "@/assets/mock/product";
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);

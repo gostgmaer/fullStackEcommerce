@@ -42,6 +42,7 @@ const Mainbar = () => {
     }
   };
 
+
   const handleCLosemenu = () => {};
 
   const session = useSession();
@@ -88,28 +89,19 @@ const Mainbar = () => {
         >
           <div className="favirite">
             <IconButton color="error" onClick={() => route.push("/wishlist")}>
-              <Badge badgeContent={wishlist?.length!==0?wishlist?.length:0} color="info">
+              <Badge badgeContent={wishlist?.length.toString()} color="info">
                 <Favorite />
               </Badge>
             </IconButton>
           </div>
-          {cartItem?.length !== 0 ? (
-            <div className="cart">
-              <IconButton onClick={() => setState(true)} color="warning">
-                <Badge badgeContent={cartItem?.length} color="info">
-                  <LocalMall />
-                </Badge>
-              </IconButton>
-            </div>
-          ) : (
-            <div className="cart">
-              <IconButton onClick={() => setState(true)} color="warning">
-                <Badge badgeContent="0" color="info">
-                  <LocalMall />
-                </Badge>
-              </IconButton>
-            </div>
-          )}
+
+          <div className="cart">
+            <IconButton onClick={() => setState(true)} color="warning">
+              <Badge badgeContent={cartItem.length.toString()} color="info">
+                <LocalMall />
+              </Badge>
+            </IconButton>
+          </div>
 
           {session?.data ? (
             <IconButton

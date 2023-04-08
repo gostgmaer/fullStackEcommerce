@@ -72,25 +72,7 @@ const OrderDetails = () => {
 
 export default OrderDetails;
 
-export const getServerSideProps = async (ctx) => {
-  const session = await getSession(ctx);
-  // console.log(session);
-  if (!session) {
-    return {
-      redirect: {
-        destination: `/auth/signin?callbackUrl=${appBaseUrl}/order`,
-        parmanent: false,
-      },
-    };
-  }
 
-  return {
-    props: {
-      session,
-      data: session ? "List of 100 pro blog" : "list of free blogs",
-    },
-  };
-};
 
 const OrderSteaper = (params) => {
   const [activeStep, setActiveStep] = useState(1);
@@ -322,3 +304,23 @@ const AddressAndSummery = (params) => {
 
 
 
+
+export const getServerSideProps = async (ctx) => {
+  const session = await getSession(ctx);
+  // console.log(session);
+  if (!session) {
+    return {
+      redirect: {
+        destination: `/auth/signin?callbackUrl=${appBaseUrl}/order`,
+        parmanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      session,
+      data: session ? "List of 100 pro blog" : "list of free blogs",
+    },
+  };
+};

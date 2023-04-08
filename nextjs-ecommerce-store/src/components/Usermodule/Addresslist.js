@@ -63,8 +63,12 @@ const AddressItem = ({ data }) => {
        {data.city}, {data.country}
       </Typography>
       <Typography sx={{ flex: 0.5 }} variant="body2">
+        {data.pincode}
+      </Typography>
+      <Typography sx={{ flex: 0.5 }} variant="body2">
         {data.phone}
       </Typography>
+
 
       <Stack
         sx={{ flex: 0.5 }}

@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Head from "next/head";
 import Layout from "@/layout";
-import { getSession, useSession } from "next-auth/react";
 import CategoryList from "@/components/homecomponents/CategoryListsection";
 import FlashDeal from "@/components/homecomponents/Flashdealsection";
 import ModeForYou from "@/components/homecomponents/ModeForYou";
@@ -11,21 +10,19 @@ import DiscountSlider from "@/components/homecomponents/DiscountSlider";
 import FeatureItems from "@/components/homecomponents/FeatureItems";
 import Heroslider from "@/components/homecomponents/Heroslider";
 import { productData } from "@/assets/mock/product";
-import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import MuiModal from "@/layout/modal";
 import Landingmodal from "@/components/landingmodal/Landingmodal";
 import { useGlobalContext } from "@/context/globalContext";
 import { useFetcher } from "@/lib/helper";
+import { useSelector } from "react-redux";
 
 export default function Home( ) {
   const { openModal, setOpenModal } = useGlobalContext();
-  const ShowModal = (params) => {
-    setOpenModal(true);
-  };
+
   useEffect(() => {
     setTimeout(() => {
-      ShowModal();
+      setOpenModal(true);
     }, 1000);
   }, []);
 
@@ -55,10 +52,14 @@ export default function Home( ) {
   );
 }
 
-// export const getServerSideProps = async (ctx) => {
+
+// export const getServerSideProps = async () => {
+//   const cartItem = useSelector((state) => state["data"].cartItems);
+//   const wishlist = useSelector((state) => state["data"].wishList);
+
 //   return {
 //     props: {
-//       data: productData,
+//       data: { cartItem: cartItem, wishlist: wishlist },
 //     },
 //   };
 // };

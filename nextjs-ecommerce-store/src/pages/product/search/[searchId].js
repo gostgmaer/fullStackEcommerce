@@ -27,13 +27,3 @@ const SearchbyCategory = () => {
 export default SearchbyCategory;
 
 
-
-// export async function getServerSideProps(ctx){
-
-
-//   return {
-//     props:{
-//       data:null
-//     }
-//   }
-// }

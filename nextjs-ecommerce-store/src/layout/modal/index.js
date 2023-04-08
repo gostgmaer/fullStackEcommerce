@@ -13,24 +13,24 @@ import {
 import { Close, Padding } from "@mui/icons-material";
 import { useGlobalContext } from "@/context/globalContext";
 
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  "& .MuiDialogContent-root": {
-    padding: theme.spacing(2),
-  },
-  "& .MuiDialogActions-root": {
-    padding: theme.spacing(1),
-  },
-  "&.MuiDialog-paper": {
-    maxWidth: "100%",
-  },
-}));
+// const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+//   "& .MuiDialogContent-root": {
+//     padding: theme.spacing(2),
+//   },
+//   "& .MuiDialogActions-root": {
+//     padding: theme.spacing(1),
+//   },
+//   "&.MuiDialog-paper": {
+//     maxWidth: "100%",
+//   },
+// }));
 
 export default function MuiModal({ heading, Content, classes, maxWidth }) {
   const { openModal, setOpenModal } = useGlobalContext();
   const [fullWidth, setFullWidth] = React.useState(true);
 
   return (
-    <BootstrapDialog
+    <Dialog
       aria-labelledby="customized-dialog-title"
       fullWidth={true}
       // @ts-ignore
@@ -57,7 +57,7 @@ export default function MuiModal({ heading, Content, classes, maxWidth }) {
 
       <DialogContent
         sx={{
-          // width: "100%",
+          width: "100%",
           height: "auto",
           padding: "0 !important",
         }}
@@ -66,6 +66,6 @@ export default function MuiModal({ heading, Content, classes, maxWidth }) {
         {Content ? Content : "No Data Found Found"}
       </DialogContent>
       {/* <DialogActions></DialogActions> */}
-    </BootstrapDialog>
+    </Dialog>
   );
 }
