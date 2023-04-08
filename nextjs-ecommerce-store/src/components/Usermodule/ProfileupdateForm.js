@@ -41,6 +41,17 @@ const [image, setImage] = useState(null);
           alignItems="center"
           spacing={2}
         >
+         <TextField
+              id="emailaddress"
+              name="emailaddress"
+              label="Email Address"
+              size="small"
+              fullWidth
+              sx={{maxWidth:'60%'}}
+              disabled
+              type="email"
+              variant="outlined"
+            />
           <IconButton
             color="primary"
             aria-label="upload picture"
@@ -79,15 +90,7 @@ const [image, setImage] = useState(null);
               size="small"
               variant="outlined"
             />
-            <TextField
-              id="emailaddress"
-              name="emailaddress"
-              label="Email Address"
-              size="small"
-              fullWidth
-              type="email"
-              variant="outlined"
-            />
+           
             <TextField
               id="dateof birth"
               label="Date of birth"

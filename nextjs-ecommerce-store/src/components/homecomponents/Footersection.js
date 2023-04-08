@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 import {
   ArrowForward,
   ArrowRight,
@@ -16,10 +16,14 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { Item } from "../elements/Item";
+import { useFetcher } from "@/lib/helper";
 
-const Footersection = ({ data }) => {
+const Footersection = ({ service }) => {
+  const { data, isLoading, isError } = useFetcher("products");
+ 
+
   return (
     <Box p={3} py={1} component={"section"}>
       <Box sx={{ width: "100%", mt: 2 }}>
@@ -33,7 +37,7 @@ const Footersection = ({ data }) => {
             m="0"
             columns={12.6}
           >
-            {data.map((item) => (
+            {service.map((item) => (
               <FeatureItemscard data={item} key={item.id} />
             ))}
           </Grid>

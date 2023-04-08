@@ -1,4 +1,5 @@
 import Userlayout from "@/layout/user";
+import { appBaseUrl } from "@/utils/config";
 import { Person } from "@mui/icons-material";
 import {
   Backdrop,
@@ -215,12 +216,22 @@ const ProfileDetails = (params) => {
 
 
 
-export async function getServerSideProps(ctx){
-
+export const getServerSideProps = async (ctx) => {
+  const session = await getSession(ctx);
+  // console.log(session);
+  if (!session) {
+    return {
+      redirect: {
+        destination: `/auth/signin?callbackUrl=${appBaseUrl}/profile`,
+        parmanent: false,
+      },
+    };
+  }
 
   return {
-    props:{
-      data:null
-    }
-  }
-}
+    props: {
+      session,
+      data: session ? "List of 100 pro blog" : "list of free blogs",
+    },
+  };
+};

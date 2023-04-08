@@ -13,26 +13,29 @@ import {
 import { Close, Padding } from "@mui/icons-material";
 import { useGlobalContext } from "@/context/globalContext";
 
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  "& .MuiDialogContent-root": {
-    padding: theme.spacing(2),
-  },
-  "& .MuiDialogActions-root": {
-    padding: theme.spacing(1),
-  },
-}));
+// const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+//   "& .MuiDialogContent-root": {
+//     padding: theme.spacing(2),
+//   },
+//   "& .MuiDialogActions-root": {
+//     padding: theme.spacing(1),
+//   },
+//   "&.MuiDialog-paper": {
+//     maxWidth: "100%",
+//   },
+// }));
 
-export default function MuiModal({ heading, Content }) {
+export default function MuiModal({ heading, Content, classes, maxWidth }) {
   const { openModal, setOpenModal } = useGlobalContext();
   const [fullWidth, setFullWidth] = React.useState(true);
-  const [maxWidth, setMaxWidth] = React.useState(false);
 
   return (
     <Dialog
       aria-labelledby="customized-dialog-title"
       fullWidth={true}
-      maxWidth={false}
-      // className={class?class:''}
+      // @ts-ignore
+      maxWidth={maxWidth ? maxWidth : "md"}
+      className={`${classes ? classes : ""}`}
       open={openModal}
     >
       {heading && (
@@ -55,8 +58,8 @@ export default function MuiModal({ heading, Content }) {
       <DialogContent
         sx={{
           width: "100%",
-          height:'auto',
-          padding:'0 !important'
+          height: "auto",
+          padding: "0 !important",
         }}
         dividers
       >

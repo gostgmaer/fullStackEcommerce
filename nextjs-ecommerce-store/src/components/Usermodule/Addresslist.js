@@ -13,7 +13,8 @@ import {
 } from "@mui/material";
 import moment from "moment/moment";
 import { useRouter } from "next/router";
-const Addresslist = () => {
+const Addresslist = ({addresses}) => {
+  console.log(addresses);
   return (
     <Box width={"100%"}>
       <Stack
@@ -28,8 +29,8 @@ const Addresslist = () => {
           px: 1,
         }}
       >
-        {addressData.map((item) => (
-          <AddressItem key={item.id} data={item} />
+        {addresses.data.map((item) => (
+          <AddressItem key={item.id} data={item.attributes} />
         ))}
       </Stack>
     </Box>
@@ -55,14 +56,27 @@ const AddressItem = ({ data }) => {
         px: 2,
       }}
     >
-      <Typography variant="body2" sx={{flex:0.5}}>{data.title}</Typography>
-      <Typography sx={{flex:1.5}} variant="body2">
-        {data.street}, {data.city}, {data.country}
+      <Typography variant="body2" sx={{ flex: 0.5 }}>
+        {data.name}
       </Typography>
-      <Typography sx={{flex:0.5}} variant="body2">{data.phone}</Typography>
+      <Typography sx={{ flex: 1.5 }} variant="body2">
+       {data.city}, {data.country}
+      </Typography>
+      <Typography sx={{ flex: 0.5 }} variant="body2">
+        {data.pincode}
+      </Typography>
+      <Typography sx={{ flex: 0.5 }} variant="body2">
+        {data.phone}
+      </Typography>
 
-      <Stack sx={{flex:0.5}} direction={"row"} justifyContent={'flex-end'} gap={1}>
-        <IconButton onClick={() => router.push(`/address/${data.id}`)}>
+
+      <Stack
+        sx={{ flex: 0.5 }}
+        direction={"row"}
+        justifyContent={"flex-end"}
+        gap={1}
+      >
+        <IconButton onClick={() => router.push(`/address/${data.uuid}`)}>
           <Edit />
         </IconButton>
         <IconButton>
@@ -72,3 +86,6 @@ const AddressItem = ({ data }) => {
     </Paper>
   );
 };
+
+
+

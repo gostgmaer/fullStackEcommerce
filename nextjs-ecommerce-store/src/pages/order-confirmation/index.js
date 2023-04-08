@@ -44,12 +44,3 @@ export default Index;
 
 
 
-export async function getServerSideProps(ctx){
-
-
-  return {
-    props:{
-      data:null
-    }
-  }
-}

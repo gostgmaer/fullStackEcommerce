@@ -41,12 +41,3 @@ const Heroslider = ({ data }) => {
 };
 
 export default Heroslider;
-
-// export const getServerSideProps = async (ctx) => {
-
-//   return {
-//     props: {
-//       data: productData,
-//     },
-//   };
-// };
