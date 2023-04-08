@@ -322,12 +322,3 @@ const AddressAndSummery = (params) => {
 
 
 
-export async function getServerSideProps(ctx){
-
-
-  return {
-    props:{
-      data:null
-    }
-  }
-}
