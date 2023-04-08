@@ -17,7 +17,7 @@ import { useSelector } from "react-redux";
 import Productcard from "../elements/Productcard";
 const Wishlist = () => {
   const wishlist = useSelector((state) => state["data"].wishList);
-  console.log(wishlist);
+  // console.log(wishlist);
   return (
     <Box width={"100%"}>
       <Box sx={{ flexGrow: 1, width: "100%" }}>
@@ -56,7 +56,7 @@ export default Wishlist;
 
 const OrderItem = ({ data }) => {
   const router = useRouter();
-  console.log(data);
+  // console.log(data);
 
   const StyleColor = {
     backgroundColor:

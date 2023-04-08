@@ -33,7 +33,7 @@ const Reviewform = () => {
     if (value === 0) {
       setOpen(true);
     } else {
-      console.log(values, value);
+      // console.log(values, value);
     }
   };
 

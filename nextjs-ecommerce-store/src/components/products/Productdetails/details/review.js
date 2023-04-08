@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 
 const Review = () => {
   const session = useSession();
-  console.log(session);
+  // console.log(session);
   return (
     <Box
       className="elements"
