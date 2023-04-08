@@ -56,3 +56,15 @@ const UpdateProfile = () => {
 };
 
 export default UpdateProfile;
+
+
+
+export async function getServerSideProps(ctx){
+
+
+  return {
+    props:{
+      data:null
+    }
+  }
+}

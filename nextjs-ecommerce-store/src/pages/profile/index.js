@@ -1,4 +1,3 @@
-import Layout from "@/layout";
 import Userlayout from "@/layout/user";
 import { Person } from "@mui/icons-material";
 import {
@@ -12,6 +11,7 @@ import {
   colors,
 } from "@mui/material";
 import { getSession, signIn } from "next-auth/react";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -86,8 +86,9 @@ const UserCard = (params) => {
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <img
+          <Image
             width={75}
+            height={75}
             style={{ borderRadius: "50%" }}
             src="/assets/images/nike-black.png"
             alt=""
@@ -213,3 +214,13 @@ const ProfileDetails = (params) => {
 
 
 
+
+export async function getServerSideProps(ctx){
+
+
+  return {
+    props:{
+      data:null
+    }
+  }
+}

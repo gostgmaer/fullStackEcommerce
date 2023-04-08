@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Head from "next/head";
 import Layout from "@/layout";
 import { getSession, useSession } from "next-auth/react";

@@ -9,11 +9,11 @@ const AppProvider = ({ children }) => {
   const cartItem = useSelector((state) => state["data"].cartItems);
   const wishlist = useSelector((state) => state["data"].wishList);
 
-  useEffect(() => {
-    console.log(cartItem);
-    // window.localStorage.setItem('cartItem',cartItem)
-    console.log(cartItem);
-  }, [cartItem]);
+  // useEffect(() => {
+  //   console.log(cartItem);
+  //   // window.localStorage.setItem('cartItem',cartItem)
+  //   console.log(cartItem);
+  // }, [cartItem]);
 
   const array = [];
   const getYearsList = (params) => {
@@ -27,9 +27,9 @@ const AppProvider = ({ children }) => {
     // console.log(years);
   };
 
-  useEffect(() => {
-    getYearsList();
-  }, []);
+  // useEffect(() => {
+  //   getYearsList();
+  // }, []);
 
   return (
     <AppContext.Provider

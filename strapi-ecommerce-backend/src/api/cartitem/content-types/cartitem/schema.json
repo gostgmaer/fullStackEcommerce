@@ -36,12 +36,6 @@
     "price": {
       "type": "decimal"
     },
-    "user": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "plugin::users-permissions.user",
-      "inversedBy": "cartitems"
-    },
     "subtotal": {
       "type": "decimal"
     },
@@ -53,6 +47,18 @@
     },
     "size": {
       "type": "string"
+    },
+    "products": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::product.product",
+      "mappedBy": "cartitem"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "cartitems"
     }
   }
 }

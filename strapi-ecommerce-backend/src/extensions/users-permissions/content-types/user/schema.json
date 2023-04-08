@@ -66,12 +66,6 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "cartitems": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::cartitem.cartitem",
-      "mappedBy": "user"
-    },
     "wishlists": {
       "type": "relation",
       "relation": "oneToMany",
@@ -89,6 +83,40 @@
       "relation": "oneToMany",
       "target": "api::review.review",
       "mappedBy": "users_permissions_user"
+    },
+    "cartitems": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::cartitem.cartitem",
+      "mappedBy": "user"
+    },
+    "addresses": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::address.address",
+      "mappedBy": "users_permissions_user"
+    },
+    "avater": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "dbo": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "firstname": {
+      "type": "string"
+    },
+    "lastname": {
+      "type": "string"
     }
   }
 }
