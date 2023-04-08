@@ -12,7 +12,7 @@ import React, { useState } from "react";
 
 const ProfileupdateForm = () => {
 const [image, setImage] = useState(null);
-console.log(image);
+// console.log(image);
 
 
   return (

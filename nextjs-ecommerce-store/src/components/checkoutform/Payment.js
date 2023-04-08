@@ -30,8 +30,8 @@ export default function PaymentForm({ formik }) {
 
   const handleChange = (event) => {
     setValue(event.target.value);
-    console.log(event);
-    console.log(value);
+    // console.log(event);
+    // console.log(value);
   };
   return (
     <Paper

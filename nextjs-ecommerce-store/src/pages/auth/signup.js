@@ -32,7 +32,7 @@ const SignUp = () => {
   const [error, setError] = useState("");
 
   const onFinish = async (values) => {
-    console.log(values);
+    // console.log(values);
     setIsLoading(true);
     try {
       const response = await fetch(`${API}/auth/local/register`, {

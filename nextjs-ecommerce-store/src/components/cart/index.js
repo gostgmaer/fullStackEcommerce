@@ -25,7 +25,7 @@ export default function CartBlock() {
   const { state, setState } = useGlobalContext();
   const cartItem = useSelector((state) => state["data"].cartItems);
   const wishlist = useSelector((state) => state["data"].wishList);
-  console.log(sumWithInitial(cartItem));
+  // console.log(sumWithInitial(cartItem));
   const router = useRouter();
 
   const toggleDrawer = (open) => (event) => {

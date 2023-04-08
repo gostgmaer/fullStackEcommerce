@@ -13,7 +13,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 const Left = () => {
-  console.log(ClassNames);
+  // console.log(ClassNames);
   const router = useRouter();
 
   const prodileUrl = {

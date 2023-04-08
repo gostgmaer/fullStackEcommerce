@@ -60,7 +60,7 @@ export default Orderlist;
 
 const OrderItem = ({ data }) => {
   const router = useRouter();
-  console.log(data);
+  // console.log(data);
 
   const StyleColor = {
     backgroundColor:

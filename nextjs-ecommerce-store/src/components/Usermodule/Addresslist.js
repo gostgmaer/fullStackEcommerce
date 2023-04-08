@@ -40,7 +40,7 @@ export default Addresslist;
 
 const AddressItem = ({ data }) => {
   const router = useRouter();
-  console.log(data);
+  // console.log(data);
 
   return (
     <Paper
