@@ -3,15 +3,24 @@ import Addresslist from "@/components/Usermodule/Addresslist";
 import { useGlobalContext } from "@/context/globalContext";
 import MuiModal from "@/layout/modal";
 import Userlayout from "@/layout/user";
+import { useFetcher } from "@/lib/helper";
 import { invokeExternalAPI } from "@/lib/http";
 import { appBaseUrl } from "@/utils/config";
 import { Close, LocationOn, Person, ShoppingBag } from "@mui/icons-material";
 import { Box, Button, Pagination, Stack, Typography } from "@mui/material";
 import { getSession } from "next-auth/react";
+import { useState } from "react";
 
 const Address = ({ data }) => {
+
   console.log(data);
   const { openModal, setOpenModal } = useGlobalContext();
+  const [call, setCall] = useState(false);
+
+  
+
+
+
   return (
     <Userlayout>
       <Box
@@ -44,7 +53,7 @@ const Address = ({ data }) => {
         </Stack>
         <MuiModal
           heading={{ title: "Please add a Address", icon: <Close /> }}
-          Content=<AddressAddForm />
+          Content=<AddressAddForm call={setCall} />
           classes={undefined}
           maxWidth={"sm"}
         />

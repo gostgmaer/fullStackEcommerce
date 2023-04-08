@@ -27,7 +27,7 @@ import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
 import { useGlobalContext } from "@/context/globalContext";
 
-const AddressAddForm = () => {
+const AddressAddForm = ({call}) => {
   const session = useSession();
 
   const [isdesable, setIsdesable] = useState(true);
@@ -62,8 +62,14 @@ const AddressAddForm = () => {
       {},
       {}
     );
+    if (req.error === null) {
+      call(true)
+    }
     setOpenModal(false);
   };
+  useEffect(() => {
+    call(false)
+  }, []);
 
   return (
     <Fragment>
