@@ -1,5 +1,6 @@
 import ProfileupdateForm from "@/components/Usermodule/ProfileupdateForm";
 import Layout from "@/layout";
+import { object, string, number, date } from "yup";
 import { v4 as uuidv4 } from "uuid";
 import MuiModal from "@/layout/modal";
 import Userlayout from "@/layout/user";
@@ -24,10 +25,25 @@ import { Formik } from "formik";
 import { getSession, signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
+import { useGlobalContext } from "@/context/globalContext";
 
 const AddressAddForm = () => {
-  const { data, status } = useSession();
-  const [open, setOpen] = useState(false);
+  const session = useSession();
+
+  const [isdesable, setIsdesable] = useState(true);
+  const { openModal, years, setOpenModal } = useGlobalContext();
+
+  const phoneReg =
+    /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+  const validationSchema = object({
+    addressname: string().required(),
+    phone: string().matches(phoneReg, "Phone Number is not Valid").required(),
+    address: string().required(),
+    city: string().required(),
+    country: string().required(),
+    pincode: string().required(),
+  });
+
   const handleFormSubmit = async (values) => {
     const body = {
       name: values.addressname,
@@ -35,8 +51,9 @@ const AddressAddForm = () => {
       address: values.address,
       city: values.city,
       country: values.country,
-      users_permissions_user:'kishor.sarkar',
+      user: session.data.user.name,
       uuid: uuidv4(),
+      pincode: values.pincode,
     };
     const req = await invokeExternalAPI(
       "addresses",
@@ -45,14 +62,7 @@ const AddressAddForm = () => {
       {},
       {}
     );
-    setOpen(true);
-    return (
-      <Snackbar
-        open={open}
-        autoHideDuration={2000}
-        message="New Address had been Added"
-      />
-    );
+    setOpenModal(false);
   };
 
   return (
@@ -64,7 +74,9 @@ const AddressAddForm = () => {
           address: "",
           country: "",
           city: "",
+          pincode: "",
         }}
+        validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting }) => {
           handleFormSubmit(values);
         }}
@@ -73,9 +85,14 @@ const AddressAddForm = () => {
           values,
           errors,
           touched,
+          isValid,
           handleChange,
           handleBlur,
           handleSubmit,
+          status,
+          isValidating,
+          validateForm,
+
           isSubmitting,
           /* and other goodies */
         }) => (
@@ -104,6 +121,7 @@ const AddressAddForm = () => {
                 <TextField
                   id="addressname"
                   onChange={handleChange}
+                  required
                   onBlur={handleBlur}
                   value={values.addressname}
                   name="addressname"
@@ -118,6 +136,7 @@ const AddressAddForm = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.address}
+                  required
                   label="Address"
                   size="small"
                   fullWidth
@@ -129,6 +148,7 @@ const AddressAddForm = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.city}
+                  required
                   label="City"
                   fullWidth
                   size="small"
@@ -140,6 +160,7 @@ const AddressAddForm = () => {
                   id="phone"
                   size="small"
                   name="phone"
+                  required
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.phone}
@@ -151,11 +172,24 @@ const AddressAddForm = () => {
                   id="country"
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  required
                   value={values.country}
                   name="country"
                   fullWidth
                   size="small"
                   label="Country"
+                  variant="outlined"
+                />
+                <TextField
+                  id="pincode"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  required
+                  value={values.pincode}
+                  name="pincode"
+                  fullWidth
+                  size="small"
+                  label="Pincode"
                   variant="outlined"
                 />
               </Grid>
@@ -179,6 +213,7 @@ const AddressAddForm = () => {
                 sx={{ textTransform: "capitalize" }}
                 color="error"
                 type="submit"
+                disabled={!isValid}
               >
                 Add Address
               </Button>
