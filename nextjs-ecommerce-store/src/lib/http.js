@@ -1,6 +1,13 @@
 import axios from "axios";
+import { cleanQueryparam } from "./sevice";
+import { apiUrl, token } from "@/utils/config";
+import { BEARER } from "../../constant";
 
-const baseURL = "https://ceebit-vwr.inadev.net/";
+const baseURL = apiUrl;
+const Authorization = {
+  Authorization: `${BEARER} ${token}`,
+};
+
 export const invokeExternalAPI = async (
   endpoint,
   method,
@@ -11,7 +18,7 @@ export const invokeExternalAPI = async (
   const options = {
     method: method,
     url: baseURL + endpoint,
-    headers: header,
+    headers: { ...Authorization, ...header },
     params: query,
     data: body,
   };
@@ -36,13 +43,5 @@ export const invokeExternalAPI = async (
     error = e.message;
   }
 
-  return {data,error};
-};
-
-export const cleanQueryparam = (query) => {
-  return Object.keys(query).forEach(
-    (key) =>
-      (query[key] === "" || query[key] == null || query[key] === undefined) &&
-      delete query[key]
-  );
+  return { data, error };
 };

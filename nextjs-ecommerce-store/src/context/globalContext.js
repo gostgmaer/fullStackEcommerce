@@ -15,17 +15,17 @@ const AppProvider = ({ children }) => {
   //   console.log(cartItem);
   // }, [cartItem]);
 
-  const array = [];
-  const getYearsList = (params) => {
-    for (let index = 0; index <= 15; index++) {
-      const expDate = new Date().getFullYear() + index;
-      array.push(expDate);
-    }
-    const data = { year: array };
+  // const array = [];
+  // const getYearsList = (params) => {
+  //   for (let index = 0; index <= 15; index++) {
+  //     const expDate = new Date().getFullYear() + index;
+  //     array.push(expDate);
+  //   }
+  //   const data = { year: array };
 
-    setYears(data);
-    // console.log(years);
-  };
+  //   setYears(data);
+  //   // console.log(years);
+  // };
 
   // useEffect(() => {
   //   getYearsList();

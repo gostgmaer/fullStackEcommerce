@@ -42,8 +42,7 @@ const Address = () => {
         </Stack>
         <MuiModal
           heading={{ title: "Please add a Address", icon: <Close /> }}
-          Content=<AddressAddForm />
-        />
+          Content=<AddressAddForm /> classes={undefined} maxWidth={'sm'}        />
         <Addresslist />
         <Box
           width={"100%"}

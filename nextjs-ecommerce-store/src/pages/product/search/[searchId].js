@@ -28,12 +28,12 @@ export default SearchbyCategory;
 
 
 
-export async function getServerSideProps(ctx){
+// export async function getServerSideProps(ctx){
 
 
-  return {
-    props:{
-      data:null
-    }
-  }
-}
+//   return {
+//     props:{
+//       data:null
+//     }
+//   }
+// }
