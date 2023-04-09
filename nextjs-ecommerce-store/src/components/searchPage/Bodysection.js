@@ -11,6 +11,7 @@ import React from "react";
 import { array } from "yup";
 import Productcard from "../elements/Productcard";
 import Filter from "./child/Filter";
+import { productData } from "@/assets/mock/product";
 
 const BodySection = () => {
   const [page, setPage] = React.useState(1);
@@ -41,8 +42,8 @@ const BodySection = () => {
             m="0"
             columns={12.8}
           >
-            {Array.from(Array(24).keys()).map((item) => (
-              <Productcard key={item} size={4} />
+            {productData.moreItems.map((item) => (
+              <Productcard key={item.id} size={4} product={productData.moreItems} />
             ))}
           </Grid>
         </Box>

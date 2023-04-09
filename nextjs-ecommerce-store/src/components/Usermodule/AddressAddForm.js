@@ -67,9 +67,7 @@ const AddressAddForm = ({call}) => {
     }
     setOpenModal(false);
   };
-  useEffect(() => {
-    call(false)
-  }, []);
+
 
   return (
     <Fragment>

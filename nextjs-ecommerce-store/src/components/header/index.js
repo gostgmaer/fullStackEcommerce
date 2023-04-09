@@ -87,7 +87,7 @@ function Header(props) {
       px={8}
     >
       {/* {mainNavigationbar()} */}
-      <Mainbar newData={undefined}/>
+      <Mainbar/>
       {state && <CartBlock />}
     </Box>
   );
