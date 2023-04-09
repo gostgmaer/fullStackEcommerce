@@ -22,7 +22,23 @@ export const removeToken = () => {
 export const fetcher = (...args) => axios(...args).then((res) => res.data);
 
 export function useFetcher(endpoint) {
-  const { data, error, isLoading } = useSWR(`${apiUrl}${endpoint}?populate=*`, fetcher);
+  const { data, error, isLoading } = useSWR(
+    `${apiUrl}${endpoint}?populate=*`,
+    fetcher
+  );
+
+  return {
+    data: data,
+    isLoading,
+    isError: error,
+  };
+}
+
+export function useGetFetcher(endpoint,fetcherData) {
+  const { data, error, isLoading } = useSWR(
+    `${apiUrl}${endpoint}?populate=*`,
+    fetcherData
+  );
 
   return {
     data: data,

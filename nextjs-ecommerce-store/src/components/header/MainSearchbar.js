@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { Fragment, useEffect, useState } from "react";
 import { productData } from "@/assets/mock/product";
+import { useFetcher } from "@/lib/helper";
 const MainSearchbar = () => {
   const [anchorElcate, setAnchorElcate] = useState(null);
   const [value, setValue] = useState("");
@@ -28,6 +29,11 @@ const MainSearchbar = () => {
   const handleMenuClick = (params) => {
     setValue(params.target.textContent);
   };
+
+  const category = useFetcher('categories')
+
+
+
   const handleMenuClose = (params) => {};
   return (
     <Box
@@ -141,9 +147,9 @@ const MainSearchbar = () => {
         onClick={() => setAnchorElcate(null)}
       >
         {value && <MenuItem onClick={handleMenuClick}>All Category</MenuItem>}
-        {productData.bottomCategories.map((option) => (
+        {category?.data?.data.map((option) => (
           <MenuItem key={option.id} onClick={handleMenuClick}>
-            {option.name}
+            {option.attributes.name}
           </MenuItem>
         ))}
       </Menu>

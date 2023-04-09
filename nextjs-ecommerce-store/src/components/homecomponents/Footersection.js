@@ -21,7 +21,7 @@ import { Item } from "../elements/Item";
 import { useFetcher } from "@/lib/helper";
 
 const Footersection = ({ service }) => {
-  const { data, isLoading, isError } = useFetcher("products");
+  // const { data, isLoading, isError } = useFetcher("products");
  
 
   return (

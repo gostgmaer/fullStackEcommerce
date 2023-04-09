@@ -1,3 +1,4 @@
+import { invokeExternalAPI } from "@/lib/http";
 import { Star } from "@mui/icons-material";
 import { Textarea } from "@mui/joy";
 import {
@@ -13,28 +14,38 @@ import {
   Alert,
 } from "@mui/material";
 import { Formik } from "formik";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { useState } from "react";
 // @ts-ignore
 import { object, string } from "yup";
 
 const initialValues = {
-  reviewField: "",
+  comments: "",
+  rating: 0,
 };
 
-const userSchema = object().shape({
-  reviewField: string().required('Review is required'),
-});
+// const userSchema = object().shape({
+//   reviewField: string().required("Review is required"),
+//   rating: string().required("Rating is required"),
+// });
 
 const Reviewform = () => {
   const [value, setValue] = useState(0);
   const [open, setOpen] = useState(false);
-
+  const route = useRouter();
+  const session = useSession();
   const handleFormSubmit = (values) => {
-    if (value === 0) {
-      setOpen(true);
-    } else {
-      // console.log(values, value);
-    }
+    console.log(values);
+    const body = {
+      title: values.comments,
+      rating: values.rating,
+      product: route.query.productId,
+      username: session.data.user.name,
+      userimage: session.data.user.image,
+    };
+   const req = invokeExternalAPI('reviews','post',{data:body},{},{})
+    console.log(req);
   };
 
   function getLabelText(value) {
@@ -46,7 +57,7 @@ const Reviewform = () => {
       sx={{
         width: "60%",
         my: 3,
-        py:3,
+        py: 3,
         display: "flex",
         flexDirection: "column",
         gap: 1,
@@ -63,7 +74,7 @@ const Reviewform = () => {
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
-        validationSchema={userSchema}
+       
       >
         {({
           values,
@@ -95,14 +106,18 @@ const Reviewform = () => {
                 Your Rating <span style={{ color: colors.red[900] }}>*</span>
               </Typography>
               <Rating
-                name="hover-feedback"
-                value={value}
+                name="rating"
                 precision={0.5}
                 getLabelText={getLabelText}
                 // @ts-ignore
-                onChange={(event, newValue) => {
-                  setValue(newValue);
-                }}
+                required
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.rating}
+                //   error={!!touched.rating && !!errors.rating}
+                // @ts-ignore
+
+                // helperText={touched.rating && errors.rating}
                 // @ts-ignore
 
                 emptyIcon={
@@ -126,14 +141,15 @@ const Reviewform = () => {
                 style={{ borderColor: "Background" }}
                 minRows={10}
                 multiline
+                id="comments"
                 required
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.reviewField}
-                name="reviewField"
-                error={!!touched.reviewField && !!errors.reviewField}
+                value={values.comments}
+                name="comments"
+                //  error={!!touched.comments && !!errors.comments}
                 // @ts-ignore
-                helperText={touched.reviewField && errors.reviewField}
+                // helperText={touched.reviewField && errors.reviewField}
                 sx={{ gridColumn: "span 4" }}
               ></TextField>
             </Box>
@@ -142,7 +158,7 @@ const Reviewform = () => {
               <Button
                 type="submit"
                 color="primary"
-                disabled={values.reviewField===''?true:false}
+                disabled={values.reviewField === "" ? true : false}
                 variant="contained"
               >
                 Submit
@@ -153,7 +169,7 @@ const Reviewform = () => {
       </Formik>
       <Snackbar
         open={open}
-        autoHideDuration={3000}
+        autoHideDuration={1000}
         onClose={() => setOpen(false)}
       >
         <Alert
@@ -161,7 +177,7 @@ const Reviewform = () => {
           severity="error"
           sx={{ width: "100%" }}
         >
-          Please Choose a rating then Submit
+          {"Has Been Added"}
         </Alert>
       </Snackbar>
     </Box>

@@ -1,6 +1,6 @@
 import CartBlock from "@/components/cart";
 import { AuthProvider } from "@/context/AuthContext";
-import { AppProvider } from "@/context/globalContext";
+import { AppProvider, useGlobalContext } from "@/context/globalContext";
 import { fetcher } from "@/lib/helper";
 import { store } from "@/store";
 import "@/styles/globals.css";
@@ -12,9 +12,11 @@ import NextNProgress from "nextjs-progressbar";
 import { Provider } from "react-redux";
 import { SWRConfig } from "swr";
 export default function App({ Component, pageProps }) {
+
+
   return (
     <SessionProvider session={pageProps.session}>
-      <SWRConfig  value={{ fetcher }}>
+      <SWRConfig value={{ fetcher }}>
         <Provider store={store}>
           <AppProvider>
             <AuthProvider>
@@ -28,7 +30,7 @@ export default function App({ Component, pageProps }) {
               />
 
               <Component {...pageProps}></Component>
-              <CartBlock />
+           
             </AuthProvider>
           </AppProvider>
         </Provider>

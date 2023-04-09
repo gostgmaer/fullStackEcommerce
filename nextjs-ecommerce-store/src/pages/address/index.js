@@ -3,24 +3,33 @@ import Addresslist from "@/components/Usermodule/Addresslist";
 import { useGlobalContext } from "@/context/globalContext";
 import MuiModal from "@/layout/modal";
 import Userlayout from "@/layout/user";
-import { useFetcher } from "@/lib/helper";
+import { fetcher, useFetcher, useGetFetcher } from "@/lib/helper";
 import { invokeExternalAPI } from "@/lib/http";
 import { appBaseUrl } from "@/utils/config";
 import { Close, LocationOn, Person, ShoppingBag } from "@mui/icons-material";
 import { Box, Button, Pagination, Stack, Typography } from "@mui/material";
-import { getSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
+import { calculateOverrideValues } from "next/dist/server/font-utils";
 import { useState } from "react";
 
 const Address = ({ data }) => {
-
+  const session = useSession();
   console.log(data);
   const { openModal, setOpenModal } = useGlobalContext();
   const [call, setCall] = useState(false);
+  const [NewData, setNewData] = useState(data);
 
-  
-
-
-
+  const newFetcher = async () => {
+    await fetcher({
+      params: {
+        "filters[user][$eq]": session.data.user.name,
+      },
+    });
+  };
+  if (call) {
+    const { data, isLoading, isError } = useGetFetcher("addresses", newFetcher);
+    console.log(data);
+  }
   return (
     <Userlayout>
       <Box
@@ -57,7 +66,7 @@ const Address = ({ data }) => {
           classes={undefined}
           maxWidth={"sm"}
         />
-        <Addresslist addresses={data?.data} />
+        <Addresslist addresses={NewData?.data} />
         <Box
           width={"100%"}
           sx={{
@@ -97,7 +106,7 @@ export const getServerSideProps = async (ctx) => {
   return {
     props: {
       session,
-      data
+      data,
     },
   };
 };

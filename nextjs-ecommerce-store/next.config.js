@@ -16,6 +16,9 @@ const nextConfig = {
   // images: {
   //   domains: ["", "themoviedb.org"],
   // },
+  compiler: {
+    styledComponents: true
+  },
   images: {
     remotePatterns: [
      
