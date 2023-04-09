@@ -1,11 +1,31 @@
 import { ArrayData } from "@/assets/mock/product";
 import { Box } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Reviews from "./children/Reviews";
 import Reviewform from "./children/Reviewform";
 import { useSession } from "next-auth/react";
+import { invokeExternalAPI } from "@/lib/http";
+import moment from "moment";
+import { useRouter } from "next/router";
 
 const Review = () => {
+  const route = useRouter();
+  const [data, setData] = useState(null);
+
+  const getReview = async () => {
+    const newParams = {
+      " filters[product][$eq]": route.query.productId,
+    };
+    const req = await invokeExternalAPI("reviews", "get", "", {}, newParams);
+
+    setData(req);
+  };
+
+  useEffect(() => {
+    getReview();
+    console.log(data);
+  }, []);
+
   const session = useSession();
   // console.log(session);
   return (
@@ -13,11 +33,10 @@ const Review = () => {
       className="elements"
       sx={{
         width: "100%",
-
         p: 5,
       }}
     >
-      {session.status==='authenticated' && <Reviewform />}
+      {session.status === "authenticated" && <Reviewform />}
       <Box
         display={"flex"}
         alignItems={"flex-start"}
@@ -25,8 +44,8 @@ const Review = () => {
         flexDirection={"column"}
         justifyContent={"center"}
       >
-        {ArrayData.map((item) => (
-          <Reviews key={item} />
+        {data?.data?.data?.map((item) => (
+          <Reviews data={item} key={item} />
         ))}
       </Box>
     </Box>
@@ -34,3 +53,11 @@ const Review = () => {
 };
 
 export default Review;
+
+// export async function getStaticProps(ctx) {
+
+//   return {
+//     props: { reviews: data },
+//     // will be passed to the page component as props
+//   };
+// }

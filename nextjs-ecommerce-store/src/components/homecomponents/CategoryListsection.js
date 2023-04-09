@@ -8,8 +8,8 @@ const CategoryList = ({ data }) => {
   return (
     <Fragment>
       <Elementlist title={"Categories"} icon=<Category />>
-        {data.map((item) => (
-          <CatagoryCard category={item} key={item.id} />
+        {data?.map((item) => (
+          <CatagoryCard category={item.attributes} key={item.id} />
         ))}
       </Elementlist>
     </Fragment>

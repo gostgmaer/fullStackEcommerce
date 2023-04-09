@@ -9,6 +9,7 @@ import React from "react";
 
 const Index = () => {
   const data = productData.mobileList
+  console.log(data);
   return (
     <>
       <Head>

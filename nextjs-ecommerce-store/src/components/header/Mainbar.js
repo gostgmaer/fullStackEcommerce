@@ -25,7 +25,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { useGlobalContext } from "@/context/globalContext";
 import MainSearchbar from "./MainSearchbar";
 import { useDispatch, useSelector } from "react-redux";
-const Mainbar = () => {
+const Mainbar = ({ newData }) => {
   const { state, setState } = useGlobalContext();
   const [anchorEl, setAnchorEl] = useState(null);
   const cartItem = useSelector((state) => state["data"].cartItems);
@@ -36,12 +36,12 @@ const Mainbar = () => {
     setAnchorEl(event.currentTarget);
   };
 
+  console.log(newData);
   const handleClose = (e) => {
     if (e.target.innerText) {
       route.push(`/${e.target.innerText.replace(" ", "-").toLowerCase()}`);
     }
   };
-
 
   const handleCLosemenu = () => {};
 
@@ -58,6 +58,14 @@ const Mainbar = () => {
 
     setAnchorEl(null);
   };
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+  if (!hydrated) {
+    // Returns null on first render, so the client and server match
+    return null;
+  }
 
   return (
     <Box width={"100%"}>
@@ -88,19 +96,35 @@ const Mainbar = () => {
           className=" flex gap-2 items-center"
         >
           <div className="favirite">
-            <IconButton color="error" onClick={() => route.push("/wishlist")}>
-              <Badge badgeContent={wishlist?.length.toString()} color="info">
-                <Favorite />
-              </Badge>
-            </IconButton>
+            {wishlist.length !== 0 ? (
+              <IconButton color="error" onClick={() => route.push("/wishlist")}>
+                <Badge badgeContent={wishlist?.length.toString()} color="info">
+                  <Favorite />
+                </Badge>
+              </IconButton>
+            ) : (
+              <IconButton color="error" onClick={() => route.push("/wishlist")}>
+                <Badge badgeContent="0" color="info">
+                  <Favorite />
+                </Badge>
+              </IconButton>
+            )}
           </div>
 
           <div className="cart">
-            <IconButton onClick={() => setState(true)} color="warning">
-              <Badge badgeContent={cartItem.length.toString()} color="info">
-                <LocalMall />
-              </Badge>
-            </IconButton>
+            {cartItem.length !== 0 ? (
+              <IconButton onClick={() => setState(true)} color="warning">
+                <Badge badgeContent={cartItem.length.toString()} color="info">
+                  <LocalMall />
+                </Badge>
+              </IconButton>
+            ) : (
+              <IconButton onClick={() => setState(true)} color="warning">
+                <Badge badgeContent="0" color="info">
+                  <LocalMall />
+                </Badge>
+              </IconButton>
+            )}
           </div>
 
           {session?.data ? (
@@ -186,3 +210,14 @@ const Mainbar = () => {
 };
 
 export default Mainbar;
+
+export async function getStaticProps() {
+  const cartItem = useSelector((state) => state["data"].cartItems);
+  const wishlist = useSelector((state) => state["data"].wishList);
+
+  console.log(wishlist);
+
+  return {
+    props: { newData: wishlist }, // will be passed to the page component as props
+  };
+}

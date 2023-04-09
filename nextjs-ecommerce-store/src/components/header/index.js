@@ -27,6 +27,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { useGlobalContext } from "@/context/globalContext";
 import { Input } from "@mui/joy";
 import Mainbar from "./Mainbar";
+import CartBlock from "../cart";
 
 function Header(props) {
   const [show, setShow] = useState("translate-y-0");
@@ -86,7 +87,8 @@ function Header(props) {
       px={8}
     >
       {/* {mainNavigationbar()} */}
-      <Mainbar/>
+      <Mainbar newData={undefined}/>
+      {state && <CartBlock />}
     </Box>
   );
 
