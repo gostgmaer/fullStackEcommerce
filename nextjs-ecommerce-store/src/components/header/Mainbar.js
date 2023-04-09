@@ -25,7 +25,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { useGlobalContext } from "@/context/globalContext";
 import MainSearchbar from "./MainSearchbar";
 import { useDispatch, useSelector } from "react-redux";
-const Mainbar = ({ newData }) => {
+const Mainbar = () => {
   const { state, setState } = useGlobalContext();
   const [anchorEl, setAnchorEl] = useState(null);
   const cartItem = useSelector((state) => state["data"].cartItems);
@@ -36,7 +36,7 @@ const Mainbar = ({ newData }) => {
     setAnchorEl(event.currentTarget);
   };
 
-  console.log(newData);
+ 
   const handleClose = (e) => {
     if (e.target.innerText) {
       route.push(`/${e.target.innerText.replace(" ", "-").toLowerCase()}`);
@@ -211,13 +211,13 @@ const Mainbar = ({ newData }) => {
 
 export default Mainbar;
 
-export async function getStaticProps() {
-  const cartItem = useSelector((state) => state["data"].cartItems);
-  const wishlist = useSelector((state) => state["data"].wishList);
+// export async function getStaticProps() {
+//   const cartItem = useSelector((state) => state["data"].cartItems);
+//   const wishlist = useSelector((state) => state["data"].wishList);
 
-  console.log(wishlist);
+//   console.log(wishlist);
 
-  return {
-    props: { newData: wishlist }, // will be passed to the page component as props
-  };
-}
+//   return {
+//     props: { newData: wishlist }, // will be passed to the page component as props
+//   };
+// }

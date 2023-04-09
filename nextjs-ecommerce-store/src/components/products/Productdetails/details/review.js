@@ -1,3 +1,4 @@
+// /react-hooks/exhaustive-deps
 import { ArrayData } from "@/assets/mock/product";
 import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -21,10 +22,7 @@ const Review = () => {
     setData(req);
   };
 
-  useEffect(() => {
-    getReview();
-    console.log(data);
-  }, []);
+  getReview();
 
   const session = useSession();
   // console.log(session);
@@ -37,7 +35,7 @@ const Review = () => {
       }}
     >
       {session.status === "authenticated" && <Reviewform />}
-      <Box
+  {  data?.data?.data &&  <Box
         display={"flex"}
         alignItems={"flex-start"}
         gap={2}
@@ -47,7 +45,7 @@ const Review = () => {
         {data?.data?.data?.map((item) => (
           <Reviews data={item} key={item} />
         ))}
-      </Box>
+      </Box>}
     </Box>
   );
 };

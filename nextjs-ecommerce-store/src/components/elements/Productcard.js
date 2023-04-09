@@ -170,7 +170,7 @@ const Productcard = ({ product, size }) => {
                   ? product?.price.toFixed(2) - product?.discount.toFixed(2)
                   : product?.price.toFixed(2)
                   ? product?.price.toFixed(2)
-                  : "$275.00"}
+                  : "$205.00"}
               </Typography>
               {product?.discount && (
                 <Typography

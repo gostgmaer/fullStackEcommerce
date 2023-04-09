@@ -19,17 +19,8 @@ const Address = ({ data }) => {
   const [call, setCall] = useState(false);
   const [NewData, setNewData] = useState(data);
 
-  const newFetcher = async () => {
-    await fetcher({
-      params: {
-        "filters[user][$eq]": session.data.user.name,
-      },
-    });
-  };
-  if (call) {
-    const { data, isLoading, isError } = useGetFetcher("addresses", newFetcher);
-    console.log(data);
-  }
+
+
   return (
     <Userlayout>
       <Box
