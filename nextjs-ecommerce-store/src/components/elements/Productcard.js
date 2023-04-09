@@ -167,9 +167,9 @@ const Productcard = ({ product, size }) => {
               <Typography color={colors.red[500]} variant="body2">
                 ${" "}
                 {product?.discount
-                  ? product?.price - product?.discount
-                  : product?.price
-                  ? product?.price
+                  ? product?.price.toFixed(2) - product?.discount.toFixed(2)
+                  : product?.price.toFixed(2)
+                  ? product?.price.toFixed(2)
                   : "$205.00"}
               </Typography>
               {product?.discount && (

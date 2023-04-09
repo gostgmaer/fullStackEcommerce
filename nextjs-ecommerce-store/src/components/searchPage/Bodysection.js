@@ -43,7 +43,7 @@ const BodySection = () => {
             columns={12.8}
           >
             {productData.moreItems.map((item) => (
-              <Productcard key={item.id} size={4} product={productData.moreItems} />
+              <Productcard key={item.id} size={4} product={item} />
             ))}
           </Grid>
         </Box>
