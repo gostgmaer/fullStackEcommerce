@@ -9,7 +9,7 @@ const CategoryList = ({ data }) => {
     <Fragment>
       <Elementlist title={"Categories"} icon=<Category />>
         {data?.map((item) => (
-          <CatagoryCard category={item.attributes} key={item.id} />
+          <CatagoryCard category={item} key={item.id} />
         ))}
       </Elementlist>
     </Fragment>
