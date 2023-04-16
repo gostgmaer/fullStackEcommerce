@@ -77,13 +77,13 @@ const UpdateAddressForm = (data) => {
       country: values.country,
       pincode: values.pincode,
     };
-    const req = await invokeExternalAPI(
-      `addresses/${data.data[0]?.id}`,
-      "put",
-      { data: body },
-      {},
-      {}
-    );
+  //   const req = await invokeExternalAPI(
+  //     `addresses/${data.data[0]?.id}`,
+  //     "put",
+  //     { data: body },
+  //     {},
+  //     {}
+  //   );
     route.push('/address')
   };
   const phoneReg =
@@ -267,20 +267,20 @@ const UpdateAddressForm = (data) => {
   );
 };
 
-export const getServerSideProps = async (ctx) => {
-  const session = await getSession(ctx);
-  console.log(session);
+// export const getServerSideProps = async (ctx) => {
+//   const session = await getSession(ctx);
+//   console.log(session);
 
-  const param = {
-    "filters[uuid][$eq]": ctx.query["addressId"],
-  };
+//   const param = {
+//     "filters[uuid][$eq]": ctx.query["addressId"],
+//   };
 
-  const data = await invokeExternalAPI(`addresses`, "get", {}, {}, param);
+//   // const data = await invokeExternalAPI(`addresses`, "get", {}, {}, param);
 
-  return {
-    props: {
-      session,
-      data: data?.data.data
-    },
-  };
-};
+//   return {
+//     props: {
+//       session,
+//       data: data?.data.data
+//     },
+//   };
+// };

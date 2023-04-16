@@ -12,12 +12,12 @@ import { getSession, useSession } from "next-auth/react";
 import { calculateOverrideValues } from "next/dist/server/font-utils";
 import { useState } from "react";
 
-const Address = ({ data }) => {
+const Address = ({  }) => {
   const session = useSession();
-  console.log(data);
+
   const { openModal, setOpenModal } = useGlobalContext();
   const [call, setCall] = useState(false);
-  const [NewData, setNewData] = useState(data);
+  // const [NewData, setNewData] = useState(data);
 
 
 
@@ -57,7 +57,7 @@ const Address = ({ data }) => {
           classes={undefined}
           maxWidth={"sm"}
         />
-        <Addresslist addresses={NewData?.data} />
+        {/* <Addresslist addresses={NewData?.data} /> */}
         <Box
           width={"100%"}
           sx={{
@@ -83,7 +83,7 @@ export const getServerSideProps = async (ctx) => {
   const param = {
     "filters[user][$eq]": session.user.name,
   };
-  const data = await invokeExternalAPI("addresses", "get", {}, {}, param);
+  
 
   if (!session) {
     return {
@@ -96,8 +96,8 @@ export const getServerSideProps = async (ctx) => {
 
   return {
     props: {
-      session,
-      data,
+      session
+     
     },
   };
 };

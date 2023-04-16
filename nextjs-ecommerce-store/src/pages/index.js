@@ -23,20 +23,20 @@ import moment from "moment";
 const Home = ({ products }) => {
   const { openModal, setOpenModal } = useGlobalContext();
 
-  console.log(products);
-  useEffect(() => {
-    setTimeout(async () => {
-      setOpenModal(true);
-      const discount = await invokeExternalAPI(
-        "products",
-        "get",
-        "",
-        {},
-        { sort: "price:desc" }
-      );
-      console.log(discount);
-    }, 1000);
-  }, []);
+  // console.log(products);
+  // useEffect(() => {
+  //   setTimeout(async () => {
+  //     setOpenModal(true);
+  //     const discount = await invokeExternalAPI(
+  //       "products",
+  //       "get",
+  //       "",
+  //       {},
+  //       { sort: "price:desc" }
+  //     );
+  //     console.log(discount);
+  //   }, 1000);
+  // }, []);
 
   // const category = useFetcher("categories");
   // console.log(category);
@@ -57,7 +57,7 @@ const Home = ({ products }) => {
         <FeatureItems data={productData} />
         <DiscountSlider data={productData?.bigDiscountList} />
         <NewArrival data={productData?.newArrivalsList} />
-        <CategoryList data={products.categories?.data?.data} />
+        <CategoryList data={productData.bottomCategories} />
         <ModeForYou data={productData.moreItems} />
         <Footersection service={productData.serviceList} />
         <MuiModal
@@ -73,59 +73,59 @@ const Home = ({ products }) => {
 
 export default Home;
 
-export async function getStaticProps() {
-  const newParams = {
-    "filters[$or][0][publishedAt][$eq]": moment().format("YYYY-MM-DD"),
-  };
-  const moreItems = await invokeExternalAPI("products", "get", "", {}, {});
-  const categories = await invokeExternalAPI("categories", "get", "", {}, {});
-  const newArival = await invokeExternalAPI(
-    "products",
-    "get",
-    "",
-    {},
-    newParams
-  );
-  const discount = await invokeExternalAPI(
-    "products",
-    "get",
-    "",
-    {},
-    { sort: "discount:desc" }
-  );
+// export async function getStaticProps() {
+//   const newParams = {
+//     "filters[$or][0][publishedAt][$eq]": moment().format("YYYY-MM-DD"),
+//   };
+//   const moreItems = await invokeExternalAPI("products", "get", "", {}, {});
+//   const categories = await invokeExternalAPI("categories", "get", "", {}, {});
+//   const newArival = await invokeExternalAPI(
+//     "products",
+//     "get",
+//     "",
+//     {},
+//     newParams
+//   );
+//   const discount = await invokeExternalAPI(
+//     "products",
+//     "get",
+//     "",
+//     {},
+//     { sort: "discount:desc" }
+//   );
 
-  // const deal = await invokeExternalAPI(
-  //   "products",
-  //   "get",
-  //   "",
-  //   {},
-  //   {}
-  // );
-  // const feature = await invokeExternalAPI(
-  //   "products",
-  //   "get",
-  //   "",
-  //   {},
-  //   {}
-  // );
-  // const mainCarouselData = await invokeExternalAPI(
-  //   "products",
-  //   "get",
-  //   "",
-  //   {},
-  //   {}
-  // );
-  //    const res = await fetch('https://demo.creativethemes.com/blocksy/blog/')
+//   // const deal = await invokeExternalAPI(
+//   //   "products",
+//   //   "get",
+//   //   "",
+//   //   {},
+//   //   {}
+//   // );
+//   // const feature = await invokeExternalAPI(
+//   //   "products",
+//   //   "get",
+//   //   "",
+//   //   {},
+//   //   {}
+//   // );
+//   // const mainCarouselData = await invokeExternalAPI(
+//   //   "products",
+//   //   "get",
+//   //   "",
+//   //   {},
+//   //   {}
+//   // );
+//   //    const res = await fetch('https://demo.creativethemes.com/blocksy/blog/')
 
-  const Data = {
-    newArival,
-    categories,
-    moreItems,
-    discount,
-  };
+//   const Data = {
+//     newArival,
+//     categories,
+//     moreItems,
+//     discount,
+//   };
 
-  return {
-    props: { products: Data },
-    // will be passed to the page component as props
-  };
-}
+//   return {
+//     props: { products: Data },
+//     // will be passed to the page component as props
+//   };
+// }

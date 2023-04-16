@@ -19,6 +19,9 @@ const MainSearchbar = () => {
   const [anchorElcate, setAnchorElcate] = useState(null);
   const [value, setValue] = useState("");
   const opencate = Boolean(anchorElcate);
+  useEffect(() => {
+    console.log(value);
+  }, [value]);
 
   const handleClickcate = (event) => {
     setAnchorElcate(event.currentTarget);
@@ -30,9 +33,7 @@ const MainSearchbar = () => {
     setValue(params.target.textContent);
   };
 
-  const category = useFetcher('categories')
-
-
+  // const category = useFetcher('categories')
 
   const handleMenuClose = (params) => {};
   return (
@@ -146,10 +147,12 @@ const MainSearchbar = () => {
         onClose={() => setAnchorElcate(null)}
         onClick={() => setAnchorElcate(null)}
       >
-        {value && <MenuItem onClick={handleMenuClick}>All Category</MenuItem>}
-        {category?.data?.data.map((option) => (
+        {value !== "All Category" && (
+          <MenuItem onClick={handleMenuClick}>All Category</MenuItem>
+        )}
+        {productData.bottomCategories.map((option) => (
           <MenuItem key={option.id} onClick={handleMenuClick}>
-            {option.attributes.name}
+            {option.name}
           </MenuItem>
         ))}
       </Menu>

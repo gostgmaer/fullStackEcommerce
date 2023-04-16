@@ -36,7 +36,7 @@ export default function MuiModal({ heading, Content, classes, maxWidth }) {
       // @ts-ignore
       maxWidth={maxWidth ? maxWidth : "md"}
       className={`${classes ? classes : ""}`}
-      open={openModal}
+      open={openModal ? true : false}
     >
       {heading && (
         <DialogTitle
