@@ -7,12 +7,13 @@ import {
 } from "@mui/icons-material";
 import { Box, Button, colors, Grid, Typography } from "@mui/material";
 import Smallproductcard from "../elements/Smallproductcard";
+import { Pagination, Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-import SwiperCode, { Autoplay, Pagination, Navigation } from "swiper";
+import SwiperCode from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-const DiscountSlider = ({data}) => {
+const DiscountSlider = ({ data }) => {
   SwiperCode.use([Autoplay]);
   return (
     <Box p={3} py={1} component={"section"}>
@@ -56,7 +57,6 @@ const DiscountSlider = ({data}) => {
               style={{ padding: "10px 0" }}
               rewind={true}
               navigation={true}
-             
               loop
               autoplay={{ delay: 2500 }}
               modules={[Navigation, Pagination]}
@@ -64,7 +64,12 @@ const DiscountSlider = ({data}) => {
             >
               {data.map((item) => (
                 <SwiperSlide key={item.id}>
-                  <Smallproductcard product={item} height={null} size={12} issale={true} />
+                  <Smallproductcard
+                    product={item}
+                    height={null}
+                    size={12}
+                    issale={true}
+                  />
                 </SwiperSlide>
               ))}
             </Swiper>

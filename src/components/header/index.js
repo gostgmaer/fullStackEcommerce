@@ -23,11 +23,11 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
-import { useSession, signIn, signOut } from "next-auth/react";
-import { useGlobalContext } from "@/context/globalContext";
+
 import { Input } from "@mui/joy";
 import Mainbar from "./Mainbar";
 import CartBlock from "../cart";
+import { useGlobalContext } from "@/context/globalContext";
 
 function Header(props) {
   const [show, setShow] = useState("translate-y-0");
@@ -57,13 +57,12 @@ function Header(props) {
   }, [scrollPosition]);
   const handleCLosemenu = () => {};
 
-  const session = useSession();
 
   //console.log(session);
 
   const handleLogoutHandler = (e) => {
     try {
-      signOut({ redirect: true, callbackUrl: "http://localhost:3000/" });
+    //  signOut({ redirect: true, callbackUrl: "http://localhost:3000/" });
     } catch (error) {
       console.log(error);
     }
@@ -190,7 +189,7 @@ function Header(props) {
           </IconButton>
         </div>
 
-        {session?.data ? (
+        {/* {session?.data ? (
           <IconButton
             onClick={handleClick}
             size="small"
@@ -211,7 +210,7 @@ function Header(props) {
               </IconButton>
             </div>
           </Fragment>
-        )}
+        )} */}
         <Menu
           anchorEl={anchorEl}
           id="account-menu"

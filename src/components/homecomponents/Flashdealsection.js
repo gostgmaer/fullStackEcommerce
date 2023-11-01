@@ -9,7 +9,8 @@ import {
 import { Box, Button, colors, Grid, Typography } from "@mui/material";
 import "swiper/css";
 import "swiper/css/navigation";
-import SwiperCode, { Autoplay, Pagination, Navigation } from "swiper";
+import { Pagination, Navigation, Autoplay } from "swiper/modules";
+import SwiperCode from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Productcard from "../elements/Productcard";
 

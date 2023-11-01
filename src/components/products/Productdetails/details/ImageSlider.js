@@ -9,7 +9,7 @@ import "swiper/css/navigation";
 import "swiper/css/thumbs";
 
 // import required modules
-import { FreeMode, Navigation, Thumbs } from "swiper";
+import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 import { imagesData } from "@/assets/mock/images";
 import Image from "next/image";
 
