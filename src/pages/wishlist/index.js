@@ -5,7 +5,7 @@ import Userlayout from "@/layout/user";
 import { appBaseUrl } from "@/utils/config";
 import { Favorite } from "@mui/icons-material";
 import { Box, Button, Stack, Typography } from "@mui/material";
-import { getSession } from "next-auth/react";
+
 import { useEffect } from "react";
 
 const Index = () => {
@@ -45,21 +45,12 @@ const Index = () => {
 export default Index;
 
 export const getServerSideProps = async (ctx) => {
-  const session = await getSession(ctx);
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: `/auth/signin?callbackUrl=${appBaseUrl}${ctx.resolvedUrl}`,
-        parmanent: false,
-      },
-    };
-  }
 
   return {
-    props: {
-      session,
-      data: session,
+    redirect: {
+      destination: `/auth/signin?callbackUrl=${appBaseUrl}${ctx.resolvedUrl}`,
+      parmanent: false,
     },
   };
+  
 };

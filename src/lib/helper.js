@@ -1,9 +1,9 @@
 import axios from "axios";
 import useSWR from "swr";
 
-import { AUTH_TOKEN } from "../../constant";
-import { apiUrl } from "@/utils/config";
 
+import { apiUrl } from "@/utils/config";
+const AUTH_TOKEN = "asdjkashdjkashdjashduiasgdhiuasdijahsdiuhasuidhauisdhiauhdiuhaid"
 export const getToken = () => {
   window.localStorage.getItem(AUTH_TOKEN);
 };

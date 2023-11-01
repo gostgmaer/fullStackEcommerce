@@ -14,7 +14,6 @@ import {
   Alert,
 } from "@mui/material";
 import { Formik } from "formik";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 // @ts-ignore
@@ -34,15 +33,14 @@ const Reviewform = () => {
   const [value, setValue] = useState(0);
   const [open, setOpen] = useState(false);
   const route = useRouter();
-  const session = useSession();
+
   const handleFormSubmit = (values) => {
     console.log(values);
     const body = {
       title: values.comments,
       rating: values.rating,
       product: route.query.productId,
-      username: session.data.user.name,
-      userimage: session.data.user.image,
+
     };
    const req = invokeExternalAPI('reviews','post',{data:body},{},{})
     console.log(req);

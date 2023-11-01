@@ -21,7 +21,7 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
-import { useSession, signIn, signOut } from "next-auth/react";
+
 import { useGlobalContext } from "@/context/globalContext";
 import MainSearchbar from "./MainSearchbar";
 import { useDispatch, useSelector } from "react-redux";
@@ -45,13 +45,12 @@ const Mainbar = () => {
 
   const handleCLosemenu = () => {};
 
-  const session = useSession();
 
   //console.log(session);
 
   const handleLogoutHandler = (e) => {
     try {
-      signOut({ redirect: true, callbackUrl: "http://localhost:3000/" });
+     
     } catch (error) {
       console.log(error);
     }
@@ -127,8 +126,7 @@ const Mainbar = () => {
             )}
           </div>
 
-          {session?.data ? (
-            <IconButton
+          {/* <IconButton
               onClick={handleClick}
               size="small"
               aria-controls={open ? "account-menu" : undefined}
@@ -139,16 +137,15 @@ const Mainbar = () => {
                 sx={{ width: 32, height: 32 }}
                 src={session.data.user.image}
               ></Avatar>
-            </IconButton>
-          ) : (
+            </IconButton> */}
             <Fragment>
               <div className="login">
-                <IconButton onClick={() => signIn()}>
+                <IconButton>
                   <Login />
                 </IconButton>
               </div>
             </Fragment>
-          )}
+        
           <Menu
             anchorEl={anchorEl}
             id="account-menu"
