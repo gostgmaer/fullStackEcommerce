@@ -1,15 +1,13 @@
-/* @tailwind base; */
-/* @tailwind components;
+@tailwind base;
+@tailwind components;
 @tailwind utilities;
- */
 
-
- :root {
+:root {
   --max-width: 1100px;
   --border-radius: 12px;
-  --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
-    'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
-    'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+  --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
+    "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
+    "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
 
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -39,9 +37,6 @@
     #00000010,
     #00000080
   );
-
-
-
 
   --callout-rgb: 238, 240, 241;
   --callout-border-rgb: 172, 175, 176;
@@ -95,12 +90,12 @@ body {
   overflow-x: hidden;
 }
 
-#__next{
+#__next {
   min-height: 100vh;
 }
-body{
+body {
   padding: 0 !important;
-  background: #F6F9FC !important;
+  background: #fff !important;
 }
 /* 
 body {
@@ -117,12 +112,11 @@ body {
   }
 } */
 
-h1{
+h1 {
   font-size: 55px !important;
 }
-h2{
+h2 {
   font-size: 40px;
-
 }
 a {
   color: inherit;

@@ -13,8 +13,12 @@ import { Pagination, Navigation, Autoplay } from "swiper/modules";
 import SwiperCode from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Productcard from "../elements/Productcard";
+import PCard from "../global/products/Card";
+import { productData } from "@/assets/mock/product";
 
-const FlashDeal = ({data}) => {
+
+
+const FlashDeal = ({ data }) => {
   SwiperCode.use([Autoplay]);
   return (
     <Box p={3} py={1} component={"section"}>
@@ -45,14 +49,15 @@ const FlashDeal = ({data}) => {
         <Box sx={{ flexGrow: 1 }}>
           <Grid
             container
-            gap={"10px"}
+          //  gap={"10px"}
             justifyContent="space-between"
             width="100%"
             m=""
             columns={12}
           >
+       
             <Swiper
-              slidesPerView={5}
+              slidesPerView={4}
               spaceBetween={8}
               style={{ padding: "10px 0" }}
               rewind={true}
@@ -64,7 +69,8 @@ const FlashDeal = ({data}) => {
             >
               {data.map((item) => (
                 <SwiperSlide key={item.id}>
-                  <Productcard product={item} size={12} />
+                <PCard key={item.id} product={item} />
+               
                 </SwiperSlide>
               ))}
             </Swiper>
