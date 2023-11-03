@@ -34,12 +34,12 @@ const Home = ({ products }) => {
         <CategoryList data={productData.bottomCategories} />
         <ModeForYou data={productData.moreItems} />
         <Footersection service={productData.serviceList} />
-        <MuiModal
+        {/* <MuiModal
           heading={undefined}
           Content={<Landingmodal />}
           classes={undefined}
           maxWidth={""}
-        ></MuiModal>
+        ></MuiModal> */}
       </Layout>
     </>
   );
