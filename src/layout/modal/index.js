@@ -13,24 +13,19 @@ import {
 import { Close, Padding } from "@mui/icons-material";
 import { useGlobalContext } from "@/context/globalContext";
 
-// const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-//   "& .MuiDialogContent-root": {
-//     padding: theme.spacing(2),
-//   },
-//   "& .MuiDialogActions-root": {
-//     padding: theme.spacing(1),
-//   },
-//   "&.MuiDialog-paper": {
-//     maxWidth: "100%",
-//   },
-// }));
-
-export default function MuiModal({ heading, Content, classes, maxWidth }) {
-  const { openModal, setOpenModal } = useGlobalContext();
+export default function MuiModal({
+  heading,
+  Content,
+  classes,
+  maxWidth,
+  openModal,
+  setOpenModal,
+}) {
   const [fullWidth, setFullWidth] = React.useState(true);
 
   return (
-    <Dialog
+   <div>
+     <Dialog
       aria-labelledby="customized-dialog-title"
       fullWidth={true}
       // @ts-ignore
@@ -66,6 +61,15 @@ export default function MuiModal({ heading, Content, classes, maxWidth }) {
         {Content ? Content : "No Data Found Found"}
       </DialogContent>
       {/* <DialogActions></DialogActions> */}
+
+      <IconButton
+        aria-label="close"
+        onClick={() => setOpenModal(false)}
+        className=" absolute top-0 right-0"
+      >
+        {heading ? heading.icon : <Close />}
+      </IconButton>
     </Dialog>
+   </div>
   );
 }

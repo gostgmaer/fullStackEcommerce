@@ -69,7 +69,7 @@ const FlashDeal = ({ data }) => {
             >
               {data.map((item) => (
                 <SwiperSlide key={item.id}>
-                <PCard key={item.id} product={item} />
+                <PCard key={item.id} product={item} size={12} />
                
                 </SwiperSlide>
               ))}
