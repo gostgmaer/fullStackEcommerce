@@ -10,13 +10,18 @@ import DiscountSlider from "@/components/homecomponents/DiscountSlider";
 import FeatureItems from "@/components/homecomponents/FeatureItems";
 import Heroslider from "@/components/homecomponents/Heroslider";
 import { productData } from "@/assets/mock/product";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import MuiModal from "@/layout/modal";
 import Landingmodal from "@/components/landingmodal/Landingmodal";
 
 import React from "react";
+import { useGlobalContext } from "@/context/globalContext";
 
 const Home = ({ products }) => {
+  const [openModal, setOpenModal] = useState(false);
+  useEffect(() => {
+    setOpenModal(true);
+  }, []);
   return (
     <>
       <Head>
@@ -30,16 +35,21 @@ const Home = ({ products }) => {
         <FlashDeal data={productData?.flashDealsData} />
         <FeatureItems data={productData} />
         <DiscountSlider data={productData?.bigDiscountList} />
-         <NewArrival data={productData?.newArrivalsList} />
+        <NewArrival data={productData?.newArrivalsList} />
         <CategoryList data={productData.bottomCategories} />
         <ModeForYou data={productData.moreItems} />
         <Footersection service={productData.serviceList} />
-        {/* <MuiModal
+
+        <MuiModal
           heading={undefined}
-          Content={<Landingmodal />}
+          Content={
+            <Landingmodal openModal={openModal} setOpenModal={setOpenModal} />
+          }
           classes={undefined}
           maxWidth={""}
-        ></MuiModal> */}
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+        ></MuiModal>
       </Layout>
     </>
   );

@@ -17,8 +17,8 @@ import {
 } from "@mui/material";
 import React from "react";
 
-const Landingmodal = () => {
-  const { openModal, setOpenModal } = useGlobalContext();
+const Landingmodal = ({openModal, setOpenModal}) => {
+
   return (
     <Stack
       sx={{
