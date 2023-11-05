@@ -7,6 +7,7 @@ import {
   styled,
 } from "@mui/material";
 import Link from "next/link";
+import { Item } from "./Item";
 
 const CatagoryCard = ({ category }) => {
   // console.log(category);
@@ -62,4 +63,42 @@ const CatagoryCard = ({ category }) => {
   );
 };
 
-export default CatagoryCard;
+const CategoryBlock = ({ size, category }) => {
+  return (
+    <Grid
+      item
+      className=" [&_.MuiPaper-rounded]:border p-1"
+      xs={size ? size : 12}
+      sx={{
+        "& .MuiPaper-rounded": {
+          boxShadow: "none",
+        },
+      }}
+    >
+      <Item>
+        <div className="product-category col is-selected">
+          <div className="col-inner relative">
+            <div className="box-image">
+              <img
+                className="lazy-load-active w-full"
+                src="https://flatsome3.uxthemes.com/wp-content/uploads/2013/08/589864-5295_1-494x593.jpeg"
+                data-src="https://flatsome3.uxthemes.com/wp-content/uploads/2013/08/589864-5295_1-494x593.jpeg"
+                alt="Women"
+                width="300"
+                height="300"
+              />
+            </div>
+            <div className="image-tools bg-white text-gray-900 cursor-pointer justify-center hover:bg-gray-700 opacity-95 hover:text-white  top-[50%]  items-center w-full absolute  text-center grid-tools  hide-for-small bottom hover-slide-in show-on-hover">
+              <Link href={`/product/search/${category.slug}`}>
+                {category?.name ? category.name : "category Title"}
+              </Link>
+              <p className="is-xsmall uppercase count"> 18 Products</p>
+            </div>
+          </div>
+        </div>
+      </Item>
+    </Grid>
+  );
+};
+
+export default CategoryBlock;

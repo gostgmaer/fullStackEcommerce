@@ -1,4 +1,3 @@
-
 import {
   ArrowForward,
   ArrowRight,
@@ -22,7 +21,6 @@ import { useFetcher } from "@/lib/helper";
 
 const Footersection = ({ service }) => {
   // const { data, isLoading, isError } = useFetcher("products");
- 
 
   return (
     <Box p={3} py={1} component={"section"}>
@@ -54,9 +52,13 @@ export const FeatureItemscard = ({ data }) => {
     <Grid
       item
       xs={3}
+     className="border "
       sx={{
         "& .MuiPaper-rounded:hover": {
-          boxShadow: "0px 6px 20px rgba(3, 0, 71, 0.09)",
+          boxShadow: "none",
+        },
+        "& .MuiPaper-rounded": {
+          boxShadow: "none",
         },
       }}
     >

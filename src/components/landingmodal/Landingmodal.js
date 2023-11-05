@@ -17,12 +17,11 @@ import {
 } from "@mui/material";
 import React from "react";
 
-const Landingmodal = ({openModal, setOpenModal}) => {
-
+const Landingmodal = ({ openModal, setOpenModal }) => {
   return (
     <Stack
       sx={{
-        backgroundImage: "url(/assets/images/bg-1.png)",
+        backgroundImage: "url(/assets/images/pexels-wendy-wei-14411099.jpg)",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "left",
       }}
@@ -30,10 +29,11 @@ const Landingmodal = ({openModal, setOpenModal}) => {
       alignItems={"flex-start"}
       gap={0}
     >
-      <Grid container padding={"20px 5px"} spacing={2} columns={16}>
-        <Grid item xs={8}></Grid>
+      <Grid container   spacing={2} columns={16}>
+      <Grid item xs={8}></Grid>
         <Grid
           item
+          className="bg-white"
           xs={8}
           sx={{
             gap: 1.5,
@@ -50,17 +50,18 @@ const Landingmodal = ({openModal, setOpenModal}) => {
             Sign up to Commerce
           </Typography>
           <Typography fontSize={16} py={2} textAlign={"center"}>
-            Subscribe to the Gost eCommerce newsletter to receive timely
-            updates from your favorite products.
+            Subscribe to the Gost eCommerce newsletter to receive timely updates
+            from your favorite products.
           </Typography>
           <TextField
             variant="outlined"
+            size="small"
             fullWidth
             id="emailaddressmodal"
             name="emailaddressmodal"
             placeholder="Enter your email address"
           ></TextField>
-          <Button fullWidth color="error" variant="contained">
+          <Button fullWidth color="error" variant="contained" className="bg-red-600">
             Submit
           </Button>
 
@@ -80,7 +81,7 @@ const Landingmodal = ({openModal, setOpenModal}) => {
           </Stack>
         </Grid>
       </Grid>
-      <IconButton sx={{m:1}} onClick={() => setOpenModal(null)}>
+      <IconButton sx={{ m: 1 }} onClick={() => setOpenModal(null)}>
         <Close></Close>
       </IconButton>
     </Stack>
