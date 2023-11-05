@@ -49,6 +49,7 @@ import {
   Button,
   Grid,
   IconButton,
+  Rating,
   Stack,
   TextField,
   Typography,
@@ -62,6 +63,7 @@ import {
 } from "@/store/cartReducer";
 import { useGlobalContext } from "@/context/globalContext";
 import MuiModal from "@/layout/modal";
+import Link from "next/link";
 const PCard = ({ product, size }) => {
   const [openModal, setOpenModal] = useState(false);
 
@@ -100,34 +102,74 @@ const PCard = ({ product, size }) => {
                     decoding="async"
                   />
                 </a>
-                <IconButton
-                  data-label={"Add to Wishlist"}
-                  className="show-on-hover absolute border rounded-full top-5 right-5 h-10 w-10 flex items-center hover:text-red-600"
-                  title={"Add to Wishlist"}
-                  aria-label={"Add to Wishlist"}
-                  onClick={() =>
-                    dispatch(
-                      addToWishlist({
-                        id: product.id,
-                        slug: product.slug,
-                        title: product.title,
-                        brand: product.brand,
-                        price: product.price,
-                        size: product.size,
-                        colors: product.colors,
-                        discount: product.discount,
-                        thumbnail: product.thumbnail,
-                        images: product.images,
-                        categories: product.categories,
-                        status: product.status,
-                        reviews: product.reviews,
-                        for: product?.for,
-                      })
-                    )
-                  }
-                >
-                  <Favorite className="" />
-                </IconButton>
+                <div className="show-on-hover absolute top-3 right-3 rounded-full border-2">
+                  {wishlist?.find((item) => item.id === product.id)?.id !==
+                  product.id ? (
+                    <IconButton
+                      data-label={"Add to Wishlist"}
+                      className=" border rounded-full h-10 w-10 flex items-center "
+                      title={"Add to Wishlist"}
+                      aria-label={"Add to Wishlist"}
+                      onClick={() =>
+                        dispatch(
+                          addToWishlist({
+                            id: product.id,
+                            slug: product.slug,
+                            title: product.title,
+                            brand: product.brand,
+                            price: product.price,
+                            size: product.size,
+                            colors: product.colors,
+                            discount: product.discount,
+                            thumbnail: product.thumbnail,
+                            images: product.images,
+                            categories: product.categories,
+                            status: product.status,
+                            reviews: product.reviews,
+                            for: product?.for,
+                          })
+                        )
+                      }
+                    >
+                      <Favorite className="" />
+                    </IconButton>
+                  ) : (
+                    <IconButton
+                      color="error"
+                      onClick={() => dispatch(removeFromWishlist(product.id))}
+                    >
+                      <Favorite />
+                    </IconButton>
+                  )}
+                </div>
+                <div>
+                  {product?.discount && (
+                    <Typography
+                      className=" text-green-500  absolute top-3 left-3"
+                      sx={{
+                        p: "5px 10px",
+                        borderRadius: 5,
+                      }}
+                      gutterBottom
+                      variant="body2"
+                    >
+                      -
+                      {product?.discount &&
+                        ((100 / product?.price) * product?.discount).toFixed(2)}
+                      %
+                    </Typography>
+                  )}
+                </div>
+
+                <div className=" gap-1 flex flex-col text-blck h-8  w-full px-5 absolute bottom-[50%]  grid-tools  hide-for-small bottom ">
+                  <span className="p-2 rounded-full text-white bg-green-600 w-max">
+                    Sale!
+                  </span>
+                  <span className="p-2 rounded-full text-white bg-orange-500 w-max">
+                    New
+                  </span>
+                </div>
+
                 <div
                   onClick={() => setOpenModal(true)}
                   className="image-tools cursor-pointer justify-center bg-gray-700 opacity-95 text-white h-8 items-center w-full absolute bottom-0 text-center grid-tools  hide-for-small bottom hover-slide-in show-on-hover"
@@ -138,20 +180,40 @@ const PCard = ({ product, size }) => {
             </div>
             <div className="box-text box-text-products px-5 py-1">
               <div className="title-wrapper">
-                <p className="category text-xs uppercase is-smaller no-text-overflow product-cat p-1 cursor-pointer">
+                <p className="category text-xs font-semibold uppercase is-smaller no-text-overflow product-cat p-1 cursor-pointer">
                   Men
                 </p>
-                <a
-                  href="https://flatsome3.uxthemes.com/shop/men/t-shirts/ss-crew-california-sub-river-island/"
-                  className="woocommerce-LoopProduct-link woocommerce-loop-product__link"
-                >
-                  SS Crew California Sub River Island
-                </a>
+                <Link href={`/product/${product.slug}`}>
+                  {product?.title
+                    ? product?.title
+                    : " This is a product? Title"}
+                </Link>
               </div>
               <div className="price-wrapper">
-                <span className="price font-medium">
-                  <span>$</span> <span> 19,00</span>
-                </span>
+                <p className="price font-semibold text-red-500 flex gap-3 items-end">
+                  <span className=" text-lg flex  items-end">
+                    $
+                    <span className=" ">
+                      {product?.discount
+                        ? product?.price.toFixed(2) -
+                          product?.discount.toFixed(2)
+                        : product?.price.toFixed(2)
+                        ? product?.price.toFixed(2)
+                        : product?.price.toFixed(2)}
+                    </span>
+                  </span>
+
+                  <span className=" line-through text-gray-500 ">
+                    ${product?.price ? product?.price.toFixed(2) : "$0.00"}
+                  </span>
+                  {product?.discount && (
+                    <span className=" text-green-500 top-3 left-3">
+                      {product?.discount &&
+                        ((100 / product?.price) * product?.discount).toFixed(2)}
+                      % off
+                    </span>
+                  )}
+                </p>
               </div>
             </div>
           </div>
@@ -159,7 +221,7 @@ const PCard = ({ product, size }) => {
       </Item>
       <MuiModal
         heading={undefined}
-        Content={<ProductDetails data={product} />}
+        Content={<ProductDetails product={product} />}
         classes={undefined}
         maxWidth={""}
         openModal={openModal}
@@ -171,11 +233,14 @@ const PCard = ({ product, size }) => {
 
 export default PCard;
 
-const ProductDetails = ({ data }) => {
-  console.log(data);
+const ProductDetails = ({ product }) => {
+  const cartItem = useSelector((state) => state["data"].cartItems);
+  const wishlist = useSelector((state) => state["data"].wishList);
+  const dispatch = useDispatch();
+
   return (
     <div className="product-content flex overflow-hidden gap-5">
-      <div className="product-gallery large-6 col flex-1">
+      <div className="product-gallery large-6 col flex-1 relative">
         <img
           src="https://flatsome3.uxthemes.com/wp-content/uploads/2013/08/271174-0066_1-494x593.jpeg"
           data-src="https://flatsome3.uxthemes.com/wp-content/uploads/2013/08/271174-0066_1-494x593.jpeg"
@@ -183,20 +248,111 @@ const ProductDetails = ({ data }) => {
           alt=""
           decoding="async"
         />
+        <div className="show-on-hover absolute top-3 right-3 rounded-full border-2">
+          {wishlist?.find((item) => item.id === product.id)?.id !==
+          product.id ? (
+            <IconButton
+              data-label={"Add to Wishlist"}
+              className=" border rounded-full h-10 w-10 flex items-center "
+              title={"Add to Wishlist"}
+              aria-label={"Add to Wishlist"}
+              onClick={() =>
+                dispatch(
+                  addToWishlist({
+                    id: product.id,
+                    slug: product.slug,
+                    title: product.title,
+                    brand: product.brand,
+                    price: product.price,
+                    size: product.size,
+                    colors: product.colors,
+                    discount: product.discount,
+                    thumbnail: product.thumbnail,
+                    images: product.images,
+                    categories: product.categories,
+                    status: product.status,
+                    reviews: product.reviews,
+                    for: product?.for,
+                  })
+                )
+              }
+            >
+              <Favorite className="" />
+            </IconButton>
+          ) : (
+            <IconButton
+              color="error"
+              onClick={() => dispatch(removeFromWishlist(product.id))}
+            >
+              <Favorite />
+            </IconButton>
+          )}
+        </div>
+        <div>
+          {product?.discount && (
+            <Typography
+              className=" text-green-500  absolute top-3 left-3"
+              sx={{
+                p: "5px 10px",
+                borderRadius: 5,
+              }}
+              gutterBottom
+              variant="body2"
+            >
+              -
+              {product?.discount &&
+                ((100 / product?.price) * product?.discount).toFixed(2)}
+              %
+            </Typography>
+          )}
+        </div>
+
+        <div className=" gap-1 flex flex-col text-blck h-8  w-full px-5 absolute bottom-[50%]  grid-tools  hide-for-small bottom ">
+          <span className="p-2 rounded-full text-white bg-green-600 w-max">
+            Sale!
+          </span>
+          <span className="p-2 rounded-full text-white bg-orange-500 w-max">
+            New
+          </span>
+        </div>
       </div>
       <div className="product-info summary large-6 col entry-summary flex-1 p-5 overflow-hidden">
         <div className="product-lightbox-inner overflow-hidden">
-          <a
-            className="plain"
-            href="https://flatsome3.uxthemes.com/shop/clothing/happy-ninja/"
-          >
-            <p className=" text-2xl">Happy Ninja</p>
-          </a>
+          <Rating
+            name="half-rating-read"
+            defaultValue={4.5}
+            precision={0.5}
+            readOnly
+          />
+          <p></p>
+          <Link href={`/product/${product.slug}`}>
+            {product?.title ? product?.title : " This is a product? Title"}
+          </Link>
           <div className="border-t border-gray-300 my-4 w-5 border-2"></div>
           <div className="price-wrapper">
-            <span className="price font-medium">
-              <span>$</span> <span> 19,00</span>
-            </span>
+            <p className="price font-semibold text-red-500 flex gap-3 items-end">
+              <span className=" text-lg flex  items-end">
+                $
+                <span className=" ">
+                  {product?.discount
+                    ? product?.price.toFixed(2) - product?.discount.toFixed(2)
+                    : product?.price.toFixed(2)
+                    ? product?.price.toFixed(2)
+                    : product?.price.toFixed(2)}
+                </span>
+              </span>
+
+              <span className=" line-through text-gray-500 ">
+                ${product?.price ? product?.price.toFixed(2) : "$0.00"}
+              </span>
+              {product?.discount && (
+                <span className=" text-green-500 top-3 left-3">
+                  {product?.discount &&
+                    ((100 / product?.price) * product?.discount).toFixed(2)}
+                  % off
+                </span>
+              )}
+            </p>
           </div>
           <div className="product-short-description">
             <p>
@@ -213,7 +369,7 @@ const ProductDetails = ({ data }) => {
             method="post"
             encType="multipart/form-data"
           >
-            <CartAddItems />
+            <CartAddItems product={product} />
           </form>
 
           <div className="border-t border-gray-300 my-4 "></div>
@@ -235,7 +391,23 @@ const ProductDetails = ({ data }) => {
   );
 };
 
-const CartAddItems = ({}) => {
+const CartAddItems = ({ product }) => {
+  const cartItem = useSelector((state) => state["data"].cartItems);
+  const wishlist = useSelector((state) => state["data"].wishList);
+  const dispatch = useDispatch();
+
+  const [value, setValue] = useState(1);
+
+  const handleIncrement = () => {
+    setValue(value + 1);
+  };
+
+  const handleDecrement = () => {
+    if (value > 0) {
+      setValue(value - 1);
+    }
+  };
+
   return (
     <Box className="flex items-center">
       <Stack
@@ -256,19 +428,45 @@ const CartAddItems = ({}) => {
           type="button"
           value={"-"}
           className="h-10 w-10 cursor-pointer "
+          onClick={handleDecrement}
         />
         <TextField
           type="text"
-          value={5}
+          value={value}
+       
           className="h-10 w-12 text-center [&_.MuiInputBase-input]:cursor-auto "
         />
         <TextField
           type="button"
           value={"+"}
+          onClick={handleIncrement}
           className="h-10 w-10 cursor-pointer "
         />
       </Stack>
-      <Button className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 h-10 px-4 rounded">
+      <Button
+        onClick={() =>
+          dispatch(
+            addToCart({
+              id: product.id,
+              slug: product.slug,
+              title: product.title,
+              brand: product.brand,
+              size: product.size,
+              colors: product.colors,
+              desc: product.description,
+              image: product.thumbnail,
+              quantity: value,
+              subtotal: product["discount"]
+                ? product["price"] - product["discount"]
+                : product["price"],
+              price: product["discount"]
+                ? product["price"] - product["discount"]
+                : product["price"],
+            })
+          )
+        }
+        className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 h-10 px-4 rounded"
+      >
         Add to Cart
       </Button>
     </Box>

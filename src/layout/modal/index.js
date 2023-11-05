@@ -24,16 +24,16 @@ export default function MuiModal({
   const [fullWidth, setFullWidth] = React.useState(true);
 
   return (
-   <div>
-     <Dialog
+    <Dialog
       aria-labelledby="customized-dialog-title"
       fullWidth={true}
       // @ts-ignore
+
       maxWidth={maxWidth ? maxWidth : "md"}
-      className={`${classes ? classes : ""}`}
+      className={`${classes ? classes : ""} overflow-hidden`}
       open={openModal ? true : false}
     >
-      {heading && (
+      {heading ? (
         <DialogTitle
           sx={{
             m: 0,
@@ -48,6 +48,16 @@ export default function MuiModal({
             {heading ? heading.icon : <Close />}
           </IconButton>
         </DialogTitle>
+      ) : (
+        <div className="absolute " style={{ top: 10, right: 10 }}>
+          <IconButton
+            aria-label="close"
+            onClick={() => setOpenModal(false)}
+            className=" "
+          >
+            {heading ? heading.icon : <Close />}
+          </IconButton>
+        </div>
       )}
 
       <DialogContent
@@ -61,15 +71,6 @@ export default function MuiModal({
         {Content ? Content : "No Data Found Found"}
       </DialogContent>
       {/* <DialogActions></DialogActions> */}
-
-      <IconButton
-        aria-label="close"
-        onClick={() => setOpenModal(false)}
-        className=" absolute top-0 right-0"
-      >
-        {heading ? heading.icon : <Close />}
-      </IconButton>
     </Dialog>
-   </div>
   );
 }

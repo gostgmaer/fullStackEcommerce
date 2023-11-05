@@ -165,7 +165,7 @@ const Productcard = ({ product, size }) => {
           <CardActions sx={{ justifyContent: "space-between" }}>
             <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
               <Typography color={colors.red[500]} variant="body2">
-                ${" "}
+                $
                 {product?.discount
                   ? product?.price.toFixed(2) - product?.discount.toFixed(2)
                   : product?.price.toFixed(2)
