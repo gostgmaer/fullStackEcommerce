@@ -1,47 +1,3 @@
-// import React from 'react';
-// import Link from 'next/link';
-// import {
-//   Card,
-//   CardActionArea,
-//   CardContent,
-//   CardMedia,
-//   Typography,
-//   Button,
-// } from '@mui/material';
-
-// const PCard = ({ product }) => {
-//   return (
-//     <Card className="max-w-sm shadow-md">
-//       <Link href={`/products/${product.id}`}>
-//       <CardActionArea>
-//             <CardMedia
-//               component="img"
-//               alt={product.title}
-//               height="200"
-//               image={product.image}
-//             />
-//             <CardContent>
-//               <Typography gutterBottom variant="h5" component="div">
-//                 {product.title}
-//               </Typography>
-//               <Typography variant="body2" color="textSecondary">
-//                 {product.description}
-//               </Typography>
-//               <Typography variant="h6" color="textPrimary">
-//                 ${product.price}
-//               </Typography>
-//             </CardContent>
-//           </CardActionArea>
-//       </Link>
-//       <Button variant="contained" color="primary">
-//         Add to Cart
-//       </Button>
-//     </Card>
-//   );
-// };
-
-// export default PCard;
-
 import { Item } from "@/components/elements/Item";
 import { Add, Favorite, Remove } from "@mui/icons-material";
 import {
@@ -74,7 +30,7 @@ const PCard = ({ product, size }) => {
   return (
     <Grid
       item
-      className=" [&_.MuiPaper-rounded]:border"
+      className=" [&_.MuiPaper-rounded]:border p-1"
       xs={size ? size : 12}
       sx={{
         "& .MuiPaper-rounded": {
@@ -88,9 +44,9 @@ const PCard = ({ product, size }) => {
             <div className="badge-container absolute left top z-1"></div>
             <div className="product-small box ">
               <div className="image-fade_in_back [&_.show-on-hover]:hover:flex [&_.show-on-hover]:hidden relative">
-                <a
-                  href="https://flatsome3.uxthemes.com/shop/men/t-shirts/ss-crew-california-sub-river-island/"
-                  aria-label="SS Crew California Sub River Island"
+                <Link
+                  href={`/product/${product.slug}`}
+                  aria-label={product.name}
                 >
                   <img
                     width="494"
@@ -101,7 +57,7 @@ const PCard = ({ product, size }) => {
                     alt=""
                     decoding="async"
                   />
-                </a>
+                </Link>
                 <div className="show-on-hover absolute top-3 right-3 rounded-full border-2">
                   {wishlist?.find((item) => item.id === product.id)?.id !==
                   product.id ? (
@@ -161,14 +117,14 @@ const PCard = ({ product, size }) => {
                   )}
                 </div>
 
-                <div className=" gap-1 flex flex-col text-blck h-8  w-full px-5 absolute bottom-[50%]  grid-tools  hide-for-small bottom ">
+                <span className=" gap-1 flex flex-col text-blck h-8  w-max px-5 absolute bottom-[50%]  grid-tools  hide-for-small bottom ">
                   <span className="p-2 rounded-full text-white bg-green-600 w-max">
                     Sale!
                   </span>
                   <span className="p-2 rounded-full text-white bg-orange-500 w-max">
                     New
                   </span>
-                </div>
+                </span>
 
                 <div
                   onClick={() => setOpenModal(true)}
@@ -391,7 +347,7 @@ const ProductDetails = ({ product }) => {
   );
 };
 
-const CartAddItems = ({ product }) => {
+export const CartAddItems = ({ product }) => {
   const cartItem = useSelector((state) => state["data"].cartItems);
   const wishlist = useSelector((state) => state["data"].wishList);
   const dispatch = useDispatch();
@@ -407,9 +363,31 @@ const CartAddItems = ({ product }) => {
       setValue(value - 1);
     }
   };
+  const addToCard = () => {
+    dispatch(
+      addToCart({
+        id: product.id,
+        slug: product.slug,
+        title: product.title,
+        brand: product.brand,
+        size: product.size,
+        colors: product.colors,
+        desc: product.description,
+        image: product.thumbnail,
+        quantity: value,
+        subtotal: product["discount"]
+          ? product["price"] - product["discount"]
+          : product["price"],
+        price: product["discount"]
+          ? product["price"] - product["discount"]
+          : product["price"],
+      })
+    );
+    setValue(1)
+  };
 
   return (
-    <Box className="flex items-center">
+    <Box className="flex items-center gap-5">
       <Stack
         flex={0.5}
         direction={"row"}
@@ -433,7 +411,6 @@ const CartAddItems = ({ product }) => {
         <TextField
           type="text"
           value={value}
-       
           className="h-10 w-12 text-center [&_.MuiInputBase-input]:cursor-auto "
         />
         <TextField
@@ -444,27 +421,7 @@ const CartAddItems = ({ product }) => {
         />
       </Stack>
       <Button
-        onClick={() =>
-          dispatch(
-            addToCart({
-              id: product.id,
-              slug: product.slug,
-              title: product.title,
-              brand: product.brand,
-              size: product.size,
-              colors: product.colors,
-              desc: product.description,
-              image: product.thumbnail,
-              quantity: value,
-              subtotal: product["discount"]
-                ? product["price"] - product["discount"]
-                : product["price"],
-              price: product["discount"]
-                ? product["price"] - product["discount"]
-                : product["price"],
-            })
-          )
-        }
+        onClick={addToCard}
         className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 h-10 px-4 rounded"
       >
         Add to Cart

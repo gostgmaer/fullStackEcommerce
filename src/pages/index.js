@@ -33,8 +33,8 @@ const Home = ({ products }) => {
       <Layout>
         <Heroslider data={productData?.mainCarouselData} />
         <FlashDeal data={productData?.flashDealsData} />
-        <FeatureItems data={productData} />
-        <DiscountSlider data={productData?.bigDiscountList} />
+        {/* <FeatureItems data={productData} /> */}
+        {/* <DiscountSlider data={productData?.bigDiscountList} /> */}
         <NewArrival data={productData?.newArrivalsList} />
         <CategoryList data={productData.bottomCategories} />
         <ModeForYou data={productData.moreItems} />

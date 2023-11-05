@@ -8,9 +8,11 @@ import {
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { Fragment } from "react";
 import Productcard from "./Productcard";
-const Elementlist = ({ children, title, icon }) => {
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Navigation, Autoplay } from "swiper/modules";
+const Elementlist = ({ children, title, icon, isSlide,slideItem }) => {
   return (
-    <Box  p={3} py={1} component={"section"}>
+    <Box p={3} py={1} component={"section"}>
       <Box sx={{ width: "100%", mt: 0 }}>
         <Box
           sx={{
@@ -21,13 +23,15 @@ const Elementlist = ({ children, title, icon }) => {
             alignItems: "center",
           }}
         >
-          <Typography   sx={{
-          
-            display: "flex",
-           gap:1,
-  
-            alignItems: "center",
-          }}  variant="h4">
+          <Typography
+            sx={{
+              display: "flex",
+              gap: 1,
+
+              alignItems: "center",
+            }}
+            variant="h4"
+          >
             {icon ? (
               <Fragment>
                 {icon} {title}
@@ -43,15 +47,28 @@ const Elementlist = ({ children, title, icon }) => {
         <Box sx={{ flexGrow: 1 }}>
           <Grid
             container
-            item
-            gap={"10px"}
             justifyContent="space-between"
-            p="0"
             width="100%"
-            m="0"
-            columns={12.8}
+            columns={12}
+         
           >
-            {children}
+            {isSlide ? (
+              <Swiper
+                slidesPerView={slideItem}
+                spaceBetween={8}
+                style={{ padding: "10px 0" }}
+                rewind={true}
+                navigation={true}
+                loop
+                autoplay={{ delay: 3000 }}
+                modules={[Navigation]}
+                className="mySwiper"
+              >
+                {children}
+              </Swiper>
+            ) : (
+              <>{children}</>
+            )}
           </Grid>
         </Box>
       </Box>

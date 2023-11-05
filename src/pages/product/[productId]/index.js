@@ -1,15 +1,19 @@
-import { productData } from "@/assets/mock/product";
+import { allproducts, productData } from "@/assets/mock/product";
 import Info from "@/components/products/Productdetails/Info";
 import Related from "@/components/products/Productdetails/Related";
 import ProductDetails from "@/components/products/Productdetails/details";
 import Layout from "@/layout";
 import { Box } from "@mui/material";
 import Head from "next/head";
+import { useParams } from "next/navigation";
 import React from "react";
 
 const Index = () => {
-  const data = productData.mobileList
-  console.log(data);
+  const data = allproducts;
+  const params = useParams();
+  const product = data.find((data) => data.slug === params["productId"]);
+  const relatedProduct = data;
+  console.log(product);
   return (
     <>
       <Head>
@@ -20,9 +24,9 @@ const Index = () => {
       </Head>
       <Layout>
         <Box p={3} component={"div"}>
-          <Info />
-          <ProductDetails />
-          <Related data ={productData} />
+          <Info data={product} />
+          <ProductDetails data={product} />
+          <Related data={relatedProduct} />
         </Box>
       </Layout>
     </>
@@ -30,7 +34,3 @@ const Index = () => {
 };
 
 export default Index;
-
-
-
-

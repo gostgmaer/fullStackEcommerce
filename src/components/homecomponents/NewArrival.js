@@ -1,8 +1,10 @@
 import { ArrowRight, NewReleases } from "@mui/icons-material";
 import { Box, Button, colors, Grid, Typography } from "@mui/material";
 import Smallproductcard from "../elements/Smallproductcard";
-
-const NewArrival = ({data}) => {
+import PCard from "../global/products/Card";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Navigation, Autoplay } from "swiper/modules";
+const NewArrival = ({ data }) => {
   return (
     <Box p={3} py={1} component={"section"}>
       <Box sx={{ width: "100%", mt: 0 }}>
@@ -24,7 +26,7 @@ const NewArrival = ({data}) => {
               alignItems: "center",
             }}
           >
-            <NewReleases /> New Arrival
+            <NewReleases /> Featured
           </Typography>
           <Button variant="text" endIcon={<ArrowRight />}>
             View all
@@ -33,18 +35,29 @@ const NewArrival = ({data}) => {
         <Box sx={{ flexGrow: 1 }}>
           <Grid
             container
-            gap={"10px"}
+            //  gap={"10px"}
             justifyContent="space-between"
-            p="10px"
-            borderRadius={5}
-            bgcolor={"white"}
             width="100%"
-            m="0"
-            columns={19}
+            m=""
+            columns={12}
           >
-            {data.map((item) => (
-              <Smallproductcard  height={null} issale={false} size={null} key={item.id} product={item} />
-            ))}
+            <Swiper
+              slidesPerView={4}
+              spaceBetween={8}
+              style={{ padding: "10px 0" }}
+              rewind={true}
+              navigation={true}
+              loop
+              autoplay={{ delay: 3000 }}
+              modules={[Navigation]}
+              className="mySwiper"
+            >
+              {data.map((item) => (
+                <SwiperSlide key={item.id}>
+                  <PCard key={item.id} product={item} size={12} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </Grid>
         </Box>
       </Box>

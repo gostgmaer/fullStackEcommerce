@@ -1,6 +1,7 @@
 import { ArrayData } from "@/assets/mock/product";
 import Elementlist from "@/components/elements/Elementlist";
 import Productcard from "@/components/elements/Productcard";
+import PCard from "@/components/global/products/Card";
 import { ReplayOutlined } from "@mui/icons-material";
 import { Box } from "@mui/material";
 import { useRouter } from "next/router";
@@ -14,9 +15,9 @@ const router = useRouter()
 
   return (
     <Box sx={{ width: "100%" }} mt={5}>
-      <Elementlist title={"Related Products"} icon={<ReplayOutlined />}>
-        {data.mobileList.slice(0,8).map((item) => (
-          <Productcard key={item.id} product={item} size={undefined} />
+      <Elementlist title={"Related Products"} icon={<ReplayOutlined />}  isSlide={undefined} slideItem={undefined}>
+        {data.slice(0,8).map((item) => (
+          <PCard key={item.id} product={item} size={3} />
         ))}
       </Elementlist>
     </Box>

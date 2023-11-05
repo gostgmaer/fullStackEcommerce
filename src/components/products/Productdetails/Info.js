@@ -11,8 +11,9 @@ import { Box, Grid, Rating, Typography, colors, Button } from "@mui/material";
 import Image from "next/image";
 import React, { useState } from "react";
 import ImageSlider from "./details/ImageSlider";
+import { CartAddItems } from "@/components/global/products/Card";
 
-const Info = () => {
+const Info = ({data}) => {
   // const [selected, setSelected] = useState(true);
   const [selected, setSelected] = useState("");
   const [type, setType] = useState("");
@@ -76,12 +77,12 @@ const Info = () => {
             gap={"5px"}
             flexDirection="column"
           >
-            <Typography variant="h1">Xamaha R15 Black R15 </Typography>
+            <Typography variant="h1" className=" !text-4xl">{data.title} </Typography>
             <Typography
               sx={{ display: "flex", alignItems: "center", gap: "10px" }}
               variant="body1"
             >
-              Brand: <span>Xiaomi</span>
+              Brand: <span>{data.brand}</span>
             </Typography>
             <Typography
               sx={{ display: "flex", alignItems: "center", gap: "10px" }}
@@ -206,34 +207,32 @@ const Info = () => {
             gap={"5px"}
             flexDirection="column"
           >
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-              <Typography
-                sx={{ fontSize: "20px", fontWeight: 600 }}
-                color={colors.red[500]}
-                variant="body2"
-              >
-                $256.00
-              </Typography>
-              <Typography
-                sx={{
-                  textDecoration: "line-through",
-                  fontWeight: 600,
-                  fontSize: "20px",
-                }}
-                color={colors.grey[400]}
-                variant="body2"
-              >
-                $275.00
-              </Typography>
-              <Typography
-                sx={{
-                  color: colors.green[600],
-                }}
-                variant="body2"
-              >
-                18% off
-              </Typography>
-            </Box>
+           <div className="price-wrapper">
+                <p className="price font-semibold text-red-500 flex gap-3 items-end">
+                  <span className=" text-lg flex  items-end">
+                    $
+                    <span className=" ">
+                      {data?.discount
+                        ? data?.price.toFixed(2) -
+                        data?.discount.toFixed(2)
+                        : data?.price.toFixed(2)
+                        ? data?.price.toFixed(2)
+                        : data?.price.toFixed(2)}
+                    </span>
+                  </span>
+
+                  <span className=" line-through text-gray-500 ">
+                    ${data?.price ? data?.price.toFixed(2) : "$0.00"}
+                  </span>
+                  {data?.discount && (
+                    <span className=" text-green-500 top-3 left-3">
+                      {data?.discount &&
+                        ((100 / data?.price) * data?.discount).toFixed(2)}
+                      % off
+                    </span>
+                  )}
+                </p>
+              </div>
             <Typography
               sx={{
                 color: colors.grey[800],
@@ -244,9 +243,7 @@ const Info = () => {
               Stock is avaliable
             </Typography>
           </Box>
-          <Button color="error" variant="contained" endIcon={<ShoppingBag />} >
-            Add to Cart
-          </Button>
+              <CartAddItems product={data}/>
           <Typography
             sx={{
               color: colors.grey[800],

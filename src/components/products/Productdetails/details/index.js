@@ -4,7 +4,7 @@ import { useState } from "react";
 import Description from "./description";
 import Specifications from "./specification";
 import Review from "./review";
-const ProductDetails = () => {
+const ProductDetails = ({data}) => {
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
