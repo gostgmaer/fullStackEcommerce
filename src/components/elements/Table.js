@@ -340,25 +340,17 @@ export default function EnhancedTable({
                     )}
 
                     {headCells.map((item) => (
-                      <TableCell key={item.id} align="left">
+                      <TableCell
+                        key={item.id}
+                        align={`${item.action ? "right" : "left"}`}
+                      >
                         {row[item.id]}
                       </TableCell>
                     ))}
 
-                    {/* <TableCell
-                      component="th"
-                      id={labelId}
-                      scope="row"
-                      padding="none"
-                    >
-                      {row.name}
-                    </TableCell>
-                    <TableCell align="right">{row.calories}</TableCell>
-                    <TableCell align="right">{row.fat}</TableCell>
-                    <TableCell align="right">{row.carbs}</TableCell> */}
-                    <TableCell align="right">
+                    {/* <TableCell align="right">
                       <CartAddItems product={row} />
-                    </TableCell>
+                    </TableCell> */}
                   </TableRow>
                 );
               })}

@@ -1,5 +1,5 @@
 import { ArrayData } from "@/assets/mock/product";
-import { Check, ShoppingBag } from "@mui/icons-material";
+import { Check, KeyboardArrowDown, ShoppingBag } from "@mui/icons-material";
 import Radio from "@mui/joy/Radio";
 import RadioGroup from "@mui/joy/RadioGroup";
 import CheckIcon from "@mui/icons-material/Check";
@@ -12,9 +12,9 @@ import Image from "next/image";
 import React, { useState } from "react";
 import ImageSlider from "./details/ImageSlider";
 import { CartAddItems } from "@/components/global/products/Cart";
+import { Select, selectClasses, Option } from "@mui/joy";
 
-
-const Info = ({data}) => {
+const Info = ({ data }) => {
   // const [selected, setSelected] = useState(true);
   const [selected, setSelected] = useState("");
   const [type, setType] = useState("");
@@ -38,13 +38,8 @@ const Info = ({data}) => {
           item
           xs={8}
         >
-          {/* <Image
-            width={500}
-            height={420}
-            style={{ objectFit: "contain" }}
-            alt="Xamaha R15 Black"
-            src="/assets/images/nike-black.png"
-          ></Image>
+          {/* 
+          
           <Box
             display={"flex"}
             justifyContent={"space-between"}
@@ -62,7 +57,7 @@ const Info = ({data}) => {
               ></Image>
             ))}
           </Box> */}
-          <ImageSlider />
+          {/* <ImageSlider /> */}
         </Grid>
         <Grid
           display={"flex"}
@@ -75,16 +70,13 @@ const Info = ({data}) => {
           <Box
             display={"flex"}
             alignItems="flex-start"
-            gap={"5px"}
+            gap={"8px"}
             flexDirection="column"
           >
-            <Typography variant="h1" className=" !text-4xl">{data.title} </Typography>
-            <Typography
-              sx={{ display: "flex", alignItems: "center", gap: "10px" }}
-              variant="body1"
-            >
-              Brand: <span>{data.brand}</span>
+            <Typography variant="h1" className=" !text-2xl">
+              {data.title}{" "}
             </Typography>
+            <div className="border-t border-gray-300 my-1 w-10 border-2"></div>
             <Typography
               sx={{ display: "flex", alignItems: "center", gap: "10px" }}
               variant="body1"
@@ -98,8 +90,38 @@ const Info = ({data}) => {
               />{" "}
               <span> (20)</span>
             </Typography>
-          </Box>
-          <Box>
+            <div className="price-wrapper">
+              <p className="price font-semibold text-red-500 flex gap-3 items-end">
+                <span className=" text-lg flex  items-end">
+                  $
+                  <span className=" ">
+                    {data?.discount
+                      ? data?.price.toFixed(2) - data?.discount.toFixed(2)
+                      : data?.price.toFixed(2)
+                      ? data?.price.toFixed(2)
+                      : data?.price.toFixed(2)}
+                  </span>
+                </span>
+
+                <span className=" line-through text-gray-500 ">
+                  ${data?.price ? data?.price.toFixed(2) : "$0.00"}
+                </span>
+                {data?.discount && (
+                  <span className=" text-green-500 top-3 left-3">
+                    {data?.discount &&
+                      ((100 / data?.price) * data?.discount).toFixed(2)}
+                    % off
+                  </span>
+                )}
+              </p>
+            </div>
+            <div className="product-short-description">
+              <p>
+                Pellentesque habitant morbi tristique senectus et netus et
+                malesuada fames ac turpis egestas. Vestibulum tortor quam,
+                feugiat vitae, ultricies eget, tempor sit amet, ante.
+              </p>
+            </div>
             <Box
               sx={{
                 display: "flex",
@@ -108,152 +130,132 @@ const Info = ({data}) => {
                 flexDirection: "column",
               }}
             >
-              <strong>Option:</strong>
+              <Typography
+                sx={{
+                  color: colors.grey[800],
+                }}
+                gutterBottom
+                variant="subtitle1"
+              >
+                Stock is avaliable
+              </Typography>
               <Box
+                width={"100%"}
                 sx={{
                   display: "flex",
                   alignItems: "center",
-                  gap: "10px",
                 }}
               >
-                <RadioGroup
-                  name="best-movie"
-                  aria-labelledby="best-movie"
-                  orientation="horizontal"
-                  sx={{ flexWrap: "wrap", gap: 1 }}
+                {" "}
+                <span className="flex-1">Option:</span>
+                <Select
+                  className="flex-2"
+                  placeholder="Select a Options"
+                  indicator={<KeyboardArrowDown />}
+                  sx={{
+                    width: 240,
+                    flex: 2,
+                    [`& .${selectClasses.indicator}`]: {
+                      transition: "0.2s",
+                      [`&.${selectClasses.expanded}`]: {
+                        transform: "rotate(-180deg)",
+                      },
+                    },
+                  }}
                 >
-                  {["Star trek", "Batman", "Spider man"].map((name) => {
-                    const checked = selected === name;
-                    return (
-                      <Chip
-                        key={name}
-                        variant={checked ? "solid" : "plain"}
-                        color={checked ? "primary" : "neutral"}
-                      >
-                        <Radio
-                          variant="outlined"
-                          color={checked ? "" : "neutral"}
-                          disableIcon
-                          overlay
-                          label={name}
-                          value={name}
-                          checked={checked}
-                          onChange={(event) => {
-                            if (event.target.checked) {
-                              setSelected(name);
-                            }
-                          }}
-                        />
-                      </Chip>
-                    );
-                  })}
-                </RadioGroup>
+                  {["Star trek", "Batman", "Spider man"].map((name, index) => (
+                    <Option key={index} value={name}>
+                      {name}
+                    </Option>
+                  ))}
+                </Select>
               </Box>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "flex-start",
-                gap: "10px",
-                flexDirection: "column",
-              }}
-            >
-              <strong>Type: </strong>
               <Box
+                width={"100%"}
                 sx={{
                   display: "flex",
                   alignItems: "center",
-                  gap: "10px",
                 }}
               >
-                <RadioGroup
-                  name="best-movie"
-                  aria-labelledby="best-movie"
-                  orientation="horizontal"
-                  sx={{ flexWrap: "wrap", gap: 1 }}
+                <span className="flex-1">Type: </span>
+                <Select
+                  className="flex-[2]"
+                  placeholder="Select a Type"
+                  indicator={<KeyboardArrowDown />}
+                  sx={{
+                    width: 240,
+                    flex: 2,
+                    [`& .${selectClasses.indicator}`]: {
+                      transition: "0.2s",
+                      [`&.${selectClasses.expanded}`]: {
+                        transform: "rotate(-180deg)",
+                      },
+                    },
+                  }}
                 >
-                  {["Thor", "The hulk"].map((name) => {
-                    const checked = type === name;
-                    return (
-                      <Chip
-                        key={name}
-                        variant={checked ? "solid" : "plain"}
-                        color={checked ? "primary" : "neutral"}
-                      >
-                        <Radio
-                          variant="outlined"
-                          color={checked ? "" : "neutral"}
-                          disableIcon
-                          overlay
-                          label={name}
-                          value={name}
-                          checked={checked}
-                          onChange={(event) => {
-                            if (event.target.checked) {
-                              setType(name);
-                            }
-                          }}
-                        />
-                      </Chip>
-                    );
-                  })}
-                </RadioGroup>
+                  {["Thor", "The hulk"].map((name, index) => (
+                    <Option key={index} value={name}>
+                      {name}
+                    </Option>
+                  ))}
+                </Select>
               </Box>
             </Box>
-          </Box>
+            <CartAddItems product={data} />
 
-          <Box
-            display={"flex"}
-            alignItems="flex-start"
-            gap={"5px"}
-            flexDirection="column"
-          >
-           <div className="price-wrapper">
-                <p className="price font-semibold text-red-500 flex gap-3 items-end">
-                  <span className=" text-lg flex  items-end">
-                    $
-                    <span className=" ">
-                      {data?.discount
-                        ? data?.price.toFixed(2) -
-                        data?.discount.toFixed(2)
-                        : data?.price.toFixed(2)
-                        ? data?.price.toFixed(2)
-                        : data?.price.toFixed(2)}
-                    </span>
-                  </span>
+            <div className="border-t border-gray-300 my-4 border-1 w-1 "></div>
 
-                  <span className=" line-through text-gray-500 ">
-                    ${data?.price ? data?.price.toFixed(2) : "$0.00"}
-                  </span>
-                  {data?.discount && (
-                    <span className=" text-green-500 top-3 left-3">
-                      {data?.discount &&
-                        ((100 / data?.price) * data?.discount).toFixed(2)}
-                      % off
-                    </span>
-                  )}
-                </p>
-              </div>
-            <Typography
-              sx={{
-                color: colors.grey[800],
-              }}
-              gutterBottom
-              variant="subtitle1"
-            >
-              Stock is avaliable
-            </Typography>
+            <div className="product_meta">
+              <Typography
+                sx={{
+                  color: colors.grey[800],
+                }}
+             
+                variant="subtitle1"
+              >
+                SKU: <span>NA</span>
+              </Typography>
+              <Typography
+                sx={{
+                  color: colors.grey[800],
+                }}
+             
+                variant="subtitle1"
+              >
+                Category: <a
+                  href="https://flatsome3.uxthemes.com/product-category/clothing/"
+                  rel="tag"
+                >
+                  Clothing
+                </a>
+              </Typography>
+             
+              <Typography
+                sx={{ display: "flex", alignItems: "center", gap: "10px", color: colors.grey[800], }}
+                variant="subtitle1"
+              >
+                Brand: <span>{data.brand}</span>
+              </Typography>
+              <Typography
+                sx={{
+                  color: colors.grey[800],
+                }}
+           
+                variant="subtitle1"
+              >
+                Soldby: <strong>Mobile Store</strong>
+              </Typography>
+              <Typography
+                sx={{
+                  color: colors.grey[800],
+                }}
+               
+                variant="subtitle1"
+              >
+                Tags: <strong>Tag1</strong>
+              </Typography>
+            </div>
           </Box>
-              <CartAddItems product={data}/>
-          <Typography
-            sx={{
-              color: colors.grey[800],
-            }}
-            gutterBottom
-            variant="subtitle1"
-          >
-            Soldby: <strong>Mobile Store</strong>
-          </Typography>
         </Grid>
       </Grid>
     </Box>

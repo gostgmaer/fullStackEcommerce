@@ -16,7 +16,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 const DiscountSlider = ({ data }) => {
   SwiperCode.use([Autoplay]);
   return (
-    <Box p={3} py={1} component={"section"}>
+    <Box py={1} component={"section"}>
       <Box sx={{ width: "100%", mt: 0 }}>
         <Box
           sx={{
