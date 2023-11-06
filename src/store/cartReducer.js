@@ -22,12 +22,13 @@ export const cartSlice = createSlice({
         (item) => item.id === action.payload.id
       );
       if (item) {
-        item.quantity += 1;
+        item.quantity += action.payload.quantity;
         item["subtotal"] = item.quantity * item.price;
       } else {
         state.cartItems.push(action.payload);
       }
     },
+
     updateCart: (state, action) => {
       const item = state.cartItems.find(
         (item) => item.id === action.payload.id

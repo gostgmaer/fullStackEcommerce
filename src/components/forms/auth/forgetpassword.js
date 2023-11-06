@@ -82,7 +82,7 @@ class ForgetPasswordForm extends React.Component {
           </Grid>
 
 
-          <Grid container justify="center" style={{ marginTop: '10px' }}>
+          <Grid container justifyContent="center" style={{ marginTop: '10px' }}>
             <Button
               variant="outlined"
               color="primary"
@@ -93,7 +93,7 @@ class ForgetPasswordForm extends React.Component {
               {this.props.loading ? 'Submitting...' : 'Submit'}
             </Button>
           </Grid>
-          <Grid container alignItems="center" justify="center">
+          <Grid container alignItems="center" justifyContent="center">
             <Grid item>
               <Button
                 disableFocusRipple

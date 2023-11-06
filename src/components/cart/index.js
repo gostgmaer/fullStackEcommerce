@@ -20,6 +20,7 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removefromCart, updateCart } from "@/store/cartReducer";
 import { sumWithInitial } from "@/lib/sevice";
+import { CartAddItems, CartUpdate } from "../global/products/Cart";
 
 export default function CartBlock() {
   const { state, setState } = useGlobalContext();
@@ -104,6 +105,7 @@ export default function CartBlock() {
             }}
             variant="contained"
             color="error"
+            className=" bg-red-600"
             fullWidth
           >
             Checkout {`($ ${sumWithInitial(cartItem).toFixed(2)})`}
@@ -161,62 +163,7 @@ const HascartData = ({ data }) => {
         p: 2,
       }}
     >
-      <Stack
-        gap={1}
-        flex={0.5}
-        alignItems={"center"}
-        sx={{
-          "&>.MuiButton-outlined": {
-            p: 0,
-            minHeight: 0,
-            minWidth: 0,
-            textTransform: "capitalize",
-          },
-        }}
-      >
-        <IconButton
-          sx={{ border: "1px solid", padding: "0" }}
-          color="error"
-          onClick={() =>
-            dispatch(
-              addToCart({
-                id: data.id,
-                slug: data.slug,
-                title: data.title,
-                brand: data.brand,
-                size: data.size,
-                colors: data.colors,
-                desc: data.description,
-                image: data.thumbnail,
-                quantity: data.quantity,
-                subtotal: data["subtotal"],
-                price: data["price"],
-              })
-            )
-          }
-        >
-          <Add></Add>
-        </IconButton>
-        <Typography
-          variant="body2"
-          sx={{ mx: 0.5, fontWeight: 600, fontSize: 15 }}
-        >
-          {data.quantity}
-        </Typography>
-        <IconButton
-          sx={{ border: "1px solid", padding: "0" }}
-          color="error"
-          onClick={() =>
-            dispatch(
-              updateCart({
-                id: data?.id,
-              })
-            )
-          }
-        >
-          <Remove></Remove>
-        </IconButton>
-      </Stack>
+      <CartUpdate data={data} />
       <Box
         display={"flex"}
         gap={2}

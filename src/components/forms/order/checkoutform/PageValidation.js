@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import AddressForm from "@/components/checkoutform/Address";
-import PaymentForm from "@/components/checkoutform/Payment";
-import Review from "@/components/checkoutform/Preview";
-import Pricesumery from "@/components/checkoutform/Pricesumery";
+import AddressForm from "@/components/forms/order/checkoutform/Address";
+import PaymentForm from "@/components/forms/order/checkoutform/Payment";
+import Review from "@/components/forms/order/checkoutform/Preview";
+import Pricesumery from "@/components/forms/order/checkoutform/Pricesumery";
 import { useAuthContext } from "@/context/AuthContext";
 import { appBaseUrl } from "@/utils/config";
 import {

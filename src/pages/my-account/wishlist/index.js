@@ -7,13 +7,10 @@ import { Favorite } from "@mui/icons-material";
 import { Box, Button, Stack, Typography } from "@mui/material";
 
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const Index = () => {
-  const { protectedRouteCheck, pageLoading } = useAuthContext();
-  useEffect(() => {
-    protectedRouteCheck();
-  }, []);
-
+  const wishlist = useSelector((state) => state["data"].wishList);
   return (
     <Userlayout>
       <Box
@@ -36,7 +33,7 @@ const Index = () => {
             <span>My Wishlist</span>
           </Typography>
         </Stack>
-        <Wishlist />
+        <Wishlist wishlist={wishlist} />
       </Box>
     </Userlayout>
   );
@@ -44,13 +41,13 @@ const Index = () => {
 
 export default Index;
 
-export const getServerSideProps = async (ctx) => {
+// export const getServerSideProps = async (ctx) => {
 
-  return {
-    redirect: {
-      destination: `/auth/signin?callbackUrl=${appBaseUrl}${ctx.resolvedUrl}`,
-      parmanent: false,
-    },
-  };
+//   return {
+//     redirect: {
+//       destination: `/auth/signin?callbackUrl=${appBaseUrl}${ctx.resolvedUrl}`,
+//       parmanent: false,
+//     },
+//   };
   
-};
+// };

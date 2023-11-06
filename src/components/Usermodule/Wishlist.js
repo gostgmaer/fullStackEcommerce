@@ -11,42 +11,86 @@ import {
   Typography,
   colors,
 } from "@mui/material";
+import * as React from "react";
+import { DataGrid } from "@mui/x-data-grid";
+
 import moment from "moment/moment";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import Productcard from "../elements/Productcard";
-const Wishlist = () => {
-  const wishlist = useSelector((state) => state["data"].wishList);
-  // console.log(wishlist);
+import EnhancedTable from "../elements/Table";
+const Wishlist = ({ wishlist }) => {
+  const headCells = [
+    {
+      id: "remove",
+      numeric: false,
+      disablePadding: true,
+      label: "",
+    },
+    {
+      id: "title",
+      numeric: true,
+      disablePadding: true,
+      label: "Product Name",
+    },
+    {
+      id: "price",
+      numeric: true,
+      disablePadding: false,
+      label: "Unit Price",
+    },
+    {
+      id: "stock",
+      numeric: true,
+      disablePadding: false,
+      label: "Stock Status",
+    },
+    {
+      id: "rating",
+      numeric: true,
+      disablePadding: false,
+      label: "Rating",
+    },
+    {
+      id: "action",
+      numeric: true,
+      disablePadding: false,
+      label: "",
+    },
+  ];
   return (
     <Box width={"100%"}>
       <Box sx={{ flexGrow: 1, width: "100%" }}>
-       {wishlist.length!==0? <Grid
-          container
-          item
-          gap={"10px"}
-          justifyContent="flex-start"
-          p="0"
-          width="100%"
-          m="0"
-          columns={12.8}
-        >
-          {wishlist.map((item) => (
-            <Productcard key={item.id} size={4} product={item} />
-          ))}
-        </Grid>:
-        <Grid
-          container
-          item
-          gap={"10px"}
-          justifyContent="center"
-          p="0"
-          width="100%"
-          m="0"
-          columns={12.8}
-        >
-        No product on your wishlist
-        </Grid>}
+        {wishlist.length !== 0 ? (
+          <Grid
+            container
+            item
+            gap={"10px"}
+            justifyContent="flex-start"
+            p="0"
+            width="100%"
+            m="0"
+            columns={12.8}
+          >
+            {/* {wishlist.map((item) => (
+              <Productcard key={item.id} size={4} product={item} />
+            ))} */}
+          </Grid>
+        ) : (
+          <Grid
+            container
+            item
+            gap={"10px"}
+            justifyContent="center"
+            p="0"
+            width="100%"
+            m="0"
+            columns={12.8}
+          >
+            No product on your wishlist
+          </Grid>
+        )}
+        <EnhancedTable rows={wishlist} headCells={headCells} />
       </Box>
     </Box>
   );
@@ -123,3 +167,54 @@ const OrderItem = ({ data }) => {
     </Paper>
   );
 };
+
+const columns = [
+  { field: "id", headerName: "ID", width: 70 },
+  { field: "firstName", headerName: "First name", width: 130 },
+  { field: "lastName", headerName: "Last name", width: 130 },
+  {
+    field: "age",
+    headerName: "Age",
+    type: "number",
+    width: 90,
+  },
+  {
+    field: "fullName",
+    headerName: "Full name",
+    description: "This column has a value getter and is not sortable.",
+    sortable: false,
+    width: 160,
+    valueGetter: (params) =>
+      `${params.row.firstName || ""} ${params.row.lastName || ""}`,
+  },
+];
+
+const rows = [
+  { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
+  { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
+  { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
+  { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
+  { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
+  { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
+  { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
+  { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
+  { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
+];
+
+export function DataTable() {
+  return (
+    <div style={{ height: 400, width: "100%" }}>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        initialState={{
+          pagination: {
+            paginationModel: { page: 0, pageSize: 5 },
+          },
+        }}
+        pageSizeOptions={[5, 10]}
+        checkboxSelection
+      />
+    </div>
+  );
+}
