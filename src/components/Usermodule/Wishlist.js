@@ -18,8 +18,46 @@ import moment from "moment/moment";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import Productcard from "../elements/Productcard";
+import EnhancedTable from "../elements/Table";
 const Wishlist = ({ wishlist }) => {
-  // console.log(wishlist);
+  const headCells = [
+    {
+      id: "remove",
+      numeric: false,
+      disablePadding: true,
+      label: "",
+    },
+    {
+      id: "title",
+      numeric: true,
+      disablePadding: true,
+      label: "Product Name",
+    },
+    {
+      id: "price",
+      numeric: true,
+      disablePadding: false,
+      label: "Unit Price",
+    },
+    {
+      id: "stock",
+      numeric: true,
+      disablePadding: false,
+      label: "Stock Status",
+    },
+    {
+      id: "rating",
+      numeric: true,
+      disablePadding: false,
+      label: "Rating",
+    },
+    {
+      id: "action",
+      numeric: true,
+      disablePadding: false,
+      label: "",
+    },
+  ];
   return (
     <Box width={"100%"}>
       <Box sx={{ flexGrow: 1, width: "100%" }}>
@@ -34,9 +72,9 @@ const Wishlist = ({ wishlist }) => {
             m="0"
             columns={12.8}
           >
-            {wishlist.map((item) => (
+            {/* {wishlist.map((item) => (
               <Productcard key={item.id} size={4} product={item} />
-            ))}
+            ))} */}
           </Grid>
         ) : (
           <Grid
@@ -52,6 +90,7 @@ const Wishlist = ({ wishlist }) => {
             No product on your wishlist
           </Grid>
         )}
+        <EnhancedTable rows={wishlist} headCells={headCells} />
       </Box>
     </Box>
   );

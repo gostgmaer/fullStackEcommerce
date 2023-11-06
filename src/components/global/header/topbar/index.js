@@ -20,6 +20,7 @@ import {
   Favorite,
   Mail,
 } from "@mui/icons-material";
+import Link from "next/link";
 const socialLinks = [
     {
       label: "Facebook",
@@ -107,7 +108,7 @@ const menuItems = [
 
   {
     label: "Wishlist",
-    url: "mailto:your@email",
+    url: "/my-account/wishlist",
     icon: <Favorite />,
     tooltip: undefined,
   },
@@ -137,9 +138,11 @@ function TopBar() {
                   data-label={socialLink.tooltip}
                   className={`icon plain  font-normal flex items-center text-gray-200 gap-1 text-sm tooltip hover:text-gray-50 cursor-pointer  [&_.MuiSvgIcon-root]:w-[14px] [&_.MuiSvgIcon-root]:h-[14px]`}
                   title={socialLink.tooltip}
-                  aria-label={socialLink.tooltip}
+                  aria-label={socialLink?.tooltip}
                 >
-                  {socialLink.label} {socialLink.icon}
+                {socialLink.url? <Link href={socialLink.url}>
+                 {socialLink.label} {socialLink.icon}
+                 </Link>: <>{socialLink.label} {socialLink.icon}</>}
                 </li>
               ))}
               {/* <li

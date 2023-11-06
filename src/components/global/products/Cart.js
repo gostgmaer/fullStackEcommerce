@@ -70,7 +70,7 @@ export const CartAddItems = ({ product }) => {
         <TextField
           type="button"
           value={"-"}
-          className="h-10 w-10 cursor-pointer "
+          className="h-10 w-10 cursor-pointer bg-gray-300 overflow-hidden "
           onClick={handleDecrement}
         />
         <TextField
@@ -82,7 +82,7 @@ export const CartAddItems = ({ product }) => {
           type="button"
           value={"+"}
           onClick={handleIncrement}
-          className="h-10 w-10 cursor-pointer "
+          className="h-10 w-10 cursor-pointer bg-gray-300 overflow-hidden"
         />
       </Stack>
       <Button
