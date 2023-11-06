@@ -81,9 +81,9 @@ const Landingmodal = ({ openModal, setOpenModal }) => {
           </Stack>
         </Grid>
       </Grid>
-      <IconButton sx={{ m: 1 }} onClick={() => setOpenModal(null)}>
+      {/* <IconButton sx={{ m: 1 }} onClick={() => setOpenModal(null)}>
         <Close></Close>
-      </IconButton>
+      </IconButton> */}
     </Stack>
   );
 };

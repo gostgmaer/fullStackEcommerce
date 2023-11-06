@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import React from "react";
 
-const Description = () => {
+const Description = ({product}) => {
   return (
     <Box
       className="elements"
@@ -10,10 +10,10 @@ const Description = () => {
         display: "flex",
         flexDirection: "column",
         gap: 1,
-        p: 5,
+       
       }}
     >
-      asdasssssssssssssssssssssssssssssssssssss
+    <div dangerouslySetInnerHTML={{ __html: product.description }} />
     </Box>
   );
 };

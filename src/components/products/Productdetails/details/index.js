@@ -4,7 +4,7 @@ import { useState } from "react";
 import Description from "./description";
 import Specifications from "./specification";
 import Review from "./review";
-const ProductDetails = ({data}) => {
+const ProductDetails = ({ data }) => {
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -16,13 +16,16 @@ const ProductDetails = ({data}) => {
         <Tabs
           value={value}
           onChange={handleChange}
+          className="[&_.MuiTab-root]:mr-5 [&_.MuiTab-root]:px-0 [&_.MuiTab-root]:hover::mr-5"
           sx={{
-          '&>.MuiTabs-scroller':{  display: "flex",
-            justifyContent: "center",
-            gap: "10px",
-            alignItems: "center",}
+            "&>.MuiTabs-scroller": {
+              display: "flex",
+              justifyContent: "left",
+              gap: "10px",
+              alignItems: "center",
+            },
           }}
-          aria-label="basic tabs example"
+          aria-label="basic tabs"
         >
           <Tab label="Descriptions" {...a11yProps(0)} />
           <Tab label="Specifications" {...a11yProps(1)} />
@@ -31,13 +34,13 @@ const ProductDetails = ({data}) => {
       </Box>
 
       <TabPanel value={value} index={0}>
-        <Description />
+        <Description product={data} />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Specifications />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <Review />
+        {/* <Review /> */}
       </TabPanel>
     </Box>
   );

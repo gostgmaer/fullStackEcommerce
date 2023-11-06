@@ -1,5 +1,5 @@
 import { orders } from "@/assets/mock/moreData";
-import { ArrowForward, ArrowRight } from "@mui/icons-material";
+import { ArrowForward, ArrowRight, Close } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -16,10 +16,33 @@ import { DataGrid } from "@mui/x-data-grid";
 
 import moment from "moment/moment";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
-import Productcard from "../elements/Productcard";
+import { useDispatch, useSelector } from "react-redux";
 import EnhancedTable from "../elements/Table";
+import { CartAddItems } from "../global/products/Cart";
+import { removeFromWishlist } from "@/store/cartReducer";
 const Wishlist = ({ wishlist }) => {
+  const dispatch = useDispatch();
+
+  wishlist.forEach((element) => {
+    element["remove"] = (
+      <IconButton
+        className="border border-gray-400 rounded-full w-10 h-10"
+        onClick={() => dispatch(removeFromWishlist(element.id))}
+      >
+        <Close />
+      </IconButton>
+    );
+    element["action"] = <CartAddItems product={element} />;
+  });
+  // const action = (
+  //   <>
+  //     <CartAddItems />
+  //     <IconButton>
+  //       <Close />
+  //     </IconButton>
+  //   </>
+  // );
+
   const headCells = [
     {
       id: "remove",
@@ -58,6 +81,7 @@ const Wishlist = ({ wishlist }) => {
       label: "",
     },
   ];
+
   return (
     <Box width={"100%"}>
       <Box sx={{ flexGrow: 1, width: "100%" }}>
