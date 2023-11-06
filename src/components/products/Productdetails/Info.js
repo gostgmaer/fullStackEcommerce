@@ -11,7 +11,8 @@ import { Box, Grid, Rating, Typography, colors, Button } from "@mui/material";
 import Image from "next/image";
 import React, { useState } from "react";
 import ImageSlider from "./details/ImageSlider";
-import { CartAddItems } from "@/components/global/products/Card";
+import { CartAddItems } from "@/components/global/products/Cart";
+
 
 const Info = ({data}) => {
   // const [selected, setSelected] = useState(true);

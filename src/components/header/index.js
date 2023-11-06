@@ -60,6 +60,7 @@ function Header(props) {
     >
       <TopBar />
       <Navigation />
+      {/* <MainSearchbar/> */}
 
       {state && <CartBlock />}
     </Box>
