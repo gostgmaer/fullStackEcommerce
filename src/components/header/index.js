@@ -80,10 +80,11 @@ function Navigation() {
   const open = Boolean(anchorEl);
 
   const fetchCategories = async (second) => {
-    const response = get("/categories");
+    const response = await get("/categories");
     console.log(response);
+    setCategories(response)
   };
-  
+
   useEffect(() => {
     fetchCategories();
   }, []);
@@ -149,14 +150,11 @@ function Navigation() {
               className=" rounded-3xl"
             >
               <option value="">All</option>
-              <option value="bags">Bags</option>
-              <option value="booking">Booking</option>
-              <option value="clothing">Clothing</option>
-              <option value="men">Men</option>
-              <option value="music">Music</option>
-              <option value="posters">Posters</option>
-              <option value="shoes">Shoes</option>
-              <option value="women">Women</option>
+              {categories?.results?.map((item, index) => (
+                <option key={index} value={item.name}>
+                  {item.name}
+                </option>
+              ))}
             </Select>
           </FormControl>
 
@@ -206,6 +204,7 @@ function Navigation() {
             size="large"
             aria-label="show 17 new notifications"
             color="inherit"
+            onClick={() => route.push("/auth/signin")}
           >
             <Person />
           </IconButton>

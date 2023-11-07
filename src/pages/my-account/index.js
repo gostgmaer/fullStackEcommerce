@@ -21,18 +21,18 @@ const Profile = () => {
   const [open, setopen] = useState(true);
   const route = useRouter()
 
-  useEffect(() => {
-    const sequrePage = async () => {
-      const session = await getSession();
+  // useEffect(() => {
+  //   const sequrePage = async () => {
+  //     const session = await getSession();
 
-      if (!session) {
-        signIn();
-      } else {
-        setloading(false);
-      }
-    };
-    sequrePage();
-  }, []);
+  //     if (!session) {
+  //       signIn();
+  //     } else {
+  //       setloading(false);
+  //     }
+  //   };
+  //   sequrePage();
+  // }, []);
 
   return (
     <Userlayout>
@@ -216,22 +216,22 @@ const ProfileDetails = (params) => {
 
 
 
-export const getServerSideProps = async (ctx) => {
-  const session = await getSession(ctx);
-  // console.log(session);
-  if (!session) {
-    return {
-      redirect: {
-        destination: `/auth/signin?callbackUrl=${appBaseUrl}/profile`,
-        parmanent: false,
-      },
-    };
-  }
+// export const getServerSideProps = async (ctx) => {
+//   const session = await getSession(ctx);
+//   // console.log(session);
+//   if (!session) {
+//     return {
+//       redirect: {
+//         destination: `/auth/signin?callbackUrl=${appBaseUrl}/profile`,
+//         parmanent: false,
+//       },
+//     };
+//   }
 
-  return {
-    props: {
-      session,
-      data: session ? "List of 100 pro blog" : "list of free blogs",
-    },
-  };
-};
+//   return {
+//     props: {
+//       session,
+//       data: session ? "List of 100 pro blog" : "list of free blogs",
+//     },
+//   };
+// };

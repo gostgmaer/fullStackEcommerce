@@ -17,12 +17,27 @@ import Landingmodal from "@/components/landingmodal/Landingmodal";
 import React from "react";
 import { useGlobalContext } from "@/context/globalContext";
 import { Container } from "@mui/material";
+import { get } from "@/lib/network/http";
+import { apiUrl } from "@/utils/config";
 
-const Home = ({ products }) => {
+const Home = ({ data }) => {
   const [openModal, setOpenModal] = useState(false);
+  const [homeData, setHomeData] = useState(undefined);
   useEffect(() => {
     setOpenModal(true);
   }, []);
+  console.log(data);
+
+  // const fetchHomeData = async (second) => {
+  //   const response = await get("/home/data");
+  //   console.log(response);
+  //   setHomeData(response);
+  // };
+
+  // useEffect(() => {
+  //   fetchHomeData();
+  // }, []);
+
   return (
     <>
       <Head>
@@ -40,11 +55,11 @@ const Home = ({ products }) => {
         </Container>
         <div></div>
         <Container>
-          <ModeForYou data={productData.moreItems} />
+          <ModeForYou data={data.results.newArive} />
           <Footersection service={productData.serviceList} />
         </Container>
 
-        <MuiModal
+        {/* <MuiModal
           heading={undefined}
           Content={
             <Landingmodal openModal={openModal} setOpenModal={setOpenModal} />
@@ -53,10 +68,21 @@ const Home = ({ products }) => {
           maxWidth={""}
           openModal={openModal}
           setOpenModal={setOpenModal}
-        ></MuiModal>
+        ></MuiModal> */}
       </Layout>
     </>
   );
 };
 
 export default Home;
+
+export const getServerSideProps = async (ctx) => {
+  const response = await fetch(`${apiUrl}/home/data`);
+  const data = await response.json();
+  console.log(data);
+  return {
+    props: {
+      data,
+    },
+  };
+};

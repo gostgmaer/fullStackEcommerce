@@ -3,6 +3,7 @@ import PasswordField from "@/components/global/fields/PasswordField";
 import { useAuthContext } from "@/context/AuthContext";
 import { post } from "@/lib/network/http";
 
+
 import { useAxios } from "@/lib/network/interceptors";
 
 import { resetPasswordValidation } from "@/utils/validation/validation";
@@ -11,7 +12,9 @@ import { useFormik } from "formik";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-const ChangePassword = () => {
+
+const ResetForm = () => {
+
   const { handleLoginAuth, user, userId } = useAuthContext();
   const router = useRouter();
 
@@ -19,6 +22,7 @@ const ChangePassword = () => {
   const [error, setError] = useState(undefined);
   const param = useSearchParams();
 
+  
   const handleSubmit = async (values) => {
     try {
       const reset = await post(
@@ -40,9 +44,11 @@ const ChangePassword = () => {
     }
   }, [userId]);
 
+
+
+
   const formik = useFormik({
     initialValues: {
-      current_password: "",
       password: "",
       confirmPassword: "",
     },
@@ -57,19 +63,6 @@ const ChangePassword = () => {
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="space-y-5 text-black">
-        <div className="rizzui-password-root flex flex-col [&amp;>label>span]:font-medium">
-          <label className="block">
-            <span className="rizzui-password-label block text-sm mb-1.5">
-              Current Password
-            </span>
-            <PasswordField
-              placeholder="current_password"
-              name="current_password"
-              value={formik.values.current_password}
-              handleChange={formik.handleChange}
-            />
-          </label>
-        </div>
         <div className="rizzui-password-root flex flex-col [&amp;>label>span]:font-medium">
           <label className="block">
             <span className="rizzui-password-label block text-sm mb-1.5">
@@ -102,15 +95,12 @@ const ChangePassword = () => {
           type="submit"
           disabled={!formik.isValid}
         >
-          <span>Confirm Password</span> <KeyboardArrowRight />
+          <span>Confirm Password</span>{" "}
+      <KeyboardArrowRight/>
         </button>
       </div>
       {error && (
-        <div
-          className={`error text-red-500 font-medium text-sm py-2 ${
-            error["statusCode"] == 200 && " text-green-700"
-          } `}
-        >
+        <div className={`error text-red-500 font-medium text-sm py-2 ${error["statusCode"]==200 && " text-green-700"} `}>
           <p className="text-center">{error.message}</p>
         </div>
       )}
@@ -118,4 +108,4 @@ const ChangePassword = () => {
   );
 };
 
-export default ChangePassword;
+export default ResetForm;
