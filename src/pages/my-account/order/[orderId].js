@@ -305,22 +305,22 @@ const AddressAndSummery = (params) => {
 
 
 
-export const getServerSideProps = async (ctx) => {
-  const session = await getSession(ctx);
-  // console.log(session);
-  if (!session) {
-    return {
-      redirect: {
-        destination: `/auth/signin?callbackUrl=${appBaseUrl}/order`,
-        parmanent: false,
-      },
-    };
-  }
+// export const getServerSideProps = async (ctx) => {
+//   const session = await getSession(ctx);
+//   // console.log(session);
+//   if (!session) {
+//     return {
+//       redirect: {
+//         destination: `/auth/signin?callbackUrl=${appBaseUrl}/order`,
+//         parmanent: false,
+//       },
+//     };
+//   }
 
-  return {
-    props: {
-      session,
-      data: session ? "List of 100 pro blog" : "list of free blogs",
-    },
-  };
-};
+//   return {
+//     props: {
+//       session,
+//       data: session ? "List of 100 pro blog" : "list of free blogs",
+//     },
+//   };
+// };

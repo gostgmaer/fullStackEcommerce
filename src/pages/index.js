@@ -16,6 +16,7 @@ import Landingmodal from "@/components/landingmodal/Landingmodal";
 
 import React from "react";
 import { useGlobalContext } from "@/context/globalContext";
+import { Container } from "@mui/material";
 
 const Home = ({ products }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -32,13 +33,16 @@ const Home = ({ products }) => {
       </Head>
       <Layout>
         <Heroslider data={productData?.mainCarouselData} />
-        <FlashDeal data={productData?.flashDealsData} />
-        {/* <FeatureItems data={productData} /> */}
-        {/* <DiscountSlider data={productData?.bigDiscountList} /> */}
-        <NewArrival data={productData?.newArrivalsList} />
-        <CategoryList data={productData.bottomCategories} />
-        <ModeForYou data={productData.moreItems} />
-        <Footersection service={productData.serviceList} />
+        <Container>
+          <FlashDeal data={productData?.flashDealsData} />
+          <NewArrival data={productData?.newArrivalsList} />
+          <CategoryList data={productData.bottomCategories} />
+        </Container>
+        <div></div>
+        <Container>
+          <ModeForYou data={productData.moreItems} />
+          <Footersection service={productData.serviceList} />
+        </Container>
 
         <MuiModal
           heading={undefined}

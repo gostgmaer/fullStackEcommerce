@@ -122,7 +122,7 @@ const OrderItem = ({ data }) => {
       >
         <IconButton
          
-          onClick={() => router.push(`/order/${data.id}`)}
+          onClick={() => router.push(`/my-account/order/${data.id}`)}
         >
           <ArrowForward />
         </IconButton>

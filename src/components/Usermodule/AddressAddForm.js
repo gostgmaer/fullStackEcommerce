@@ -28,7 +28,7 @@ import { Fragment, useEffect, useState } from "react";
 import { useGlobalContext } from "@/context/globalContext";
 
 const AddressAddForm = ({call}) => {
-  const session = useSession();
+  // const session = useSession();
 
   const [isdesable, setIsdesable] = useState(true);
   const { openModal, years, setOpenModal } = useGlobalContext();
@@ -51,7 +51,7 @@ const AddressAddForm = ({call}) => {
       address: values.address,
       city: values.city,
       country: values.country,
-      user: session.data.user.name,
+      user: {},
       uuid: uuidv4(),
       pincode: values.pincode,
     };
@@ -100,7 +100,7 @@ const AddressAddForm = ({call}) => {
           isSubmitting,
           /* and other goodies */
         }) => (
-          <Box width={"100%"} component={"form"} onSubmit={handleSubmit}>
+          <Box width={"100%"} component={"form"} onSubmit={handleSubmit} className="rounded-lg">
             <Grid
               container
               sx={{
@@ -109,7 +109,7 @@ const AddressAddForm = ({call}) => {
                 m: "0!important",
                 gap: 2.5,
                 width: "100%",
-                p: 1,
+                p: 2,
                 "&>.MuiGrid-item": {
                   p: 0,
 
@@ -121,7 +121,7 @@ const AddressAddForm = ({call}) => {
               spacing={2}
               columns={17}
             >
-              <Grid item xs={8}>
+              <Grid item xs={8} className="">
                 <TextField
                   id="addressname"
                   onChange={handleChange}
@@ -205,8 +205,8 @@ const AddressAddForm = ({call}) => {
 
                 gap: 2.5,
                 width: "100%",
-                p: 1,
-                mt: 2,
+              
+                my: 2,
               }}
               direction="row"
               alignItems="center"
@@ -214,6 +214,7 @@ const AddressAddForm = ({call}) => {
             >
               <Button
                 variant="contained"
+                className="bg-red-500"
                 sx={{ textTransform: "capitalize" }}
                 color="error"
                 type="submit"

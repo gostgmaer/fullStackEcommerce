@@ -33,6 +33,7 @@ import CartBlock from "../cart";
 import { useGlobalContext } from "@/context/globalContext";
 import TopBar from "../global/header/topbar";
 import Image from "next/image";
+import { get } from "@/lib/network/http";
 
 function Header(props) {
   const { state, setState } = useGlobalContext();
@@ -72,10 +73,21 @@ export default Header;
 function Navigation() {
   const { state, setState } = useGlobalContext();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [categories, setCategories] = useState(undefined);
   const cartItem = useSelector((state) => state["data"].cartItems);
   const wishlist = useSelector((state) => state["data"].wishList);
   const route = useRouter();
   const open = Boolean(anchorEl);
+
+  const fetchCategories = async (second) => {
+    const response = get("/categories");
+    console.log(response);
+  };
+  
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };

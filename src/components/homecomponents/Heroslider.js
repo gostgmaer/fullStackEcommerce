@@ -17,20 +17,19 @@ import BigSlider from "../elements/BigSlider";
 import { productData } from "@/assets/mock/product";
 
 const Heroslider = ({ data }) => {
-
   SwiperCode.use([Autoplay]);
   return (
-    <Box  py={1} component={"section"}>
-      <Box sx={{ width: "100%", mt: 0 }}>
+    <Box py={1} component={"section"}>
+      <Box sx={{ width: "100%", height: "100vh", m:0, p:0 }}>
         <Swiper
           navigation={true}
           pagination
           loop
-          autoplay={{ delay: 2000 }}
+          autoplay={{ delay: 100000 }}
           modules={[Navigation, Pagination]}
-          className="mySwiper"
+          className="mySwiper h-screen"
         >
-          {data?.map((slide,index) => (
+          {data?.map((slide, index) => (
             <SwiperSlide key={index}>
               <BigSlider data={slide} />
             </SwiperSlide>
