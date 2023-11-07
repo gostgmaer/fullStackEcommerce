@@ -1,6 +1,13 @@
 import { ArrayData } from "@/assets/mock/product";
 import CartItem from "@/components/elements/CartItem";
 import CartRight from "@/components/elements/cartRight";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+
 import Layout from "@/layout";
 import {
   Add,
@@ -22,7 +29,9 @@ import {
 import Head from "next/head";
 import Image from "next/image";
 import { Fragment } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { CartUpdate } from "@/components/global/products/Cart";
+import { removefromCart } from "@/store/cartReducer";
 
 const CartPage = () => {
   const cartData = useSelector((state) => state["data"].cartItems);
@@ -37,16 +46,17 @@ const CartPage = () => {
       </Head>
       <Layout>
         <Box p={3} component={"div"}>
-          <Typography variant="h1" mb={5}>
+          <Typography variant="h1" mb={5} className="!text-3xl">
             {" "}
             Your Cart
           </Typography>
           <Grid container direction={"row"} gap={5}>
             {cartData.length !== 0 ? (
               <Stack direction={"column"} gap={1.5} flex={2}>
-                {cartData?.map((item) => (
+                {/* {cartData?.map((item) => (
                   <CartItem key={item} data={item} />
-                ))}
+                ))} */}
+                <CartTable />
               </Stack>
             ) : (
               <Stack direction={"column"} gap={1.5} flex={2}>
@@ -64,3 +74,50 @@ const CartPage = () => {
 };
 
 export default CartPage;
+
+const CartTable = (second) => {
+  const wishlist = useSelector((state) => state["data"].wishList);
+  const cartData = useSelector((state) => state["data"].cartItems);
+
+  const dispatch = useDispatch();
+
+  return (
+    <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell></TableCell>
+            <TableCell align="left">Product</TableCell>
+            <TableCell align="left">Price</TableCell>
+            <TableCell align="left">Quentity</TableCell>
+            <TableCell align="right">Sub Total</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {cartData.map((row) => (
+            <TableRow
+              key={row.title}
+              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+            >
+              <TableCell align="left">
+                <IconButton
+                  onClick={() => dispatch(removefromCart(row["id"]))}
+                  color="error"
+                >
+                  <Close></Close>
+                </IconButton>
+              </TableCell>
+              <TableCell align="left">{row.title}</TableCell>
+              <TableCell align="left">{row.price}</TableCell>
+
+              <TableCell align="left">
+                <CartUpdate data={row} />
+              </TableCell>
+              <TableCell align="right">{row.subtotal}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+};

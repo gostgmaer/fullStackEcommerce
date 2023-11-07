@@ -70,21 +70,60 @@ export const CartAddItems = ({ product }) => {
         <TextField
           type="button"
           value={"-"}
-          className="h-10 w-10 cursor-pointer bg-gray-300 overflow-hidden "
+          className="h-10 w-6 cursor-pointer bg-gray-300 overflow-hidden rounded-none"
           onClick={handleDecrement}
         />
         <TextField
           type="text"
           value={value}
-          className="h-10 w-12 text-center [&_.MuiInputBase-input]:cursor-auto "
+          className="h-10 w-10 text-center [&_.MuiInputBase-input]:cursor-auto "
         />
         <TextField
           type="button"
           value={"+"}
           onClick={handleIncrement}
-          className="h-10 w-10 cursor-pointer bg-gray-300 overflow-hidden"
+          className="h-10 w-6 cursor-pointer bg-gray-300 overflow-hidden"
         />
       </Stack>
+      <Button
+        onClick={addToCard}
+        className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 h-10 px-4 rounded"
+      >
+        Add to Cart
+      </Button>
+    </Box>
+  );
+};
+
+export const AddToCartSingle = ({ product }) => {
+  const cartItem = useSelector((state) => state["data"].cartItems);
+  const wishlist = useSelector((state) => state["data"].wishList);
+  const dispatch = useDispatch();
+
+  const addToCard = () => {
+    dispatch(
+      addToCart({
+        id: product.id,
+        slug: product.slug,
+        title: product.title,
+        brand: product.brand,
+        size: product.size,
+        colors: product.colors,
+        desc: product.description,
+        image: product.thumbnail,
+        quantity: 1,
+        subtotal: product["discount"]
+          ? product["price"] - product["discount"]
+          : product["price"],
+        price: product["discount"]
+          ? product["price"] - product["discount"]
+          : product["price"],
+      })
+    );
+  };
+
+  return (
+    <Box className="flex items-center gap-5">
       <Button
         onClick={addToCard}
         className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 h-10 px-4 rounded"
@@ -100,9 +139,10 @@ export const CartUpdate = ({ data }) => {
 
   return (
     <Stack
-      gap={1}
       flex={0.5}
+      direction={"row"}
       alignItems={"center"}
+      className="flex justify-start py-2 [&_.MuiInputBase-input]:cursor-pointer [&_.MuiInputBase-input]:text-center [&_.MuiInputBase-input]:p-3 [&_.MuiInputBase-input]:leading-none [&_.MuiInputBase-input]:h-4 [&_.MuiInputBase-input]:flex [&_.MuiInputBase-input]:items-center [&_.MuiInputBase-input]:justify-center"
       sx={{
         "&>.MuiButton-outlined": {
           p: 0,
@@ -112,9 +152,28 @@ export const CartUpdate = ({ data }) => {
         },
       }}
     >
-      <IconButton
-        sx={{ border: "1px solid", padding: "0" }}
-        color="error"
+      <TextField
+        type="button"
+        value={"-"}
+        className="h-10 w-6 cursor-pointer bg-gray-300 overflow-hidden "
+        onClick={() =>
+          dispatch(
+            updateCart({
+              id: data?.id,
+            })
+          )
+        }
+      />
+
+      <TextField
+        type="text"
+        value={data.quantity}
+        className="h-10 w-10 text-center [&_.MuiInputBase-input]:cursor-auto "
+      />
+
+      <TextField
+        type="button"
+        value={"+"}
         onClick={() =>
           dispatch(
             addToCart({
@@ -132,28 +191,8 @@ export const CartUpdate = ({ data }) => {
             })
           )
         }
-      >
-        <Add></Add>
-      </IconButton>
-      <Typography
-        variant="body2"
-        sx={{ mx: 0.5, fontWeight: 600, fontSize: 15 }}
-      >
-        {data.quantity}
-      </Typography>
-      <IconButton
-        sx={{ border: "1px solid", padding: "0" }}
-        color="error"
-        onClick={() =>
-          dispatch(
-            updateCart({
-              id: data?.id,
-            })
-          )
-        }
-      >
-        <Remove></Remove>
-      </IconButton>
+        className="h-10 w-6 cursor-pointer bg-gray-300 overflow-hidden"
+      />
     </Stack>
   );
 };

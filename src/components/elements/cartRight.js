@@ -42,7 +42,16 @@ const CartRight = () => {
           alignItems={"center"}
         >
           <Typography variant="subtitle1">Additional Comments</Typography>
-          <Typography variant="body2" sx={{padding:'2px 5px',bgcolor:colors.red[100],color:colors.red[400]}}>Note</Typography>
+          <Typography
+            variant="body2"
+            sx={{
+              padding: "2px 5px",
+              bgcolor: colors.red[100],
+              color: colors.red[400],
+            }}
+          >
+            Note
+          </Typography>
         </Stack>
         <TextField
           fullWidth
@@ -95,11 +104,10 @@ const CartRight = () => {
               {...props}
             >
               <Image
-              height={20}
+                height={20}
                 loading="lazy"
                 width={20}
                 src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
-               
                 alt=""
               />
               {option.label} ({option.code}) +{option.phone}
@@ -161,15 +169,18 @@ const CartRight = () => {
         >
           Calculate Shipiing
         </Button>
-       {cartData.length!==0&& <Button
-          sx={{ mt: 0.8, mb: 2 }}
-          fullWidth
-          variant="contained"
-          color="error"
-          onClick={() => router.push("/checkout")}
-        >
-          Checkout Now
-        </Button>}
+        {cartData.length !== 0 && (
+          <Button
+            sx={{ mt: 0.8, mb: 2 }}
+            fullWidth
+            variant="contained"
+            color="error"
+            className="bg-red-500"
+            onClick={() => router.push("/checkout")}
+          >
+            Checkout Now
+          </Button>
+        )}
       </Stack>
     </Paper>
   );
