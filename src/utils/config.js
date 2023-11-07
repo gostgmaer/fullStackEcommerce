@@ -9,7 +9,7 @@ export const appBaseUrl = "http://localhost:3000";
 export const DBpass = "user123Pass";
 export const DBusername = "kishor81160";
 export const DbURL = `mongodb+srv://${DBusername}:${DBpass}@cluster0.884ticn.mongodb.net/userdata?retryWrites=true&w=majority`;
-export const apiUrl = "http://localhost:1337/api/";
+export const apiUrl = "http://localhost:3500/api";
 export const dataBaseUrl =
   "postgres://strapi:strapi@localhost:5432/strapi?synchronize=true";
 export const token =

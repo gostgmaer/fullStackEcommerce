@@ -22,6 +22,7 @@ import MuiModal from "@/layout/modal";
 import Link from "next/link";
 import { CartAddItems } from "./Cart";
 const PCard = ({ product, size }) => {
+
   const [openModal, setOpenModal] = useState(false);
 
   const cartItem = useSelector((state) => state["data"].cartItems);
@@ -47,7 +48,7 @@ const PCard = ({ product, size }) => {
               <div className="image-fade_in_back [&_.show-on-hover]:hover:flex [&_.show-on-hover]:hidden relative">
                 <Link
                   href={`/product/${product.slug}`}
-                  aria-label={product.name}
+                  aria-label={product?.title}
                 >
                   <img
                     width="494"
@@ -69,22 +70,7 @@ const PCard = ({ product, size }) => {
                       aria-label={"Add to Wishlist"}
                       onClick={() =>
                         dispatch(
-                          addToWishlist({
-                            id: product.id,
-                            slug: product.slug,
-                            title: product.title,
-                            brand: product.brand,
-                            price: product.price,
-                            size: product.size,
-                            colors: product.colors,
-                            discount: product.discount,
-                            thumbnail: product.thumbnail,
-                            images: product.images,
-                            categories: product.categories,
-                            status: product.status,
-                            reviews: product.reviews,
-                            for: product?.for,
-                          })
+                          addToWishlist(product)
                         )
                       }
                     >
@@ -140,7 +126,7 @@ const PCard = ({ product, size }) => {
                 <p className="category text-xs font-semibold uppercase is-smaller no-text-overflow product-cat p-1 cursor-pointer">
                   Men
                 </p>
-                <Link href={`/product/${product.slug}`}>
+                <Link href={`/product/${product?.slug}`}>
                   {product?.title
                     ? product?.title
                     : " This is a product? Title"}
@@ -151,9 +137,9 @@ const PCard = ({ product, size }) => {
                   <span className=" text-lg flex  items-end">
                     $
                     <span className=" ">
-                      {product?.discount
+                      {product?.salePrice
                         ? product?.price.toFixed(2) -
-                          product?.discount.toFixed(2)
+                          product?.salePrice.toFixed(2)
                         : product?.price.toFixed(2)
                         ? product?.price.toFixed(2)
                         : product?.price.toFixed(2)}
@@ -163,10 +149,10 @@ const PCard = ({ product, size }) => {
                   <span className=" line-through text-gray-500 ">
                     ${product?.price ? product?.price.toFixed(2) : "$0.00"}
                   </span>
-                  {product?.discount && (
+                  {product?.salePrice && (
                     <span className=" text-green-500 top-3 left-3">
-                      {product?.discount &&
-                        ((100 / product?.price) * product?.discount).toFixed(2)}
+                      {product?.salePrice &&
+                        ((100 / product?.price) * product?.salePrice).toFixed(2)}
                       % off
                     </span>
                   )}
