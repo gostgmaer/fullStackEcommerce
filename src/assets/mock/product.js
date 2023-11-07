@@ -8581,7 +8581,7 @@ export const productData = {
   mainCarouselData: [
     {
       title: "50% Off For Your First Shopping",
-      imgUrl: "/assets/images/products/nike-black.png",
+      video: "/assets/images/pexels-james-cheney-6933537 (1080p).mp4",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis lobortis consequat eu, quam etiam at quis ut convalliss.",
       buttonText: "Shop Now",
@@ -8589,7 +8589,7 @@ export const productData = {
     },
     {
       title: "50% Off For Your First Shopping",
-      imgUrl: "/assets/images/products/nike-black.png",
+      imgUrl: "/assets/images/pexels-pixabay-33045.jpg",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis lobortis consequat eu, quam etiam at quis ut convalliss.",
       buttonText: "Shop Now",

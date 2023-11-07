@@ -13,9 +13,10 @@ import { calculateOverrideValues } from "next/dist/server/font-utils";
 import { useState } from "react";
 
 const Address = ({  }) => {
-  const session = useSession();
+  // const session = useSession();
 
-  const { openModal, setOpenModal } = useGlobalContext();
+  const [openModal, setOpenModal] = useState(false);
+
   const [call, setCall] = useState(false);
   // const [NewData, setNewData] = useState(data);
 
@@ -55,8 +56,7 @@ const Address = ({  }) => {
           heading={{ title: "Please add a Address", icon: <Close /> }}
           Content=<AddressAddForm call={setCall} />
           classes={undefined}
-          maxWidth={"sm"}
-        />
+          maxWidth={"sm"} openModal={openModal} setOpenModal={setOpenModal}        />
         {/* <Addresslist addresses={NewData?.data} /> */}
         <Box
           width={"100%"}
@@ -76,28 +76,28 @@ const Address = ({  }) => {
 
 export default Address;
 
-export const getServerSideProps = async (ctx) => {
-  const session = await getSession(ctx);
-  console.log(session);
+// export const getServerSideProps = async (ctx) => {
+//   const session = await getSession(ctx);
+//   console.log(session);
 
-  const param = {
-    "filters[user][$eq]": session.user.name,
-  };
+//   const param = {
+//     "filters[user][$eq]": session.user.name,
+//   };
   
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: `/auth/signin?callbackUrl=${appBaseUrl}/address`,
-        parmanent: false,
-      },
-    };
-  }
+//   if (!session) {
+//     return {
+//       redirect: {
+//         destination: `/auth/signin?callbackUrl=${appBaseUrl}/address`,
+//         parmanent: false,
+//       },
+//     };
+//   }
 
-  return {
-    props: {
-      session
+//   return {
+//     props: {
+//       session
      
-    },
-  };
-};
+//     },
+//   };
+// };

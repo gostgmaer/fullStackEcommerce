@@ -9,7 +9,7 @@ const Layout = ({ children }) => {
   return (
     <Fragment>
       <Header />
-      <Container>{children}</Container>
+      <div>{children}</div>
 
       <Footer />
     </Fragment>

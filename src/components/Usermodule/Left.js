@@ -31,14 +31,14 @@ const Left = () => {
       items: [
         {
           id: 1,
-          url: "/order",
+          url: "/my-account/order",
           text: "Order",
           icon: <ShoppingBagOutlined />,
           count: 5,
         },
         {
           id: 2,
-          url: "/wishlist",
+          url: "/my-account/wishlist",
           text: "Wishlist",
           icon: <FavoriteOutlined />,
           count: 3,
@@ -52,14 +52,14 @@ const Left = () => {
       items: [
         {
           id: 1,
-          url: "/profile",
+          url: "/my-account/profile",
           text: "Profile info",
           icon: <Person />,
           count: 2,
         },
         {
           id: 2,
-          url: "/address",
+          url: "/my-account/address",
           text: "My Addresses",
           icon: <LocationCity />,
           count: 3,

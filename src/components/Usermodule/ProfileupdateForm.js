@@ -138,6 +138,7 @@ const [image, setImage] = useState(null);
             variant="contained"
             sx={{ textTransform: "capitalize" }}
             color="error"
+            className="bg-red-500"
           >
             Save Changes
           </Button>
