@@ -78,12 +78,13 @@ export const AuthContextProvider = ({ children }) => {
           const decoded = jwtDecode(res.accessToken);
           setToken(
             "accessToken",
-            res.accessToken,
+            res.access_token,
             decoded["exp"],
             "ACCESS_TOKEN"
           );
           setUserId(decoded);
           setUser(jwtDecode(res.id_token));
+          setAuthError(undefined);
         }
       }
       setAuthError(undefined);
