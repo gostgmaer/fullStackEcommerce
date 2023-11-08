@@ -22,7 +22,6 @@ import MuiModal from "@/layout/modal";
 import Link from "next/link";
 import { CartAddItems } from "./Cart";
 const PCard = ({ product, size }) => {
-
   const [openModal, setOpenModal] = useState(false);
 
   const cartItem = useSelector((state) => state["data"].cartItems);
@@ -68,11 +67,7 @@ const PCard = ({ product, size }) => {
                       className=" border rounded-full h-10 w-10 flex items-center "
                       title={"Add to Wishlist"}
                       aria-label={"Add to Wishlist"}
-                      onClick={() =>
-                        dispatch(
-                          addToWishlist(product)
-                        )
-                      }
+                      onClick={() => dispatch(addToWishlist(product))}
                     >
                       <Favorite className="" />
                     </IconButton>
@@ -152,7 +147,9 @@ const PCard = ({ product, size }) => {
                   {product?.salePrice && (
                     <span className=" text-green-500 top-3 left-3">
                       {product?.salePrice &&
-                        ((100 / product?.price) * product?.salePrice).toFixed(2)}
+                        ((100 / product?.price) * product?.salePrice).toFixed(
+                          2
+                        )}
                       % off
                     </span>
                   )}
@@ -192,33 +189,14 @@ const ProductDetails = ({ product }) => {
           decoding="async"
         />
         <div className="show-on-hover absolute top-3 right-3 rounded-full border-2">
-          {wishlist?.find((item) => item.id === product.id)?.id !==
-          product.id ? (
+          {wishlist?.find((item) => item.id?item.id:item._id === product.id?product.id:product._id)?.id !==
+            product.id?product.id:product._id ? (
             <IconButton
               data-label={"Add to Wishlist"}
               className=" border rounded-full h-10 w-10 flex items-center "
               title={"Add to Wishlist"}
               aria-label={"Add to Wishlist"}
-              onClick={() =>
-                dispatch(
-                  addToWishlist({
-                    id: product.id,
-                    slug: product.slug,
-                    title: product.title,
-                    brand: product.brand,
-                    price: product.price,
-                    size: product.size,
-                    colors: product.colors,
-                    discount: product.discount,
-                    thumbnail: product.thumbnail,
-                    images: product.images,
-                    categories: product.categories,
-                    status: product.status,
-                    reviews: product.reviews,
-                    for: product?.for,
-                  })
-                )
-              }
+              onClick={() => dispatch(addToWishlist(product))}
             >
               <Favorite className="" />
             </IconButton>
@@ -333,6 +311,3 @@ const ProductDetails = ({ product }) => {
     </div>
   );
 };
-
-
-
