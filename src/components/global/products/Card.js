@@ -23,7 +23,7 @@ import Link from "next/link";
 import { CartAddItems } from "./Cart";
 const PCard = ({ product, size }) => {
   const [openModal, setOpenModal] = useState(false);
-
+console.log(product);
   const cartItem = useSelector((state) => state["data"].cartItems);
   const wishlist = useSelector((state) => state["data"].wishList);
   const dispatch = useDispatch();

@@ -29,25 +29,7 @@ export const CartAddItems = ({ product }) => {
   };
   const addToCard = () => {
     console.log(value);
-    dispatch(
-      addToCart({
-        id: product.id,
-        slug: product.slug,
-        title: product.title,
-        brand: product.brand,
-        size: product.size,
-        colors: product.colors,
-        desc: product.description,
-        image: product.thumbnail,
-        quantity: value,
-        subtotal: product["discount"]
-          ? product["price"] - product["discount"]
-          : product["price"],
-        price: product["discount"]
-          ? product["price"] - product["discount"]
-          : product["price"],
-      })
-    );
+    dispatch(addToCart({ product: product, quantity: value }));
     setValue(1);
   };
 
@@ -103,21 +85,8 @@ export const AddToCartSingle = ({ product }) => {
   const addToCard = () => {
     dispatch(
       addToCart({
-        id: product.id,
-        slug: product.slug,
-        title: product.title,
-        brand: product.brand,
-        size: product.size,
-        colors: product.colors,
-        desc: product.description,
-        image: product.thumbnail,
+        product: product,
         quantity: 1,
-        subtotal: product["discount"]
-          ? product["price"] - product["discount"]
-          : product["price"],
-        price: product["discount"]
-          ? product["price"] - product["discount"]
-          : product["price"],
       })
     );
   };
@@ -177,17 +146,8 @@ export const CartUpdate = ({ data }) => {
         onClick={() =>
           dispatch(
             addToCart({
-              id: data.id,
-              slug: data.slug,
-              title: data.title,
-              brand: data.brand,
-              size: data.size,
-              colors: data.colors,
-              desc: data.description,
-              image: data.thumbnail,
+              product: data,
               quantity: 1,
-              subtotal: data["subtotal"],
-              price: data["price"],
             })
           )
         }

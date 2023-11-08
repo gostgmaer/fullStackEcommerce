@@ -29,6 +29,7 @@ export default function CartBlock() {
   // console.log(sumWithInitial(cartItem));
   const router = useRouter();
 
+  console.log(cartItem);
   const toggleDrawer = (open) => (event) => {
     setState(open);
   };
@@ -153,7 +154,7 @@ const NoCartData = (params) => {
 
 const HascartData = ({ data }) => {
   const dispatch = useDispatch();
-
+  console.log(data);
   return (
     <Box
       sx={{
@@ -178,9 +179,9 @@ const HascartData = ({ data }) => {
           src="/assets/images/nike-black.png"
         ></Image>
         <Stack gap={0} alignItems={"flex-start"}>
-          <Typography fontSize={14}>{data.title}</Typography>
+          <Typography fontSize={14}>{data.product.title}</Typography>
           <Typography fontSize={13} variant="body1">
-            <span>$ {data.price.toFixed(2)}</span> x{" "}
+            <span>$ {data.product.price.toFixed(2)}</span> x{" "}
             <span>{data.quantity}</span>
           </Typography>
           <Typography fontSize={13}>
@@ -188,7 +189,7 @@ const HascartData = ({ data }) => {
           </Typography>
         </Stack>
         <IconButton
-          onClick={() => dispatch(removefromCart(data.id))}
+          onClick={() => dispatch(removefromCart(data.product.id))}
           color="error"
         >
           <Close></Close>

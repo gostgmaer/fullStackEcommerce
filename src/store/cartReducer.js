@@ -19,32 +19,37 @@ export const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const item = state.cartItems.find(
-        (item) => item.id === action.payload.id
+        (item) => item.product["id"] === action.payload.product["id"]
       );
       if (item) {
         item.quantity += action.payload.quantity;
-        item["subtotal"] = item.quantity * item.price;
+        item["subtotal"] = item.quantity * item.product["price"];
       } else {
-        state.cartItems.push(action.payload);
+        state.cartItems.push({
+          ["quantity"]: action.payload.quantity,
+          ["subtotal"]:
+            action.payload.quantity * action.payload.product["price"],
+          product: action.payload.product,
+        });
       }
     },
 
     updateCart: (state, action) => {
       const item = state.cartItems.find(
-        (item) => item.id === action.payload.id
+        (item) => item.product["id"] === action.payload["id"]
       );
       if (item.quantity > 1) {
         item.quantity -= 1;
-        item["subtotal"] = item.quantity * item.price;
+        item["subtotal"] = item.quantity * item.product.price;
       } else {
         state.cartItems = state.cartItems.filter(
-          (data) => data.id !== action.payload.id
+          (data) => data.product["id"] !== action.payload["id"]
         );
       }
     },
     removefromCart: (state, action) => {
       state.cartItems = state.cartItems.filter(
-        (item) => item.id !== action.payload
+        (item) => item.product.id !== action.payload
       );
     },
     resetCart: (state, action) => {
