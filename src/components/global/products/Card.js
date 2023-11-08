@@ -23,11 +23,12 @@ import Link from "next/link";
 import { CartAddItems } from "./Cart";
 const PCard = ({ product, size }) => {
   const [openModal, setOpenModal] = useState(false);
-console.log(product);
+  console.log(product);
   const cartItem = useSelector((state) => state["data"].cartItems);
   const wishlist = useSelector((state) => state["data"].wishList);
   const dispatch = useDispatch();
 
+  console.log(wishlist);
   return (
     <Grid
       item
@@ -188,27 +189,27 @@ const ProductDetails = ({ product }) => {
           alt=""
           decoding="async"
         />
-        <div className="show-on-hover absolute top-3 right-3 rounded-full border-2">
-          {wishlist?.find((item) => item.id?item.id:item._id === product.id?product.id:product._id)?.id !==
-            product.id?product.id:product._id ? (
-            <IconButton
-              data-label={"Add to Wishlist"}
-              className=" border rounded-full h-10 w-10 flex items-center "
-              title={"Add to Wishlist"}
-              aria-label={"Add to Wishlist"}
-              onClick={() => dispatch(addToWishlist(product))}
-            >
-              <Favorite className="" />
-            </IconButton>
-          ) : (
-            <IconButton
-              color="error"
-              onClick={() => dispatch(removeFromWishlist(product.id))}
-            >
-              <Favorite />
-            </IconButton>
-          )}
-        </div>
+         <div className="show-on-hover absolute top-3 right-3 rounded-full border-2">
+                  {wishlist?.find((item) => item.id === product.id)?.id !==
+                  product.id ? (
+                    <IconButton
+                      data-label={"Add to Wishlist"}
+                      className=" border rounded-full h-10 w-10 flex items-center "
+                      title={"Add to Wishlist"}
+                      aria-label={"Add to Wishlist"}
+                      onClick={() => dispatch(addToWishlist(product))}
+                    >
+                      <Favorite className="" />
+                    </IconButton>
+                  ) : (
+                    <IconButton
+                      color="error"
+                      onClick={() => dispatch(removeFromWishlist(product.id))}
+                    >
+                      <Favorite />
+                    </IconButton>
+                  )}
+                </div>
         <div>
           {product?.discount && (
             <Typography

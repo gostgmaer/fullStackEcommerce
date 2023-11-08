@@ -106,19 +106,19 @@ const CartTable = (second) => {
           <TableBody>
             {cartData.map((row) => (
               <TableRow
-                key={row.title}
+                key={row["product"].title}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell align="left">
                   <IconButton
-                    onClick={() => dispatch(removefromCart(row["id"]))}
+                    onClick={() => dispatch(removefromCart(row["product"]["id"]))}
                     color="error"
                   >
                     <Close></Close>
                   </IconButton>
                 </TableCell>
-                <TableCell align="left">{row.title}</TableCell>
-                <TableCell align="left">{row.price}</TableCell>
+                <TableCell align="left">{row["product"].title}</TableCell>
+                <TableCell align="left">{row["product"].price}</TableCell>
 
                 <TableCell align="left">
                   <CartUpdate data={row} />
