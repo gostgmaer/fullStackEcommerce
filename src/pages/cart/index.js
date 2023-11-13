@@ -19,6 +19,7 @@ import {
 import {
   Box,
   Button,
+  Container,
   Grid,
   IconButton,
   Paper,
@@ -45,29 +46,37 @@ const CartPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Box p={3} component={"div"}>
+        <Container className="mt-5 min-h-screen">
           <Typography variant="h1" mb={5} className="!text-3xl">
-            {" "}
+          
             Your Cart
           </Typography>
           <Grid container direction={"row"} gap={5}>
             {cartData.length !== 0 ? (
+              <>
               <Stack direction={"column"} gap={1.5} flex={2}>
                 {/* {cartData?.map((item) => (
                   <CartItem key={item} data={item} />
                 ))} */}
                 <CartTable />
               </Stack>
-            ) : (
-              <Stack direction={"column"} gap={1.5} flex={2}>
-                Cart is empty
-              </Stack>
-            )}
-            <Stack direction={"column"} gap={1} flex={0.9}>
+              <Stack direction={"column"} gap={1} flex={0.9}>
               <CartRight />
             </Stack>
+              </>
+             
+              
+            ) : (
+              <Stack direction={"column"} gap={1.5} flex={2}>
+                <div className="h-40 flex items-center justify-center font-medium text-xl">
+                  {" "}
+                  Cart is empty
+                </div>
+              </Stack>
+            )}
+           
           </Grid>
-        </Box>
+        </Container>
       </Layout>
     </Fragment>
   );
@@ -83,41 +92,48 @@ const CartTable = (second) => {
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell></TableCell>
-            <TableCell align="left">Product</TableCell>
-            <TableCell align="left">Price</TableCell>
-            <TableCell align="left">Quentity</TableCell>
-            <TableCell align="right">Sub Total</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {cartData.map((row) => (
-            <TableRow
-              key={row.title}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell align="left">
-                <IconButton
-                  onClick={() => dispatch(removefromCart(row["id"]))}
-                  color="error"
-                >
-                  <Close></Close>
-                </IconButton>
-              </TableCell>
-              <TableCell align="left">{row.title}</TableCell>
-              <TableCell align="left">{row.price}</TableCell>
-
-              <TableCell align="left">
-                <CartUpdate data={row} />
-              </TableCell>
-              <TableCell align="right">{row.subtotal}</TableCell>
+      {cartData.length != 0 ? (
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell></TableCell>
+              <TableCell align="left">Product</TableCell>
+              <TableCell align="left">Price</TableCell>
+              <TableCell align="left">Quentity</TableCell>
+              <TableCell align="right">Sub Total</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHead>
+          <TableBody>
+            {cartData.map((row) => (
+              <TableRow
+                key={row["product"].title}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell align="left">
+                  <IconButton
+                    onClick={() => dispatch(removefromCart(row["product"]["id"]))}
+                    color="error"
+                  >
+                    <Close></Close>
+                  </IconButton>
+                </TableCell>
+                <TableCell align="left">{row["product"].title}</TableCell>
+                <TableCell align="left">{row["product"].price}</TableCell>
+
+                <TableCell align="left">
+                  <CartUpdate data={row} />
+                </TableCell>
+                <TableCell align="right">{row.subtotal}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      ) : (
+        <div className="h-40 flex items-center justify-center font-medium text-xl">
+          {" "}
+          No Item Has been add to Cart
+        </div>
+      )}
     </TableContainer>
   );
 };

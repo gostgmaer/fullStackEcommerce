@@ -21,14 +21,16 @@ import { useGlobalContext } from "@/context/globalContext";
 import MuiModal from "@/layout/modal";
 import Link from "next/link";
 import { CartAddItems } from "./Cart";
+import Image from "next/image";
 const PCard = ({ product, size }) => {
-
   const [openModal, setOpenModal] = useState(false);
-
+  const [index, setIndex] = useState(0);
+  console.log(product);
   const cartItem = useSelector((state) => state["data"].cartItems);
   const wishlist = useSelector((state) => state["data"].wishList);
   const dispatch = useDispatch();
 
+  console.log(wishlist);
   return (
     <Grid
       item
@@ -50,12 +52,14 @@ const PCard = ({ product, size }) => {
                   href={`/product/${product.slug}`}
                   aria-label={product?.title}
                 >
-                  <img
-                    width="494"
-                    height="593"
-                    src="https://flatsome3.uxthemes.com/wp-content/uploads/2013/08/271174-0066_1-494x593.jpeg"
+                  <Image
+                    width={420}
+                    onMouseOver={()=>setIndex(1)}
+                    onMouseLeave={()=>setIndex(0)}
+                    height={360}
+                    src={product.images[index]?.["url"]}
                     data-src="https://flatsome3.uxthemes.com/wp-content/uploads/2013/08/271174-0066_1-494x593.jpeg"
-                    className="attachment-woocommerce_thumbnail size-woocommerce_thumbnail lazy-load-active"
+                    className="attachment-woocommerce_thumbnail size-woocommerce_thumbnail lazy-load-active h-80"
                     alt=""
                     decoding="async"
                   />
@@ -68,11 +72,7 @@ const PCard = ({ product, size }) => {
                       className=" border rounded-full h-10 w-10 flex items-center "
                       title={"Add to Wishlist"}
                       aria-label={"Add to Wishlist"}
-                      onClick={() =>
-                        dispatch(
-                          addToWishlist(product)
-                        )
-                      }
+                      onClick={() => dispatch(addToWishlist(product))}
                     >
                       <Favorite className="" />
                     </IconButton>
@@ -124,7 +124,7 @@ const PCard = ({ product, size }) => {
             <div className="box-text box-text-products px-5 py-1">
               <div className="title-wrapper">
                 <p className="category text-xs font-semibold uppercase is-smaller no-text-overflow product-cat p-1 cursor-pointer">
-                  Men
+                  {product.categories[0]}
                 </p>
                 <Link href={`/product/${product?.slug}`}>
                   {product?.title
@@ -137,12 +137,9 @@ const PCard = ({ product, size }) => {
                   <span className=" text-lg flex  items-end">
                     $
                     <span className=" ">
-                      {product?.salePrice
-                        ? product?.price.toFixed(2) -
-                          product?.salePrice.toFixed(2)
-                        : product?.price.toFixed(2)
-                        ? product?.price.toFixed(2)
-                        : product?.price.toFixed(2)}
+                      {product?.salePrice? product?.salePrice.toFixed(2) : product?.price.toFixed(2) }
+
+                     
                     </span>
                   </span>
 
@@ -152,7 +149,9 @@ const PCard = ({ product, size }) => {
                   {product?.salePrice && (
                     <span className=" text-green-500 top-3 left-3">
                       {product?.salePrice &&
-                        ((100 / product?.price) * product?.salePrice).toFixed(2)}
+                        ((100 / product?.price) * product?.salePrice).toFixed(
+                          2
+                        )}
                       % off
                     </span>
                   )}
@@ -199,26 +198,7 @@ const ProductDetails = ({ product }) => {
               className=" border rounded-full h-10 w-10 flex items-center "
               title={"Add to Wishlist"}
               aria-label={"Add to Wishlist"}
-              onClick={() =>
-                dispatch(
-                  addToWishlist({
-                    id: product.id,
-                    slug: product.slug,
-                    title: product.title,
-                    brand: product.brand,
-                    price: product.price,
-                    size: product.size,
-                    colors: product.colors,
-                    discount: product.discount,
-                    thumbnail: product.thumbnail,
-                    images: product.images,
-                    categories: product.categories,
-                    status: product.status,
-                    reviews: product.reviews,
-                    for: product?.for,
-                  })
-                )
-              }
+              onClick={() => dispatch(addToWishlist(product))}
             >
               <Favorite className="" />
             </IconButton>
@@ -333,6 +313,3 @@ const ProductDetails = ({ product }) => {
     </div>
   );
 };
-
-
-

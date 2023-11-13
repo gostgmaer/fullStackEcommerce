@@ -10,9 +10,9 @@ import { Fragment } from "react";
 import Productcard from "./Productcard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation, Autoplay } from "swiper/modules";
-const Elementlist = ({ children, title, icon, isSlide,slideItem }) => {
+const Elementlist = ({ children, title, icon, isSlide, slideItem }) => {
   return (
-    <Box p={3} py={1} component={"section"}>
+    <Box py={1} component={"section"}>
       <Box sx={{ width: "100%", mt: 0 }}>
         <Box
           sx={{
@@ -32,13 +32,7 @@ const Elementlist = ({ children, title, icon, isSlide,slideItem }) => {
             }}
             variant="h4"
           >
-            {icon ? (
-              <Fragment>
-                {icon} {title}
-              </Fragment>
-            ) : (
-              <Fragment>{title}</Fragment>
-            )}
+            {icon && icon} <span>{title}</span>
           </Typography>
           <Button variant="text" endIcon={<ArrowRight />}>
             View all
@@ -50,7 +44,6 @@ const Elementlist = ({ children, title, icon, isSlide,slideItem }) => {
             justifyContent="space-between"
             width="100%"
             columns={12}
-         
           >
             {isSlide ? (
               <Swiper

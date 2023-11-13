@@ -13,6 +13,7 @@ const nextConfig = {
     styledComponents: true,
   },
   images: {
+    domains: ["firebasestorage.googleapis.com"] ,
     remotePatterns: [
       {
         protocol: "https",

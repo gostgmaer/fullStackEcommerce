@@ -9,7 +9,7 @@ const Layout = ({ children }) => {
   return (
     <Fragment>
       <Header />
-      <div>{children}</div>
+      <div className="min-h-[100vh]" >{children}</div>
 
       <Footer />
     </Fragment>

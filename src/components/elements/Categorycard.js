@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import { Item } from "./Item";
+import Image from "next/image";
 
 const CatagoryCard = ({ category }) => {
   // console.log(category);
@@ -79,13 +80,13 @@ const CategoryBlock = ({ size, category }) => {
         <div className="product-category col is-selected">
           <div className="col-inner relative">
             <div className="box-image">
-              <img
-                className="lazy-load-active w-full"
-                src="https://flatsome3.uxthemes.com/wp-content/uploads/2013/08/589864-5295_1-494x593.jpeg"
-                data-src="https://flatsome3.uxthemes.com/wp-content/uploads/2013/08/589864-5295_1-494x593.jpeg"
-                alt="Women"
-                width="300"
-                height="300"
+              <Image
+                className="lazy-load-active w-40 h-40"
+                src={category["images"]?.[0]?.["url"]}
+                data-src={category["images"]?.[0]?.["url"]}
+                alt={category?.["name"]}
+                width={100}
+                height={100}
               />
             </div>
             <div className="image-tools bg-white text-gray-900 cursor-pointer justify-center hover:bg-gray-700 opacity-95 hover:text-white  top-[50%]  items-center w-full absolute  text-center grid-tools  hide-for-small bottom hover-slide-in show-on-hover">

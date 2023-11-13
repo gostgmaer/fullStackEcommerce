@@ -7,6 +7,7 @@ import CategoryBlock from "../elements/Categorycard";
 import { SwiperSlide } from "swiper/react";
 
 const CategoryList = ({ data }) => {
+  console.log(data);
   return (
     <Fragment>
       <Elementlist
@@ -17,7 +18,7 @@ const CategoryList = ({ data }) => {
       >
         {data?.map((item, index) => (
           <SwiperSlide key={index}>
-            <CategoryBlock category={item} key={item.id} size={12} />
+            <CategoryBlock category={item} key={item._id} size={12} />
           </SwiperSlide>
         ))}
       </Elementlist>
