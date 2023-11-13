@@ -3,6 +3,7 @@ import Info from "@/components/products/Productdetails/Info";
 import Related from "@/components/products/Productdetails/Related";
 import ProductDetails from "@/components/products/Productdetails/details";
 import Layout from "@/layout";
+import { apiUrl } from "@/utils/config";
 import { Box } from "@mui/material";
 import Head from "next/head";
 import { useParams } from "next/navigation";
@@ -11,7 +12,8 @@ import React from "react";
 const Index = () => {
   const data = allproducts;
   const params = useParams();
-  const product = data.find((data) => data.slug === params["productId"]);
+
+  const product = data.find((data) => data.slug === params?.["productId"]);
   const relatedProduct = data;
   console.log(product);
   return (
@@ -24,9 +26,9 @@ const Index = () => {
       </Head>
       <Layout>
         <Box p={3} component={"div"}>
-          <Info data={product} />
+          {/* <Info data={product} />
           <ProductDetails data={product} />
-          <Related data={relatedProduct} />
+          <Related data={relatedProduct} /> */}
         </Box>
       </Layout>
     </>
@@ -34,3 +36,19 @@ const Index = () => {
 };
 
 export default Index;
+
+export const getServerSideProps = async (ctx) => {
+  // const id = ctx.params["productId"];
+  // const path = { slug: ctx.params["productId"] };
+  // const resData = await fetch(
+  //   `${apiUrl}/products/slag:${JSON.stringify(path)}`
+  // );
+  // const cate = await resData.json();
+
+  // console.log(cate);
+  // return {
+  //   props: {
+  //     cate,
+  //   },
+  // };
+};

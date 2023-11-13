@@ -74,7 +74,7 @@ const Info = ({ data }) => {
             flexDirection="column"
           >
             <Typography variant="h1" className=" !text-2xl">
-              {data.title}{" "}
+              {data?.title}{" "}
             </Typography>
             <div className="border-t border-gray-300 my-1 w-10 border-2"></div>
             <Typography
