@@ -73,17 +73,19 @@ export const AuthContextProvider = ({ children }) => {
         );
 
         if (decodedToken["user_id"]) {
-          const res = await post("/user/auth/verify/session");
+          const response = await post("/user/auth/verify/session");
 
-          const decoded = jwtDecode(res.accessToken);
+     
+          const decoded = jwtDecode(response["accessToken"]);
+          const idToken = jwtDecode(response["id_token"]);
           setToken(
             "accessToken",
-            res.access_token,
+            response.access_token,
             decoded["exp"],
             "ACCESS_TOKEN"
           );
           setUserId(decoded);
-          setUser(jwtDecode(res.id_token));
+          setUser(idToken);
           setAuthError(undefined);
         }
       }
