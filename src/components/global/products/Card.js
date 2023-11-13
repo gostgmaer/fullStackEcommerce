@@ -25,12 +25,10 @@ import Image from "next/image";
 const PCard = ({ product, size }) => {
   const [openModal, setOpenModal] = useState(false);
   const [index, setIndex] = useState(0);
-  console.log(product);
-  const cartItem = useSelector((state) => state["data"].cartItems);
+
   const wishlist = useSelector((state) => state["data"].wishList);
   const dispatch = useDispatch();
 
-  console.log(wishlist);
   return (
     <Grid
       item
@@ -54,8 +52,8 @@ const PCard = ({ product, size }) => {
                 >
                   <Image
                     width={420}
-                    onMouseOver={()=>setIndex(1)}
-                    onMouseLeave={()=>setIndex(0)}
+                    onMouseOver={() => setIndex(1)}
+                    onMouseLeave={() => setIndex(0)}
                     height={360}
                     src={product.images[index]?.["url"]}
                     data-src="https://flatsome3.uxthemes.com/wp-content/uploads/2013/08/271174-0066_1-494x593.jpeg"
@@ -137,9 +135,9 @@ const PCard = ({ product, size }) => {
                   <span className=" text-lg flex  items-end">
                     $
                     <span className=" ">
-                      {product?.salePrice? product?.salePrice.toFixed(2) : product?.price.toFixed(2) }
-
-                     
+                      {product?.salePrice
+                        ? product?.salePrice.toFixed(2)
+                        : product?.price.toFixed(2)}
                     </span>
                   </span>
 
