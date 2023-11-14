@@ -80,7 +80,7 @@ const MultiImageUploadr = ({ selectedFiles, setSelectedFiles, label }) => {
   };
 
   return (
-    <div className="mb-4">
+    <div className="mb-4 w-full">
       <label className="block text-gray-700 text-sm font-bold mb-2">
         {label}
       </label>
@@ -144,6 +144,7 @@ const MultiImageUploadr = ({ selectedFiles, setSelectedFiles, label }) => {
                 </div>
                 <button
                   onClick={() => handleRemoveFile(index)}
+                  type="button"
                   className="ml-2 text-red-500 hover:text-red-700 focus:outline-none"
                 >
                   Remove

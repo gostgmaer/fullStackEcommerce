@@ -9,13 +9,13 @@ import Head from "next/head";
 import { useParams } from "next/navigation";
 import React from "react";
 
-const Index = () => {
-  const data = allproducts;
+const Index = ({data}) => {
+  // const data = allproducts;
   const params = useParams();
 
-  const product = data.find((data) => data.slug === params?.["productId"]);
-  const relatedProduct = data;
-  console.log(product);
+  // const product = data.find((data) => data.slug === params?.["productId"]);
+  // const relatedProduct = data;
+  // console.log(product);
   return (
     <>
       <Head>
@@ -26,9 +26,9 @@ const Index = () => {
       </Head>
       <Layout>
         <Box p={3} component={"div"}>
-          {/* <Info data={product} />
-          <ProductDetails data={product} />
-          <Related data={relatedProduct} /> */}
+          <Info data={data.results} />
+          <ProductDetails data={data.results} />
+          {/* <Related data={relatedProduct} /> */}
         </Box>
       </Layout>
     </>
@@ -38,17 +38,17 @@ const Index = () => {
 export default Index;
 
 export const getServerSideProps = async (ctx) => {
-  // const id = ctx.params["productId"];
-  // const path = { slug: ctx.params["productId"] };
-  // const resData = await fetch(
-  //   `${apiUrl}/products/slag:${JSON.stringify(path)}`
-  // );
-  // const cate = await resData.json();
+  const id = ctx.params["productId"];
+  // const query = { slug: ctx.params["productId"] };
+  const resData = await fetch(
+    `${apiUrl}/products/${id}?slug=${id}`
+  );
+  const data = await resData.json();
 
-  // console.log(cate);
-  // return {
-  //   props: {
-  //     cate,
-  //   },
-  // };
+  console.log(data);
+  return {
+    props: {
+      data,
+    },
+  };
 };

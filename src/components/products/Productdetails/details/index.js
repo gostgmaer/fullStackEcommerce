@@ -1,15 +1,14 @@
 import PropTypes from "prop-types";
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 import { useState } from "react";
-import Description from "./description";
-import Specifications from "./specification";
-import Review from "./review";
+import ReviewBlock from "./review";
 const ProductDetails = ({ data }) => {
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
   return (
     <Box sx={{ width: "100%" }} mt={5}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -34,13 +33,13 @@ const ProductDetails = ({ data }) => {
       </Box>
 
       <TabPanel value={value} index={0}>
-        <Description product={data} />
+        <DescriptionBlock product={data} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Specifications />
+        <SpecificationsBlock product={data} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        {/* <Review /> */}
+        <ReviewBlock data={data} />
       </TabPanel>
     </Box>
   );
@@ -76,3 +75,36 @@ function a11yProps(index) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
+
+export const DescriptionBlock = ({ product }) => {
+  return (
+    <Box
+      className="elements"
+      sx={{
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        gap: 1,
+      }}
+    >
+      <div dangerouslySetInnerHTML={{ __html: product.descriptions }} />
+    </Box>
+  );
+};
+
+export const SpecificationsBlock = ({ product }) => {
+  return (
+    <Box
+      className="elements"
+      sx={{
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        gap: 1,
+        p: 5,
+      }}
+    >
+      <div dangerouslySetInnerHTML={{ __html: product.specifications }} />
+    </Box>
+  );
+};

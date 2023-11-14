@@ -8,9 +8,8 @@ import {
   getDownloadURL,
   ref,
 } from "firebase/storage";
-
 import { firebaseStorage } from "@/config/firebase";
-import { useGlobalContext } from "@/contex/contextAPi";
+
 
 const ImageUpload = ({ imagePreview, setImagePreview,label }) => {
   const [progrss, setProgrss] = useState(0);
