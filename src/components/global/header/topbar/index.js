@@ -116,8 +116,8 @@ const menuItems = [
 
 function TopBar() {
   return (
-    <AppBar component={"div"} position="relative" color="primary" className="text-gray-200  bg-[#446084]">
-      <Container className="flex  py-2">
+    <AppBar component={"div"} position="relative" color="primary" className="text-gray-200  !bg-[#446084]">
+      <Container className="!flex  py-2">
         <Box display="flex" alignItems="center" flexGrow={1} flex={0.2}>
           <Typography
             minWidth={" max-content"}

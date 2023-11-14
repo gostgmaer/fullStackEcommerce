@@ -81,7 +81,6 @@ function Navigation() {
 
   const fetchCategories = async (second) => {
     const response = await get("/categories");
-    console.log(response);
     setCategories(response)
   };
 
@@ -121,9 +120,9 @@ function Navigation() {
       component={"div"}
       position="relative"
       color="primary"
-      className="text-gray-700  bg-[#fff] shadow-none "
+      className="!text-gray-700  !bg-[#fff] !shadow-none "
     >
-      <Container className="flex  py-2 items-center justify-between">
+      <Container className="!flex py-2 items-center justify-between">
         <Typography variant="h6" className="flex-1">
           <Link
             href="/"

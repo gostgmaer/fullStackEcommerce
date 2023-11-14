@@ -13,13 +13,13 @@ import { get } from "@/lib/network/http";
 import { apiUrl } from "@/utils/config";
 import { FeaturedItem, FlashDeal, HomeFooter, NewArrived } from "@/components/homecomponents/elements";
 
-const Home = ({ data, cate }) => {
+const Home = ({  }) => {
   const [openModal, setOpenModal] = useState(false);
   const [homeData, setHomeData] = useState(undefined);
   useEffect(() => {
     setOpenModal(true);
   }, []);
-  console.log(data);
+
 
   const fetchHomeData = async (second) => {
     const response = await get("/home/data");
@@ -68,13 +68,13 @@ const Home = ({ data, cate }) => {
 
 export default Home;
 
-export const getServerSideProps = async (ctx) => {
-  const resData = await fetch(`${apiUrl}/categories`);
-  const cate = await resData.json();
+// export const getServerSideProps = async (ctx) => {
+//   const resData = await fetch(`${apiUrl}/categories`);
+//   const cate = await resData.json();
 
-  return {
-    props: {
-      cate,
-    },
-  };
-};
+//   return {
+//     props: {
+//       cate,
+//     },
+//   };
+// };
