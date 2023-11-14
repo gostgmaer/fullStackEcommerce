@@ -56,7 +56,7 @@ const PCard = ({ product, size }) => {
                     onMouseLeave={() => setIndex(0)}
                     height={360}
                     src={product.images[index]?.["url"]}
-                    data-src="https://flatsome3.uxthemes.com/wp-content/uploads/2013/08/271174-0066_1-494x593.jpeg"
+                    data-src={product.images[index]?.["url"]}
                     className="attachment-woocommerce_thumbnail size-woocommerce_thumbnail lazy-load-active h-80"
                     alt=""
                     decoding="async"
@@ -174,20 +174,29 @@ const PCard = ({ product, size }) => {
 export default PCard;
 
 const ProductDetails = ({ product }) => {
+  const [index, setIndex] = useState(0);
+
   const cartItem = useSelector((state) => state["data"].cartItems);
   const wishlist = useSelector((state) => state["data"].wishList);
   const dispatch = useDispatch();
+  console.log(product);
 
   return (
     <div className="product-content flex overflow-hidden gap-5">
       <div className="product-gallery large-6 col flex-1 relative">
-        <img
-          src="https://flatsome3.uxthemes.com/wp-content/uploads/2013/08/271174-0066_1-494x593.jpeg"
-          data-src="https://flatsome3.uxthemes.com/wp-content/uploads/2013/08/271174-0066_1-494x593.jpeg"
-          className="w-auto h-auto lazy-load-active"
-          alt=""
-          decoding="async"
-        />
+        <Link href={`/product/${product.slug}`} aria-label={product?.title}>
+          <Image
+            width={420}
+            onMouseOver={() => setIndex(1)}
+            onMouseLeave={() => setIndex(0)}
+            height={360}
+            src={product.images[index]?.["url"]}
+            data-src={product.images[index]?.["url"]}
+            className="attachment-woocommerce_thumbnail size-woocommerce_thumbnail lazy-load-active h-84  object-cover"
+            alt=""
+            decoding="async"
+          />
+        </Link>
         <div className="show-on-hover absolute top-3 right-3 rounded-full border-2">
           {wishlist?.find((item) => item.id === product.id)?.id !==
           product.id ? (
@@ -246,7 +255,10 @@ const ProductDetails = ({ product }) => {
             readOnly
           />
           <p></p>
-          <Link href={`/product/${product.slug}`}>
+          <Link
+            href={`/product/${product.slug}`}
+            className=" font-bold text-xl"
+          >
             {product?.title ? product?.title : " This is a product? Title"}
           </Link>
           <div className="border-t border-gray-300 my-4 w-5 border-2"></div>
@@ -255,10 +267,8 @@ const ProductDetails = ({ product }) => {
               <span className=" text-lg flex  items-end">
                 $
                 <span className=" ">
-                  {product?.discount
-                    ? product?.price.toFixed(2) - product?.discount.toFixed(2)
-                    : product?.price.toFixed(2)
-                    ? product?.price.toFixed(2)
+                  {product?.salePrice
+                    ? product?.salePrice.toFixed(2)
                     : product?.price.toFixed(2)}
                 </span>
               </span>
@@ -266,10 +276,10 @@ const ProductDetails = ({ product }) => {
               <span className=" line-through text-gray-500 ">
                 ${product?.price ? product?.price.toFixed(2) : "$0.00"}
               </span>
-              {product?.discount && (
+              {product?.salePrice && (
                 <span className=" text-green-500 top-3 left-3">
-                  {product?.discount &&
-                    ((100 / product?.price) * product?.discount).toFixed(2)}
+                  {product?.salePrice &&
+                    ((100 / product?.price) * product?.salePrice).toFixed(2)}
                   % off
                 </span>
               )}
@@ -296,13 +306,24 @@ const ProductDetails = ({ product }) => {
           <div className="border-t border-gray-300 my-4 "></div>
 
           <div className="product_meta font-semibold">
-            <span className="posted_in">
-              Category:{" "}
+            <span className="posted_in flex gap-2">
+              Category:
               <a
                 href="https://flatsome3.uxthemes.com/product-category/clothing/"
                 rel="tag"
               >
-                Clothing
+                {product.categories[0]}
+              </a>
+            </span>
+          </div>
+          <div className="product_meta font-semibold">
+            <span className="posted_in flex gap-2">
+              Tags:
+              <a
+                href="https://flatsome3.uxthemes.com/product-category/clothing/"
+                rel="tag"
+              >
+                {product.tags.toString()}
               </a>
             </span>
           </div>
