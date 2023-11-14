@@ -81,7 +81,7 @@ function Navigation() {
 
   const fetchCategories = async (second) => {
     const response = await get("/categories");
-    setCategories(response)
+    setCategories(response);
   };
 
   useEffect(() => {
@@ -167,7 +167,7 @@ function Navigation() {
 
               height: "40px",
             }}
-            className=" rounded-3xl"
+            className=" !rounded-3xl"
           >
             <InputBase
               placeholder="Search…"
