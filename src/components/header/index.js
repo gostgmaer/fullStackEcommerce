@@ -167,7 +167,7 @@ function Navigation() {
 
               height: "40px",
             }}
-            className=" rounded-3xl"
+            className=" !rounded-3xl"
           >
             <InputBase
               placeholder="Search…"
