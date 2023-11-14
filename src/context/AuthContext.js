@@ -78,6 +78,7 @@ export const AuthContextProvider = ({ children }) => {
      
           const decoded = jwtDecode(response["accessToken"]);
           const idToken = jwtDecode(response["id_token"]);
+          
           setToken(
             "accessToken",
             response.access_token,
