@@ -146,7 +146,7 @@ function Navigation() {
                 maxWidth: "max-content",
                 backgroundColor: "#f2f2f2",
               }}
-              className=" rounded-3xl"
+              className=" !rounded-3xl"
             >
               <option value="">All</option>
               {categories?.results?.map((item, index) => (
@@ -167,7 +167,7 @@ function Navigation() {
 
               height: "40px",
             }}
-            className=" !rounded-3xl"
+            className="!rounded-3xl"
           >
             <InputBase
               placeholder="Search…"
