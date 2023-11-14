@@ -91,30 +91,28 @@ const Info = ({ data }) => {
               <span> (20)</span>
             </Typography>
             <div className="price-wrapper">
-              <p className="price font-semibold text-red-500 flex gap-3 items-end">
-                <span className=" text-lg flex  items-end">
-                  $
-                  <span className=" ">
-                    {data?.discount
-                      ? data?.price.toFixed(2) - data?.discount.toFixed(2)
-                      : data?.price.toFixed(2)
-                      ? data?.price.toFixed(2)
-                      : data?.price.toFixed(2)}
-                  </span>
+            <p className="price font-semibold text-red-500 flex gap-3 items-end">
+              <span className=" text-lg flex  items-end">
+                $
+                <span className=" ">
+                  {data?.salePrice
+                    ? data?.salePrice.toFixed(2)
+                    : data?.price.toFixed(2)}
                 </span>
+              </span>
 
-                <span className=" line-through text-gray-500 ">
-                  ${data?.price ? data?.price.toFixed(2) : "$0.00"}
+              <span className=" line-through text-gray-500 ">
+                ${data?.price ? data?.price.toFixed(2) : "$0.00"}
+              </span>
+              {data?.salePrice && (
+                <span className=" text-green-500 top-3 left-3">
+                  {data?.salePrice &&
+                    ((100 / data?.price) * data?.salePrice).toFixed(2)}
+                  % off
                 </span>
-                {data?.discount && (
-                  <span className=" text-green-500 top-3 left-3">
-                    {data?.discount &&
-                      ((100 / data?.price) * data?.discount).toFixed(2)}
-                    % off
-                  </span>
-                )}
-              </p>
-            </div>
+              )}
+            </p>
+          </div>
             <div className="product-short-description">
               <p>
                 Pellentesque habitant morbi tristique senectus et netus et
@@ -213,7 +211,7 @@ const Info = ({ data }) => {
              
                 variant="subtitle1"
               >
-                SKU: <span>NA</span>
+                SKU: <span>{data.sku}</span>
               </Typography>
               <Typography
                 sx={{
@@ -226,7 +224,7 @@ const Info = ({ data }) => {
                   href="https://flatsome3.uxthemes.com/product-category/clothing/"
                   rel="tag"
                 >
-                  Clothing
+                  {data.categories[0]}
                 </a>
               </Typography>
              
@@ -234,9 +232,9 @@ const Info = ({ data }) => {
                 sx={{ display: "flex", alignItems: "center", gap: "10px", color: colors.grey[800], }}
                 variant="subtitle1"
               >
-                Brand: <span>{data.brand}</span>
+                Brand: <span>{data.brandName}</span>
               </Typography>
-              <Typography
+              {/* <Typography
                 sx={{
                   color: colors.grey[800],
                 }}
@@ -244,7 +242,7 @@ const Info = ({ data }) => {
                 variant="subtitle1"
               >
                 Soldby: <strong>Mobile Store</strong>
-              </Typography>
+              </Typography> */}
               <Typography
                 sx={{
                   color: colors.grey[800],
@@ -252,7 +250,7 @@ const Info = ({ data }) => {
                
                 variant="subtitle1"
               >
-                Tags: <strong>Tag1</strong>
+                Tags: <span className=" font-medium">{data.tags.toString()}</span>
               </Typography>
             </div>
           </Box>
