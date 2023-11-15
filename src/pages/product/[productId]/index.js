@@ -9,7 +9,7 @@ import Head from "next/head";
 import { useParams } from "next/navigation";
 import React from "react";
 
-const Index = ({data}) => {
+const Index = ({data,related}) => {
   // const data = allproducts;
   const params = useParams();
 
@@ -28,7 +28,7 @@ const Index = ({data}) => {
         <Box p={3} component={"div"}>
           <Info data={data.results} />
           <ProductDetails data={data.results} />
-          {/* <Related data={relatedProduct} /> */}
+          <Related data={related.results} />
         </Box>
       </Layout>
     </>
@@ -44,11 +44,19 @@ export const getServerSideProps = async (ctx) => {
     `${apiUrl}/products/${id}?slug=${id}`
   );
   const data = await resData.json();
+  const filter =   
+    JSON.stringify({ categories: "Man"})  
+  
 
-  console.log(data);
+  const relatedProducts = await fetch(`${apiUrl}/products?filter=${filter}`)
+  const related = await relatedProducts.json()
+
+
   return {
     props: {
       data,
+      related
+     
     },
   };
 };

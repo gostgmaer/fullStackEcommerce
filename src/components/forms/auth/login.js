@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuthContext } from "@/context/AuthContext";
 
-
 const LoginForm = () => {
   const { handleLoginAuth, user, userId, authError } = useAuthContext();
   const route = useRouter();
@@ -27,7 +26,6 @@ const LoginForm = () => {
     if (userId) {
       route.push("/my-account");
     }
-  
   }, [userId]);
 
   return (
