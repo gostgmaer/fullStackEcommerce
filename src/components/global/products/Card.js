@@ -57,7 +57,7 @@ const PCard = ({ product, size }) => {
                     height={360}
                     src={product.images[index]?.["url"]}
                     data-src={product.images[index]?.["url"]}
-                    className="attachment-woocommerce_thumbnail size-woocommerce_thumbnail lazy-load-active h-80"
+                    className="attachment-woocommerce_thumbnail size-woocommerce_thumbnail lazy-load-active h-80 object-cover object-top"
                     alt=""
                     decoding="async"
                   />
@@ -124,7 +124,7 @@ const PCard = ({ product, size }) => {
                 <p className="category text-xs font-semibold uppercase is-smaller no-text-overflow product-cat p-1 cursor-pointer">
                   {product.categories[0]}
                 </p>
-                <Link href={`/product/${product?.slug}`}>
+                <Link href={`/product/${product?.slug}`} className=" text-sm">
                   {product?.title
                     ? product?.title
                     : " This is a product? Title"}

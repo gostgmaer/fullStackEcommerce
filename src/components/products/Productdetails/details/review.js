@@ -1,4 +1,3 @@
-// /react-hooks/exhaustive-deps
 import {
   Alert,
   Avatar,
@@ -10,14 +9,12 @@ import {
   colors,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { invokeExternalAPI } from "@/lib/http";
 import moment from "moment";
 import { useRouter } from "next/router";
 import { Formik } from "formik";
 import { Star } from "@mui/icons-material";
-import { post } from "@/lib/network/http";
+import { get, post } from "@/lib/network/http";
 import TextField from "@/components/global/fields/TextField";
-import ImageUpload from "@/components/global/fields/ImageUpload";
 import MultiImageUploadr from "@/components/global/fields/multiImageUploadr";
 
 const ReviewBlock = ({ data }) => {
@@ -25,15 +22,13 @@ const ReviewBlock = ({ data }) => {
   const [review, setReview] = useState(null);
 
   const getReview = async () => {
-    const newParams = {
-      " filters[product][$eq]": route.query.productId,
-    };
-    const req = await invokeExternalAPI("reviews", "get", "", {}, newParams);
-
+    const req = await get(`/products/${data["_id"]}/reviews`);
     setReview(req);
   };
 
-  // getReview();
+  useEffect(() => {
+    getReview();
+  }, []);
 
   // console.log(session);
   return (

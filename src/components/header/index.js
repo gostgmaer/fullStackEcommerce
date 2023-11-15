@@ -34,6 +34,7 @@ import { useGlobalContext } from "@/context/globalContext";
 import TopBar from "../global/header/topbar";
 import Image from "next/image";
 import { get } from "@/lib/network/http";
+import { useAuthContext } from "@/context/AuthContext";
 
 function Header(props) {
   const { state, setState } = useGlobalContext();
@@ -72,6 +73,7 @@ export default Header;
 
 function Navigation() {
   const { state, setState } = useGlobalContext();
+  const { user, userId, Logout } = useAuthContext();
   const [anchorEl, setAnchorEl] = useState(null);
   const [categories, setCategories] = useState(undefined);
   const cartItem = useSelector((state) => state["data"].cartItems);
@@ -98,13 +100,14 @@ function Navigation() {
     }
   };
 
-  const handleLogoutHandler = (e) => {
+  const handleLogoutHandler = async (e) => {
     try {
     } catch (error) {
       console.log(error);
     }
 
     setAnchorEl(null);
+    const log = await Logout();
   };
   const [hydrated, setHydrated] = useState(false);
   useEffect(() => {
@@ -115,6 +118,7 @@ function Navigation() {
     return null;
   }
 
+  console.log(user);
   return (
     <AppBar
       component={"div"}
@@ -199,14 +203,25 @@ function Navigation() {
               <ShoppingCart />
             </Badge>
           </IconButton>
-          <IconButton
-            size="large"
-            aria-label="show 17 new notifications"
-            color="inherit"
-            onClick={() => route.push("/auth/signin")}
-          >
-            <Person />
-          </IconButton>
+          {userId ? (
+            <IconButton
+              size="large"
+              aria-label="show 17 new notifications"
+              color="inherit"
+              onClick={handleClick}
+            >
+              <Avatar alt="Remy Sharp" src={user?.["profilePicture"]} />
+            </IconButton>
+          ) : (
+            <IconButton
+              size="large"
+              aria-label="show 17 new notifications"
+              color="inherit"
+              onClick={() => route.push("/auth/signin")}
+            >
+              <Person />
+            </IconButton>
+          )}
           <Menu
             anchorEl={anchorEl}
             id="account-menu"
@@ -243,7 +258,7 @@ function Navigation() {
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
             <MenuItem onClick={handleClose}>
-              <Avatar />
+              <Avatar alt="Remy Sharp" src={user?.["profilePicture"]} />
               profile
             </MenuItem>
             <Divider />
@@ -254,7 +269,7 @@ function Navigation() {
               </ListItemIcon>
               Order
             </MenuItem>
-            <MenuItem onClick={handleLogoutHandler}>
+            <MenuItem >
               <ListItemIcon>
                 <Logout fontSize="small" />
               </ListItemIcon>

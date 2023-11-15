@@ -36,7 +36,6 @@ export const AuthContextProvider = ({ children }) => {
         setUserId(decoded);
         setUser(jwtDecode(res.id_token));
         setAuthError(undefined);
-        router.push("/dashboard");
       }
     } catch (err) {
       console.log(err);
@@ -47,7 +46,7 @@ export const AuthContextProvider = ({ children }) => {
     try {
       const res = await post("/user/auth/logout");
       if (res.statusCode == "200") {
-        router.push("/auth/login");
+        // router.push("/auth/login");
         window.sessionStorage.clear();
         window.localStorage.clear();
         const cookies = Cookies.get();
@@ -75,22 +74,24 @@ export const AuthContextProvider = ({ children }) => {
         if (decodedToken["user_id"]) {
           const response = await post("/user/auth/verify/session");
 
-     
-          const decoded = jwtDecode(response["accessToken"]);
-          const idToken = jwtDecode(response["id_token"]);
-          
-          setToken(
-            "accessToken",
-            response.access_token,
-            decoded["exp"],
-            "ACCESS_TOKEN"
-          );
-          setUserId(decoded);
-          setUser(idToken);
-          setAuthError(undefined);
+          if (response) {
+            console.log(response);
+            const decoded = jwtDecode(response["accessToken"]);
+            const id = jwtDecode(response["id_token"]);
+
+            console.log(decoded,id);
+            setToken(
+              "accessToken",
+              response.accessToken,
+              decoded["exp"],
+              "ACCESS_TOKEN"
+            );
+            setUserId(decoded);
+            setUser(id);
+            setAuthError(undefined);
+          }
         }
       }
-      setAuthError(undefined);
     } catch (error) {
       setUser(undefined);
       setUserId(undefined);
