@@ -5,6 +5,8 @@ import {
   ShoppingCart,
   Logout,
   Search,
+  PersonAdd,
+  Settings,
 } from "@mui/icons-material";
 
 import {
@@ -23,6 +25,7 @@ import {
   MenuItem,
   colors,
   FormControl,
+  Tooltip,
 } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -35,6 +38,7 @@ import TopBar from "../global/header/topbar";
 import Image from "next/image";
 import { get } from "@/lib/network/http";
 import { useAuthContext } from "@/context/AuthContext";
+import React from "react";
 
 function Header(props) {
   const { state, setState } = useGlobalContext();
@@ -72,14 +76,12 @@ function Header(props) {
 export default Header;
 
 function Navigation() {
+  const route = useRouter();
   const { state, setState } = useGlobalContext();
-  const { user, userId, Logout } = useAuthContext();
   const [anchorEl, setAnchorEl] = useState(null);
   const [categories, setCategories] = useState(undefined);
   const cartItem = useSelector((state) => state["data"].cartItems);
   const wishlist = useSelector((state) => state["data"].wishList);
-  const route = useRouter();
-  const open = Boolean(anchorEl);
 
   const fetchCategories = async (second) => {
     const response = await get("/categories");
@@ -90,25 +92,6 @@ function Navigation() {
     fetchCategories();
   }, []);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = (e) => {
-    if (e.target.innerText) {
-      route.push(`/${e.target.innerText.replace(" ", "-").toLowerCase()}`);
-    }
-  };
-
-  const handleLogoutHandler = async (e) => {
-    try {
-    } catch (error) {
-      console.log(error);
-    }
-
-    setAnchorEl(null);
-    const log = await Logout();
-  };
   const [hydrated, setHydrated] = useState(false);
   useEffect(() => {
     setHydrated(true);
@@ -118,7 +101,6 @@ function Navigation() {
     return null;
   }
 
-  console.log(user);
   return (
     <AppBar
       component={"div"}
@@ -188,6 +170,7 @@ function Navigation() {
             size="large"
             aria-label="show 17 new notifications"
             color="inherit"
+            onClick={() => route.push("/my-account/wishlist")}
           >
             <Badge badgeContent={wishlist?.length.toString()} color="error">
               <Favorite />
@@ -203,81 +186,132 @@ function Navigation() {
               <ShoppingCart />
             </Badge>
           </IconButton>
-          {userId ? (
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-              onClick={handleClick}
-            >
-              <Avatar alt="Remy Sharp" src={user?.["profilePicture"]} />
-            </IconButton>
-          ) : (
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-              onClick={() => route.push("/auth/signin")}
-            >
-              <Person />
-            </IconButton>
-          )}
-          <Menu
-            anchorEl={anchorEl}
-            id="account-menu"
-            open={open}
-            onClose={() => setAnchorEl(null)}
-            onClick={() => setAnchorEl(null)}
-            PaperProps={{
-              elevation: 0,
-              sx: {
-                overflow: "visible",
-                filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                mt: 1.5,
-                "& .MuiAvatar-root": {
-                  width: 32,
-                  height: 32,
-                  ml: -0.5,
-                  mr: 1,
-                },
-                "&:before": {
-                  content: '""',
-                  display: "block",
-                  position: "absolute",
-                  top: 0,
-                  right: 14,
-                  width: 10,
-                  height: 10,
-                  bgcolor: "background.paper",
-                  transform: "translateY(-50%) rotate(45deg)",
-                  zIndex: 0,
-                },
-              },
-            }}
-            transformOrigin={{ horizontal: "right", vertical: "top" }}
-            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-          >
-            <MenuItem onClick={handleClose}>
-              <Avatar alt="Remy Sharp" src={user?.["profilePicture"]} />
-              profile
-            </MenuItem>
-            <Divider />
 
-            <MenuItem onClick={handleClose}>
-              <ListItemIcon>
-                <Dashboard fontSize="small" />
-              </ListItemIcon>
-              Order
-            </MenuItem>
-            <MenuItem >
-              <ListItemIcon>
-                <Logout fontSize="small" />
-              </ListItemIcon>
-              Logout
-            </MenuItem>
-          </Menu>
+          <AccountMenu />
         </Box>
       </Container>
     </AppBar>
+  );
+}
+
+export function AccountMenu() {
+  const route = useRouter();
+  const { user, userId, signout } = useAuthContext();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  return (
+    <React.Fragment>
+      <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
+        {userId ? (
+          <Tooltip title="Account settings">
+            <IconButton
+              onClick={handleClick}
+              size="small"
+              sx={{ ml: 2 }}
+              aria-controls={open ? "account-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+            >
+              <Avatar
+                sx={{ width: 32, height: 32 }}
+                src={user?.["profilePicture"]}
+              ></Avatar>
+            </IconButton>
+          </Tooltip>
+        ) : (
+          <Tooltip title="Login">
+            <IconButton
+              onClick={() => route.push("/auth/signin")}
+              size="small"
+              sx={{ ml: 2 }}
+              aria-controls={open ? "account-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+            >
+              <Person />
+            </IconButton>
+          </Tooltip>
+        )}
+      </Box>
+      <Menu
+        anchorEl={anchorEl}
+        id="account-menu"
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        PaperProps={{
+          elevation: 0,
+          sx: {
+            overflow: "visible",
+            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+            mt: 1.5,
+            "& .MuiAvatar-root": {
+              width: 32,
+              height: 32,
+              ml: -0.5,
+              mr: 1,
+            },
+            "&:before": {
+              content: '""',
+              display: "block",
+              position: "absolute",
+              top: 0,
+              right: 14,
+              width: 10,
+              height: 10,
+              bgcolor: "background.paper",
+              transform: "translateY(-50%) rotate(45deg)",
+              zIndex: 0,
+            },
+          },
+        }}
+        transformOrigin={{ horizontal: "right", vertical: "top" }}
+        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+      >
+        <MenuItem
+          onClick={() => {
+            route.push("/my-account");
+            handleClose();
+          }}
+        >
+          <Avatar
+            sx={{ width: 32, height: 32 }}
+            src={user?.["profilePicture"]}
+          ></Avatar>{" "}
+          My account
+        </MenuItem>
+
+        <Divider />
+        {/* <MenuItem onClick={handleClose}>
+          <ListItemIcon>
+            <PersonAdd fontSize="small" />
+          </ListItemIcon>
+          Add another account
+        </MenuItem> */}
+        <MenuItem onClick={handleClose}>
+          <ListItemIcon>
+            <Settings fontSize="small" />
+          </ListItemIcon>
+          Settings
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleClose;
+            signout();
+          }}
+        >
+          <ListItemIcon>
+            <Logout fontSize="small" />
+          </ListItemIcon>
+          Logout
+        </MenuItem>
+      </Menu>
+    </React.Fragment>
   );
 }

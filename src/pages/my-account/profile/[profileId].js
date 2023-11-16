@@ -43,7 +43,7 @@ const UpdateProfile = () => {
             variant="outlined"
             sx={{ textTransform: "capitalize" }}
             color="error"
-            onClick={()=>route.push(`/profile`)}
+            onClick={()=>route.push(`/my-account/profile`)}
           >
             Back to Profile
           </Button>

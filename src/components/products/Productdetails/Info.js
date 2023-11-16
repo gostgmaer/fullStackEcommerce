@@ -211,7 +211,7 @@ const Info = ({ data }) => {
              
                 variant="subtitle1"
               >
-                SKU: <span>{data.sku}</span>
+                SKU: <span>{data?.sku}</span>
               </Typography>
               <Typography
                 sx={{
@@ -224,7 +224,7 @@ const Info = ({ data }) => {
                   href="https://flatsome3.uxthemes.com/product-category/clothing/"
                   rel="tag"
                 >
-                  {data.categories[0]}
+                  {data?.categories[0]}
                 </a>
               </Typography>
              

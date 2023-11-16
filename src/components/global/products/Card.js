@@ -26,6 +26,7 @@ const PCard = ({ product, size }) => {
   const [openModal, setOpenModal] = useState(false);
   const [index, setIndex] = useState(0);
 
+  console.log(product);
   const wishlist = useSelector((state) => state["data"].wishList);
   const dispatch = useDispatch();
 
@@ -63,8 +64,8 @@ const PCard = ({ product, size }) => {
                   />
                 </Link>
                 <div className="show-on-hover absolute top-3 right-3 rounded-full border-2">
-                  {wishlist?.find((item) => item.id === product.id)?.id !==
-                  product.id ? (
+                  {wishlist?.find((item) => item._id === product._id)?._id !==
+                  product._id ? (
                     <IconButton
                       data-label={"Add to Wishlist"}
                       className=" border rounded-full h-10 w-10 flex items-center "
@@ -77,14 +78,14 @@ const PCard = ({ product, size }) => {
                   ) : (
                     <IconButton
                       color="error"
-                      onClick={() => dispatch(removeFromWishlist(product.id))}
+                      onClick={() => dispatch(removeFromWishlist(product._id))}
                     >
                       <Favorite />
                     </IconButton>
                   )}
                 </div>
                 <div>
-                  {product?.discount && (
+                  {product?.salePrice && (
                     <Typography
                       className=" text-green-500  absolute top-3 left-3"
                       sx={{
@@ -95,8 +96,10 @@ const PCard = ({ product, size }) => {
                       variant="body2"
                     >
                       -
-                      {product?.discount &&
-                        ((100 / product?.price) * product?.discount).toFixed(2)}
+                      {product?.salePrice &&
+                        ((100 / product?.price) * product?.salePrice).toFixed(
+                          2
+                        )}
                       %
                     </Typography>
                   )}
@@ -198,8 +201,8 @@ const ProductDetails = ({ product }) => {
           />
         </Link>
         <div className="show-on-hover absolute top-3 right-3 rounded-full border-2">
-          {wishlist?.find((item) => item.id === product.id)?.id !==
-          product.id ? (
+          {wishlist?.find((item) => item._id === product._id)?._id !==
+          product._id ? (
             <IconButton
               data-label={"Add to Wishlist"}
               className=" border rounded-full h-10 w-10 flex items-center "
@@ -212,14 +215,14 @@ const ProductDetails = ({ product }) => {
           ) : (
             <IconButton
               color="error"
-              onClick={() => dispatch(removeFromWishlist(product.id))}
+              onClick={() => dispatch(removeFromWishlist(product._id))}
             >
               <Favorite />
             </IconButton>
           )}
         </div>
         <div>
-          {product?.discount && (
+          {product?.salePrice && (
             <Typography
               className=" text-green-500  absolute top-3 left-3"
               sx={{
@@ -230,9 +233,12 @@ const ProductDetails = ({ product }) => {
               variant="body2"
             >
               -
-              {product?.discount &&
-                ((100 / product?.price) * product?.discount).toFixed(2)}
-              %
+              <span className="pl-1">
+                {" "}
+                {product?.salePrice &&
+                  ((100 / product?.price) * product?.salePrice).toFixed(2)}
+                %
+              </span>
             </Typography>
           )}
         </div>
