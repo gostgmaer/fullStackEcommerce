@@ -1,3 +1,4 @@
+import { useAuthContext } from "@/context/AuthContext";
 import Userlayout from "@/layout/user";
 import { appBaseUrl } from "@/utils/config";
 import { Person } from "@mui/icons-material";
@@ -13,6 +14,7 @@ import {
 } from "@mui/material";
 import { getSession, signIn } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -20,7 +22,7 @@ const Profile = () => {
   const [loading, setloading] = useState(true);
   const [open, setopen] = useState(true);
   const route = useRouter()
-
+  const { user,userId } = useAuthContext();
   // useEffect(() => {
   //   const sequrePage = async () => {
   //     const session = await getSession();
@@ -55,14 +57,7 @@ const Profile = () => {
             <Person color="error" />
             <span>My profile</span>
           </Typography>
-          <Button
-            variant="outlined"
-            sx={{ textTransform: "capitalize" }}
-            color="error"
-            onClick={()=>route.push(`/profile/8919872ysaduih38y87dna378hgd78hnad`)}
-          >
-            Edit Profile
-          </Button>
+          <Link className="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" href={`/my-account/profile/${userId?.user_id}`}>Edit Profile</Link>
         </Stack>
         <UserCard />
         <ProfileDetails />

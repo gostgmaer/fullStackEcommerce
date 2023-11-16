@@ -9,12 +9,39 @@ import {
   TextField,
 } from "@mui/material";
 import React, { useState } from "react";
+import ImageUpload from "../global/fields/ImageUpload";
+import { useAuthContext } from "@/context/AuthContext";
+import moment from "moment";
+import { patch } from "@/lib/network/http";
 
 const ProfileupdateForm = () => {
-const [image, setImage] = useState(null);
-// console.log(image);
+  const { user, userId } = useAuthContext();
+
+  const [formData, setFormData] = useState({
+    firstName: user?.firstName,
+    lastName: user?.lastName,
+    username: user?.username,
+    email: user?.email,
+    phoneNumber: user?.phoneNumber,
+    dateOfBirth: user?.dateOfBirth,
+  });
+  const [image, setImage] = useState(null);
 
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    
+  };
+
+  const handleSubmit = async (e)=>{
+    e.preventDefault()
+    const body = {
+      ...formData,profilePicture:image
+    }
+    const req= await patch('/users',body,userId?.user_id)
+    console.log(req);
+  }
   return (
     <Box width={"100%"}>
       <Paper
@@ -22,8 +49,8 @@ const [image, setImage] = useState(null);
           display: "flex",
           alignItems: "flex-start",
           flexDirection: "column",
-          py: 2,
-          gap: 2.5,
+          py: 1,
+          gap: 1,
           width: "100%",
           p: 2,
         }}
@@ -34,32 +61,39 @@ const [image, setImage] = useState(null);
             alignItems: "flex-start",
             justifyContent: "space-between",
             m: "0!important",
-            gap: 2.5,
+            gap: 3,
             width: "100%",
             p: 1,
           }}
           alignItems="center"
           spacing={2}
         >
-         <TextField
-              id="emailaddress"
-              name="emailaddress"
-              label="Email Address"
-              size="small"
-              fullWidth
-              sx={{maxWidth:'60%'}}
-              disabled
-              type="email"
-              variant="outlined"
-            />
-          <IconButton
-            color="primary"
-            aria-label="upload picture"
-            component="label"
-          >
-            <input onChange={(e)=>setImage(e)} hidden accept="image/*" type="file" />
-            <PhotoCamera />
-          </IconButton>
+          <TextField
+            id="email"
+            name="email"
+            label="Email Address"
+            className="border-none  outline-none rounded-md w-full focus:outline-none focus:ring "
+            size="small"
+            fullWidth
+            value={formData.email}
+            onChange={handleChange}
+            disabled
+            type="email"
+            variant="outlined"
+          />
+          <TextField
+            id="username"
+            name="username"
+            label="User Name"
+            value={formData.username}
+            onChange={handleChange}
+            size="small"
+            fullWidth
+            // sx={{maxWidth:'40%'}}
+            disabled
+            type="email"
+            variant="outlined"
+          />
         </Stack>
         <Grid
           container
@@ -83,17 +117,21 @@ const [image, setImage] = useState(null);
         >
           <Grid item xs={8}>
             <TextField
-              id="firstname"
-              name="firstname"
+              id="firstName"
+              name="firstName"
               label="First Name"
+              value={formData.firstName}
+              onChange={handleChange}
               fullWidth
               size="small"
               variant="outlined"
             />
-           
+
             <TextField
-              id="dateof birth"
+              id="dateOfBirth"
               label="Date of birth"
+              value={formData.dateOfBirth}
+              onChange={handleChange}
               type="date"
               fullWidth
               size="small"
@@ -104,17 +142,21 @@ const [image, setImage] = useState(null);
           </Grid>
           <Grid item xs={8}>
             <TextField
-              id="lastname"
-              name="lastname"
+              id="lastName"
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleChange}
               fullWidth
               size="small"
               label="Last Name"
               variant="outlined"
             />
             <TextField
-              id="phonenumber"
+              id="phoneNumber"
+              value={formData.phoneNumber}
+              onChange={handleChange}
               size="small"
-              name="phonenumber"
+              name="phoneNumber"
               fullWidth
               label="Phone Number"
               variant="outlined"
@@ -134,16 +176,36 @@ const [image, setImage] = useState(null);
           alignItems="center"
           spacing={2}
         >
+          <ImageUpload
+            imagePreview={image}
+            setImagePreview={setImage}
+            label={"Upload Profile Picture"}
+          />
+        </Stack>
+        <Stack
+          sx={{
+            alignItems: "center",
+            justifyContent: "space-between",
+            m: "0!important",
+            gap: 2.5,
+            width: "100%",
+            p: 1,
+          }}
+          direction="row"
+          alignItems="center"
+          spacing={2}
+        >
           <Button
             variant="contained"
             sx={{ textTransform: "capitalize" }}
             color="error"
             className="bg-red-500"
+            onClick={handleSubmit}
           >
             Save Changes
           </Button>
         </Stack>
-      </Paper>{" "}
+      </Paper>
     </Box>
   );
 };

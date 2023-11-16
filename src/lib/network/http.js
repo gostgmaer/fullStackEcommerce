@@ -48,7 +48,7 @@ export const getsingle = async (endpint, id, query) => {
     method: "get",
     url: baseURL + endpint + `/${id}`,
     headers: {
-      Authorization: token,
+      Authorization: "Bearer " + token,
     },
     params: query,
   };
@@ -71,7 +71,7 @@ export const serverGetsingle = async (endpint, id, query) => {
     method: "get",
     url: baseURL + endpint + `/${id}`,
     headers: {
-      Authorization: token,
+      Authorization: "Bearer " + token,
     },
     params: query,
   };
@@ -82,7 +82,7 @@ export const serverGetsingle = async (endpint, id, query) => {
   } catch (e) {
     error = e.response.data;
 
-  //  throw new Error(JSON.stringify(e.response.data));
+    //  throw new Error(JSON.stringify(e.response.data));
   }
   return response?.data ? response?.data : error; // or set initial value
 };
@@ -95,7 +95,7 @@ export const getServerSingle = async (endpint, query, id) => {
     method: "get",
     url: baseURL + endpint + `/${id}`,
     headers: {
-      Authorization: token,
+      Authorization: "Bearer " + token,
     },
     params: query,
   };
@@ -106,7 +106,7 @@ export const getServerSingle = async (endpint, query, id) => {
   } catch (e) {
     error = e.response.data;
 
-  //  throw new Error(JSON.stringify(e.response.data));
+    //  throw new Error(JSON.stringify(e.response.data));
   }
   return response?.data ? response?.data : error; // or set initial value
 };
@@ -137,7 +137,6 @@ export const post = async (endpint, data) => {
   return response?.data ? response.data : error; // or set initial value
 };
 
-
 export const patch = async (endpint, data, id) => {
   const cookiesData = Cookies.get();
   const token = cookiesData["headerPayload"] + "." + cookiesData["signature"];
@@ -145,7 +144,7 @@ export const patch = async (endpint, data, id) => {
     method: "patch",
     url: baseURL + endpint + `/${id}`,
     headers: {
-      Authorization: token,
+      Authorization: "Bearer " + token,
     },
     params: {},
     data: data,
@@ -161,7 +160,6 @@ export const patch = async (endpint, data, id) => {
   }
   return response?.data ? response?.data : error; // or set initial value
 };
-
 
 export const put = async (endpint, data, id) => {
   const cookiesData = Cookies.get();
@@ -170,7 +168,7 @@ export const put = async (endpint, data, id) => {
     method: "put",
     url: baseURL + endpint + `/${id}`,
     headers: {
-      Authorization: token,
+      Authorization: "Bearer " + token,
     },
     params: {},
     data: data,
@@ -186,7 +184,6 @@ export const put = async (endpint, data, id) => {
   }
   return response?.data ? response?.data : error; // or set initial value
 };
-
 
 export const del = async (endpoint, id) => {
   const cookiesData = Cookies.get();
