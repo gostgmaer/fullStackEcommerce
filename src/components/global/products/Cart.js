@@ -128,7 +128,7 @@ export const CartUpdate = ({ data }) => {
         onClick={() =>
           dispatch(
             updateCart({
-              id: data?.product.id,
+              id: data?.product._id,
             })
           )
         }

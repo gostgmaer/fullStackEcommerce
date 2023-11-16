@@ -19,7 +19,7 @@ export const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const item = state.cartItems.find(
-        (item) => item.product["id"] === action.payload.product["id"]
+        (item) => item.product["_id"] === action.payload.product["_id"]
       );
       if (item) {
         item.quantity += action.payload.quantity;
@@ -36,32 +36,33 @@ export const cartSlice = createSlice({
 
     updateCart: (state, action) => {
       const item = state.cartItems.find(
-        (item) => item.product["id"] === action.payload["id"]
+        (item) => item.product["_id"] === action.payload["_id"]
       );
       if (item.quantity > 1) {
         item.quantity -= 1;
         item["subtotal"] = item.quantity * item.product.price;
       } else {
         state.cartItems = state.cartItems.filter(
-          (data) => data.product["id"] !== action.payload["id"]
+          (data) => data.product["_id"] !== action.payload["_id"]
         );
       }
     },
     removefromCart: (state, action) => {
       state.cartItems = state.cartItems.filter(
-        (item) => item.product.id !== action.payload
+        (item) => item.product._id !== action.payload
       );
     },
     resetCart: (state, action) => {
       state.cartItems = [];
     },
     addToWishlist: (state, action) => {
-      const item = state.wishList.find((item) => item.id === action.payload.id);
+      const item = state.wishList.find((item) => item._id === action.payload._id);
       state.wishList.push(action.payload);
     },
     removeFromWishlist: (state, action) => {
+      console.log(state,action);
       state.wishList = state.wishList.filter(
-        (item) => item.id !== action.payload
+        (item) => item._id !== action.payload
       );
     },
     resetWishList: (state, action) => {

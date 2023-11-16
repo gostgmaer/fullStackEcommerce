@@ -42,11 +42,11 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const Logout = async () => {
+  const signout = async () => {
     try {
       const res = await post("/user/auth/logout");
       if (res.statusCode == "200") {
-        // router.push("/auth/login");
+        router.push("/auth/signin");
         window.sessionStorage.clear();
         window.localStorage.clear();
         const cookies = Cookies.get();
@@ -79,7 +79,7 @@ export const AuthContextProvider = ({ children }) => {
             const decoded = jwtDecode(response["accessToken"]);
             const id = jwtDecode(response["id_token"]);
 
-            console.log(decoded,id);
+            console.log(decoded, id);
             setToken(
               "accessToken",
               response.accessToken,
@@ -133,7 +133,7 @@ export const AuthContextProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, handleLoginAuth, Logout, userId, authError }}
+      value={{ user, handleLoginAuth, signout, userId, authError }}
     >
       {children}
     </AuthContext.Provider>

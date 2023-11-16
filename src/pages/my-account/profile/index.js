@@ -58,7 +58,7 @@ const Profile = () => {
             <Person color="error" />
             <span>My profile</span>
           </Typography>
-          <Link href={`/my-account/profile/${user._id}`}>Edit Profile</Link>
+          <Link href={`/my-account/profile/${user?.user_id}`}>Edit Profile</Link>
         </Stack>
         <UserCard user={user} />
         <ProfileDetails user={user} />
@@ -86,8 +86,9 @@ const UserCard = ({ user }) => {
           <Image
             width={75}
             height={75}
+            className=" w-20 h-20 object-cover"
             style={{ borderRadius: "50%" }}
-            src="/assets/images/nike-black.png"
+            src={user?.["profilePicture"]}
             alt=""
           />
           <Stack>
@@ -194,7 +195,7 @@ const ProfileDetails = ({ user }) => {
           }}
           variant="body2"
         >
-          Email: <span>{user?.lastName}</span>
+          Email: <span>{user?.email}</span>
         </Typography>
         <Typography
           sx={{
@@ -205,7 +206,7 @@ const ProfileDetails = ({ user }) => {
           }}
           variant="body2"
         >
-          Phone: <span>{user?.lastName}</span>
+          Phone: <span>{user?.phoneNumber}</span>
         </Typography>
         <Typography
           sx={{
@@ -216,7 +217,7 @@ const ProfileDetails = ({ user }) => {
           }}
           variant="body2"
         >
-          Date of Birth: <span>{user?.lastName}</span>
+          Date of Birth: <span>{user?.dateOfBirth}</span>
         </Typography>
       </Paper>
     </Stack>

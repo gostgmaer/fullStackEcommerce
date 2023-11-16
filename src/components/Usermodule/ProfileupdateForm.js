@@ -25,7 +25,7 @@ const ProfileupdateForm = () => {
     phoneNumber: user?.phoneNumber,
     dateOfBirth: user?.dateOfBirth,
   });
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(user?.profilePicture);
 
 
   const handleChange = (e) => {

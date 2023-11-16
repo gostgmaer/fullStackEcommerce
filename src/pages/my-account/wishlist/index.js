@@ -87,7 +87,7 @@ const WishListTable = (second) => {
               >
                 <TableCell align="left">
                   <IconButton
-                    onClick={() => dispatch(removeFromWishlist(row["id"]))}
+                    onClick={() => dispatch(removeFromWishlist(row._id))}
                     color="error"
                   >
                     <Close></Close>
@@ -97,22 +97,30 @@ const WishListTable = (second) => {
                 <TableCell align="left">
                   {" "}
                   <div className="price-wrapper">
-                    <p className="price font-semibold text-gray-600 flex gap-3 items-end">
-                      <span className=" line-through text-gray-400 ">
-                        ${row?.price ? row?.price.toFixed(2) : "$0.00"}
-                      </span>
-                      <span className=" flex  items-end">
-                        $
-                        <span className=" ">
-                          {row?.discount
-                            ? row?.price.toFixed(2) - row?.discount.toFixed(2)
-                            : row?.price.toFixed(2)
-                            ? row?.price.toFixed(2)
-                            : row?.price.toFixed(2)}
-                        </span>
-                      </span>
-                    </p>
-                  </div>
+                <p className="price font-semibold text-red-500 flex gap-3 items-end">
+                  <span className=" text-sm flex  items-end">
+                    $
+                    <span className=" ">
+                      {row?.salePrice
+                        ? row?.salePrice.toFixed(2)
+                        : row?.price.toFixed(2)}
+                    </span>
+                  </span>
+
+                  <span className=" line-through text-gray-500 ">
+                    ${row?.price ? row?.price.toFixed(2) : "$0.00"}
+                  </span>
+                  {row?.salePrice && (
+                    <span className=" text-green-500 top-3 left-3">
+                      {row?.salePrice &&
+                        ((100 / row?.price) * row?.salePrice).toFixed(
+                          2
+                        )}
+                      % off
+                    </span>
+                  )}
+                </p>
+              </div>
                 </TableCell>
 
                 <TableCell align="right">{"Avaliable"}</TableCell>
