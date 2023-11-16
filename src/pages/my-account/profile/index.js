@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { getSession, signIn } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -57,18 +58,7 @@ const Profile = () => {
             <Person color="error" />
             <span>My profile</span>
           </Typography>
-          <Button
-            variant="outlined"
-            sx={{ textTransform: "capitalize" }}
-            color="error"
-            onClick={() =>
-              route.push(
-                `/my-account/profile/8919872ysaduih38y87dna378hgd78hnad`
-              )
-            }
-          >
-            Edit Profile
-          </Button>
+          <Link href={`/my-account/profile/${user._id}`}>Edit Profile</Link>
         </Stack>
         <UserCard user={user} />
         <ProfileDetails user={user} />
@@ -79,7 +69,7 @@ const Profile = () => {
 
 export default Profile;
 
-const UserCard = ({user}) => {
+const UserCard = ({ user }) => {
   return (
     <Stack direction={"row"} width={"100%"} justifyContent={"space-between"}>
       <Paper
@@ -101,7 +91,9 @@ const UserCard = ({user}) => {
             alt=""
           />
           <Stack>
-            <strong>{user?.firstName} {user?.lastName}</strong>
+            <strong>
+              {user?.firstName} {user?.lastName}
+            </strong>
             <span>Balance: $5421</span>
           </Stack>
         </Box>
@@ -157,8 +149,7 @@ const UserCard = ({user}) => {
   );
 };
 
-const ProfileDetails = ({user}) => {
-
+const ProfileDetails = ({ user }) => {
   return (
     <Stack direction={"row"} width={"100%"} justifyContent={"space-between"}>
       <Paper
