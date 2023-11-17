@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import Wishlist from "@/components/Usermodule/Wishlist";
 import {
   AddToCartSingle,
   CartAddItems,
@@ -24,15 +22,18 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-
-import { useEffect } from "react";
+import Head from "next/head";
+import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 
 const Index = () => {
-  const wishlist = useSelector((state) => state["data"].wishList);
-  console.log(wishlist);
   return (
     <Userlayout>
+      <Head>
+        <title>Ecommerce Wishlist</title>
+        <meta property="og:title" content="Ecommerce Wishlist" key="title" />
+        <meta name="description" content="Ecommerce wishlist items" />
+      </Head>
       <Box
         display={"flex"}
         flexDirection={"column"}
@@ -61,11 +62,8 @@ const Index = () => {
 
 const WishListTable = (second) => {
   const wishlist = useSelector((state) => state["data"].wishList);
-  const cartData = useSelector((state) => state["data"].cartItems);
-
-  const dispatch = useDispatch();
-
   console.log(wishlist);
+  const dispatch = useDispatch();
   return (
     <TableContainer component={Paper}>
       {wishlist.length != 0 ? (
@@ -93,34 +91,44 @@ const WishListTable = (second) => {
                     <Close></Close>
                   </IconButton>
                 </TableCell>
-                <TableCell align="left">{row.title}</TableCell>
+                <TableCell align="left">
+                  <div className="flex gap-1 items-center">
+                 
+                    <Image
+                      src={row["images"][0]["url"]}
+                      width={100}
+                      height={100}
+                      className="w-10 h-10 rounded-full"
+                      alt={row.title}
+                    ></Image>{" "}
+                    {row.title}
+                  </div>
+                </TableCell>
                 <TableCell align="left">
                   {" "}
                   <div className="price-wrapper">
-                <p className="price font-semibold text-red-500 flex gap-3 items-end">
-                  <span className=" text-sm flex  items-end">
-                    $
-                    <span className=" ">
-                      {row?.salePrice
-                        ? row?.salePrice.toFixed(2)
-                        : row?.price.toFixed(2)}
-                    </span>
-                  </span>
+                    <p className="price font-semibold text-red-500 flex gap-3 items-end">
+                      <span className=" text-sm flex  items-end">
+                        $
+                        <span className=" ">
+                          {row?.salePrice
+                            ? row?.salePrice.toFixed(2)
+                            : row?.price.toFixed(2)}
+                        </span>
+                      </span>
 
-                  <span className=" line-through text-gray-500 ">
-                    ${row?.price ? row?.price.toFixed(2) : "$0.00"}
-                  </span>
-                  {row?.salePrice && (
-                    <span className=" text-green-500 top-3 left-3">
-                      {row?.salePrice &&
-                        ((100 / row?.price) * row?.salePrice).toFixed(
-                          2
-                        )}
-                      % off
-                    </span>
-                  )}
-                </p>
-              </div>
+                      <span className=" line-through text-gray-500 ">
+                        ${row?.price ? row?.price.toFixed(2) : "$0.00"}
+                      </span>
+                      {row?.salePrice && (
+                        <span className=" text-green-500 top-3 left-3">
+                          {row?.salePrice &&
+                            ((100 / row?.price) * row?.salePrice).toFixed(2)}
+                          % off
+                        </span>
+                      )}
+                    </p>
+                  </div>
                 </TableCell>
 
                 <TableCell align="right">{"Avaliable"}</TableCell>
@@ -132,7 +140,10 @@ const WishListTable = (second) => {
           </TableBody>
         </Table>
       ) : (
-        <div className="h-40 flex items-center justify-center font-medium text-xl"> No Item Has been add to Wishlist</div>
+        <div className="h-40 flex items-center justify-center font-medium text-xl">
+          {" "}
+          No Item Has been add to Wishlist
+        </div>
       )}
     </TableContainer>
   );
