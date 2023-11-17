@@ -25,11 +25,8 @@ import { CartAddItems, CartUpdate } from "../global/products/Cart";
 export default function CartBlock() {
   const { state, setState } = useGlobalContext();
   const cartItem = useSelector((state) => state["data"].cartItems);
-  const wishlist = useSelector((state) => state["data"].wishList);
-  // console.log(sumWithInitial(cartItem));
   const router = useRouter();
 
-  console.log(cartItem);
   const toggleDrawer = (open) => (event) => {
     setState(open);
   };
@@ -173,13 +170,13 @@ const HascartData = ({ data }) => {
         alignItems={"center"}
       >
         <Image
-          width={80}
-          height={80}
+          width={100}
+          height={100}
           alt="product"
-          src="/assets/images/nike-black.png"
+          src={data.product.images[0]["url"]}
         ></Image>
         <Stack gap={0} alignItems={"flex-start"}>
-          <Typography fontSize={14}>{data.product.title}</Typography>
+          <Typography fontSize={14} className=" text-sm">{data.product.title}</Typography>
           <Typography fontSize={13} variant="body1">
             <span>$ {data.product.price.toFixed(2)}</span> x{" "}
             <span>{data.quantity}</span>
@@ -189,7 +186,7 @@ const HascartData = ({ data }) => {
           </Typography>
         </Stack>
         <IconButton
-          onClick={() => dispatch(removefromCart(data.product.id))}
+          onClick={() => dispatch(removefromCart(data.product._id))}
           color="error"
         >
           <Close></Close>
