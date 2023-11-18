@@ -85,7 +85,7 @@ export const cartSlice = createSlice({
       state.wishList.push(action.payload);
     },
     removeFromWishlist: (state, action) => {
-      console.log(state,action);
+     
       state.wishList = state.wishList.filter(
         (item) => item._id !== action.payload
       );

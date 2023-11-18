@@ -24,7 +24,7 @@ export const get = async (endpint, query, id) => {
     method: "get",
     url: reqUrl,
     headers: {
-      Authorization: token,
+      Authorization:  "Bearer " + token,
     },
     params: query,
   };
@@ -33,7 +33,7 @@ export const get = async (endpint, query, id) => {
   try {
     response = await instance.request(option);
   } catch (e) {
-    error = e.response.data;
+    error = e.response?.data;
 
     //throw new Error(JSON.stringify(e.response.data));
   }
@@ -57,7 +57,7 @@ export const getsingle = async (endpint, id, query) => {
   try {
     response = await instance.request(option);
   } catch (e) {
-    error = e.response.data;
+    error = e.response?.data;
 
     throw new Error(JSON.stringify(e.response.data));
   }
