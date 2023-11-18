@@ -3,6 +3,7 @@ import Layout from "@/layout";
 import { Box } from "@mui/material";
 import BodySection from "@/components/searchPage/Bodysection";
 import FilterSection from "@/components/searchPage/Topsection";
+import ProductListing from "@/components/searchPage";
 
 
 const SearchbyCategory = () => {
@@ -15,10 +16,7 @@ const SearchbyCategory = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Box p={3} component={"div"}>
-          <FilterSection />
-          <BodySection />
-        </Box>
+      <ProductListing/>
       </Layout>
     </>
   );

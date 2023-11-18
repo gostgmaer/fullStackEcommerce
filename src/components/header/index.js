@@ -77,11 +77,11 @@ export default Header;
 
 function Navigation() {
   const route = useRouter();
-  const { state, setState } = useGlobalContext();
-  const [anchorEl, setAnchorEl] = useState(null);
+  const { state, setState, searchProducts } = useGlobalContext();
   const [categories, setCategories] = useState(undefined);
   const cartItem = useSelector((state) => state["data"].cartItems);
   const wishlist = useSelector((state) => state["data"].wishList);
+  const [searchData, setSearchData] = useState("");
 
   const fetchCategories = async (second) => {
     const response = await get("/categories");
@@ -100,6 +100,11 @@ function Navigation() {
     // Returns null on first render, so the client and server match
     return null;
   }
+
+  const fetchData = (params) => {
+    // route.push(`/product/search/${searchData}`);
+    searchProducts();
+  };
 
   return (
     <AppBar
@@ -158,10 +163,14 @@ function Navigation() {
             <InputBase
               placeholder="Search…"
               style={{ padding: "8px", width: "90%" }}
+              onChange={(e) => setSearchData(e.target.value)}
+              value={searchData}
             />
-            <button className=" rounded text-gray-700 h-10">
-              {" "}
-              <Search />{" "}
+            <button
+              className="  text-gray-100 hover:bg-gray-800 h-10 bg-gray-500  w-20 rounded-full"
+              onClick={fetchData}
+            >
+              <Search />
             </button>
           </div>
         </Box>

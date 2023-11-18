@@ -75,11 +75,10 @@ export const AuthContextProvider = ({ children }) => {
           const response = await post("/user/auth/verify/session");
 
           if (response) {
-            console.log(response);
+         
             const decoded = jwtDecode(response["accessToken"]);
             const id = jwtDecode(response["id_token"]);
 
-            console.log(decoded, id);
             setToken(
               "accessToken",
               response.accessToken,

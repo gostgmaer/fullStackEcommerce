@@ -86,7 +86,7 @@ export const Reviewform = ({ product }) => {
       product: product._id,
       user: "user.id",
     };
-    console.log(body);
+   // console.log(body);
     //  const req = post('reviews',body)
     // console.log(req);
   };

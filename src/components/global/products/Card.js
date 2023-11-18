@@ -26,7 +26,6 @@ const PCard = ({ product, size }) => {
   const [openModal, setOpenModal] = useState(false);
   const [index, setIndex] = useState(0);
 
-  console.log(product);
   const wishlist = useSelector((state) => state["data"].wishList);
   const dispatch = useDispatch();
 
@@ -179,10 +178,9 @@ export default PCard;
 const ProductDetails = ({ product }) => {
   const [index, setIndex] = useState(0);
 
-  const cartItem = useSelector((state) => state["data"].cartItems);
   const wishlist = useSelector((state) => state["data"].wishList);
   const dispatch = useDispatch();
-  console.log(product);
+
 
   return (
     <div className="product-content flex overflow-hidden gap-5">

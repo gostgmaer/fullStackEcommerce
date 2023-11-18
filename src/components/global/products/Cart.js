@@ -30,8 +30,7 @@ export const CartAddItems = ({ product }) => {
   const addToCard = async () => {
   
   const response = await  dispatch(addToCart({ product: product, quantity: value }));
-  console.log(response);
-  //  dispatch(saveCartToDb(cartItem));
+   dispatch(saveCartToDb(cartItem));
     setValue(1);
   };
 
@@ -81,7 +80,6 @@ export const CartAddItems = ({ product }) => {
 
 export const AddToCartSingle = ({ product }) => {
   const cartItem = useSelector((state) => state["data"].cartItems);
-  const wishlist = useSelector((state) => state["data"].wishList);
   const dispatch = useDispatch();
 
   const addToCard = async () => {
@@ -108,7 +106,6 @@ export const AddToCartSingle = ({ product }) => {
 
 export const CartUpdate = ({ data }) => {
 
-  console.log(data);
   const dispatch = useDispatch();
 
   return (

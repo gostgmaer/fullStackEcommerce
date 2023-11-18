@@ -10,7 +10,8 @@ import { Fragment } from "react";
 import Productcard from "./Productcard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation, Autoplay } from "swiper/modules";
-const Elementlist = ({ children, title, icon, isSlide, slideItem }) => {
+import Link from "next/link";
+const Elementlist = ({ children, title, icon, isSlide, slideItem,link='/product/search' }) => {
   return (
     <Box py={1} component={"section"}>
       <Box sx={{ width: "100%", mt: 0 }}>
@@ -34,9 +35,9 @@ const Elementlist = ({ children, title, icon, isSlide, slideItem }) => {
           >
             {icon && icon} <span>{title}</span>
           </Typography>
-          <Button variant="text" endIcon={<ArrowRight />}>
-            View all
-          </Button>
+          <Link href={link}  >
+            View all <ArrowRight/>
+          </Link>
         </Box>
         <Box sx={{ flexGrow: 1 }}>
           <Grid

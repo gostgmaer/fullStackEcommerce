@@ -35,7 +35,7 @@ const Reviewform = () => {
   const route = useRouter();
 
   const handleFormSubmit = (values) => {
-    console.log(values);
+   // console.log(values);
     const body = {
       title: values.comments,
       rating: values.rating,
