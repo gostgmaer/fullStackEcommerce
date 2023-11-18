@@ -7,12 +7,36 @@
 
 // export default rootReducer
 
-import { createSlice } from "@reduxjs/toolkit";
+import { baseurl } from "@/config/setting";
+import { post } from "@/lib/network/http";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+
+
+
+
+export const fetchProducts = createAsyncThunk('cart/fetchProducts', async () => {
+  const response = await axios.get('https://api.example.com/products');
+  return response.data;
+});
+
+
+export const saveCartToDb = createAsyncThunk('cart/saveCartToDb', async (cartItems) => {
+  // Replace the URL and data structure with your actual API endpoint and data
+  const response = await post('/cart', { cartItems });
+  return response.data;
+});
+
+
 
 const initialState = {
   cartItems: [],
   wishList: [],
 };
+
+
+
+
 export const cartSlice = createSlice({
   name: "cart",
   initialState,
@@ -32,6 +56,7 @@ export const cartSlice = createSlice({
           product: action.payload.product,
         });
       }
+     
     },
 
     updateCart: (state, action) => {
@@ -69,6 +94,12 @@ export const cartSlice = createSlice({
       state.wishList = [];
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(saveCartToDb.fulfilled, (state, action) => {
+      // Handle successful save to the database, if needed
+      console.log('Cart data saved to the database:', action.payload);
+    });
+  },
 });
 
 // Action creators are generated for each case reducer function
@@ -81,5 +112,19 @@ export const {
   removeFromWishlist,
   resetWishList,
 } = cartSlice.actions;
+
+
+
+export const selectCartItems = state => state.cart.items;
+
+export const selectCartTotal = state => {
+  return state.cart.items.reduce((total, item) => total + item.price * item.quantity, 0);
+};
+
+export const selectCartQuantity = state => {
+  return state.cart.items.reduce((quantity, item) => quantity + item.quantity, 0);
+};
+
+
 
 export default cartSlice.reducer;

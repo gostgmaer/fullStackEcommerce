@@ -48,24 +48,21 @@ const CartPage = () => {
       <Layout>
         <Container className="mt-5 min-h-screen">
           <Typography variant="h1" mb={5} className="!text-3xl">
-          
             Your Cart
           </Typography>
           <Grid container direction={"row"} gap={5}>
             {cartData.length !== 0 ? (
               <>
-              <Stack direction={"column"} gap={1.5} flex={2}>
-                {/* {cartData?.map((item) => (
+                <Stack direction={"column"} gap={1.5} flex={2}>
+                  {/* {cartData?.map((item) => (
                   <CartItem key={item} data={item} />
                 ))} */}
-                <CartTable />
-              </Stack>
-              <Stack direction={"column"} gap={1} flex={0.9}>
-              <CartRight />
-            </Stack>
+                  <CartTable />
+                </Stack>
+                <Stack direction={"column"} gap={1} flex={0.9}>
+                  <CartRight />
+                </Stack>
               </>
-             
-              
             ) : (
               <Stack direction={"column"} gap={1.5} flex={2}>
                 <div className="h-40 flex items-center justify-center font-medium text-xl">
@@ -74,7 +71,6 @@ const CartPage = () => {
                 </div>
               </Stack>
             )}
-           
           </Grid>
         </Container>
       </Layout>
@@ -111,13 +107,28 @@ const CartTable = (second) => {
               >
                 <TableCell align="left">
                   <IconButton
-                    onClick={() => dispatch(removefromCart(row["product"]["id"]))}
+                    onClick={() =>
+                      dispatch(removefromCart(row["product"]["_id"]))
+                    }
                     color="error"
                   >
                     <Close></Close>
                   </IconButton>
                 </TableCell>
-                <TableCell align="left">{row["product"].title}</TableCell>
+                <TableCell align="left">
+                  {" "}
+                  <div className="flex gap-1 items-center">
+                    {" "}
+                    <Image
+                      width={100}
+                      height={100}
+                      alt="product"
+                      className=" rounded-full w-20 h-20"
+                      src={row.product.images[0]["url"]}
+                    ></Image>{" "}
+                    {row["product"].title}
+                  </div>
+                </TableCell>
                 <TableCell align="left">{row["product"].price}</TableCell>
 
                 <TableCell align="left">
