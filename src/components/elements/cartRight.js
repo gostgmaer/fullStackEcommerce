@@ -103,13 +103,13 @@ const CartRight = () => {
               sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
               {...props}
             >
-              <Image
+              {/* <Image
                 height={20}
                 loading="lazy"
                 width={20}
                 src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
                 alt=""
-              />
+              /> */}
               {option.label} ({option.code}) +{option.phone}
             </Box>
           )}

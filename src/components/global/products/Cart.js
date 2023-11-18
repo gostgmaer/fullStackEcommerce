@@ -1,4 +1,4 @@
-import { addToCart, updateCart } from "@/store/cartReducer";
+import { addToCart, updateCart,saveCartToDb  } from "@/store/cartReducer";
 import { Add, Remove } from "@mui/icons-material";
 import {
   Box,
@@ -27,9 +27,11 @@ export const CartAddItems = ({ product }) => {
       setValue(value - 1);
     }
   };
-  const addToCard = () => {
-    console.log(value);
-    dispatch(addToCart({ product: product, quantity: value }));
+  const addToCard = async () => {
+  
+  const response = await  dispatch(addToCart({ product: product, quantity: value }));
+  console.log(response);
+  //  dispatch(saveCartToDb(cartItem));
     setValue(1);
   };
 
@@ -82,13 +84,14 @@ export const AddToCartSingle = ({ product }) => {
   const wishlist = useSelector((state) => state["data"].wishList);
   const dispatch = useDispatch();
 
-  const addToCard = () => {
+  const addToCard = async () => {
     dispatch(
       addToCart({
         product: product,
         quantity: 1,
       })
     );
+   const res= await dispatch(saveCartToDb(cartItem));
   };
 
   return (
@@ -104,6 +107,8 @@ export const AddToCartSingle = ({ product }) => {
 };
 
 export const CartUpdate = ({ data }) => {
+
+  console.log(data);
   const dispatch = useDispatch();
 
   return (
@@ -128,7 +133,7 @@ export const CartUpdate = ({ data }) => {
         onClick={() =>
           dispatch(
             updateCart({
-              id: data?.product._id,
+              _id: data?.product?.["_id"],
             })
           )
         }
