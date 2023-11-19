@@ -76,7 +76,7 @@ const LoginForm = () => {
           </div>
           <Link
             className="h-auto p-0 text-sm font-semibold text-gray-700 underline transition-colors hover:text-primary hover:no-underline"
-            href="/auth/forgot-password"
+            href="/auth/forget-password"
           >
             Forgot Password?
           </Link>

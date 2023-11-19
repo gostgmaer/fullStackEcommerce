@@ -52,7 +52,7 @@ const index = () => {
             Don’t have an account?
             <Link
               className="font-semibold text-gray-700 transition-colors hover:text-primary ml-1"
-              href="/auth/register"
+              href="/auth/sign-up"
             >
               Sign Up
             </Link>
