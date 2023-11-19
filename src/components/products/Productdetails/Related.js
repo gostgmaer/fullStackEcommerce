@@ -1,6 +1,4 @@
-import { ArrayData } from "@/assets/mock/product";
 import Elementlist from "@/components/elements/Elementlist";
-import Productcard from "@/components/elements/Productcard";
 import PCard from "@/components/global/products/Card";
 import { ReplayOutlined } from "@mui/icons-material";
 import { Box } from "@mui/material";

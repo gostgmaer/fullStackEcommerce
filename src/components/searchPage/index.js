@@ -19,10 +19,12 @@ import { Apps, ViewList } from "@mui/icons-material";
 import Filter from "./child/Filter";
 import Productcard from "../elements/Productcard";
 import { productData } from "../../../public/assets/mock/product";
+import { useGlobalContext } from "@/context/globalContext";
+import PCard from "../global/products/Card";
 
 const ProductListing = () => {
   return (
-    <Container >
+    <Container>
       <FilterSection />
       <BodySection />
     </Container>
@@ -32,6 +34,7 @@ const ProductListing = () => {
 export default ProductListing;
 
 export const FilterSection = () => {
+  const { products } = useGlobalContext();
   const [personName, setPersonName] = React.useState("Relevance");
   const filterType = [
     "Relevance",
@@ -56,7 +59,7 @@ export const FilterSection = () => {
           Searching for “ <span> mobile phone</span> ”
         </Typography>
         <Typography>
-          <span>48 </span> results found
+          <span>{products?.total} </span> results found
         </Typography>
       </Box>
       <Box display={"flex"} gap={3} alignItems={"center"}>
@@ -98,56 +101,56 @@ export const FilterSection = () => {
   );
 };
 
+export const BodySection = () => {
+  const { products } = useGlobalContext();
+  const [page, setPage] = React.useState(1);
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
 
-export const  BodySection = () => {
-    const [page, setPage] = React.useState(1);
-    const handleChange = (event, value) => {
-      setPage(value);
-    };
-  
-    return (
-      <Box
-        p={3}
-        display={"flex"}
-        alignItems={"flex-start"}
-        gap={5}
-        component={"section"}
-      >
-        <Box flex={1} bgcolor={colors.grey[50]}>
-          <Filter/>
+  return (
+    <Box
+      p={3}
+      display={"flex"}
+      alignItems={"flex-start"}
+      gap={5}
+      component={"section"}
+    >
+      <Box flex={1} bgcolor={colors.grey[50]}>
+        <Filter />
+      </Box>
+      <Box flex={3}>
+        <Box sx={{ flexGrow: 1 }}>
+          <Grid
+            container
+            item
+            gap={"5px"}
+            justifyContent="flex-start"
+            p="0"
+            width="100%"
+            m="0"
+            columns={12.17}
+          >
+            {products?.["results"]?.map((item) => (
+              <PCard key={item._id} size={4} product={item} />
+            ))}
+          </Grid>
         </Box>
-        <Box flex={3}>
-          <Box sx={{ flexGrow: 1 }}>
-            <Grid
-              container
-              item
-              gap={"10px"}
-              justifyContent="space-between"
-              p="0"
-              width="100%"
-              m="0"
-              columns={12.8}
-            >
-              {productData.moreItems.map((item) => (
-                <Productcard key={item.id} size={4} product={item} />
-              ))}
-            </Grid>
-          </Box>
-          <Box py={3}>
-            <Stack justifyContent={"space-between"} direction="row" spacing={2}>
-              <Typography>
-                <span>Showing</span> <span>1-24</span> of <span>4125</span>{" "}
-                Products
-              </Typography>
-              <Pagination
-                variant="outlined"
-                count={10}
-                page={page}
-                onChange={handleChange}
-              />
-            </Stack>
-          </Box>
+        <Box py={3}>
+          <Stack justifyContent={"space-between"} direction="row" spacing={2}>
+            <Typography>
+              <span>Showing</span> <span>1-24</span> of <span>{products.total}</span>{" "}
+              Products
+            </Typography>
+            <Pagination
+              variant="outlined"
+              count={10}
+              page={page}
+              onChange={handleChange}
+            />
+          </Stack>
         </Box>
       </Box>
-    );
-  };
+    </Box>
+  );
+};

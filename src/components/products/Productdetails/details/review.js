@@ -3,6 +3,9 @@ import {
   Avatar,
   Box,
   Button,
+  IconButton,
+  ImageList,
+  ImageListItem,
   Rating,
   Snackbar,
   Typography,
@@ -12,22 +15,32 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { useRouter } from "next/router";
 import { Formik } from "formik";
-import { Star } from "@mui/icons-material";
+import { Star, StarBorderTwoTone, Stars } from "@mui/icons-material";
 import { get, post } from "@/lib/network/http";
 import TextField from "@/components/global/fields/TextField";
 import MultiImageUploadr from "@/components/global/fields/multiImageUploadr";
+import Image from "next/image";
+import MuiModal from "@/layout/modal";
+import { apiUrl } from "@/utils/config";
 
 const ReviewBlock = ({ data }) => {
   const route = useRouter();
   const [review, setReview] = useState(null);
 
-  const getReview = async () => {
-    const req = await get(`/products/${data["_id"]}/reviews`);
-    setReview(req);
-  };
+  // console.log(data);
+  // const getReview = async () => {
+  //   const req = await get(`/products/${data["_id"]}/reviews`);
+  //   setReview(req);
+  // };
+
+  const getRelated = async (second) => { 
+    const filter = JSON.stringify({ categories: "Man" });
+    const relatedProducts = await fetch(`${apiUrl}/products?filter=${filter}`);
+    console.log(relatedProducts);
+   }
 
   useEffect(() => {
-    getReview();
+    getRelated()
   }, []);
 
   // console.log(session);
@@ -40,15 +53,15 @@ const ReviewBlock = ({ data }) => {
       }}
     >
       {<Reviewform product={data} />}
-      {review?.data?.data && (
+      {data?.reviews && (
         <Box
           display={"flex"}
           alignItems={"flex-start"}
-          gap={2}
+          gap={1}
           flexDirection={"column"}
           justifyContent={"center"}
         >
-          {review?.data?.data?.map((item) => (
+          {data?.reviews?.map((item) => (
             <Reviews data={item} key={item} />
           ))}
         </Box>
@@ -84,10 +97,10 @@ export const Reviewform = ({ product }) => {
       rating: values.rating,
       review: values.comments,
       product: product._id,
-      user: "user.id",
+      images: value,
     };
-   // console.log(body);
-    //  const req = post('reviews',body)
+    console.log(body);
+    const req = post(`/products/${product._id}/reviews`, body);
     // console.log(req);
   };
 
@@ -243,61 +256,103 @@ export const Reviewform = ({ product }) => {
 };
 
 export const Reviews = ({ data }) => {
+  const [openModal, setOpenModal] = useState(false);
+  const [imageData, setImageData] = useState({});
+
+  const setImageIndex = (index) => {
+    setImageData(index);
+    setOpenModal(true);
+  };
+
   return (
     <Box
-      className="elements"
+      className="elements border p-2"
       sx={{
-        width: "60%",
         display: "flex",
         flexDirection: "column",
         gap: 1,
+        width:"60%"
       }}
     >
       <Box display={"flex"} alignItems={"center"} gap={2}>
-        <Avatar
-          alt="Remy Sharp"
-          src={
-            data.attributes.userimage
-              ? data.attributes.userimage
-              : "/assets/images/pexels-wendy-wei-14411099.jpg"
-          }
-          sx={{ width: 56, height: 56 }}
-        />
-
         <Box
           display={"flex"}
           alignItems={"flex-start"}
           gap={1}
           flexDirection={"column"}
         >
-          <Typography variant="subtitle1">
-            {data.attributes.username ? data.attributes.username : "Kishor"}
-          </Typography>
           <Box display={"flex"} alignItems={"center"} gap={1.5}>
-            <Rating
-              name="half-rating-read"
-              defaultValue={
-                data.attributes.rating ? data.attributes.rating : 4.0
-              }
-              precision={0.5}
-              readOnly
-            />{" "}
-            <span>
-              {data.attributes.rating ? data.attributes.rating : "4.0"}
-            </span>{" "}
-            <span>
-              {data.attributes.publishedAt
-                ? moment(data.attributes.publishedAt).fromNow()
-                : "2.2 years ago"}
+            <IconButton className=" bg-green-700 rounded-xl h-8 text-white text-lg w-max">
+              <span className=" font-thin text-sm"> {data?.rating}</span>{" "}
+              <Star className="h-4 w-4" />
+            </IconButton>
+            <span className=" text-sm font-semibold capitalize">
+              {data?.title}
             </span>
           </Box>
+          {data?.images.length != 0 && (
+            <ImageList
+              sx={{ width: "auto", height: "auto" }}
+              className="flex flex-wrap"
+              cols={3}
+            >
+              {data?.images.map((item) => (
+                <ImageListItem key={item.url} className=" h-auto">
+                  <Image
+                    src={`${item.url}?w=96&h=96&fit=crop&auto=format`}
+                    alt={item.name}
+                    loading="lazy"
+                    className=" w-24 h-24 object-cover"
+                    width={100}
+                    height={100}
+                    onClick={() => setImageIndex(item)}
+                  />
+                </ImageListItem>
+              ))}
+            </ImageList>
+          )}
+          <div className=" whitespace-pre-line ">
+            <div
+              dangerouslySetInnerHTML={{ __html: data?.review }}
+              className="  whitespace-pre-line"
+            />
+          </div>
         </Box>
       </Box>
-      <Typography>
-        {data.attributes.title
-          ? data.attributes.title
-          : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis rerum commodi possimus beatae vero, animi odio eligendi, suscipit ipsa soluta quasi assumenda et quo at libero enim! Sed, beatae quae!"}
-      </Typography>
+      <div className=" flex gap-1">
+        <Avatar
+          alt={data?.username}
+          src={data?.profilePicture}
+          sx={{ width: 24, height: 24 }}
+        />
+        <div className=" flex gap-2">
+          <span>{data?.firstName}</span>,
+          <span>{moment(data?.date).format("ll")}</span>
+        </div>
+      </div>
+      <MuiModal
+        heading={undefined}
+        Content={<OpenImageModal img={imageData} />}
+        classes={"undefined"}
+        maxWidth={"auto"}
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+      ></MuiModal>
     </Box>
+  );
+};
+
+const OpenImageModal = ({ img }) => {
+  return (
+    <div className="w-max">
+      <Image
+        loading="lazy"
+        alt={img.name}
+        src={img.url}
+        objectFit="cover"
+        width={360}
+        height={420}
+      />
+    </div>
   );
 };

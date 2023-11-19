@@ -42,7 +42,7 @@ const Elementlist = ({ children, title, icon, isSlide, slideItem,link='/product/
         <Box sx={{ flexGrow: 1 }}>
           <Grid
             container
-            justifyContent="space-between"
+            justifyContent="flex-start"
             width="100%"
             columns={12}
           >

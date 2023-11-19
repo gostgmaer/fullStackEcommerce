@@ -81,7 +81,7 @@ const CategoryBlock = ({ size, category }) => {
           <div className="col-inner relative">
             <div className="box-image">
               <Image
-                className="lazy-load-active w-40 h-40"
+                className="lazy-load-active w-40 h-40 object-cover"
                 src={category["images"]?.[0]?.["url"]}
                 data-src={category["images"]?.[0]?.["url"]}
                 alt={category?.["name"]}
