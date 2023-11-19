@@ -9,7 +9,6 @@ import MuiModal from "@/layout/modal";
 import React from "react";
 import { Container } from "@mui/material";
 import { get } from "@/lib/network/http";
-import { apiUrl } from "@/utils/config";
 import { FeaturedItem, FlashDeal, HomeFooter, NewArrived } from "@/components/homecomponents/elements";
 import { baseurl } from "@/config/setting";
 

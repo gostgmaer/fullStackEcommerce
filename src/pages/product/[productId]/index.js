@@ -2,8 +2,8 @@ import { allproducts, productData } from "@/assets/mock/product";
 import Info from "@/components/products/Productdetails/Info";
 import Related from "@/components/products/Productdetails/Related";
 import ProductDetails from "@/components/products/Productdetails/details";
+import { baseurl } from "@/config/setting";
 import Layout from "@/layout";
-import { apiUrl } from "@/utils/config";
 import { Box } from "@mui/material";
 import Head from "next/head";
 import { useParams } from "next/navigation";
@@ -39,7 +39,7 @@ export default Index;
 
 export const getServerSideProps = async (ctx) => {
   const id = ctx.params["productId"];
-  const resData = await fetch(`${apiUrl}/product/details?slug=${id}`);
+  const resData = await fetch(`${baseurl}/product/details?slug=${id}`);
   const data = await resData.json();
 
   return {
