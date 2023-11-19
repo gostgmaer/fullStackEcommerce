@@ -252,3 +252,13 @@ const Showtextdata = ({ params }) => {
   console.log(params.length);
   return <>  <span>({params.length}) </span> </>;
 };
+
+const imageGallery = ({images}) => {
+  
+
+
+return <div className=" ">
+
+</div>
+
+}

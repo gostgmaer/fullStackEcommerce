@@ -1,4 +1,4 @@
-import { addToCart, updateCart,saveCartToDb  } from "@/store/cartReducer";
+import { addToCart, updateCart, saveCartToDb } from "@/store/cartReducer";
 import { Add, Remove } from "@mui/icons-material";
 import {
   Box,
@@ -28,9 +28,35 @@ export const CartAddItems = ({ product }) => {
     }
   };
   const addToCard = async () => {
-  
-  const response = await  dispatch(addToCart({ product: product, quantity: value }));
-   dispatch(saveCartToDb(cartItem));
+    const {
+      _id,
+      title,
+      categories,
+      descriptions,
+      images,
+      price,
+      salePrice,
+      sku,
+      ratings,
+      slug,
+    } = product;
+
+    const actualproduct = {
+      _id,
+      title,
+      categories,
+      descriptions,
+      images,
+      price: salePrice ? salePrice : price,
+      sku,
+      ratings,
+      slug,
+    };
+
+    const response = await dispatch(
+      addToCart({ product: actualproduct, quantity: value })
+    );
+    dispatch(saveCartToDb(cartItem));
     setValue(1);
   };
 
@@ -83,13 +109,38 @@ export const AddToCartSingle = ({ product }) => {
   const dispatch = useDispatch();
 
   const addToCard = async () => {
+    const {
+      _id,
+      title,
+      categories,
+      descriptions,
+      images,
+      price,
+      salePrice,
+      sku,
+      ratings,
+      slug,
+    } = product;
+
+    const actualproduct = {
+      _id,
+      title,
+      categories,
+      descriptions,
+      images,
+      price: salePrice ? salePrice : price,
+      sku,
+      ratings,
+      slug,
+    };
+
     dispatch(
       addToCart({
-        product: product,
+        product: actualproduct,
         quantity: 1,
       })
     );
-   const res= await dispatch(saveCartToDb(cartItem));
+    const res = await dispatch(saveCartToDb(cartItem));
   };
 
   return (
@@ -105,8 +156,43 @@ export const AddToCartSingle = ({ product }) => {
 };
 
 export const CartUpdate = ({ data }) => {
-
   const dispatch = useDispatch();
+
+
+  const updateCartdata = async () => {
+    const {
+      _id,
+      title,
+      categories,
+      descriptions,
+      images,
+      price,
+      salePrice,
+      sku,
+      ratings,
+      slug,
+    } = data.product;
+
+    const actualproduct = {
+      _id,
+      title,
+      categories,
+      descriptions,
+      images,
+      price: salePrice ? salePrice : price,
+      sku,
+      ratings,
+      slug,
+    };
+
+    dispatch(
+      addToCart({
+        product: actualproduct,
+        quantity: 1,
+      })
+    );
+   
+  };
 
   return (
     <Stack
@@ -145,13 +231,7 @@ export const CartUpdate = ({ data }) => {
       <TextField
         type="button"
         value={"+"}
-        onClick={() =>
-          dispatch(
-            addToCart({
-              product: data["product"],
-              quantity: 1,
-            })
-          )
+        onClick={updateCartdata
         }
         className="h-10 w-6 cursor-pointer bg-gray-300 overflow-hidden"
       />

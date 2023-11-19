@@ -173,12 +173,12 @@ const HascartData = ({ data }) => {
           width={100}
           height={100}
           alt="product"
-          src={data.product.images[0]["url"]}
+          src={data.product?.images?.[0]?.["url"]}
         ></Image>
         <Stack gap={0} alignItems={"flex-start"}>
           <Typography fontSize={14} className=" text-sm">{data.product.title}</Typography>
           <Typography fontSize={13} variant="body1">
-            <span>$ {data.product.price.toFixed(2)}</span> x{" "}
+            <span>$ {data.product?.price?.toFixed(2)}</span> x{" "}
             <span>{data.quantity}</span>
           </Typography>
           <Typography fontSize={13}>

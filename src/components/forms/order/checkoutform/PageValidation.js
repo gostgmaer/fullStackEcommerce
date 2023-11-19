@@ -4,10 +4,11 @@ import PaymentForm from "@/components/forms/order/checkoutform/Payment";
 import Review from "@/components/forms/order/checkoutform/Preview";
 import Pricesumery from "@/components/forms/order/checkoutform/Pricesumery";
 import { useAuthContext } from "@/context/AuthContext";
-import { appBaseUrl } from "@/utils/config";
+
 import {
   Box,
   Button,
+  Container,
   Grid,
   Stack,
   Step,
@@ -24,7 +25,7 @@ const steps = ["Address Details", "Payment details", "Review your order"];
 export default function PageValidation() {
   const router = useRouter();
   const [activeStep, setActiveStep] = useState(0);
-  const { protectedRouteCheck, pageLoading } = useAuthContext();
+  // const { protectedRouteCheck, pageLoading } = useAuthContext();
 
   const formik = useFormik({
     initialValues: {
@@ -73,9 +74,9 @@ export default function PageValidation() {
         throw new Error("Unknown step");
     }
   }
-  useEffect(() => {
-    protectedRouteCheck();
-  }, []);
+  // useEffect(() => {
+  //   protectedRouteCheck();
+  // }, []);
 
   const handleNext = (e) => {
     e.preventDefault()
@@ -94,7 +95,7 @@ export default function PageValidation() {
   };
 
   return (
-    <Box p={3} component={"div"}>
+    <Container>
       <Stepper activeStep={activeStep} sx={{ py: 3, px: 20 }}>
         {steps.map((label) => (
           <Step key={label}>
@@ -173,6 +174,6 @@ export default function PageValidation() {
           <Pricesumery />
         </Stack>
       </Grid>
-    </Box>
+    </Container>
   );
 }

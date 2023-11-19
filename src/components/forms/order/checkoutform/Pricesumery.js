@@ -1,6 +1,13 @@
 import { Box, Divider, Paper, Stack, Typography } from "@mui/material";
+import { useSelector } from "react-redux";
 
 const Pricesumery = () => {
+
+  const cartData = useSelector((state) => state["data"].cartItems);
+
+  console.log(cartData);
+
+
   return (
     <Paper
       variant="outlined"
@@ -14,7 +21,7 @@ const Pricesumery = () => {
           sx={{ mt: 2, mb: 1 }}
         >
           <Typography variant="body2">Subtotal:</Typography>
-          <Typography variant="body2">$1,090.00</Typography>
+          <Typography variant="body2">$</Typography>
         </Stack>
         <Stack
           direction={"row"}
