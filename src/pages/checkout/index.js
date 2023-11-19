@@ -25,7 +25,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Formik } from "formik";
-import { getSession } from "next-auth/react";
+
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
@@ -47,10 +47,10 @@ const steps = ["Address Details", "Payment details", "Review your order"];
 
 export default function Checkout() {
   const [activeStep, setActiveStep] = useState(0);
-  const { protectedRouteCheck, pageLoading } = useAuthContext();
-  useEffect(() => {
-    protectedRouteCheck();
-  }, []);
+  // const {  } = useAuthContext();
+  // useEffect(() => {
+  //   protectedRouteCheck();
+  // }, []);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);

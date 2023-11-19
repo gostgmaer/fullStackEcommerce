@@ -36,7 +36,7 @@ import { removefromCart } from "@/store/cartReducer";
 
 const CartPage = () => {
   const cartData = useSelector((state) => state["data"].cartItems);
-  const wishlist = useSelector((state) => state["data"].wishList);
+
   return (
     <Fragment>
       <Head>
@@ -129,7 +129,7 @@ const CartTable = (second) => {
                     {row["product"].title}
                   </div>
                 </TableCell>
-                <TableCell align="left">{row["product"].price}</TableCell>
+                <TableCell align="left">{row["product"].salePrice}</TableCell>
 
                 <TableCell align="left">
                   <CartUpdate data={row} />
