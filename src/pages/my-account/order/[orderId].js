@@ -1,6 +1,6 @@
 import { orders } from "@/assets/mock/moreData";
 import Userlayout from "@/layout/user";
-import { appBaseUrl } from "@/utils/config";
+
 import {
   DeliveryDining,
   Inventory,

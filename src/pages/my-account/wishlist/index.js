@@ -5,7 +5,7 @@ import {
 import { useAuthContext } from "@/context/AuthContext";
 import Userlayout from "@/layout/user";
 import { removeFromWishlist } from "@/store/cartReducer";
-import { appBaseUrl } from "@/utils/config";
+
 import { Close, Favorite } from "@mui/icons-material";
 import {
   Box,

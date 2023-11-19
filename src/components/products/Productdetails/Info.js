@@ -15,9 +15,10 @@ import { CartAddItems } from "@/components/global/products/Cart";
 import { Select, selectClasses, Option } from "@mui/joy";
 
 const Info = ({ data }) => {
+  console.log(data);
   // const [selected, setSelected] = useState(true);
-  const [selected, setSelected] = useState("");
-  const [type, setType] = useState("");
+  // const [selected, setSelected] = useState("");
+  // const [type, setType] = useState("");
 
   return (
     <Box width={"100%"}>
@@ -37,28 +38,7 @@ const Info = ({ data }) => {
           flexDirection="column"
           item
           xs={8}
-        >
-          {/* 
-          
-          <Box
-            display={"flex"}
-            justifyContent={"space-between"}
-            alignItems="center"
-            gap={"5px"}
-          >
-            {ArrayData.slice(0, 6).map((item) => (
-              <Image
-                key={item}
-                width={70}
-                height={50}
-                style={{ objectFit: "contain", border: "1px solid grey" }}
-                alt="Xamaha R15 Black"
-                src="/assets/images/nike-black.png"
-              ></Image>
-            ))}
-          </Box> */}
-          {/* <ImageSlider /> */}
-        </Grid>
+        ></Grid>
         <Grid
           display={"flex"}
           alignItems="flex-start"
@@ -87,32 +67,34 @@ const Info = ({ data }) => {
                 defaultValue={4.5}
                 precision={0.5}
                 readOnly
-              />{" "}
-              <span> (20)</span>
+              />
+              <Showtextdata params={data?.reviews}></Showtextdata>
+            
             </Typography>
-            <div className="price-wrapper">
-            <p className="price font-semibold text-red-500 flex gap-3 items-end">
-              <span className=" text-lg flex  items-end">
-                $
-                <span className=" ">
-                  {data?.salePrice
-                    ? data?.salePrice.toFixed(2)
-                    : data?.price.toFixed(2)}
-                </span>
-              </span>
 
-              <span className=" line-through text-gray-500 ">
-                ${data?.price ? data?.price.toFixed(2) : "$0.00"}
-              </span>
-              {data?.salePrice && (
-                <span className=" text-green-500 top-3 left-3">
-                  {data?.salePrice &&
-                    ((100 / data?.price) * data?.salePrice).toFixed(2)}
-                  % off
+            <div className="price-wrapper">
+              <p className="price font-semibold text-red-500 flex gap-3 items-end">
+                <span className=" text-lg flex  items-end">
+                  $
+                  <span className=" ">
+                    {data?.salePrice
+                      ? data?.salePrice.toFixed(2)
+                      : data?.price.toFixed(2)}
+                  </span>
                 </span>
-              )}
-            </p>
-          </div>
+
+                <span className=" line-through text-gray-500 ">
+                  ${data?.price ? data?.price.toFixed(2) : "$0.00"}
+                </span>
+                {data?.salePrice && (
+                  <span className=" text-green-500 top-3 left-3">
+                    {data?.salePrice &&
+                      ((100 / data?.price) * data?.salePrice).toFixed(2)}
+                    % off
+                  </span>
+                )}
+              </p>
+            </div>
             <div className="product-short-description">
               <p>
                 Pellentesque habitant morbi tristique senectus et netus et
@@ -208,7 +190,6 @@ const Info = ({ data }) => {
                 sx={{
                   color: colors.grey[800],
                 }}
-             
                 variant="subtitle1"
               >
                 SKU: <span>{data?.sku}</span>
@@ -217,19 +198,24 @@ const Info = ({ data }) => {
                 sx={{
                   color: colors.grey[800],
                 }}
-             
                 variant="subtitle1"
               >
-                Category: <a
+                Category:{" "}
+                <a
                   href="https://flatsome3.uxthemes.com/product-category/clothing/"
                   rel="tag"
                 >
                   {data?.categories[0]}
                 </a>
               </Typography>
-             
+
               <Typography
-                sx={{ display: "flex", alignItems: "center", gap: "10px", color: colors.grey[800], }}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  color: colors.grey[800],
+                }}
                 variant="subtitle1"
               >
                 Brand: <span>{data.brandName}</span>
@@ -247,10 +233,10 @@ const Info = ({ data }) => {
                 sx={{
                   color: colors.grey[800],
                 }}
-               
                 variant="subtitle1"
               >
-                Tags: <span className=" font-medium">{data.tags.toString()}</span>
+                Tags:{" "}
+                <span className=" font-medium">{data.tags.toString()}</span>
               </Typography>
             </div>
           </Box>
@@ -261,3 +247,8 @@ const Info = ({ data }) => {
 };
 
 export default Info;
+
+const Showtextdata = ({ params }) => {
+  console.log(params.length);
+  return <>  <span>({params.length}) </span> </>;
+};

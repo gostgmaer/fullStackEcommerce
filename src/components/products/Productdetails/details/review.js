@@ -21,7 +21,6 @@ import TextField from "@/components/global/fields/TextField";
 import MultiImageUploadr from "@/components/global/fields/multiImageUploadr";
 import Image from "next/image";
 import MuiModal from "@/layout/modal";
-import { apiUrl } from "@/utils/config";
 
 const ReviewBlock = ({ data }) => {
   const route = useRouter();
@@ -33,15 +32,15 @@ const ReviewBlock = ({ data }) => {
   //   setReview(req);
   // };
 
-  const getRelated = async (second) => { 
-    const filter = JSON.stringify({ categories: "Man" });
-    const relatedProducts = await fetch(`${apiUrl}/products?filter=${filter}`);
-    console.log(relatedProducts);
-   }
+  // const getRelated = async (second) => { 
+  //   const filter = JSON.stringify({ categories: "Man" });
+  //   const relatedProducts = await fetch(`${apiUrl}/products?filter=${filter}`);
+  //   console.log(relatedProducts);
+  //  }
 
-  useEffect(() => {
-    getRelated()
-  }, []);
+  // useEffect(() => {
+  //   getRelated()
+  // }, []);
 
   // console.log(session);
   return (
