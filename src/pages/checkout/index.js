@@ -6,7 +6,7 @@ import Review from "@/components/forms/order/checkoutform/Preview";
 import Pricesumery from "@/components/forms/order/checkoutform/Pricesumery";
 import { useAuthContext } from "@/context/AuthContext";
 import Layout from "@/layout";
-import { appBaseUrl } from "@/utils/config";
+
 import {
   AppBar,
   Box,
@@ -77,22 +77,22 @@ export default function Checkout() {
   );
 }
 
-export const getServerSideProps = async (ctx) => {
-  const session = await getSession(ctx);
+// export const getServerSideProps = async (ctx) => {
+//   const session = await getSession(ctx);
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: `/auth/signin?callbackUrl=${appBaseUrl}${ctx.resolvedUrl}`,
-        parmanent: false,
-      },
-    };
-  }
+//   if (!session) {
+//     return {
+//       redirect: {
+//         destination: `/auth/signin?callbackUrl=${appBaseUrl}${ctx.resolvedUrl}`,
+//         parmanent: false,
+//       },
+//     };
+//   }
 
-  return {
-    props: {
-      session,
-      data: session,
-    },
-  };
-};
+//   return {
+//     props: {
+//       session,
+//       data: session,
+//     },
+//   };
+// };

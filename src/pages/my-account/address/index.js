@@ -5,7 +5,7 @@ import MuiModal from "@/layout/modal";
 import Userlayout from "@/layout/user";
 import { fetcher, useFetcher, useGetFetcher } from "@/lib/helper";
 import { invokeExternalAPI } from "@/lib/http";
-import { appBaseUrl } from "@/utils/config";
+
 import { Close, LocationOn, Person, ShoppingBag } from "@mui/icons-material";
 import { Box, Button, Pagination, Stack, Typography } from "@mui/material";
 import { getSession, useSession } from "next-auth/react";
