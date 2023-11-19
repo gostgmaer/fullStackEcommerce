@@ -11,6 +11,7 @@ import { Container } from "@mui/material";
 import { get } from "@/lib/network/http";
 import { apiUrl } from "@/utils/config";
 import { FeaturedItem, FlashDeal, HomeFooter, NewArrived } from "@/components/homecomponents/elements";
+import { baseurl } from "@/config/setting";
 
 const Home = (props) => {
   const [openModal, setOpenModal] = useState(true);
@@ -66,7 +67,7 @@ export default Home;
 
 export async function getServerSideProps() {
   // Fetch data from external API
-  const res = await fetch(`http://localhost:3500/api/home/data`)
+  const res = await fetch(`${baseurl}/home/data`)
   const data = await res.json()
  
   // Pass data to the page via props
