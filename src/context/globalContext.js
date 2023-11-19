@@ -13,6 +13,7 @@ const AppProvider = ({ children }) => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(24);
   const [sort, setSort] = useState("");
+  const [products, setProducts] = useState({});
 
   const searchProducts = async (second) => {
     const query = {
@@ -30,7 +31,7 @@ const AppProvider = ({ children }) => {
       sort: sort,
     };
     const res = await get("/products", query);
-
+    setProducts(res)
     console.log(res);
   };
 
@@ -49,7 +50,7 @@ const AppProvider = ({ children }) => {
         setPage,
         searchProducts,
         limit,
-        setLimit,
+        setLimit,products
       }}
     >
       {children}

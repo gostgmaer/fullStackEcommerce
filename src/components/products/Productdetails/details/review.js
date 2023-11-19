@@ -3,6 +3,9 @@ import {
   Avatar,
   Box,
   Button,
+  IconButton,
+  ImageList,
+  ImageListItem,
   Rating,
   Snackbar,
   Typography,
@@ -12,10 +15,12 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { useRouter } from "next/router";
 import { Formik } from "formik";
-import { Star } from "@mui/icons-material";
+import { Star, StarBorderTwoTone, Stars } from "@mui/icons-material";
 import { get, post } from "@/lib/network/http";
 import TextField from "@/components/global/fields/TextField";
 import MultiImageUploadr from "@/components/global/fields/multiImageUploadr";
+import Image from "next/image";
+import MuiModal from "@/layout/modal";
 
 const ReviewBlock = ({ data }) => {
   const route = useRouter();
@@ -40,7 +45,7 @@ const ReviewBlock = ({ data }) => {
       }}
     >
       {<Reviewform product={data} />}
-      {review?.data?.data && (
+      {review?.results && (
         <Box
           display={"flex"}
           alignItems={"flex-start"}
@@ -48,7 +53,7 @@ const ReviewBlock = ({ data }) => {
           flexDirection={"column"}
           justifyContent={"center"}
         >
-          {review?.data?.data?.map((item) => (
+          {review?.results?.map((item) => (
             <Reviews data={item} key={item} />
           ))}
         </Box>
@@ -84,10 +89,10 @@ export const Reviewform = ({ product }) => {
       rating: values.rating,
       review: values.comments,
       product: product._id,
-      user: "user.id",
+      images: value,
     };
-   // console.log(body);
-    //  const req = post('reviews',body)
+    console.log(body);
+    const req = post(`/products/${product._id}/reviews`, body);
     // console.log(req);
   };
 
@@ -254,50 +259,62 @@ export const Reviews = ({ data }) => {
       }}
     >
       <Box display={"flex"} alignItems={"center"} gap={2}>
-        <Avatar
-          alt="Remy Sharp"
-          src={
-            data.attributes.userimage
-              ? data.attributes.userimage
-              : "/assets/images/pexels-wendy-wei-14411099.jpg"
-          }
-          sx={{ width: 56, height: 56 }}
-        />
-
         <Box
           display={"flex"}
           alignItems={"flex-start"}
           gap={1}
           flexDirection={"column"}
         >
-          <Typography variant="subtitle1">
-            {data.attributes.username ? data.attributes.username : "Kishor"}
-          </Typography>
           <Box display={"flex"} alignItems={"center"} gap={1.5}>
-            <Rating
-              name="half-rating-read"
-              defaultValue={
-                data.attributes.rating ? data.attributes.rating : 4.0
-              }
-              precision={0.5}
-              readOnly
-            />{" "}
-            <span>
-              {data.attributes.rating ? data.attributes.rating : "4.0"}
-            </span>{" "}
-            <span>
-              {data.attributes.publishedAt
-                ? moment(data.attributes.publishedAt).fromNow()
-                : "2.2 years ago"}
+            <IconButton className=" bg-green-700 rounded-xl h-8 text-white text-lg w-max">
+              <span className=" font-thin text-sm"> {data?.rating}</span>{" "}
+              <Star className="h-4 w-4" />
+            </IconButton>
+            <span className=" text-sm font-semibold capitalize">
+              {data?.title}
             </span>
           </Box>
+          <ImageList sx={{ width: "auto", height: 148 }} cols={3}>
+            {data?.images.map((item) => (
+              <ImageListItem key={item.url}>
+                <Image
+                  src={`${item.url}?w=164&h=164&fit=crop&auto=format`}
+                  alt={item.name}
+                  loading="lazy"
+                  className=" w-36 h-36 object-cover"
+                  width={148}
+                  height={148}
+                />
+              </ImageListItem>
+            ))}
+          </ImageList>
+          <div>
+            <div
+              dangerouslySetInnerHTML={{ __html: data?.review }}
+              className=" whitespace-pre"
+            />
+          </div>
         </Box>
       </Box>
-      <Typography>
-        {data.attributes.title
-          ? data.attributes.title
-          : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis rerum commodi possimus beatae vero, animi odio eligendi, suscipit ipsa soluta quasi assumenda et quo at libero enim! Sed, beatae quae!"}
-      </Typography>
+      <div className=" flex gap-1">
+        <Avatar
+          alt={data?.username}
+          src={data?.profilePicture}
+          sx={{ width: 24, height: 24 }}
+        />
+        <div className=" flex gap-2">
+          <span>{data?.firstName}</span>,
+          <span>{moment(data?.date).format("ll")}</span>
+        </div>
+      </div>
+      {/* <MuiModal
+        heading={undefined}
+        Content={<ProductDetails product={product} />}
+        classes={undefined}
+        maxWidth={""}
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+      ></MuiModal> */}
     </Box>
   );
 };
