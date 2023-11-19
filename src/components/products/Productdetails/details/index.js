@@ -49,6 +49,7 @@ export default ProductDetails;
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
+  
 
   return (
     <div
@@ -93,6 +94,7 @@ export const DescriptionBlock = ({ product }) => {
 };
 
 export const SpecificationsBlock = ({ product }) => {
+  console.log(product);
   return (
     <Box
       className="elements"

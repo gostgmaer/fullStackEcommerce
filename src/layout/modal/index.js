@@ -29,8 +29,8 @@ export default function MuiModal({
       fullWidth={true}
       // @ts-ignore
 
-      maxWidth={maxWidth ? maxWidth : "md"}
-      className={`${classes ? classes : ""} overflow-hidden`}
+      // maxWidth={maxWidth ? maxWidth : "md"}
+      className={`${classes ? classes : ""} overflow-hidden [&_.MuiPaper-root]:w-auto`}
       open={openModal ? true : false}
     >
       {heading ? (
@@ -62,7 +62,7 @@ export default function MuiModal({
 
       <DialogContent
         sx={{
-          width: "100%",
+          width: "auto  ",
           height: "auto",
           padding: "0 !important",
         }}

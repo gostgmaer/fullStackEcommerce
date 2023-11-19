@@ -21,18 +21,26 @@ import TextField from "@/components/global/fields/TextField";
 import MultiImageUploadr from "@/components/global/fields/multiImageUploadr";
 import Image from "next/image";
 import MuiModal from "@/layout/modal";
+import { apiUrl } from "@/utils/config";
 
 const ReviewBlock = ({ data }) => {
   const route = useRouter();
   const [review, setReview] = useState(null);
 
-  const getReview = async () => {
-    const req = await get(`/products/${data["_id"]}/reviews`);
-    setReview(req);
-  };
+  // console.log(data);
+  // const getReview = async () => {
+  //   const req = await get(`/products/${data["_id"]}/reviews`);
+  //   setReview(req);
+  // };
+
+  const getRelated = async (second) => { 
+    const filter = JSON.stringify({ categories: "Man" });
+    const relatedProducts = await fetch(`${apiUrl}/products?filter=${filter}`);
+    console.log(relatedProducts);
+   }
 
   useEffect(() => {
-    getReview();
+    getRelated()
   }, []);
 
   // console.log(session);
@@ -45,15 +53,15 @@ const ReviewBlock = ({ data }) => {
       }}
     >
       {<Reviewform product={data} />}
-      {review?.results && (
+      {data?.reviews && (
         <Box
           display={"flex"}
           alignItems={"flex-start"}
-          gap={2}
+          gap={1}
           flexDirection={"column"}
           justifyContent={"center"}
         >
-          {review?.results?.map((item) => (
+          {data?.reviews?.map((item) => (
             <Reviews data={item} key={item} />
           ))}
         </Box>
@@ -248,14 +256,22 @@ export const Reviewform = ({ product }) => {
 };
 
 export const Reviews = ({ data }) => {
+  const [openModal, setOpenModal] = useState(false);
+  const [imageData, setImageData] = useState({});
+
+  const setImageIndex = (index) => {
+    setImageData(index);
+    setOpenModal(true);
+  };
+
   return (
     <Box
-      className="elements"
+      className="elements border p-2"
       sx={{
-        width: "60%",
         display: "flex",
         flexDirection: "column",
         gap: 1,
+        width:"60%"
       }}
     >
       <Box display={"flex"} alignItems={"center"} gap={2}>
@@ -274,24 +290,31 @@ export const Reviews = ({ data }) => {
               {data?.title}
             </span>
           </Box>
-          <ImageList sx={{ width: "auto", height: 148 }} cols={3}>
-            {data?.images.map((item) => (
-              <ImageListItem key={item.url}>
-                <Image
-                  src={`${item.url}?w=164&h=164&fit=crop&auto=format`}
-                  alt={item.name}
-                  loading="lazy"
-                  className=" w-36 h-36 object-cover"
-                  width={148}
-                  height={148}
-                />
-              </ImageListItem>
-            ))}
-          </ImageList>
-          <div>
+          {data?.images.length != 0 && (
+            <ImageList
+              sx={{ width: "auto", height: "auto" }}
+              className="flex flex-wrap"
+              cols={3}
+            >
+              {data?.images.map((item) => (
+                <ImageListItem key={item.url} className=" h-auto">
+                  <Image
+                    src={`${item.url}?w=96&h=96&fit=crop&auto=format`}
+                    alt={item.name}
+                    loading="lazy"
+                    className=" w-24 h-24 object-cover"
+                    width={100}
+                    height={100}
+                    onClick={() => setImageIndex(item)}
+                  />
+                </ImageListItem>
+              ))}
+            </ImageList>
+          )}
+          <div className=" whitespace-pre-line ">
             <div
               dangerouslySetInnerHTML={{ __html: data?.review }}
-              className=" whitespace-pre"
+              className="  whitespace-pre-line"
             />
           </div>
         </Box>
@@ -307,14 +330,29 @@ export const Reviews = ({ data }) => {
           <span>{moment(data?.date).format("ll")}</span>
         </div>
       </div>
-      {/* <MuiModal
+      <MuiModal
         heading={undefined}
-        Content={<ProductDetails product={product} />}
-        classes={undefined}
-        maxWidth={""}
+        Content={<OpenImageModal img={imageData} />}
+        classes={"undefined"}
+        maxWidth={"auto"}
         openModal={openModal}
         setOpenModal={setOpenModal}
-      ></MuiModal> */}
+      ></MuiModal>
     </Box>
+  );
+};
+
+const OpenImageModal = ({ img }) => {
+  return (
+    <div className="w-max">
+      <Image
+        loading="lazy"
+        alt={img.name}
+        src={img.url}
+        objectFit="cover"
+        width={360}
+        height={420}
+      />
+    </div>
   );
 };
