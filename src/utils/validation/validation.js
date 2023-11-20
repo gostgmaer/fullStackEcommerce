@@ -52,3 +52,17 @@ export const ProductValidation = Yup.object().shape({
   gtin: Yup.string().required(requiredMsg),
   brandName: Yup.string().required(requiredMsg),
 });
+
+
+export const  billingAddressValidationSchema = Yup.object({
+  email: Yup.string().email('Invalid email address').required('Required'),
+  
+
+  // Add more validation as needed
+});
+
+export const  shippingAddressValidationSchema = Yup.object({
+ 
+
+  // Add more validation as needed
+});

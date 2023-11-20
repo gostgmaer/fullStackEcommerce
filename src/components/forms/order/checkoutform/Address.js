@@ -1,4 +1,3 @@
-
 import {
   Autocomplete,
   Box,
@@ -12,17 +11,15 @@ import {
 } from "@mui/material";
 import { Fragment, useEffect, useState } from "react";
 import { Country, State, City } from "country-state-city";
+import { BillingAddressForm } from "../checkout";
 
 export default function AddressForm(props) {
   return (
     <Box display={"flex"} flexDirection={"column"} gap={4.5}>
-      <ShippingAddress params={props.formik}></ShippingAddress>
-      <Billingaddress params={props.formik}></Billingaddress>
+      <BillingAddressForm />
     </Box>
   );
 }
-
-const configFormik = () => {};
 
 const ShippingAddress = (params) => {
   const formik = params.params;
@@ -169,7 +166,7 @@ const ShippingAddress = (params) => {
 const Billingaddress = (params) => {
   const formik = params.params;
   const [isSame, setIsSame] = useState(true);
-  const [country, setCountry] = useState('');
+  const [country, setCountry] = useState("");
   const handleAutoChnage = (params) => {
     // console.log(params);
   };

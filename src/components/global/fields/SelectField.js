@@ -1,7 +1,7 @@
 // components/SelectField.js
 import React from "react";
 
-const SelectField = ({ options, value, onChange, id, label, placeholder }) => {
+const SelectField = ({ options, id, label,additionalAttrs,placeholder }) => {
   return (
     <div className="">
       {label && (
@@ -10,10 +10,8 @@ const SelectField = ({ options, value, onChange, id, label, placeholder }) => {
         </label>
       )}
       <select
-        value={value}
-        onChange={onChange}
+      {...additionalAttrs}
         name={id}
-     
         id={id}
         className="block w-full placeholder:text-gray-600 px-2 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
       >

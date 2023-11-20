@@ -55,6 +55,7 @@ const ResetForm = () => {
     validationSchema: resetPasswordValidation,
     validateOnBlur: true,
     validateOnChange: true,
+    
     onSubmit: (values) => {
       handleSubmit(values);
     },

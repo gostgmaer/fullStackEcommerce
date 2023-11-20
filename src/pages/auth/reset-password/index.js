@@ -1,4 +1,3 @@
-import ForgetForm from "@/components/forms/auth/forgetForm";
 import ResetForm from "@/components/forms/auth/resetForm";
 import Layout from "@/layout";
 import Link from "next/link";
@@ -22,13 +21,13 @@ const index = () => {
               />
             </Link>
             <h2 className="rizzui-title-h2 mb-7 text-center text-[28px] font-bold leading-snug md:text-3xl md:!leading-normal lg:mb-10 lg:text-4xl">
-              Having trouble to sign in? <br />
               Reset your password.
             </h2>
           </div>
-<ForgetForm/>
+
+          <ResetForm />
           <p className="mt-6 text-center text-[15px] leading-loose text-gray-500 md:mt-7 lg:mt-9 lg:text-base">
-            Don’t want to reset?
+            Don&lsquo;t wont to reset?
             <Link
               className="font-semibold text-gray-700 transition-colors hover:text-primary ml-1"
               href="/auth/signin"

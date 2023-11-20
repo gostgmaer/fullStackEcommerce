@@ -1,13 +1,13 @@
-import LoginForm from '@/components/forms/auth/login'
-import Layout from '@/layout'
-import Link from 'next/link'
-import React from 'react'
-import { FaFacebook, FaGoogle } from 'react-icons/fa'
+import LoginForm from "@/components/forms/auth/login";
+import Layout from "@/layout";
+import Link from "next/link";
+import React from "react";
+import { FaFacebook, FaGoogle } from "react-icons/fa";
 
 const index = () => {
   return (
     <Layout>
-           <div className="flex w-full flex-col justify-center px-5">
+      <div className="flex w-full flex-col justify-center px-5">
         <div className="mx-auto w-full max-w-md py-12 md:max-w-lg lg:max-w-xl 2xl:pb-8 2xl:pt-2">
           <div className="flex flex-col items-center">
             <Link className="mb-7 inline-block max-w-[64px] lg:mb-9" href="/">
@@ -30,14 +30,14 @@ const index = () => {
               className="rizzui-button inline-flex font-medium items-center text-white justify-center active:enabled:translate-y-px focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-50 transition-colors duration-200 px-4 py-2 text-sm rounded-md border border-transparent focus-visible:ring-offset-2 bg-gray-900 hover:enabled::bg-gray-800 active:enabled:bg-gray-1000 focus-visible:ring-gray-900/30 text-gray-0 h-11 w-full"
               type="button"
             >
-              <FaGoogle className="h-4 w-4 mr-1 text-yellow-400"/>
+              <FaGoogle className="h-4 w-4 mr-1 text-yellow-400" />
               <span className="truncate">Signin with Google</span>
             </button>
             <button
               className="rizzui-button inline-flex font-medium items-center justify-center active:enabled:translate-y-px focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-50 transition-colors duration-200 px-4 py-2 text-sm rounded-md border border-transparent focus-visible:ring-offset-2 bg-blue-600 hover:enabled:bg-blue-dark focus-visible:ring-blue/30 text-white h-11 w-full"
               type="button"
             >
-            <FaFacebook className="h-4 w-4 mr-1"/>
+              <FaFacebook className="h-4 w-4 mr-1" />
               <span className="truncate">Signin with Facebook</span>
             </button>
           </div>
@@ -52,7 +52,7 @@ const index = () => {
             Don’t have an account?
             <Link
               className="font-semibold text-gray-700 transition-colors hover:text-primary ml-1"
-              href="/auth/register"
+              href="/auth/signup"
             >
               Sign Up
             </Link>
@@ -60,7 +60,7 @@ const index = () => {
         </div>
       </div>
     </Layout>
-  )
-}
+  );
+};
 
-export default index
+export default index;

@@ -29,8 +29,8 @@ export default function MuiModal({
       fullWidth={true}
       // @ts-ignore
 
-      // maxWidth={maxWidth ? maxWidth : "md"}
-      className={`${classes ? classes : ""} overflow-hidden [&_.MuiPaper-root]:w-auto`}
+      maxWidth={maxWidth ? maxWidth : "md"}
+      className={`${classes ? classes : ""} overflow-hidden `}
       open={openModal ? true : false}
     >
       {heading ? (
