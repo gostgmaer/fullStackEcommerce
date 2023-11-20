@@ -1,10 +1,8 @@
-import Orderlist from "@/components/Usermodule/Orderlist";
 import ChangePassword from "@/components/forms/auth/changePassword";
 import Userlayout from "@/layout/user";
 
 import { Person, ShoppingBag } from "@mui/icons-material";
-import { Box, Pagination, Typography } from "@mui/material";
-import { getSession } from "next-auth/react";
+import { Box, Typography } from "@mui/material";
 
 const Orders = () => {
   return (
@@ -13,6 +11,7 @@ const Orders = () => {
         display={"flex"}
         flexDirection={"column"}
         alignItems={"flex-start"}
+        width={'100%'}
         gap={3}
       >
         <Typography
@@ -22,7 +21,7 @@ const Orders = () => {
           sx={{ display: "flex", gap: 0.5, alignItems: "center" }}
         >
         
-          <span>Changed Password</span>
+        Changed Password
         </Typography>
         <ChangePassword/>
       </Box>

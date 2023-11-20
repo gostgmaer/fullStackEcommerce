@@ -1,6 +1,4 @@
-
 "use client";
-
 
 import { useAuthContext } from "@/context/AuthContext";
 import { post } from "@/lib/network/http";
@@ -10,7 +8,6 @@ import { KeyboardArrowRight } from "@mui/icons-material";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-
 
 const ForgetForm = () => {
   const { handleLoginAuth, user, userId } = useAuthContext();
@@ -81,7 +78,11 @@ const ForgetForm = () => {
         </button>
       </div>
       {error && (
-        <div className={`error text-red-500 font-medium text-sm py-2 ${error["statusCode"]==200 && " text-green-700"} `}>
+        <div
+          className={`error text-red-500 font-medium text-sm py-2 ${
+            error["statusCode"] == 200 && " text-green-700"
+          } `}
+        >
           <p className="text-center">{error.message}</p>
         </div>
       )}

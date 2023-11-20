@@ -15,7 +15,6 @@ const ChangePassword = () => {
   const { handleLoginAuth, user, userId } = useAuthContext();
   const router = useRouter();
 
-  const [axios, spinner] = useAxios();
   const [error, setError] = useState(undefined);
   const param = useSearchParams();
 
@@ -34,11 +33,11 @@ const ChangePassword = () => {
     }
   };
 
-  useEffect(() => {
-    if (userId) {
-      router.push("/dashboard");
-    }
-  }, [userId]);
+  // useEffect(() => {
+  //   if (userId) {
+  //     router.push("/dashboard");
+  //   }
+  // }, [userId]);
 
   const formik = useFormik({
     initialValues: {
@@ -55,7 +54,7 @@ const ChangePassword = () => {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form onSubmit={formik.handleSubmit} className="w-[50%]">
       <div className="space-y-5 text-black">
         <div className="rizzui-password-root flex flex-col [&amp;>label>span]:font-medium">
           <label className="block">
@@ -102,7 +101,7 @@ const ChangePassword = () => {
           type="submit"
           disabled={!formik.isValid}
         >
-          <span>Confirm Password</span> <KeyboardArrowRight />
+          <span>Change Password</span> <KeyboardArrowRight />
         </button>
       </div>
       {error && (
