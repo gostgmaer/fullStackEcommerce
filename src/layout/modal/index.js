@@ -33,6 +33,7 @@ export default function MuiModal({
       className={`${classes ? classes : ""} overflow-hidden `}
       open={openModal ? true : false}
     >
+    
       {heading ? (
         <DialogTitle
           sx={{
@@ -42,11 +43,12 @@ export default function MuiModal({
             justifyContent: "space-between",
             alignItems: "center",
           }}
+          className={heading.classess}
         >
-          {heading ? heading.title : "Modal Heading for web"}
-          <IconButton aria-label="close" onClick={() => setOpenModal(false)}>
-            {heading ? heading.icon : <Close />}
-          </IconButton>
+          { heading ? heading.title : "Modal Heading for web"}
+        { heading.icon && <IconButton aria-label="close" onClick={() => setOpenModal(false)}>
+            { heading.icon}
+          </IconButton>}
         </DialogTitle>
       ) : (
         <div className="absolute " style={{ top: 10, right: 10 }}>
