@@ -21,19 +21,29 @@ import {
   Typography,
   colors,
 } from "@mui/material";
+import { useSelector } from "react-redux";
+import Image from "next/image";
+import { leftFillNum } from "@/lib/sevice";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
 import SelectField from "@/components/global/fields/SelectField";
-import {
-  billingAddressValidationSchema,
-} from "@/utils/validation/validation";
+import { billingAddressValidationSchema } from "@/utils/validation/validation";
 import React from "react";
+import Link from "next/link";
+import MuiModal from "@/layout/modal";
+import { Close } from "@mui/icons-material";
 const { default: Input } = require("@/components/global/fields/input");
-const steps = ["Address Details", "Payment details", "Review your order"];
+// const steps = ["Address Details", "Review your order"];
 export default function PageValidation() {
+  const steper= [
+    {
+      label:"Order Details",value:0
+    },{label:"Review your order",value:1}
+  ]
   const router = useRouter();
   const [activeStep, setActiveStep] = useState(0);
+  const [iscoupon, setIscoupon] = useState(false);
   // const { protectedRouteCheck, pageLoading } = useAuthContext();
 
   const initialValues = {
@@ -62,7 +72,7 @@ export default function PageValidation() {
       country: "",
       phoneNumber: "",
     },
-    additionalNotes:"",
+    additionalNotes: "",
     useBillingAddressForShipping: false,
     accountCreate: false,
   };
@@ -79,8 +89,6 @@ export default function PageValidation() {
       case 0:
         return <AddressForm formik={formik} />;
       case 1:
-        return <PaymentForm formik={formik} />;
-      case 2:
         return <Review formik={formik} />;
       default:
         throw new Error("Unknown step");
@@ -105,26 +113,54 @@ export default function PageValidation() {
     router.push("order-confirmation");
   };
 
+
+
   return (
     <Container>
       <Stepper activeStep={activeStep} sx={{ py: 3, px: 20 }}>
-        {steps.map((label) => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
+        {steper.map((item) => (
+          <Step key={item.label}>
+            <StepLabel className=" cursor-pointer" onClick={()=>{activeStep!=0 && item.value==0 && setActiveStep(item.value)}}>{item.label}</StepLabel>
+           
           </Step>
         ))}
       </Stepper>
+      <div>
+        <p>
+          Have a coupon?{" "}
+          <span
+            className=" font-medium cursor-pointer"
+            onClick={() => setIscoupon(!iscoupon)}
+          >
+            Click here to enter your code
+          </span>
+        </p>
+        {iscoupon && (
+          <div className="flex items-center justify-start mb-2 my-2 p-10 border border-dashed border-b-2">
+            <input
+              type="text"
+              placeholder="Enter coupon code"
+              className="w-[85%] p-2 px-4 border shadow-sm border-gray-300 h-10 rounded-none  focus:outline-none focus:border-gray-500 transition duration-300"
+            />
+            <button className="w-[15%] p-2 px-4 shadow-sm  h-10 bg-gray-500 text-white  hover:bg-gray-700 focus:outline-none focus:shadow-outline-indigo active:bg-gray-800 transition duration-300 rounded-none">
+              Apply
+            </button>
+          </div>
+        )}
+      </div>
 
-      <Grid container direction={"row"} gap={5}>
+      <Grid container direction={"row"} gap={2} className="relative">
         <Stack
           sx={{ my: { xs: 2, md: 2 } }}
           direction={"column"}
           gap={1.5}
           flex={2}
+          className=" border-t-gray-300 border-t pt-4"
         >
           {/* { <AddressForm formik={formik} />} */}
+
           {getStepContent(activeStep)}
-          <Stack
+          {/* <Stack
             direction={"row"}
             sx={{ justifyContent: "space-between", gap: 5 }}
           >
@@ -174,15 +210,22 @@ export default function PageValidation() {
                 Place order
               </Button>
             )}
-          </Stack>
+          </Stack> */}
         </Stack>
         <Stack
-          direction={"column"}
+          sx={{ my: { xs: 2, md: 2 } }}
+          className="border-blue-500 border p-4 h-full"
           gap={1}
-          flex={0.9}
-          sx={{ my: 2, position: "sticky", top: 0 }}
+          flex={1}
+          position={"sticky"}
+          top={0}
+          // sx={{ my: 2, position: "sticky", top: 0 }}
         >
-          <Pricesumery />
+          <OrderdetailsData
+            formik={formik}
+            handleNext={handleNext}
+            step={activeStep}
+          />
         </Stack>
       </Grid>
     </Container>
@@ -196,10 +239,6 @@ export function AddressForm({ formik }) {
     </Box>
   );
 }
-
-import { useSelector } from "react-redux";
-import Image from "next/image";
-import { leftFillNum } from "@/lib/sevice";
 
 const addresses = ["1 MUI Drive", "Reactville", "Anytown", "99999", "USA"];
 const payments = [
@@ -360,17 +399,6 @@ export function PaymentForm({ formik }) {
         {value === "paypal" && <PaywithPaypal formik={formik} />}
         <Divider sx={{ my: 2 }} />
       </Stack>
-      {/* <Stack>
-        <RadioGroup value={value} onChange={handleChange}>
-          <FormControlLabel
-            value="upi"
-            control={<Radio />}
-            label="Pay with UPI"
-          />
-        </RadioGroup>
-        {value === "upi" && <Paywithupi />}
-        <Divider sx={{ my: 2 }} />
-      </Stack> */}
       <Stack>
         <RadioGroup value={value} onChange={handleChange}>
           <FormControlLabel
@@ -665,10 +693,7 @@ export const BillingAddressForm = () => {
 
   return (
     <div>
-      <form
-        onSubmit={formik.handleSubmit}
-        className="rounded-md shadow-md  p-6"
-      >
+      <form onSubmit={formik.handleSubmit} className="rounded-md ">
         <div className=" mb-2">
           <p className="w-full text-xl font-semibold text-gray-700">
             BILLING DETAILS
@@ -1084,6 +1109,295 @@ export const ShippingAddressForm = ({ formik }) => {
               {formik.errors.shippingPostalCode}
             </p>
           )}
+      </div>
+    </div>
+  );
+};
+
+const OrderdetailsData = ({ formik, handleNext, step }) => {
+  const cartData = useSelector((state) => state["data"].cartItems);
+  const [open, setOpen] = useState(false);
+;
+  const paymentMethod = [
+    { key: "creditCard", value: "Credit Card/Debit Card/NetBanking" },
+    { key: "paypal", value: "PayPal" },
+    { key: "cashOnDelivery", value: "Cash on Delivery" },
+  ];
+
+  const calculateTotal = () => {
+    // Calculate the total by summing up all subtotals
+    return cartData
+      .reduce((total, product) => total + product.subtotal, 0)
+      .toFixed(2);
+  };
+
+  const getPaymentDescription = () => {
+    switch (formik.values.paymentMethod) {
+      case "creditCard":
+        return "Pay securely by Credit or Debit card or Internet Banking";
+      case "paypal":
+        return "Pay with your PayPal account.";
+      case "cashOnDelivery":
+        return "Pay with cash when the order is delivered.";
+      default:
+        return "";
+    }
+  };
+
+  return (
+    <div className="">
+      <p className=" text-2xl  text-gray-600 font-semibold ">Your order</p>
+      <div className="container mx-auto mt-4">
+        <table className="min-w-full bg-white border border-gray-300 rounded-lg overflow-hidden">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="py-2 px-4 border-b text-left">Product</th>
+              <th className="py-2 px-4 border-b text-right">Subtotal</th>
+            </tr>
+          </thead>
+          <tbody className=" border-t-gray-600 ">
+            {cartData.map((item, index) => (
+              <tr key={index}>
+                <td className="py-2 px-4 border-b text-left text-sm">
+                  <span>{item.product.title}</span> <span> x </span>{" "}
+                  {item.quantity}{" "}
+                </td>
+                <td className="py-2 px-4 border-b text-right">
+                  {" "}
+                  <span>$</span>
+                  {item.subtotal.toFixed(2)}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+          <tfoot className=" border-t-gray-300 border-t-2">
+            <tr>
+              <td className="py-2 px-4 font-semibold text-left">Total</td>
+              <td className="py-2 px-4 font-semibold text-right">
+                {" "}
+                <span>$</span>
+                {calculateTotal()}
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+        <div className="flex justify-between py-2 px-4 border-t border-gray-200 border-spacing-5">
+          <span className="font-semibold">Shipping</span> <span>$18</span>
+        </div>
+        <div className="flex justify-between py-2 px-4 border-t border-gray-200 border-spacing-5">
+          <span className="font-semibold">Coupon Discount</span>{" "}
+          <span>$25</span>
+        </div>
+        <div className="flex justify-between py-2 px-4 border-t-2 border-gray-200 border-spacing-5">
+          <span className="font-bold">Final price</span>{" "}
+          <span className="font-semibold">${calculateTotal()}</span>
+        </div>
+      </div>
+      {/* <div className="container mx-auto mt-4">
+        <div className="mt-8">
+          <h2 className="text-lg font-semibold mb-4">Delivery Method</h2>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">
+              Select a delivery method
+            </label>
+            <div className="mt-2">
+              <label className="inline-flex items-center">
+                <input
+                  type="radio"
+                  id="standard"
+                  value="standard"
+                  checked={formik.values.deliveryMethod === "standard"}
+                  onChange={() =>
+                    formik.setFieldValue("deliveryMethod", "standard")
+                  }
+                  className="form-radio h-5 w-5 text-blue-600"
+                />
+                <span className="ml-2">Standard Shipping</span>
+              </label>
+              <label className="inline-flex items-center ml-6">
+                <input
+                  type="radio"
+                  id="express"
+                  value="express"
+                  checked={formik.values.deliveryMethod === "express"}
+                  onChange={() =>
+                    formik.setFieldValue("deliveryMethod", "express")
+                  }
+                  className="form-radio h-5 w-5 text-blue-600"
+                />
+                <span className="ml-2">Express Shipping</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div> */}
+
+     
+      <div className=" container mx-auto mt-2">
+        <div className="mt-8">
+          <h2 className="text-lg font-semibold mb-4">Payment Method</h2>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">
+              Select a payment method
+            </label>
+            <div className="mt-2 grid">
+              {paymentMethod.map((method) => (
+                <div
+                  className=" border-b border-gray-200 border-spacing-5 mb-2 pb-2 col-span-2 "
+                  key={method.key}
+                >
+                  <label className="inline-flex items-center">
+                    <input
+                      type="radio"
+                      id={method.key}
+                      value={method.key}
+                      checked={formik.values.paymentMethod === method.key}
+                      onChange={() =>
+                        formik.setFieldValue("paymentMethod", method.key)
+                      }
+                      className="form-radio h-3 w-3 text-blue-600"
+                    />
+                    <span className="ml-2">{method.value}</span>
+                  </label>
+                  {formik.values.paymentMethod === method.key && (
+                    <p className="text-sm text-gray-500">
+                      {getPaymentDescription()}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="container">
+        {step == 0 ? (
+          <button
+            onClick={handleNext}
+            className=" p-2 px-10 capitalize  w-full shadow-sm  h-10 bg-gray-500 text-white  hover:bg-gray-700 focus:outline-none focus:shadow-outline-indigo active:bg-gray-800 transition duration-300 rounded-none"
+          >
+            Preview order
+          </button>
+        ) : (
+          <button className=" p-2 px-10 capitalize  w-full shadow-sm  h-10 bg-gray-500 text-white  hover:bg-gray-700 focus:outline-none focus:shadow-outline-indigo active:bg-gray-800 transition duration-300 rounded-none">
+            Place order
+          </button>
+        )}
+      </div>
+      <div className="container py-4">
+        <p>
+          Your personal data will be used to process your order, support your
+          experience throughout this website, and for other purposes described
+          in our{" "}
+          <span
+            className=" font-semibold cursor-pointer"
+            onClick={() => setOpen(true)}
+          >
+            privacy policy
+          </span>
+          .
+        </p>
+      </div>
+      <MuiModal
+        heading={{
+          title: "Privacy policy",
+          classess: " text-center justify-center text-3xl",
+        }}
+        Content={<PrivacyPolicyModalContent setOpen={setOpen} />}
+        classes={undefined}
+        maxWidth={undefined}
+        openModal={open}
+        setOpenModal={setOpen}
+      ></MuiModal>
+    </div>
+  );
+};
+
+const PrivacyPolicyModalContent = ({ setOpen }) => {
+  return (
+    <div className=" mx-auto my-2 p-4 px-6 bg-white rounded">
+      <p className="mb-4">
+        This Privacy Policy describes how [Your Company/Website Name]
+        (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) collects, uses, and
+        shares personal information of users of this website [YourWebsite.com]
+        (the &quot;Site&quot;). Please read this Privacy Policy carefully before
+        using the Site.
+      </p>
+
+      <h2 className="text-lg font-bold mb-2">Information We Collect:</h2>
+
+      <ul className="list-disc ml-6 mb-4">
+        <li>
+          <strong>Personal Information:</strong> We may collect personally
+          identifiable information, such as your name, email address, postal
+          address, and phone number when you voluntarily submit it through forms
+          on the Site.
+        </li>
+        <li>
+          <strong>Non-Personal Information:</strong> We may also collect
+          non-personal information, such as browser type, IP address, and
+          referring site, to enhance your experience and improve our services.
+        </li>
+      </ul>
+
+      <h2 className="text-lg font-bold mb-2">How We Use Your Information:</h2>
+      <p className="mb-4">
+        We may use the information we collect for various purposes, including
+        but not limited to:
+      </p>
+
+      <ul className="list-disc ml-6 mb-4">
+        <li>Processing orders and providing customer support.</li>
+        <li>Improving our products and services.</li>
+        <li>Sending promotional emails and newsletters if you opt-in.</li>
+      </ul>
+      <h2 className="text-lg font-bold mb-2">Information Sharing:</h2>
+      <p className="mb-4">
+        We do not sell, trade, or rent your personal information to third
+        parties. However, we may share your information with trusted third
+        parties who assist us in operating our website, conducting our business,
+        or servicing you, as long as those parties agree to keep this
+        information confidential.
+      </p>
+
+      <h2 className="text-lg font-bold mb-2">Cookies:</h2>
+      <p className="mb-4">
+        We use cookies to enhance your experience on the Site. You can disable
+        cookies through your browser settings, but this may affect the
+        functionality of the Site.
+      </p>
+      <h2 className="text-lg font-bold mb-2">Security:</h2>
+      <p className="mb-4">
+        We take reasonable measures to protect the personal information
+        submitted to us, both during transmission and once we receive it.
+        However, no method of transmission over the internet or electronic
+        storage is 100% secure.
+      </p>
+      <h2 className="text-lg font-bold mb-2">Changes to This Policy:</h2>
+      <p className="mb-4">
+        We may update this Privacy Policy from time to time. The date of the
+        latest revision will be indicated at the top of this page. We encourage
+        you to review this page periodically for any changes.
+      </p>
+
+      <h2 className="text-lg font-bold mb-2">Contact Us:</h2>
+
+      <p className="mb-4">
+        If you have any questions regarding this Privacy Policy, you may contact
+        us at{" "}
+        <a href="mailto:kishor81160@gmail.com" className="text-blue-500">
+          kishor81160@gmail.com
+        </a>
+        .
+      </p>
+
+      <div className=" text-center mt-10">
+        <button
+          onClick={() => setOpen(false)}
+          className=" p-2 px-5 rounded-md capitalize  shadow-sm  h-10 bg-green-500 text-white  hover:bg-green-700 focus:outline-none focus:shadow-outline-indigo active:bg-green-800 transition duration-300"
+        >
+          Ok
+        </button>
       </div>
     </div>
   );
