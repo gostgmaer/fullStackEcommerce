@@ -1,7 +1,7 @@
 // components/SelectField.js
 import React from "react";
 
-const SelectField = ({ options, id, label,additionalAttrs,placeholder }) => {
+const SelectField = ({ options, id, label,additionalAttrs,placeholder,optionkeys={key:"",value:""} }) => {
   return (
     <div className="">
       {label && (
@@ -18,11 +18,11 @@ const SelectField = ({ options, id, label,additionalAttrs,placeholder }) => {
         <option value="" className="text-gray-400">{placeholder ? placeholder : "Select"}</option>
         {options.map((option) => (
           <option
-            key={option.value}
-            value={option.value}
+            key={option[optionkeys.key]}
+            value={option[optionkeys.key]}
             className=" capitalize"
           >
-            {option.label}
+            {option[optionkeys.value]}
           </option>
         ))}
       </select>
