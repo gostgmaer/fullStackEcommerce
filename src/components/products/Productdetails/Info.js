@@ -1,18 +1,11 @@
-import { ArrayData } from "@/assets/mock/product";
 import { Check, KeyboardArrowDown, ShoppingBag } from "@mui/icons-material";
-import Radio from "@mui/joy/Radio";
-import RadioGroup from "@mui/joy/RadioGroup";
-import CheckIcon from "@mui/icons-material/Check";
-// import Box from '@mui/joy/Box';
-import Checkbox from "@mui/joy/Checkbox";
-import Chip from "@mui/joy/Chip";
-// import Typography from '@mui/joy/Typography';
 import { Box, Grid, Rating, Typography, colors, Button } from "@mui/material";
 import Image from "next/image";
 import React, { useState } from "react";
 import ImageSlider from "./details/ImageSlider";
 import { CartAddItems } from "@/components/global/products/Cart";
 import { Select, selectClasses, Option } from "@mui/joy";
+import Link from "next/link";
 
 const Info = ({ data }) => {
   console.log(data);
@@ -64,11 +57,11 @@ const Info = ({ data }) => {
               Rating:
               <Rating
                 name="half-rating-read"
-                defaultValue={4.5}
-                precision={0.5}
+                defaultValue={data?.averageRating.toFixed(1)}
+                precision={0.1}
                 readOnly
               />
-              <Showtextdata params={data?.reviews}></Showtextdata>
+             <span>({data.totalReviews}) </span> 
             
             </Typography>
 
@@ -199,14 +192,19 @@ const Info = ({ data }) => {
                   color: colors.grey[800],
                 }}
                 variant="subtitle1"
+                className=" flex gap-2 items-center"
               >
                 Category:{" "}
-                <a
-                  href="https://flatsome3.uxthemes.com/product-category/clothing/"
-                  rel="tag"
-                >
-                  {data?.categories[0]}
-                </a>
+                <p className="category text-xs font-semibold uppercase is-smaller no-text-overflow product-cat p-1 cursor-pointer">
+                  {data?.categories?.map((category) => (
+                    <Link
+                      href={`/product/search/${category.slug}`}
+                      key={category._id}
+                    >
+                      {category.name}{" "}
+                    </Link>
+                  ))}
+                </p>
               </Typography>
 
               <Typography
