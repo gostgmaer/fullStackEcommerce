@@ -93,7 +93,7 @@ const CategoryBlock = ({ size, category }) => {
               <Link href={`/product/search/${category.slug}`}>
                 {category?.name ? category.name : "category Title"}
               </Link>
-              <p className="is-xsmall uppercase count"> 18 Products</p>
+              <p className="is-xsmall uppercase count"> {category?.productCount} Products</p>
             </div>
           </div>
         </div>

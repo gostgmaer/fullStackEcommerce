@@ -19,16 +19,16 @@ const Index = ({ data }) => {
   return (
     <>
       <Head>
-        <title>{data.results.singleProduct.title}</title>
+        <title>{data.results.currentProd?.title}</title>
         <meta name="description" content={data.results.descriptions} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       
       </Head>
       <Layout>
         <Box p={3} component={"div"}>
-          <Info data={data.results.singleProduct} />
-          <ProductDetails data={data.results.singleProduct} />
-          <Related data={data.results.related} />
+          <Info data={data.results.currentProd} />
+          <ProductDetails data={data.results.currentProd} />
+          {/* <Related data={data.results.related} /> */}
         </Box>
       </Layout>
     </>

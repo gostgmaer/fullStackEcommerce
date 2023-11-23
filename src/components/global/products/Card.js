@@ -124,7 +124,14 @@ const PCard = ({ product, size }) => {
             <div className="box-text box-text-products px-5 py-1">
               <div className="title-wrapper">
                 <p className="category text-xs font-semibold uppercase is-smaller no-text-overflow product-cat p-1 cursor-pointer">
-                  {product.categories[0]}
+                  {product?.categories?.map((category) => (
+                    <Link
+                      href={`/product/search/${category.slug}`}
+                      key={category._id}
+                    >
+                      {category.name}{" "}
+                    </Link>
+                  ))}
                 </p>
                 <Link href={`/product/${product?.slug}`} className=" text-sm">
                   {product?.title
@@ -180,7 +187,6 @@ const ProductDetails = ({ product }) => {
 
   const wishlist = useSelector((state) => state["data"].wishList);
   const dispatch = useDispatch();
-
 
   return (
     <div className="product-content flex overflow-hidden gap-5">
@@ -252,13 +258,13 @@ const ProductDetails = ({ product }) => {
       </div>
       <div className="product-info summary large-6 col entry-summary flex-1 p-5 overflow-hidden">
         <div className="product-lightbox-inner overflow-hidden">
-          <Rating
+          <div className=" flex gap-2"><Rating
             name="half-rating-read"
-            defaultValue={4.5}
-            precision={0.5}
+            defaultValue={product.averageRating}
+            precision={0.1}
             readOnly
           />
-          <p></p>
+          <p>{product.totalReviews}</p></div>
           <Link
             href={`/product/${product.slug}`}
             className=" font-bold text-xl"
@@ -312,12 +318,16 @@ const ProductDetails = ({ product }) => {
           <div className="product_meta font-semibold">
             <span className="posted_in flex gap-2">
               Category:
-              <a
-                href="https://flatsome3.uxthemes.com/product-category/clothing/"
-                rel="tag"
-              >
-                {product.categories[0]}
-              </a>
+              <p className="category text-xs font-semibold uppercase is-smaller no-text-overflow product-cat p-1 cursor-pointer">
+                  {product?.categories?.map((category) => (
+                    <Link
+                      href={`/product/search/${category.slug}`}
+                      key={category._id}
+                    >
+                      {category.name}{" "}
+                    </Link>
+                  ))}
+                </p>
             </span>
           </div>
           <div className="product_meta font-semibold">
