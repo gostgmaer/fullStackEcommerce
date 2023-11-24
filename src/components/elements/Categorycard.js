@@ -91,9 +91,14 @@ const CategoryBlock = ({ size, category }) => {
             </div>
             <div className="image-tools bg-white text-gray-900 cursor-pointer justify-center hover:bg-gray-700 opacity-95 hover:text-white  top-[50%]  items-center w-full absolute  text-center grid-tools  hide-for-small bottom hover-slide-in show-on-hover">
               <Link href={`/product/search/${category.slug}`}>
-                {category?.name ? category.name : "category Title"}
+              <p className="is-xsmall uppercase count p-2 flex flex-col justify-center items-center">
+                <span> {category?.name ? category.name : "category Title"}</span>
+                <span>{category?.productCount} Products</span>
+              </p>
+               
+                {/* <p className="is-xsmall uppercase count"> </p> */}
               </Link>
-              <p className="is-xsmall uppercase count"> {category?.productCount} Products</p>
+              
             </div>
           </div>
         </div>

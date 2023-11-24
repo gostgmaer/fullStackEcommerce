@@ -6,7 +6,17 @@ import ImageSlider from "./details/ImageSlider";
 import { CartAddItems } from "@/components/global/products/Cart";
 import { Select, selectClasses, Option } from "@mui/joy";
 import Link from "next/link";
-
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import {
+  Pagination,
+  Navigation,
+  Autoplay,
+  FreeMode,
+  Thumbs,
+} from "swiper/modules";
+import Slider from "./details/children/Slider";
 const Info = ({ data }) => {
   console.log(data);
   // const [selected, setSelected] = useState(true);
@@ -31,7 +41,9 @@ const Info = ({ data }) => {
           flexDirection="column"
           item
           xs={8}
-        ></Grid>
+        >
+          <Slider data={data}/>
+        </Grid>
         <Grid
           display={"flex"}
           alignItems="flex-start"
@@ -61,8 +73,7 @@ const Info = ({ data }) => {
                 precision={0.1}
                 readOnly
               />
-             <span>({data.totalReviews}) </span> 
-            
+              <span>({data.totalReviews}) </span>
             </Typography>
 
             <div className="price-wrapper">
@@ -248,15 +259,29 @@ export default Info;
 
 const Showtextdata = ({ params }) => {
   console.log(params.length);
-  return <>  <span>({params.length}) </span> </>;
+  return (
+    <>
+      {" "}
+      <span>({params.length}) </span>{" "}
+    </>
+  );
 };
 
-const imageGallery = ({images}) => {
-  
-
-
-return <div className=" ">
-
-</div>
-
-}
+const ImageGallery = ({ images }) => {
+  const [thumbsSwiper, setThumbsSwiper] = useState({});
+  return (
+    <div className="  ">
+      <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
+        <SwiperSlide>Slide 1</SwiperSlide>
+        <SwiperSlide>Slide 2</SwiperSlide>
+        <SwiperSlide>Slide 3</SwiperSlide>
+        <SwiperSlide>Slide 4</SwiperSlide>
+        <SwiperSlide>Slide 5</SwiperSlide>
+        <SwiperSlide>Slide 6</SwiperSlide>
+        <SwiperSlide>Slide 7</SwiperSlide>
+        <SwiperSlide>Slide 8</SwiperSlide>
+        <SwiperSlide>Slide 9</SwiperSlide>
+      </Swiper>
+    </div>
+  );
+};
