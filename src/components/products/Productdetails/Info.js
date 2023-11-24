@@ -42,7 +42,7 @@ const Info = ({ data }) => {
           item
           xs={8}
         >
-          <Slider data={data}/>
+          <Slider data={data} />
         </Grid>
         <Grid
           display={"flex"}
@@ -50,6 +50,7 @@ const Info = ({ data }) => {
           gap={"15px"}
           flexDirection="column"
           item
+          zIndex={10}
           xs={8}
         >
           <Box
@@ -209,10 +210,10 @@ const Info = ({ data }) => {
                 <p className="category text-xs font-semibold uppercase is-smaller no-text-overflow product-cat p-1 cursor-pointer">
                   {data?.categories?.map((category) => (
                     <Link
-                      href={`/product/search/${category.slug}`}
+                      href={`/product/search?category:${category.slug}`}
                       key={category._id}
                     >
-                      {category.name}{" "}
+                      {category.name}
                     </Link>
                   ))}
                 </p>
