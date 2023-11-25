@@ -33,6 +33,7 @@ import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CartUpdate } from "@/components/global/products/Cart";
 import { removefromCart } from "@/store/cartReducer";
+import Link from "next/link";
 
 const CartPage = () => {
   const cartData = useSelector((state) => state["data"].cartItems);
@@ -118,7 +119,7 @@ const CartTable = (second) => {
                 <TableCell align="left">
                   {" "}
                   <div className="flex gap-1 items-center">
-                    {" "}
+                   
                     <Image
                       width={100}
                       height={100}
@@ -126,7 +127,7 @@ const CartTable = (second) => {
                       className=" rounded-full w-20 h-20"
                       src={row.product.images[0]["url"]}
                     ></Image>{" "}
-                    {row["product"].title}
+                    <Link href={`/product/${row["product"].slug}`}>{row["product"].title}</Link>
                   </div>
                 </TableCell>
                 <TableCell align="left">{row["product"].salePrice}</TableCell>

@@ -28,7 +28,7 @@ const Index = ({ data }) => {
         <Box p={3} component={"div"}>
           <Info data={data.results.currentProd} />
           <ProductDetails data={data.results.currentProd} />
-          {/* <Related data={data.results.related} /> */}
+          <Related data={data.results.related} />
         </Box>
       </Layout>
     </>

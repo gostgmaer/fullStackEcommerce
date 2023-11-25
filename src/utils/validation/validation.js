@@ -77,3 +77,10 @@ export const billingAddressValidationSchema = Yup.object().shape({
 export const shippingAddressValidationSchema = Yup.object({
   // Add more validation as needed
 });
+
+export const reviewValidationSchema = Yup.object().shape({
+  title: Yup.string().required('title is required'),
+
+  rating: Yup.number().required('Rating is required').min(1, 'Rating must be at least 1').max(5, 'Rating can not be more than 5'),
+  review: Yup.string().required('Review is required'),
+})

@@ -35,7 +35,7 @@ const CartRight = () => {
           )}`}</Typography>
         </Stack>
         <Divider sx={{ my: 2, color: colors.grey[100] }} />
-        <Stack
+        {/* <Stack
           direction={"row"}
           gap={2}
           sx={{ mt: 1, mb: 2 }}
@@ -52,16 +52,16 @@ const CartRight = () => {
           >
             Note
           </Typography>
-        </Stack>
-        <TextField
+        </Stack> */}
+        {/* <TextField
           fullWidth
           variant="outlined"
           style={{ borderColor: "Background" }}
           minRows={5}
           multiline
           name="field-addition-note"
-        ></TextField>
-        <Divider sx={{ my: 2, color: colors.grey[100] }} />
+        ></TextField> */}
+        {/* <Divider sx={{ my: 2, color: colors.grey[100] }} /> */}
         <TextField
           fullWidth
           variant="outlined"
@@ -89,86 +89,15 @@ const CartRight = () => {
           <Typography variant="body2">Shiping Estimation:</Typography>
           <Typography variant="body2">$10.00</Typography>
         </Stack>
-        <Autocomplete
-          sx={{ mt: 1, mb: 1 }}
-          size="small"
-          id="country-select"
-          fullWidth
-          options={countries}
-          autoHighlight
-          getOptionLabel={(option) => option.label}
-          renderOption={(props, option) => (
-            <Box
-              component="li"
-              sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
-              {...props}
-            >
-              {/* <Image
-                height={20}
-                loading="lazy"
-                width={20}
-                src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
-                alt=""
-              /> */}
-              {option.label} ({option.code}) +{option.phone}
-            </Box>
-          )}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Choose a country"
-              inputProps={{
-                ...params.inputProps,
-                autoComplete: "new-password", // disable autocomplete and autofill
-              }}
-            />
-          )}
-        />
-        <Autocomplete
-          sx={{ mt: 1, mb: 1 }}
-          size="small"
-          id="states-select"
-          fullWidth
-          options={states}
-          autoHighlight
-          getOptionLabel={(option) => option.state_name}
-          renderOption={(props, option) => (
-            <Box
-              component="li"
-              sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
-              {...props}
-            >
-              {option.state_name} ({option.state_abbv})
-            </Box>
-          )}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Choose a State"
-              inputProps={{
-                ...params.inputProps,
-                autoComplete: "new-password", // disable autocomplete and autofill
-              }}
-            />
-          )}
-        />
-        <TextField
-          fullWidth
-          variant="outlined"
-          size="small"
-          style={{ borderColor: "Background" }}
-          label="Zip code"
-          placeholder="55541"
-          name="zipcode"
-        ></TextField>
-        <Button
+        
+        {/* <Button
           sx={{ mt: 4, mb: 0.8 }}
           fullWidth
           variant="outlined"
           color="error"
         >
           Calculate Shipiing
-        </Button>
+        </Button> */}
         {cartData.length !== 0 && (
           <Button
             sx={{ mt: 0.8, mb: 2 }}

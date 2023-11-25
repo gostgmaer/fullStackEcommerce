@@ -2,19 +2,13 @@ import { ArrayData } from "@/assets/mock/product";
 import { ArrowDropDown, ArrowRight, Circle, ExpandMore } from "@mui/icons-material";
 import { Input } from "@mui/joy";
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
   Box,
   FormGroup,
-  FormControl,
   Checkbox,
   Paper,
   Slider,
   Stack,
-  TextField,
   Typography,
-  colors,
   FormControlLabel,
   Rating,
 } from "@mui/material";
