@@ -1,6 +1,7 @@
 import ProductListing from "@/components/searchPage";
 import BodySection from "@/components/searchPage/Bodysection";
 import FilterSection from "@/components/searchPage/Topsection";
+import { baseurl } from "@/config/setting";
 import Layout from "@/layout";
 import { Box } from "@mui/material";
 import Head from "next/head";
@@ -21,3 +22,17 @@ const Search = () => {
 };
 
 export default Search;
+
+
+
+// export const getServerSideProps = async (ctx) => {
+//   const id = ctx.params["productId"];
+//   const resData = await fetch(`${baseurl}/product/details?slug=${id}`);
+//   const data = await resData.json();
+
+//   return {
+//     props: {
+//       data,
+//     },
+//   };
+// };

@@ -12,10 +12,19 @@ const AppProvider = ({ children }) => {
   const [category, setCategory] = useState("");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(24);
-  const [sort, setSort] = useState("");
+  const [sort, setSort] = useState("relevance");
   const [products, setProducts] = useState({});
 
   const searchProducts = async (second) => {
+   
+var sortItem = sort.split('-');
+
+let mysort=`${sortItem[0]}:${sortItem[1]}`
+  // const [sortKey, sortOrder] = sort.split("-");
+  // myObject[sortKey] = sortOrder
+
+console.log(mysort);
+
     const query = {
       filter: JSON.stringify({  
         match: {
@@ -28,12 +37,13 @@ const AppProvider = ({ children }) => {
       }),
       page: page,
       limit: limit,
-      sort: sort,
+      sort: mysort,
     };
-    const res = await get("/products", query);
+    const res = await get("/product/search/data", query);
     setProducts(res)
     console.log(res);
   };
+  
 
   return (
     <AppContext.Provider
@@ -50,7 +60,7 @@ const AppProvider = ({ children }) => {
         setPage,
         searchProducts,
         limit,
-        setLimit,products
+        setLimit,products,setSort,sort
       }}
     >
       {children}

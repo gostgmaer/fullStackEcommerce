@@ -19,15 +19,62 @@ import {
   Typography,
   colors,
 } from "@mui/material";
-import React, { useState } from "react";
-import { Apps, ArrowDropDown, ArrowRight, ViewList,Circle } from "@mui/icons-material";
+import React, { useEffect, useState } from "react";
+import {
+  Apps,
+  ArrowDropDown,
+  ArrowRight,
+  ViewList,
+  Circle,
+} from "@mui/icons-material";
 // import Filter from "./child/Filter";
 import { useGlobalContext } from "@/context/globalContext";
 import PCard from "../global/products/Card";
 import { ArrayData } from "../../../public/assets/mock/product";
-import { Router } from "next/router";
+
+import { useRouter, useSearchParams } from "next/navigation";
+import { get } from "@/lib/network/http";
 
 const ProductListing = () => {
+  const {
+    products,
+    searchProducts,
+    state,
+    setState,
+    openModal,
+    setOpenModal,
+    searchData,
+    setSearchData,
+    category,
+    setCategory,
+    page,
+    setPage,
+
+    limit,
+    setLimit,
+    setSort,
+    sort,
+  } = useGlobalContext();
+
+  // const getProducts =async ()=>{
+  //   const res=  await get('/products')
+  //   console.log(res);
+  //   setProduct(res)
+  // }
+
+  useEffect(() => {
+    searchProducts();
+  }, [sort, limit, page, category, searchData]);
+  const params = useSearchParams();
+  // params.append()
+  // route.push({
+  //   query: {
+  //     filter: 'categories',
+  //   },
+  // })
+
+  // params.set
+
   return (
     <Container>
       <FilterSection />
@@ -39,16 +86,18 @@ const ProductListing = () => {
 export default ProductListing;
 
 export const FilterSection = () => {
-  const { products } = useGlobalContext();
-  const [personName, setPersonName] = React.useState("Relevance");
-  
-  const filterType = [
-    "Relevance",
-    "Popularity",
-    "Price Low to High",
-    "Price High to low",
-    "Newest First",
+  const { products, searchProducts, setSort, sort } = useGlobalContext();
+  // const [personName, setPersonName] = React.useState("Relevance");
+
+  const sortOptions = [
+    { label: 'Relevance', value: 'relevance-desc', default: true },
+    { label: 'Price: Low to High', value: 'salePrice-asc' },
+    { label: 'Price: High to Low', value: 'salePrice-desc' },
+    { label: 'Newest Arrivals', value: 'createdAt-desc' },
+    { label: 'Customer Ratings', value: 'ratings-desc' },
+    // Add more sort options as needed
   ];
+
 
   return (
     <Box
@@ -80,14 +129,14 @@ export const FilterSection = () => {
                   padding: 1.2,
                 },
               }}
-              name={personName}
-              value={personName}
-              onChange={(e) => setPersonName(e.target.value)}
+              name={sort}
+              value={sort}
+              onChange={(e) => setSort(e.target.value)}
               input={<OutlinedInput />}
             >
-              {filterType.map((name) => (
-                <MenuItem key={name} value={name}>
-                  {name}
+              {sortOptions.map((name) => (
+                <MenuItem key={name.label} value={name.value} >
+                  {name.label}
                 </MenuItem>
               ))}
             </Select>
@@ -108,8 +157,25 @@ export const FilterSection = () => {
 };
 
 export const BodySection = () => {
-  const { products } = useGlobalContext();
-  const [page, setPage] = React.useState(1);
+  const {
+    products,
+    searchProducts,
+    state,
+    setState,
+    openModal,
+    setOpenModal,
+    searchData,
+    setSearchData,
+    category,
+    setCategory,
+    page,
+    setPage,
+    limit,
+    setLimit,
+    setSort,
+    sort,
+  } = useGlobalContext();
+
   const handleChange = (event, value) => {
     setPage(value);
   };
@@ -145,12 +211,12 @@ export const BodySection = () => {
         <Box py={3}>
           <Stack justifyContent={"space-between"} direction="row" spacing={2}>
             <Typography>
-              <span>Showing</span> <span>1-24</span> of <span>{products.total}</span>{" "}
-              Products
+              <span>Showing</span> <span>{1}-{products.total}</span> of
+              <span>{products.total}</span> Products
             </Typography>
-            <Pagination
+            <Pagination 
               variant="outlined"
-              count={10}
+              count={products?.results ? products?.results : 1}
               page={page}
               onChange={handleChange}
             />
@@ -161,12 +227,18 @@ export const BodySection = () => {
   );
 };
 
-
-
 export const Filter = () => {
   const [showCategory, setShowCategory] = useState(false);
   const [value, setValue] = useState([0, 2000]);
-  let colorArray =['action','primary','secondary','error','info','success','warning']
+  let colorArray = [
+    "action",
+    "primary",
+    "secondary",
+    "error",
+    "info",
+    "success",
+    "warning",
+  ];
 
   const handleChange = (event, newValue) => {
     // console.log(event);
@@ -189,8 +261,8 @@ export const Filter = () => {
           <Typography
             variant="body2"
             display={"flex"}
-            sx={{cursor:'pointer'}}
-            fontSize={'1rem'}
+            sx={{ cursor: "pointer" }}
+            fontSize={"1rem"}
             alignItems={"center"}
             justifyContent={"space-between"}
             onClick={() => setHeight(!height)}
@@ -199,17 +271,36 @@ export const Filter = () => {
             {height ? <ArrowDropDown /> : <ArrowRight />}
           </Typography>
           {ArrayData.map((item) => (
-            <Typography fontSize={'1rem'} sx={{cursor:'pointer'}} pt={"10px"} pl={"15px"} key={item} variant="body2">
+            <Typography
+              fontSize={"1rem"}
+              sx={{ cursor: "pointer" }}
+              pt={"10px"}
+              pl={"15px"}
+              key={item}
+              variant="body2"
+            >
               {item} category child
             </Typography>
           ))}
         </Box>
-        <Typography fontSize={'1rem'} variant="body2">Bath Preparations</Typography>
-        <Typography fontSize={'1rem'} variant="body2">Bath Preparations</Typography>
-        <Typography fontSize={'1rem'} variant="body2">Bath Preparations</Typography>
-        <Typography fontSize={'1rem'} variant="body2">Bath Preparations</Typography>
-        <Typography  fontSize={'1rem'} variant="body2">Bath Preparations</Typography>
-        <Typography  fontSize={'1rem'} variant="body2">Bath Preparations</Typography>
+        <Typography fontSize={"1rem"} variant="body2">
+          Bath Preparations
+        </Typography>
+        <Typography fontSize={"1rem"} variant="body2">
+          Bath Preparations
+        </Typography>
+        <Typography fontSize={"1rem"} variant="body2">
+          Bath Preparations
+        </Typography>
+        <Typography fontSize={"1rem"} variant="body2">
+          Bath Preparations
+        </Typography>
+        <Typography fontSize={"1rem"} variant="body2">
+          Bath Preparations
+        </Typography>
+        <Typography fontSize={"1rem"} variant="body2">
+          Bath Preparations
+        </Typography>
         <Box></Box>
       </Stack>
       <Stack gap="8px" mt={2}>
@@ -284,13 +375,18 @@ export const Filter = () => {
         <Stack width={"100%"}>
           <FormGroup className=" flex flex-col-reverse">
             {ArrayData.slice(0, 5).map((item) => (
-                <FormControlLabel
-                key={item} 
+              <FormControlLabel
+                key={item}
                 control={<Checkbox />}
-
-                label={ <Rating key={item} name="read-only-rating" value={item+1} readOnly />}
+                label={
+                  <Rating
+                    key={item}
+                    name="read-only-rating"
+                    value={item + 1}
+                    readOnly
+                  />
+                }
               />
-             
             ))}
           </FormGroup>
         </Stack>
@@ -298,14 +394,16 @@ export const Filter = () => {
       <Stack gap="8px" mt={2}>
         <Typography variant="h5">Colors</Typography>
 
-        <Stack direction={'row'} width={"100%"}>
-        
-            {colorArray.map((item) => (
-               // @ts-ignore
-               <Circle key={item} sx={{cursor:'pointer'}} color={`${item}`} fontSize='large'/>
-             
-            ))}
-        
+        <Stack direction={"row"} width={"100%"}>
+          {colorArray.map((item) => (
+            // @ts-ignore
+            <Circle
+              key={item}
+              sx={{ cursor: "pointer" }}
+              color={`${item}`}
+              fontSize="large"
+            />
+          ))}
         </Stack>
       </Stack>
       {/* <Stack gap="8px" mt={2}>
