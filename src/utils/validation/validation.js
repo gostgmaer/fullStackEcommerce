@@ -54,24 +54,30 @@ export const ProductValidation = Yup.object().shape({
 });
 
 export const billingAddressValidationSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email address').required('Email is required'),
-  billingfirstName: Yup.string().required('First Name is required'),
+  email: Yup.string()
+    .email("Invalid email address")
+    .required("Email is required"),
+  billingfirstName: Yup.string().required("First Name is required"),
   billingcompany: Yup.string(),
-  billinglastName: Yup.string().required('Last Name is required'),
+  billinglastName: Yup.string().required("Last Name is required"),
   billingphoneNumber: Yup.string()
-  .matches(/^[0-9]+$/, 'Must be a number').length(10, 'Phone number must be exactly 10 digits')
-  .required('Phone number is Required'),
+    .matches(/^[0-9]+$/, "Must be a number")
+    .length(10, "Phone number must be exactly 10 digits")
+    .required("Phone number is Required"),
   billingapartment: Yup.string(),
-  billingstreet: Yup.string().required('Street is required'),
-  billingcity: Yup.string().required('City is required'),
-  billingstate: Yup.string().required('State is required'),
-  billingpostalCode: Yup.string().required('Postal Code is required').matches(/^[0-9]+$/, 'Must be a number').length(6, 'Pincode Should be 6 digit'),
-  billingcountry: Yup.string().required('Country is required'),
+  billingstreet: Yup.string().required("Street is required"),
+  billingcity: Yup.string().required("City is required"),
+  billingstate: Yup.string().required("State is required"),
+  billingpostalCode: Yup.string()
+    .required("Postal Code is required")
+    .matches(/^[0-9]+$/, "Must be a number")
+    .length(6, "Pincode Should be 6 digit"),
+  billingcountry: Yup.string().required("Country is required"),
   accountCreate: Yup.boolean(),
   useBillingAddressForShipping: Yup.boolean(),
-  
+
   additionalNotes: Yup.string(),
-  payment_method: Yup.string().required('Payment Method is required'),
+  payment_method: Yup.string().required("Payment Method is required"),
 });
 
 export const shippingAddressValidationSchema = Yup.object({
@@ -79,8 +85,11 @@ export const shippingAddressValidationSchema = Yup.object({
 });
 
 export const reviewValidationSchema = Yup.object().shape({
-  title: Yup.string().required('title is required'),
+  title: Yup.string().required("title is required"),
 
-  rating: Yup.number().required('Rating is required').min(1, 'Rating must be at least 1').max(5, 'Rating can not be more than 5'),
-  review: Yup.string().required('Review is required'),
-})
+  rating: Yup.number()
+    .required("Rating is required")
+    .min(1, "Rating must be at least 1")
+    .max(5, "Rating can not be more than 5"),
+  review: Yup.string().required("Review is required"),
+});

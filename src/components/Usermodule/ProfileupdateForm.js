@@ -35,6 +35,7 @@ const ProfileupdateForm = () => {
   };
 
   const handleSubmit = async (e)=>{
+    console.log(formData);
     e.preventDefault()
     const body = {
       ...formData,profilePicture:image
@@ -130,6 +131,7 @@ const ProfileupdateForm = () => {
             <TextField
               id="dateOfBirth"
               label="Date of birth"
+              name="dateOfBirth"
               value={formData.dateOfBirth}
               onChange={handleChange}
               type="date"
