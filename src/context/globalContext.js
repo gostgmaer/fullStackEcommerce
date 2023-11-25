@@ -12,7 +12,7 @@ const AppProvider = ({ children }) => {
   const [category, setCategory] = useState("");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(24);
-  const [sort, setSort] = useState("relevance");
+  const [sort, setSort] = useState("relevance-desc");
   const [products, setProducts] = useState({});
 
   const searchProducts = async (second) => {
