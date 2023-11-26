@@ -10,8 +10,10 @@ const AppProvider = ({ children }) => {
   const [openModal, setOpenModal] = useState(false);
   const [searchData, setSearchData] = useState("");
   const [category, setCategory] = useState("");
+  const [brand, setBrand] = useState("");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(24);
+  const [Rating, setRating] = useState(0);
   const [sort, setSort] = useState("relevance-desc");
   const [products, setProducts] = useState({});
 

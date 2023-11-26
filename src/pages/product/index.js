@@ -5,6 +5,11 @@ import Layout from "@/layout";
 import Head from "next/head";
 import { useEffect } from "react";
 
+
+
+
+
+
 const Index = () => {
   return (
     <Layout>

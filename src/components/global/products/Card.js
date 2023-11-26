@@ -126,14 +126,14 @@ const PCard = ({ product, size }) => {
                 <p className="category text-xs font-semibold uppercase is-smaller no-text-overflow product-cat p-1 cursor-pointer">
                   {product?.categories?.map((category) => (
                     <Link
-                      href={`/product/search/${category.slug}`}
+                      href={`/product/search?category=${category.slug}`}
                       key={category._id}
                     >
                       {category.name}{" "}
                     </Link>
                   ))}
                 </p>
-                <Link href={`/product/${product?.slug}`} className=" text-sm">
+                <Link href={`/product/${product?.slug}`} className=" text-[13px]">
                   {product?.title
                     ? product?.title
                     : " This is a product? Title"}
@@ -321,7 +321,7 @@ const ProductDetails = ({ product }) => {
               <p className="category text-xs font-semibold uppercase is-smaller no-text-overflow product-cat p-1 cursor-pointer">
                   {product?.categories?.map((category) => (
                     <Link
-                      href={`/product/search/${category.slug}`}
+                      href={`/product/search?category=${category.slug}`}
                       key={category._id}
                     >
                       {category.name}{" "}
