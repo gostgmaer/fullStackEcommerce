@@ -93,7 +93,7 @@ const ProductListing = ({ props }) => {
 
 export default ProductListing;
 
-export const FilterSection = ({props}) => {
+export const FilterSection = ({ props }) => {
   const { products, searchProducts, setSort, sort } = useGlobalContext();
   // const [personName, setPersonName] = React.useState("Relevance");
   const [state, setState] = React.useState({
@@ -102,7 +102,7 @@ export const FilterSection = ({props}) => {
     bottom: false,
     right: false,
   });
-  
+
   const sortOptions = [
     { label: "Relevance", value: "relevance-desc", default: true },
     { label: "Price: Low to High", value: "salePrice-asc" },
@@ -126,71 +126,74 @@ export const FilterSection = ({props}) => {
 
   return (
     <>
- <Box
-     py={2}
-      display={"flex"}
-      justifyContent={"space-between"}
-      alignItems={"center"}
-      component={"section"}
-      bgcolor={colors.grey[50]}
-      borderRadius={3}
-    >
-      <Box className=" flex gap-2">
-        <p>
-        {/* <Button onClick={toggleDrawer("left", true)}>{"left"}</Button> */}
-          <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" onClick={toggleDrawer("left", true)}>
-            <FilterAlt /> Filter
-          </button>
-        </p>
-        <div className=" flex flex-col">
-          <p className=" leading-4">
-            Searching for “ <strong> mobile phone</strong> ”
-          </p>
+      <Box
+        py={2}
+        display={"flex"}
+        justifyContent={"space-between"}
+        alignItems={"center"}
+        component={"section"}
+        bgcolor={colors.grey[50]}
+        borderRadius={3}
+      >
+        <Box className=" flex gap-2">
           <p>
-            <strong>{products?.total} </strong> results found
-          </p>
-        </div>
-      </Box>
-      <Box display={"flex"} gap={3} alignItems={"center"}>
-        <Box display={"flex"} gap={2} alignItems={"center"}>
-          <Typography>Short by:</Typography>
-          <FormControl sx={{ width: 200 }}>
-            <Select
-              labelId="demo-multiple-name-label"
-              id="demo-multiple-name"
-              sx={{
-                "&>.MuiSelect-outlined": {
-                  padding: 1.2,
-                },
-              }}
-              name={sort}
-              value={sort}
-              onChange={(e) => setSort(e.target.value)}
-              input={<OutlinedInput />}
+            {/* <Button onClick={toggleDrawer("left", true)}>{"left"}</Button> */}
+            <button
+              className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+              onClick={toggleDrawer("left", true)}
             >
-              {sortOptions.map((name) => (
-                <MenuItem key={name.label} value={name.value}>
-                  {name.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+              <FilterAlt /> Filter
+            </button>
+          </p>
+          <div className=" flex flex-col">
+            <p className=" leading-4">
+              Searching for “ <strong> mobile phone</strong> ”
+            </p>
+            <p>
+              <strong>{products?.total} </strong> results found
+            </p>
+          </div>
         </Box>
-        <Box display={"flex"} gap={1} alignItems={"center"}>
-          <Typography>View:</Typography>
-          <IconButton>
-            <Apps />
-          </IconButton>
-          <IconButton>
-            <ViewList />
-          </IconButton>
+        <Box display={"flex"} gap={3} alignItems={"center"}>
+          <Box display={"flex"} gap={2} alignItems={"center"}>
+            <Typography>Short by:</Typography>
+            <FormControl sx={{ width: 200 }}>
+              <Select
+                labelId="demo-multiple-name-label"
+                id="demo-multiple-name"
+                sx={{
+                  "&>.MuiSelect-outlined": {
+                    padding: 1.2,
+                  },
+                }}
+                name={sort}
+                value={sort}
+                onChange={(e) => setSort(e.target.value)}
+                input={<OutlinedInput />}
+              >
+                {sortOptions.map((name) => (
+                  <MenuItem key={name.label} value={name.value}>
+                    {name.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
+          <Box display={"flex"} gap={1} alignItems={"center"}>
+            <Typography>View:</Typography>
+            <IconButton>
+              <Apps />
+            </IconButton>
+            <IconButton>
+              <ViewList />
+            </IconButton>
+          </Box>
         </Box>
       </Box>
-     
-    </Box>
-<SwipeableTemporaryDrawer children={<Filter props={props} />} state={state} toggleDrawer={toggleDrawer}/>
+      <SwipeableTemporaryDrawer state={state} toggleDrawer={toggleDrawer}>
+        <Filter props={props} />
+      </SwipeableTemporaryDrawer>
     </>
-   
   );
 };
 
@@ -220,7 +223,7 @@ export const BodySection = ({ props }) => {
 
   return (
     <Box
-     py={2}
+      py={2}
       display={"flex"}
       alignItems={"flex-start"}
       gap={5}
