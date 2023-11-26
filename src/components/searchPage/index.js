@@ -68,7 +68,7 @@ const ProductListing = ({ props }) => {
   //   setProduct(res)
   // }
 
-  console.log(props);
+  // console.log(props);
 
   useEffect(() => {
     searchProducts();
