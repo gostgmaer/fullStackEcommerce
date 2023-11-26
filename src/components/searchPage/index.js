@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Checkbox,
   Container,
   FormControl,
@@ -8,6 +9,8 @@ import {
   Grid,
   IconButton,
   Input,
+  InputLabel,
+  ListItemText,
   MenuItem,
   OutlinedInput,
   Pagination,
@@ -26,6 +29,8 @@ import {
   ArrowRight,
   ViewList,
   Circle,
+  Filter1Outlined,
+  FilterAlt,
 } from "@mui/icons-material";
 // import Filter from "./child/Filter";
 import { useGlobalContext } from "@/context/globalContext";
@@ -34,8 +39,9 @@ import { ArrayData } from "../../../public/assets/mock/product";
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { get } from "@/lib/network/http";
+import SwipeableTemporaryDrawer from "@/layout/drawer";
 
-const ProductListing = () => {
+const ProductListing = ({ props }) => {
   const {
     products,
     searchProducts,
@@ -62,6 +68,8 @@ const ProductListing = () => {
   //   setProduct(res)
   // }
 
+  console.log(props);
+
   useEffect(() => {
     searchProducts();
   }, [sort, limit, page, category, searchData]);
@@ -77,31 +85,49 @@ const ProductListing = () => {
 
   return (
     <Container>
-      <FilterSection />
-      <BodySection />
+      <FilterSection props={props} />
+      <BodySection props={props} />
     </Container>
   );
 };
 
 export default ProductListing;
 
-export const FilterSection = () => {
+export const FilterSection = ({props}) => {
   const { products, searchProducts, setSort, sort } = useGlobalContext();
   // const [personName, setPersonName] = React.useState("Relevance");
-
+  const [state, setState] = React.useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  });
+  
   const sortOptions = [
-    { label: 'Relevance', value: 'relevance-desc', default: true },
-    { label: 'Price: Low to High', value: 'salePrice-asc' },
-    { label: 'Price: High to Low', value: 'salePrice-desc' },
-    { label: 'Newest Arrivals', value: 'createdAt-desc' },
-    { label: 'Customer Ratings', value: 'ratings-desc' },
+    { label: "Relevance", value: "relevance-desc", default: true },
+    { label: "Price: Low to High", value: "salePrice-asc" },
+    { label: "Price: High to Low", value: "salePrice-desc" },
+    { label: "Newest Arrivals", value: "createdAt-desc" },
+    { label: "Customer Ratings", value: "ratings-desc" },
     // Add more sort options as needed
   ];
 
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
 
   return (
-    <Box
-      p={2}
+    <>
+ <Box
+     py={2}
       display={"flex"}
       justifyContent={"space-between"}
       alignItems={"center"}
@@ -109,13 +135,21 @@ export const FilterSection = () => {
       bgcolor={colors.grey[50]}
       borderRadius={3}
     >
-      <Box>
-        <Typography fontSize={16} fontWeight={600} variant="subtitle1">
-          Searching for “ <span> mobile phone</span> ”
-        </Typography>
-        <Typography>
-          <span>{products?.total} </span> results found
-        </Typography>
+      <Box className=" flex gap-2">
+        <p>
+        {/* <Button onClick={toggleDrawer("left", true)}>{"left"}</Button> */}
+          <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" onClick={toggleDrawer("left", true)}>
+            <FilterAlt /> Filter
+          </button>
+        </p>
+        <div className=" flex flex-col">
+          <p className=" leading-4">
+            Searching for “ <strong> mobile phone</strong> ”
+          </p>
+          <p>
+            <strong>{products?.total} </strong> results found
+          </p>
+        </div>
       </Box>
       <Box display={"flex"} gap={3} alignItems={"center"}>
         <Box display={"flex"} gap={2} alignItems={"center"}>
@@ -135,7 +169,7 @@ export const FilterSection = () => {
               input={<OutlinedInput />}
             >
               {sortOptions.map((name) => (
-                <MenuItem key={name.label} value={name.value} >
+                <MenuItem key={name.label} value={name.value}>
                   {name.label}
                 </MenuItem>
               ))}
@@ -152,11 +186,15 @@ export const FilterSection = () => {
           </IconButton>
         </Box>
       </Box>
+     
     </Box>
+<SwipeableTemporaryDrawer children={<Filter props={props} />} state={state} toggleDrawer={toggleDrawer}/>
+    </>
+   
   );
 };
 
-export const BodySection = () => {
+export const BodySection = ({ props }) => {
   const {
     products,
     searchProducts,
@@ -182,21 +220,21 @@ export const BodySection = () => {
 
   return (
     <Box
-      p={3}
+     py={2}
       display={"flex"}
       alignItems={"flex-start"}
       gap={5}
       component={"section"}
     >
-      <Box flex={1} bgcolor={colors.grey[50]}>
-        <Filter />
-      </Box>
+      {/* <Box flex={1} bgcolor={colors.grey[50]}>
+        <Filter props={props} />
+      </Box> */}
       <Box flex={3}>
         <Box sx={{ flexGrow: 1 }}>
           <Grid
             container
             item
-            gap={"5px"}
+            gap={"2px"}
             justifyContent="flex-start"
             p="0"
             width="100%"
@@ -204,17 +242,21 @@ export const BodySection = () => {
             columns={12.17}
           >
             {products?.["results"]?.map((item) => (
-              <PCard key={item._id} size={4} product={item} />
+              <PCard key={item._id} size={3} product={item} />
             ))}
           </Grid>
         </Box>
         <Box py={3}>
           <Stack justifyContent={"space-between"} direction="row" spacing={2}>
             <Typography>
-              <span>Showing</span> <span>{1}-{products.total}</span> of
+              <span>Showing</span>{" "}
+              <span>
+                {1}-{products.total}
+              </span>{" "}
+              of
               <span>{products.total}</span> Products
             </Typography>
-            <Pagination 
+            <Pagination
               variant="outlined"
               count={products?.results ? products?.results : 1}
               page={page}
@@ -227,7 +269,7 @@ export const BodySection = () => {
   );
 };
 
-export const Filter = () => {
+export const Filter = ({ props }) => {
   const [showCategory, setShowCategory] = useState(false);
   const [value, setValue] = useState([0, 2000]);
   let colorArray = [
@@ -244,64 +286,82 @@ export const Filter = () => {
     // console.log(event);
     setValue(event.target.value);
   };
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 150,
+      },
+    },
+  };
+
+  const names = [
+    "Oliver Hansen",
+    "Van Henry",
+    "April Tucker",
+    "Ralph Hubbard",
+    "Omar Alexander",
+    "Carlos Abbott",
+    "Miriam Wagner",
+    "Bradley Wilkerson",
+    "Virginia Andrews",
+    "Kelly Snyder",
+  ];
+
+  const [personName, setPersonName] = React.useState([]);
+
+  const handleSelectChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setPersonName(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
 
   const [height, setHeight] = useState(false);
   return (
     <Paper sx={{ padding: "18px 27px", gap: 5, borderRadius: "16px" }}>
       <Stack gap="8px">
         <Typography variant="h5">Categories</Typography>
-        <Box
-          sx={{
-            transition: "height 250ms ease-in-out 0s",
-            height: height ? `${ArrayData.length * 32.5}px` : "25px",
-            overflow: "hidden",
-            gap: "8px",
-          }}
-        >
-          <Typography
-            variant="body2"
-            display={"flex"}
-            sx={{ cursor: "pointer" }}
-            fontSize={"1rem"}
-            alignItems={"center"}
-            justifyContent={"space-between"}
-            onClick={() => setHeight(!height)}
-          >
-            Bath Preparations
-            {height ? <ArrowDropDown /> : <ArrowRight />}
-          </Typography>
-          {ArrayData.map((item) => (
-            <Typography
-              fontSize={"1rem"}
-              sx={{ cursor: "pointer" }}
-              pt={"10px"}
-              pl={"15px"}
-              key={item}
-              variant="body2"
+
+        <Box>
+          {/* <FormControl sx={{ m: 1, width: 250 }}>
+            <InputLabel id="demo-multiple-checkbox-label">
+              Categories
+            </InputLabel>
+            <Select
+              labelId="demo-multiple-checkbox-label"
+              id="demo-multiple-checkbox"
+              multiple
+              value={personName}
+              onChange={handleSelectChange}
+              input={<OutlinedInput label="Tag" />}
+              renderValue={(selected) => selected.join(", ")}
+              MenuProps={MenuProps}
             >
-              {item} category child
-            </Typography>
-          ))}
+              {names.map((name) => (
+                <MenuItem key={name} value={name}>
+                  <Checkbox checked={personName.indexOf(name) > -1} />
+                  <ListItemText primary={name} />
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl> */}
+
+          <FormGroup>
+            {props.categories.results.map((item) => (
+              <FormControlLabel
+                key={item._id}
+                control={<Checkbox />}
+                label={item.name}
+              />
+            ))}
+          </FormGroup>
         </Box>
-        <Typography fontSize={"1rem"} variant="body2">
-          Bath Preparations
-        </Typography>
-        <Typography fontSize={"1rem"} variant="body2">
-          Bath Preparations
-        </Typography>
-        <Typography fontSize={"1rem"} variant="body2">
-          Bath Preparations
-        </Typography>
-        <Typography fontSize={"1rem"} variant="body2">
-          Bath Preparations
-        </Typography>
-        <Typography fontSize={"1rem"} variant="body2">
-          Bath Preparations
-        </Typography>
-        <Typography fontSize={"1rem"} variant="body2">
-          Bath Preparations
-        </Typography>
-        <Box></Box>
       </Stack>
       <Stack gap="8px" mt={2}>
         <Typography variant="h5">Price Range</Typography>
@@ -359,11 +419,11 @@ export const Filter = () => {
 
         <Stack width={"100%"}>
           <FormGroup>
-            {ArrayData.slice(0, 6).map((item) => (
+            {props.brands.results.map((item) => (
               <FormControlLabel
-                key={item}
+                key={item._id}
                 control={<Checkbox />}
-                label={`Label ${item}`}
+                label={`${item.name}`}
               />
             ))}
           </FormGroup>
@@ -391,7 +451,7 @@ export const Filter = () => {
           </FormGroup>
         </Stack>
       </Stack>
-      <Stack gap="8px" mt={2}>
+      {/* <Stack gap="8px" mt={2}>
         <Typography variant="h5">Colors</Typography>
 
         <Stack direction={"row"} width={"100%"}>
@@ -405,7 +465,7 @@ export const Filter = () => {
             />
           ))}
         </Stack>
-      </Stack>
+      </Stack> */}
       {/* <Stack gap="8px" mt={2}>
         <Typography variant="h5">Status</Typography>
 
