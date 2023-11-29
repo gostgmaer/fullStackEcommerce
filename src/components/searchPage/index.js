@@ -15,6 +15,8 @@ import {
   OutlinedInput,
   Pagination,
   Paper,
+  Radio,
+  RadioGroup,
   Rating,
   Select,
   Slider,
@@ -55,11 +57,13 @@ const ProductListing = ({ props }) => {
     setCategory,
     page,
     setPage,
-
+    brand,
+    setBrand,
     limit,
     setLimit,
     setSort,
     sort,
+    price,
   } = useGlobalContext();
 
   // const getProducts =async ()=>{
@@ -72,7 +76,7 @@ const ProductListing = ({ props }) => {
 
   useEffect(() => {
     searchProducts();
-  }, [sort, limit, page, category, searchData]);
+  }, [sort, limit, page, category, searchData, brand, price]);
   const params = useSearchParams();
   // params.append()
   // route.push({
@@ -273,21 +277,35 @@ export const BodySection = ({ props }) => {
 };
 
 export const Filter = ({ props }) => {
-  const [showCategory, setShowCategory] = useState(false);
+  console.log(props);
+  const {
+    products,
+    searchProducts,
+    state,
+    setState,
+    openModal,
+    setOpenModal,
+    searchData,
+    setSearchData,
+    category,
+    setCategory,
+    page,
+    setPage,
+    brand,
+    setBrand,
+    limit,
+    setLimit,
+    setSort,
+    price,
+    setPrice,
+    sort,
+  } = useGlobalContext();
+
   const [value, setValue] = useState([0, 2000]);
-  let colorArray = [
-    "action",
-    "primary",
-    "secondary",
-    "error",
-    "info",
-    "success",
-    "warning",
-  ];
 
   const handleChange = (event, newValue) => {
-    // console.log(event);
-    setValue(event.target.value);
+    console.log(event.target.value);
+    setPrice(event.target.value);
   };
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -315,19 +333,23 @@ export const Filter = ({ props }) => {
 
   const [personName, setPersonName] = React.useState([]);
 
-  const handleSelectChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
+  var newCate = [];
+
+  const handleSelectChange = (e) => {
+    const cate = e.target.value;
+
+    if (e.target.checked === true && !newCate.includes(cate)) {
+      newCate.push(cate);
+    } else if (e.target.checked === false) {
+      newCate = newCate.filter((value) => value !== cate);
+    }
+    console.log(newCate);
+    setCategory(newCate);
   };
 
   const [height, setHeight] = useState(false);
   return (
-    <Paper sx={{ padding: "18px 27px", gap: 5, borderRadius: "16px" }}>
+    <Paper sx={{ padding: "18px 27px", gap: 5, borderRadius: "" }}>
       <Stack gap="8px">
         <Typography variant="h5">Categories</Typography>
 
@@ -355,15 +377,55 @@ export const Filter = ({ props }) => {
             </Select>
           </FormControl> */}
 
-          <FormGroup>
+          <FormControl sx={{ m: 1, minWidth: 120,width:"100%" }} size="small">
+            <Select
+              id="brand-select-small"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              placeholder="Select"
+            >
+              <MenuItem defaultValue={""} value="">
+                <em>Select</em>
+              </MenuItem>
+
+              {props.categories.results.map((item) => (
+                <MenuItem key={item._id} value={item._id}>
+                  {item.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          {/* <RadioGroup
+            aria-labelledby="demo-controlled-radio-buttons-categories"
+            name="controlled-radio-buttons-categories"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
             {props.categories.results.map((item) => (
               <FormControlLabel
                 key={item._id}
-                control={<Checkbox />}
+                value={item._id}
+                control={<Radio />}
                 label={item.name}
               />
             ))}
-          </FormGroup>
+          </RadioGroup> */}
+
+          {/* <FormGroup>
+            {props.categories.results.map((item) => (
+              <FormControlLabel
+                key={item._id}
+                control={
+                  <Radio
+                    value={item._id}
+                    onChange={(e) => setCategory(e.target.value)}
+                  />
+                }
+                label={item.name}
+              />
+            ))}
+          </FormGroup> */}
         </Box>
       </Stack>
       <Stack gap="8px" mt={2}>
@@ -374,7 +436,7 @@ export const Filter = ({ props }) => {
             <Input
               sx={{ flex: 1 }}
               type="number"
-              value={value[0]}
+              value={price?.[0]}
               slotProps={{
                 input: {
                   min: 0,
@@ -396,7 +458,7 @@ export const Filter = ({ props }) => {
             <Input
               type="number"
               sx={{ flex: 1 }}
-              value={value[1]}
+              value={price?.[1]}
               slotProps={{
                 input: {
                   min: 0,
@@ -407,10 +469,10 @@ export const Filter = ({ props }) => {
             ></Input>
           </Stack>
           <Slider
-            value={value}
+            value={price}
             min={0}
             step={1}
-            max={95400}
+            max={1000}
             onChange={handleChange}
             valueLabelDisplay="auto"
             aria-labelledby="non-linear-slider"
@@ -421,15 +483,24 @@ export const Filter = ({ props }) => {
         <Typography variant="h5">Brands</Typography>
 
         <Stack width={"100%"}>
-          <FormGroup>
-            {props.brands.results.map((item) => (
-              <FormControlLabel
-                key={item._id}
-                control={<Checkbox />}
-                label={`${item.name}`}
-              />
-            ))}
-          </FormGroup>
+          <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+            <Select
+              id="brand-select-small"
+              value={brand}
+              onChange={(e) => setBrand(e.target.value)}
+              placeholder="Select"
+            >
+              <MenuItem defaultChecked value="">
+                <em>None</em>
+              </MenuItem>
+
+              {props.brands.results.map((item) => (
+                <MenuItem key={item._id} value={item._id}>
+                  {item.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Stack>
       </Stack>
       <Stack gap="8px" mt={2}>

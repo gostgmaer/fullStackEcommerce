@@ -1,8 +1,9 @@
-import { Inbox, Mail } from "@mui/icons-material";
+import { Close, Inbox, Mail } from "@mui/icons-material";
 import {
   Box,
   Button,
   Divider,
+  IconButton,
   List,
   ListItem,
   ListItemButton,
@@ -28,18 +29,24 @@ export default function SwipeableTemporaryDrawer({
           <SwipeableDrawer
             anchor={"left"}
             open={state[anchor]}
-            onClose={toggleDrawer(anchor, false)}
+            variant="persistent"
+             onClose={()=>{console.log("click")}}
             onOpen={toggleDrawer(anchor, true)}
           >
             <Box
               sx={{
-                width: anchor === "top" || anchor === "bottom" ? "auto" : 250,
+                width: 320,
               }}
               role="presentation"
-            //   onClick={toggleDrawer(anchor, false)}
+              //   onClick={toggleDrawer(anchor, false)}
               onKeyDown={toggleDrawer(anchor, false)}
             >
               {children}
+              <Box className="absolute !top-[0] right-0" top={0} right={0}>
+                <IconButton onClick={toggleDrawer(anchor, false)}>
+                  <Close />
+                </IconButton>
+              </Box>
             </Box>
           </SwipeableDrawer>
         </React.Fragment>

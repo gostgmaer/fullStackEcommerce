@@ -9,7 +9,7 @@ import Head from "next/head";
 import React from "react";
 
 const Search = ({categories,brands}) => {
-  console.log(categories,brands);
+
   return (
     <Layout>
       <Head>
