@@ -13,6 +13,7 @@ const AppProvider = ({ children }) => {
   const [brand, setBrand] = useState("");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(24);
+  const [price, setPrice] = useState(undefined);
   const [Rating, setRating] = useState(0);
   const [sort, setSort] = useState("relevance-desc");
   const [products, setProducts] = useState({});
@@ -36,6 +37,7 @@ console.log(mysort);
           title: searchData,
         },  
         categories: category,
+        brands:brand,salePrice:price
       }),
       page: page,
       limit: limit,
@@ -62,7 +64,7 @@ console.log(mysort);
         setPage,
         searchProducts,
         limit,
-        setLimit,products,setSort,sort
+        setLimit,products,setSort,sort,brand, setBrand,price, setPrice
       }}
     >
       {children}
