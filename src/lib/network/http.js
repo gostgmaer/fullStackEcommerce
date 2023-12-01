@@ -128,7 +128,7 @@ export const post = async (endpint, data) => {
   try {
     response = await instance.request(option);
   } catch (e) {
-    error = e.response.data;
+    error = e.response;
 
     // throw new Error(JSON.stringify(e.response));
   }

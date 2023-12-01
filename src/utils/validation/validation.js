@@ -74,7 +74,7 @@ export const billingAddressValidationSchema = Yup.object().shape({
     .length(6, "Pincode Should be 6 digit"),
   billingcountry: Yup.string().required("Country is required"),
   accountCreate: Yup.boolean(),
-  useBillingAddressForShipping: Yup.boolean(),
+  notuseBillingAddressForShipping: Yup.boolean(),
 
   additionalNotes: Yup.string(),
   payment_method: Yup.string().required("Payment Method is required"),
