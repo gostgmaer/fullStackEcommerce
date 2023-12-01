@@ -42,6 +42,7 @@ const payments = [
   { name: "Expiry date", detail: "04/2024" },
 ];
 import { Country, State, City } from "country-state-city";
+import { post } from "@/lib/network/http";
 // const steps = ["Address Details", "Review your order"];
 export default function PageValidation() {
   const cartData = useSelector((state) => state["data"].cartItems);
@@ -60,11 +61,11 @@ export default function PageValidation() {
   const keysToKeep = [
     "email",
     "accountCreate",
-    "useBillingAddressForShipping",
+    "notuseBillingAddressForShipping",
     "additionalNotes",
     "payment_method",
     "couponcode",
-];
+  ];
   // const { protectedRouteCheck, pageLoading } = useAuthContext();
 
   const initialValues = {
@@ -80,7 +81,7 @@ export default function PageValidation() {
     billingpostalCode: "",
     billingcountry: "IN",
     accountCreate: false,
-    useBillingAddressForShipping: false,
+    notuseBillingAddressForShipping: false,
     shippingFirstName: "",
     shippingPhone: "",
     shippingCompany: "",
@@ -147,17 +148,25 @@ export default function PageValidation() {
       billing: createAddressObject("billing", formik.values),
       email: formik.values.email,
       phoneNumber: "+91" + formik.values.billingphoneNumber,
-      shipping: formik.values.useBillingAddressForShipping
+      shipping: formik.values.notuseBillingAddressForShipping
         ? createAddressObject("shipping", formik.values)
         : createAddressObject("billing", formik.values),
     });
   };
 
-  const submitData = (values) => {
-
+  const submitData  = async (values) => {
     const nonaddress = Object.fromEntries(
       Object.entries(values).filter(([key]) => keysToKeep.includes(key))
-  );
+    );
+    const productData = [];
+
+    cartData.forEach((element) => {
+      const obj = {
+        product: element.product._id,
+        quantity: element.quantity,
+      };
+      productData.push(obj);
+    });
     const body = {
       billing: createAddressObject("billing", values),
       email: values.email,
@@ -165,11 +174,16 @@ export default function PageValidation() {
       firstName: values.billingfirstName,
       lastName: values.billinglastName,
       username: values.email.split("@")[0],
-      shipping: values.useBillingAddressForShipping
+      shipping: values.notuseBillingAddressForShipping
         ? createAddressObject("shipping", values)
-        : createAddressObject("billing", values),...nonaddress,products:cartData
+        : createAddressObject("billing", values),
+      ...nonaddress,
+      products: productData,
     };
-    console.log(body);
+
+    const response  = await  post('/payment/checkout/process',body)
+    console.log(response);
+   
   };
 
   return (
@@ -476,17 +490,17 @@ export default function PageValidation() {
 
                       <div className="col-span-2">
                         <label
-                          htmlFor="useBillingAddressForShipping"
+                          htmlFor="notuseBillingAddressForShipping"
                           className="flex items-center"
                         >
                           <input
                             type="checkbox"
-                            id="useBillingAddressForShipping"
-                            name="useBillingAddressForShipping"
-                            value={formik.values.useBillingAddressForShipping}
-                            checked={formik.values.useBillingAddressForShipping}
+                            id="notuseBillingAddressForShipping"
+                            name="notuseBillingAddressForShipping"
+                            value={formik.values.notuseBillingAddressForShipping}
+                            checked={formik.values.notuseBillingAddressForShipping}
                             {...formik.getFieldProps(
-                              "useBillingAddressForShipping"
+                              "notuseBillingAddressForShipping"
                             )}
                             className="mr-2"
                           />
@@ -496,7 +510,7 @@ export default function PageValidation() {
                         </label>
                       </div>
                     </div>
-                    {formik.values.useBillingAddressForShipping && (
+                    {formik.values.notuseBillingAddressForShipping && (
                       <div className=" mt-4 mx-auto bg-white  grid gap-3">
                         <div>
                           <Input
@@ -698,7 +712,7 @@ export default function PageValidation() {
                       <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
                         Shipping Address
                       </Typography>
-                     <Address data={address?.shipping} />
+                      <Address data={address?.shipping} />
                     </Grid>
                     <Grid item xs={12} sm={6}>
                       <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
@@ -706,8 +720,6 @@ export default function PageValidation() {
                       </Typography>
                       <Address data={address?.billing} />
                     </Grid>
-
-                  
                   </Grid>
                 </Fragment>
               </div>
@@ -1028,7 +1040,7 @@ function createAddressObject(prefix, inputData) {
   };
 }
 
-const Address = ({data}) => {
+const Address = ({ data }) => {
   return (
     <div>
       <p className=" text-lg font-medium uppercase">
@@ -1040,8 +1052,9 @@ const Address = ({data}) => {
       <div>
         <p className="  text-[15px] capitalize">
           <span>{data.apartment}</span>, <span>{data.street}</span> ,{" "}
-          <span>{data.city}</span> , <span>{data.state}</span>, {" "}
-          <span>{Country.getCountryByCode(data?.country).name}</span> - <span>{data.postalCode}</span>
+          <span>{data.city}</span> , <span>{data.state}</span>,{" "}
+          <span>{Country.getCountryByCode(data?.country).name}</span> -{" "}
+          <span>{data.postalCode}</span>
         </p>
       </div>
     </div>

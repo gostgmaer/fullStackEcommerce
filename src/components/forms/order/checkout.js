@@ -358,7 +358,7 @@ export const BillingAddressForm = ({}) => {
       billingpostalCode: "",
       billingcountry: "",
       accountCreate: false,
-      useBillingAddressForShipping: false,
+      notuseBillingAddressForShipping: false,
       shippingFirstName: "",
       shippingPhone: "",
       shippingCompany: "",
@@ -571,14 +571,14 @@ export const BillingAddressForm = ({}) => {
 
           <div className="col-span-2">
             <label
-              htmlFor="useBillingAddressForShipping"
+              htmlFor="notuseBillingAddressForShipping"
               className="flex items-center"
             >
               <input
                 type="checkbox"
-                id="useBillingAddressForShipping"
-                name="useBillingAddressForShipping"
-                {...formik.getFieldProps("useBillingAddressForShipping")}
+                id="notuseBillingAddressForShipping"
+                name="notuseBillingAddressForShipping"
+                {...formik.getFieldProps("notuseBillingAddressForShipping")}
                 className="mr-2"
               />
               <span className="text-sm text-gray-600">
@@ -587,7 +587,7 @@ export const BillingAddressForm = ({}) => {
             </label>
           </div>
         </div>
-        {formik.values.useBillingAddressForShipping && (
+        {formik.values.notuseBillingAddressForShipping && (
           <div className=" mt-4 mx-auto bg-white  grid gap-3">
             <div>
               <Input
