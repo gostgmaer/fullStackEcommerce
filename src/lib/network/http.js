@@ -113,12 +113,15 @@ export const getServerSingle = async (endpint, query, id) => {
 
 export const post = async (endpint, data) => {
   const cookiesData = Cookies.get();
-  const token = cookiesData["headerPayload"] + "." + cookiesData["signature"];
+  let token = undefined;
+  if (cookiesData["headerPayload"]) {
+    token ='Bearer '+ cookiesData["headerPayload"] + "." + cookiesData["signature"];
+  }
   const option = {
     method: "post",
     url: baseURL + endpint,
     headers: {
-      Authorization: "Bearer " + token,
+      Authorization: token,
     },
     params: {},
     data: data,

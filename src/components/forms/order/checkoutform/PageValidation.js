@@ -43,6 +43,7 @@ const payments = [
 ];
 import { Country, State, City } from "country-state-city";
 import { post } from "@/lib/network/http";
+import PayPalButton from "../payment";
 // const steps = ["Address Details", "Review your order"];
 export default function PageValidation() {
   const cartData = useSelector((state) => state["data"].cartItems);
@@ -184,6 +185,17 @@ export default function PageValidation() {
     const response  = await  post('/payment/checkout/process',body)
     console.log(response);
    
+  };
+
+
+  const handlePaymentSuccess = () => {
+    console.log('Payment successful');
+    // Add your logic for handling a successful payment
+  };
+
+  const handlePaymentError = () => {
+    console.error('Payment failed');
+    // Add your logic for handling a failed payment
   };
 
   return (
@@ -842,6 +854,7 @@ export default function PageValidation() {
                     Preview order
                   </button>
                 ) : (
+                  
                   <button
                     type="submit"
                     disabled={formik.isSubmitting || !formik.isValid}
@@ -849,6 +862,7 @@ export default function PageValidation() {
                   >
                     Place order
                   </button>
+                
                 )}
               </div>
               <div className="container py-4">
