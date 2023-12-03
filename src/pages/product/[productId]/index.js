@@ -4,7 +4,7 @@ import Related from "@/components/products/Productdetails/Related";
 import ProductDetails from "@/components/products/Productdetails/details";
 import { baseurl } from "@/config/setting";
 import Layout from "@/layout";
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import Head from "next/head";
 import { useParams } from "next/navigation";
 import React from "react";
@@ -25,11 +25,11 @@ const Index = ({ data }) => {
       
       </Head>
       <Layout>
-        <Box p={3} component={"div"}>
+        <Container  component={"div"} className=" my-20" >
           <Info data={data.results.currentProd} />
           <ProductDetails data={data.results.currentProd} />
           <Related data={data.results.related} />
-        </Box>
+        </Container>
       </Layout>
     </>
   );

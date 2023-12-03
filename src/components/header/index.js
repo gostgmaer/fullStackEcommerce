@@ -77,20 +77,11 @@ export default Header;
 
 function Navigation() {
   const route = useRouter();
-  const { state, setState, searchProducts } = useGlobalContext();
-  const [categories, setCategories] = useState(undefined);
+  const { state, setState, searchProducts,categories } = useGlobalContext();
+  const { userId } = useAuthContext();
   const cartItem = useSelector((state) => state["data"].cartItems);
   const wishlist = useSelector((state) => state["data"].wishList);
   const [searchData, setSearchData] = useState("");
-
-  const fetchCategories = async (second) => {
-    const response = await get("/categories");
-    setCategories(response);
-  };
-
-  useEffect(() => {
-    fetchCategories();
-  }, []);
 
   const [hydrated, setHydrated] = useState(false);
   useEffect(() => {
@@ -102,7 +93,7 @@ function Navigation() {
   }
 
   const fetchData = (params) => {
-    // route.push(`/product/search/${searchData}`);
+     route.push(`/product/search?search=${searchData}`);
     searchProducts();
   };
 
@@ -179,10 +170,13 @@ function Navigation() {
             size="large"
             aria-label="show 17 new notifications"
             color="inherit"
-            onClick={() => route.push("/my-account/wishlist")}
           >
             <Badge badgeContent={wishlist?.length.toString()} color="error">
-              <Favorite />
+              <Favorite
+                onClick={() =>
+                  route.push(userId?`/my-account/${userId?.user_id}/wishlist`:'/auth/signin')
+                }
+              />
             </Badge>
           </IconButton>
           <IconButton
