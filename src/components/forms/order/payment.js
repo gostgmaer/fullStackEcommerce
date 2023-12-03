@@ -22,7 +22,7 @@ const PayPalButton = ({ amount, onSuccess, onError }) => {
   const onApprove = (data, actions) => {
     return actions.order.capture().then(function (details) {
       // Call your backend to save the transaction details
-      console.log('Transaction completed by ' + details.payer.name.given_name);
+  //    console.log('Transaction completed by ' + details.payer.name.given_name);
 
       // Execute your onSuccess callback
       onSuccess();

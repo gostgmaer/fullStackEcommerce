@@ -26,7 +26,7 @@ let mysort=`${sortItem[0]}:${sortItem[1]}`
   // const [sortKey, sortOrder] = sort.split("-");
   // myObject[sortKey] = sortOrder
 
-console.log(mysort);
+// console.log(mysort);
 
     const query = {
       filter: JSON.stringify({  
@@ -45,7 +45,7 @@ console.log(mysort);
     };
     const res = await get("/product/search/data", query);
     setProducts(res)
-    console.log(res);
+    // console.log(res);
   };
   
 

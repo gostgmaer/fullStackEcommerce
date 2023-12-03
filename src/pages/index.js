@@ -16,7 +16,7 @@ const Home = (props) => {
   const [openModal, setOpenModal] = useState(true);
   const [homeData, setHomeData] = useState(undefined);
 
-  console.log(props);
+  // console.log(props);
 
   const fetchHomeData = async () => {
     const response = await get("/home/data");

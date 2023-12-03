@@ -43,7 +43,7 @@ const Reviewform = () => {
 
     };
    const req = invokeExternalAPI('reviews','post',{data:body},{},{})
-    console.log(req);
+   // console.log(req);
   };
 
   function getLabelText(value) {
