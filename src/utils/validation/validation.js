@@ -106,3 +106,10 @@ export const AddressvalidationSchema = Yup.object().shape({
   lastName: Yup.string().required(),
   firstName: Yup.string().required(),
 });
+
+export const profileValidationSchema = Yup.object({
+  firstName: Yup.string().required("Required"),
+  lastName: Yup.string().required("Required"),
+  phoneNumber: Yup.string().required("Required"),
+  dateOfBirth: Yup.date().required("Required"),
+});
