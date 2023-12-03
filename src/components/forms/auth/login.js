@@ -24,7 +24,7 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (userId) {
-      route.push("/my-account");
+      route.push("/my-account/"+userId["user_id"]);
     }
   }, [userId]);
 

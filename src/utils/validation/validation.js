@@ -93,3 +93,16 @@ export const reviewValidationSchema = Yup.object().shape({
     .max(5, "Rating can not be more than 5"),
   review: Yup.string().required("Review is required"),
 });
+
+const phoneReg = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
+export const AddressvalidationSchema = Yup.object().shape({
+  addressname: Yup.string().required(),
+  phone: Yup.string().matches(phoneReg, "Phone Number is not Valid").required(),
+  street: Yup.string().required(),
+  city: Yup.string().required(),
+  country: Yup.string().required(),
+  postalCode: Yup.string().required(),
+  state: Yup.string().required(),
+  lastName: Yup.string().required(),
+  firstName: Yup.string().required(),
+});

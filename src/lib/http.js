@@ -1,8 +1,9 @@
 import axios from "axios";
 import { cleanQueryparam } from "./sevice";
-import { apiUrl, token } from "@/utils/config";
+import { baseurl } from "@/config/setting";
 
-const baseURL = apiUrl;
+
+const baseURL = baseurl;
 const Authorization = {
 
 };

@@ -6,6 +6,7 @@ import MuiModal from "@/layout/modal";
 import Userlayout from "@/layout/user";
 import { getToken } from "@/lib/helper";
 import { invokeExternalAPI } from "@/lib/http";
+import { Country, State, City } from "country-state-city";
 import { LocationOn, Person } from "@mui/icons-material";
 import {
   Backdrop,
@@ -21,87 +22,261 @@ import {
   colors,
   Snackbar,
 } from "@mui/material";
-import { Formik } from "formik";
+import { Formik, useFormik } from "formik";
 import { getSession, signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
 import { useGlobalContext } from "@/context/globalContext";
+import Input from "../global/fields/input";
+import SelectField from "../global/fields/SelectField";
+import { AddressvalidationSchema } from "@/utils/validation/validation";
+import { patch, post } from "@/lib/network/http";
+import { useAuthContext } from "@/context/AuthContext";
 
-const AddressAddForm = ({call}) => {
-  // const session = useSession();
+const initialValues = {
+  addressname: "",
+  firstName: "",
+  lastName: "",
+  phone: "",
+  company: "",
+  state: "",
+  country: "IN",
+  apartment: "",
+  city: "",
+  postalCode: "",
+  street: "",
+};
 
-  const [isdesable, setIsdesable] = useState(true);
-  const { openModal, years, setOpenModal } = useGlobalContext();
+const AddressAddForm = ({ address,setOpenModal }) => {
 
-  const phoneReg =
-    /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
-  const validationSchema = object({
-    addressname: string().required(),
-    phone: string().matches(phoneReg, "Phone Number is not Valid").required(),
-    address: string().required(),
-    city: string().required(),
-    country: string().required(),
-    pincode: string().required(),
+  const { userId } = useAuthContext();
+
+  const formik = useFormik({
+    initialValues: address ? address : initialValues,
+    validationSchema: AddressvalidationSchema,
+    onSubmit: (values, { setSubmitting }) => {
+      // Handle form submission logic here
+
+      handleFormSubmit(values);
+      setSubmitting(false);
+    },
   });
 
   const handleFormSubmit = async (values) => {
+   
     const body = {
-      name: values.addressname,
-      phone: values.phone,
-      address: values.address,
-      city: values.city,
-      country: values.country,
-      user: {},
-      uuid: uuidv4(),
-      pincode: values.pincode,
+      user: userId["user_id"],
+      ...values,
     };
-    const req = await invokeExternalAPI(
-      "addresses",
-      "post",
-      { data: body },
-      {},
-      {}
-    );
-    if (req.error === null) {
-      call(true)
+    if (address) {
+      const req = await patch("/address", body, address._id);
+    } else {
+      const req = await post("/address", body);
     }
-    setOpenModal(false);
+    setOpenModal(false)
   };
 
-
   return (
-    <Fragment>
-      <Formik
-        initialValues={{
-          addressname: "",
-          phone: "",
-          address: "",
-          country: "",
-          city: "",
-          pincode: "",
-        }}
-        validationSchema={validationSchema}
-        onSubmit={(values, { setSubmitting }) => {
-          handleFormSubmit(values);
-        }}
+    <div>
+      <Box
+        width={"100%"}
+        component={"form"}
+        onSubmit={formik.handleSubmit}
+        className="rounded-lg"
       >
-        {({
-          values,
-          errors,
-          touched,
-          isValid,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          status,
-          isValidating,
-          validateForm,
+        <div className=" mx-auto bg-white p-5  grid gap-3">
+          <div className=" col-span-2">
+            <Input
+              label={"Address Type"}
+              type={"text"}
+              additionalAttrs={{
+                ...formik.getFieldProps("addressname"),
+                placeholder: "Home/Work",
+              }}
+              classes={undefined}
+              icon={undefined}
+              id={"addressname"}
+            />
+            {formik.touched.addressname && formik.errors.addressname && (
+              <p className="text-red-500 text-sm mt-1">
+                {formik?.errors?.addressname}
+              </p>
+            )}
+          </div>
+          <div>
+            <Input
+              label={"First Name"}
+              type={"text"}
+              additionalAttrs={{
+                ...formik.getFieldProps("firstName"),
+                placeholder: "John",
+              }}
+              classes={undefined}
+              icon={undefined}
+              id={"firstName"}
+            />
+            {formik.touched.firstName && formik.errors.firstName && (
+              <p className="text-red-500 text-sm mt-1">
+                {formik?.errors?.firstName}
+              </p>
+            )}
+          </div>
+          <div>
+            <Input
+              label={"Last Name"}
+              type={"text"}
+              additionalAttrs={{
+                ...formik.getFieldProps("lastName"),
+                placeholder: "Doe",
+              }}
+              classes={undefined}
+              icon={undefined}
+              id={"lastName"}
+            />
+            {formik.touched.lastName && formik.errors.lastName && (
+              <p className="text-red-500 text-sm mt-1">
+                {formik.errors.lastName}
+              </p>
+            )}
 
-          isSubmitting,
-          /* and other goodies */
-        }) => (
-          <Box width={"100%"} component={"form"} onSubmit={handleSubmit} className="rounded-lg">
-            <Grid
+            {/* {formik.touched.lastName && formik.errors.lastName && (
+              <p className="text-red-500 text-sm mt-1">
+                {formik.errors.lastName}
+              </p>
+            )} */}
+          </div>
+          <div className=" col-span-2">
+            <Input
+              label={"Company name"}
+              type={"text"}
+              classes={undefined}
+              icon={undefined}
+              id={"company"}
+              additionalAttrs={{
+                ...formik.getFieldProps("company"),
+                placeholder: "Individula",
+              }}
+            />
+          </div>
+          {/* <div className="col-span-2">
+                <SelectField
+                  label={"Country"}
+                  // additionalAttrs={{
+                  //   ...formik.getFieldProps("billingcountry"),
+                  //   disabled: true,
+                  // }}
+                  id={"billingcountry"}
+                  options={Country.getAllCountries()}
+                  optionkeys={{ key: "isoCode", value: "name" }}
+                  placeholder={undefined}
+                  additionalAttrs={undefined}
+                />
+              </div> */}
+          <div>
+            <Input
+              label={"Street"}
+              type={"text"}
+              additionalAttrs={{
+                ...formik.getFieldProps("street"),
+                placeholder: "Street Name",
+              }}
+              classes={undefined}
+              icon={undefined}
+              id={"street"}
+            />
+            {formik.touched.street && formik.errors.street && (
+              <p className="text-red-500 text-sm mt-1">
+                {formik.errors.street}
+              </p>
+            )}
+          </div>
+          <div>
+            <Input
+              label={"Apartment, suite, unit, etc. (optional)"}
+              type={"text"}
+              additionalAttrs={{
+                ...formik.getFieldProps("apartment"),
+                placeholder: "13 suit building",
+              }}
+              classes={undefined}
+              icon={undefined}
+              id={"apartment"}
+            />
+            {formik.touched.apartment && formik.errors.apartment && (
+              <p className="text-red-500 text-sm mt-1">
+                {formik.errors.apartment}
+              </p>
+            )}
+          </div>
+          <div className="">
+            <Input
+              label={"City"}
+              type={"text"}
+              additionalAttrs={{
+                ...formik.getFieldProps("city"),
+                placeholder: "Kolkata",
+              }}
+              classes={undefined}
+              icon={undefined}
+              id={"city"}
+            />
+            {formik.touched.city && formik.errors.city && (
+              <p className="text-red-500 text-sm mt-1">{formik.errors.city}</p>
+            )}
+          </div>
+
+          <div className="">
+            <Input
+              label={"Postcode / ZIP"}
+              type={"text"}
+              additionalAttrs={{
+                ...formik.getFieldProps("postalCode"),
+                placeholder: "730124",
+              }}
+              classes={undefined}
+              icon={undefined}
+              id={"postalCode"}
+            />
+            {formik.touched.postalCode && formik.errors.postalCode && (
+              <p className="text-red-500 text-sm mt-1">
+                {formik.errors.postalCode}
+              </p>
+            )}
+          </div>
+          <div className="col-span-2">
+            <SelectField
+              label={"State"}
+              additionalAttrs={{
+                ...formik.getFieldProps("state"),
+                placeholder: "Select",
+              }}
+              id={"state"}
+              options={State.getStatesOfCountry("IN")}
+              optionkeys={{ key: "name", value: "name" }}
+              placeholder={undefined}
+            />
+            {formik.touched.state && formik.errors.state && (
+              <p className="text-red-500 text-sm mt-1">{formik.errors.state}</p>
+            )}
+          </div>
+          <div className="col-span-2">
+            <Input
+              label={"Phone Number"}
+              type={"text"}
+              additionalAttrs={{
+                ...formik.getFieldProps("phone"),
+                placeholder: "8752124563",
+              }}
+              classes={undefined}
+              icon={undefined}
+              id={"phone"}
+            />
+            {formik.touched.phone && formik.errors.phone && (
+              <p className="text-red-500 text-sm mt-1">{formik.errors.phone}</p>
+            )}
+          </div>
+        </div>
+        {/* <Grid
               container
               sx={{
                 alignItems: "flex-start",
@@ -197,36 +372,34 @@ const AddressAddForm = ({call}) => {
                   variant="outlined"
                 />
               </Grid>
-            </Grid>
-            <Stack
-              sx={{
-                alignItems: "center",
-                justifyContent: "center",
+            </Grid> */}
+        <Stack
+          sx={{
+            alignItems: "center",
+            justifyContent: "center",
 
-                gap: 2.5,
-                width: "100%",
-              
-                my: 2,
-              }}
-              direction="row"
-              alignItems="center"
-              spacing={2}
-            >
-              <Button
-                variant="contained"
-                className="bg-red-500"
-                sx={{ textTransform: "capitalize" }}
-                color="error"
-                type="submit"
-                disabled={!isValid}
-              >
-                Add Address
-              </Button>
-            </Stack>
-          </Box>
-        )}
-      </Formik>
-    </Fragment>
+            gap: 2.5,
+            width: "100%",
+
+            my: 2,
+          }}
+          direction="row"
+          alignItems="center"
+          spacing={2}
+        >
+          <Button
+            variant="contained"
+            className="bg-red-500"
+            sx={{ textTransform: "capitalize" }}
+            color="error"
+            type="submit"
+            disabled={!formik.isValid}
+          >
+            {address ? "Update" : "Add"} Address
+          </Button>
+        </Stack>
+      </Box>
+    </div>
   );
 };
 

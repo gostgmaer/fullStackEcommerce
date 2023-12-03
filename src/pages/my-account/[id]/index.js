@@ -1,6 +1,5 @@
 import { useAuthContext } from "@/context/AuthContext";
 import Userlayout from "@/layout/user";
-
 import { Person } from "@mui/icons-material";
 import {
   Backdrop,
@@ -19,11 +18,10 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 const Profile = () => {
-  const { user } = useAuthContext();
   const [loading, setloading] = useState(true);
   const [open, setopen] = useState(true);
-  const route = useRouter();
-  console.log(user);
+  const route = useRouter()
+  const { user,userId } = useAuthContext();
   // useEffect(() => {
   //   const sequrePage = async () => {
   //     const session = await getSession();
@@ -58,10 +56,10 @@ const Profile = () => {
             <Person color="error" />
             <span>My profile</span>
           </Typography>
-          <Link href={`/my-account/profile/${user?.user_id}`}>Edit Profile</Link>
+          <Link className="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" href={`/my-account/${userId?.user_id}/profile/edit`}>Edit Profile</Link>
         </Stack>
-        <UserCard user={user} />
-        <ProfileDetails user={user} />
+        <UserCard />
+        <ProfileDetails />
       </Box>
     </Userlayout>
   );
@@ -69,7 +67,7 @@ const Profile = () => {
 
 export default Profile;
 
-const UserCard = ({ user }) => {
+const UserCard = (params) => {
   return (
     <Stack direction={"row"} width={"100%"} justifyContent={"space-between"}>
       <Paper
@@ -86,15 +84,12 @@ const UserCard = ({ user }) => {
           <Image
             width={75}
             height={75}
-            className=" w-20 h-20 object-cover"
             style={{ borderRadius: "50%" }}
-            src={user?.["profilePicture"]}
+            src="/assets/images/nike-black.png"
             alt=""
           />
           <Stack>
-            <strong>
-              {user?.firstName} {user?.lastName}
-            </strong>
+            <strong>Kishor Sarkar</strong>
             <span>Balance: $5421</span>
           </Stack>
         </Box>
@@ -150,7 +145,7 @@ const UserCard = ({ user }) => {
   );
 };
 
-const ProfileDetails = ({ user }) => {
+const ProfileDetails = (params) => {
   return (
     <Stack direction={"row"} width={"100%"} justifyContent={"space-between"}>
       <Paper
@@ -160,8 +155,8 @@ const ProfileDetails = ({ user }) => {
           justifyContent: "space-between",
           gap: 2,
           width: "100%",
-          py: 2,
-          px: 2,
+          py:2,
+          px:2
         }}
       >
         <Typography
@@ -173,56 +168,47 @@ const ProfileDetails = ({ user }) => {
           }}
           variant="body2"
         >
-          First Name: <span>{user?.firstName}</span>
+          First Name: <span>Kishor</span>
         </Typography>
-        <Typography
-          sx={{
+        <Typography  sx={{
             display: "flex",
             alignItems: "flex-start",
             flexDirection: "column",
             gap: 0.5,
-          }}
-          variant="body2"
-        >
-          Last Name: <span>{user?.lastName}</span>
+          }} variant="body2">
+          Last Name: <span>Sarkar</span>
         </Typography>
-        <Typography
-          sx={{
+        <Typography  sx={{
             display: "flex",
             alignItems: "flex-start",
             flexDirection: "column",
             gap: 0.5,
-          }}
-          variant="body2"
-        >
-          Email: <span>{user?.email}</span>
+          }} variant="body2">
+          Email: <span>info@mail.com</span>
         </Typography>
-        <Typography
-          sx={{
+        <Typography  sx={{
             display: "flex",
             alignItems: "flex-start",
             flexDirection: "column",
             gap: 0.5,
-          }}
-          variant="body2"
-        >
-          Phone: <span>{user?.phoneNumber}</span>
+          }} variant="body2">
+          Phone: <span>44581254455</span>
         </Typography>
-        <Typography
-          sx={{
+        <Typography  sx={{
             display: "flex",
             alignItems: "flex-start",
             flexDirection: "column",
             gap: 0.5,
-          }}
-          variant="body2"
-        >
-          Date of Birth: <span>{user?.dateOfBirth}</span>
+          }} variant="body2">
+          Date of Birth: <span>26 July, 1997</span>
         </Typography>
       </Paper>
     </Stack>
   );
 };
+
+
+
 
 // export const getServerSideProps = async (ctx) => {
 //   const session = await getSession(ctx);

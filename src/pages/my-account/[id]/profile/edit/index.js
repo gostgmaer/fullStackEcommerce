@@ -1,6 +1,8 @@
 import ProfileupdateForm from "@/components/Usermodule/ProfileupdateForm";
+import { useAuthContext } from "@/context/AuthContext";
 import Layout from "@/layout";
 import Userlayout from "@/layout/user";
+import { get } from "@/lib/network/http";
 import { Person } from "@mui/icons-material";
 import {
   Backdrop,
@@ -17,6 +19,9 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 const UpdateProfile = () => {
   const route = useRouter()
+  const {userId} = useAuthContext()
+
+  
   return (
     <Userlayout>
       <Box
@@ -43,7 +48,7 @@ const UpdateProfile = () => {
             variant="outlined"
             sx={{ textTransform: "capitalize" }}
             color="error"
-            onClick={()=>route.push(`/my-account/profile`)}
+            onClick={()=>route.push(`/my-account/${userId?.user_id}/profile`)}
           >
             Back to Profile
           </Button>

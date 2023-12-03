@@ -1,3 +1,4 @@
+import { useAuthContext } from "@/context/AuthContext";
 import { ClassNames } from "@emotion/react";
 import {
   CreditCard,
@@ -15,6 +16,7 @@ import { useRouter } from "next/router";
 const Left = () => {
   // console.log(ClassNames);
   const router = useRouter();
+  const { userId}= useAuthContext()
 
   const prodileUrl = {
     display: "flex",
@@ -31,14 +33,14 @@ const Left = () => {
       items: [
         {
           id: 1,
-          url: "/my-account/order",
+          url: `/my-account/${userId?.user_id}/order`,
           text: "Order",
           icon: <ShoppingBagOutlined />,
           count: 5,
         },
         {
           id: 2,
-          url: "/my-account/wishlist",
+          url: `/my-account/${userId?.user_id}/wishlist`,
           text: "Wishlist",
           icon: <FavoriteOutlined />,
           count: 3,
@@ -52,14 +54,14 @@ const Left = () => {
       items: [
         {
           id: 1,
-          url: "/my-account/profile",
+          url: `/my-account/${userId?.user_id}/profile`,
           text: "Profile info",
           icon: <Person />,
           count: 2,
         },
         {
           id: 2,
-          url: "/my-account/address",
+          url: `/my-account/${userId?.user_id}/address`,
           text: "My Addresses",
           icon: <LocationCity />,
           count: 3,

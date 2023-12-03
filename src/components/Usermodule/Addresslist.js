@@ -1,10 +1,19 @@
 import { addressData, orders } from "@/assets/mock/moreData";
-import { ArrowForward, ArrowRight, Delete, Edit } from "@mui/icons-material";
+import MuiModal from "@/layout/modal";
+import {
+  ArrowForward,
+  ArrowRight,
+  Close,
+  Delete,
+  Edit,
+  TroubleshootSharp,
+} from "@mui/icons-material";
 import {
   Box,
   Button,
   Grid,
   IconButton,
+  Pagination,
   Paper,
   Stack,
   TextField,
@@ -13,8 +22,34 @@ import {
 } from "@mui/material";
 import moment from "moment/moment";
 import { useRouter } from "next/router";
-const Addresslist = ({addresses}) => {
-  console.log(addresses);
+import AddressAddForm from "./AddressAddForm";
+import { useEffect, useState } from "react";
+import { get } from "@/lib/network/http";
+import { useAuthContext } from "@/context/AuthContext";
+const Addresslist = ({}) => {
+  const { userId } = useAuthContext();
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(6);
+  const [address, setAddress] = useState(undefined);
+
+  const fetchAddress = async (params) => {
+    const query = {
+      filter: JSON.stringify({
+        user: userId?.user_id,
+      }),
+      page: page,
+      limit: limit,
+      sort: undefined,
+    };
+
+    const data = await get("/address", query);
+    console.log(data);
+    setAddress(data);
+  };
+
+  useEffect(() => {
+    fetchAddress();
+  }, [limit, page]);
   return (
     <Box width={"100%"}>
       <Stack
@@ -29,10 +64,30 @@ const Addresslist = ({addresses}) => {
           px: 1,
         }}
       >
-        {addresses.data.map((item) => (
-          <AddressItem key={item.id} data={item.attributes} />
-        ))}
+        {address ? (
+          address.results?.map((item) => (
+            <AddressItem key={item._id} data={item} />
+          ))
+        ) : (
+          <div>NO address Saved</div>
+        )}
       </Stack>
+      <Box
+        width={"100%"}
+        sx={{
+          display: "flex",
+          gap: 0.5,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Pagination
+          page={page}
+          onChange={(event, value) => setPage(value)}
+          count={10}
+          variant="outlined"
+        />
+      </Box>
     </Box>
   );
 };
@@ -40,8 +95,8 @@ const Addresslist = ({addresses}) => {
 export default Addresslist;
 
 const AddressItem = ({ data }) => {
+  const [open, setOpen] = useState(false);
   const router = useRouter();
-  // console.log(data);
 
   return (
     <Paper
@@ -57,18 +112,17 @@ const AddressItem = ({ data }) => {
       }}
     >
       <Typography variant="body2" sx={{ flex: 0.5 }}>
-        {data.name}
+        {data.addressname}
       </Typography>
       <Typography sx={{ flex: 1.5 }} variant="body2">
-       {data.city}, {data.country}
+        {data.city}, {data.country}
       </Typography>
       <Typography sx={{ flex: 0.5 }} variant="body2">
-        {data.pincode}
+        {data.postalCode}
       </Typography>
       <Typography sx={{ flex: 0.5 }} variant="body2">
         {data.phone}
       </Typography>
-
 
       <Stack
         sx={{ flex: 0.5 }}
@@ -76,16 +130,21 @@ const AddressItem = ({ data }) => {
         justifyContent={"flex-end"}
         gap={1}
       >
-        <IconButton onClick={() => router.push(`/address/${data.uuid}`)}>
+        <IconButton onClick={() => setOpen(true)}>
           <Edit />
         </IconButton>
         <IconButton>
           <Delete />
         </IconButton>
       </Stack>
+      <MuiModal
+        heading={{ title: "Please Update a Address", icon: <Close /> }}
+        Content=<AddressAddForm address={data} setOpenModal={setOpen} />
+        classes={undefined}
+        maxWidth={"sm"}
+        openModal={open}
+        setOpenModal={setOpen}
+      />
     </Paper>
   );
 };
-
-
-
