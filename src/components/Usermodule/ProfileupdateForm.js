@@ -8,44 +8,54 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ImageUpload from "../global/fields/ImageUpload";
-import { useAuthContext } from "@/context/AuthContext";
-import moment from "moment";
-import { patch } from "@/lib/network/http";
+import { get, patch } from "@/lib/network/http";
+import { useParams } from "next/navigation";
+import { useFormik } from "formik";
 
 const ProfileupdateForm = () => {
-  const { user, userId } = useAuthContext();
+  const [profileData, setProfileData] = useState(undefined);
+  const [userData, setUserData] = useState(undefined);
 
-  const [formData, setFormData] = useState({
-    firstName: user?.firstName,
-    lastName: user?.lastName,
-    username: user?.username,
-    email: user?.email,
-    phoneNumber: user?.phoneNumber,
-    dateOfBirth: user?.dateOfBirth,
-  });
-  const [image, setImage] = useState(user?.profilePicture);
-
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-    
+  const getUserData = async () => {
+    const request = await get(`/user/auth/profile`);
+    setUserData(request.result);
+    console.log(request.result);
   };
 
-  const handleSubmit = async (e)=>{
-    console.log(formData);
-    e.preventDefault()
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  const params = useParams();
+
+  const formik = useFormik({
+    initialValues: userData,
+
+    onSubmit: (values, { setSubmitting }) => {
+      // Handle form submission logic here
+
+      handleSubmit(values);
+      setSubmitting(false);
+    },
+  });
+
+  const [image, setImage] = useState(userData?.profilePicture);
+
+  const handleSubmit = async (values) => {
     const body = {
-      ...formData,profilePicture:image
-    }
-    const req= await patch('/users',body,userId?.user_id)
-    console.log(req);
-  }
+      ...values,
+      profilePicture: image,
+    };
+    const request = await patch("/users", body, userData._id);
+    console.log(request);
+  };
   return (
     <Box width={"100%"}>
       <Paper
+        component={"form"}
+        onSubmit={formik.handleSubmit}
         sx={{
           display: "flex",
           alignItems: "flex-start",
@@ -76,8 +86,7 @@ const ProfileupdateForm = () => {
             className="border-none  outline-none rounded-md w-full focus:outline-none focus:ring "
             size="small"
             fullWidth
-            value={formData.email}
-            onChange={handleChange}
+            {...formik.getFieldProps("email")}
             disabled
             type="email"
             variant="outlined"
@@ -86,8 +95,7 @@ const ProfileupdateForm = () => {
             id="username"
             name="username"
             label="User Name"
-            value={formData.username}
-            onChange={handleChange}
+            {...formik.getFieldProps("username")}
             size="small"
             fullWidth
             // sx={{maxWidth:'40%'}}
@@ -121,8 +129,7 @@ const ProfileupdateForm = () => {
               id="firstName"
               name="firstName"
               label="First Name"
-              value={formData.firstName}
-              onChange={handleChange}
+              {...formik.getFieldProps("firstName")}
               fullWidth
               size="small"
               variant="outlined"
@@ -132,8 +139,7 @@ const ProfileupdateForm = () => {
               id="dateOfBirth"
               label="Date of birth"
               name="dateOfBirth"
-              value={formData.dateOfBirth}
-              onChange={handleChange}
+              {...formik.getFieldProps("dateOfBirth")}
               type="date"
               fullWidth
               size="small"
@@ -146,8 +152,7 @@ const ProfileupdateForm = () => {
             <TextField
               id="lastName"
               name="lastName"
-              value={formData.lastName}
-              onChange={handleChange}
+              {...formik.getFieldProps("lastName")}
               fullWidth
               size="small"
               label="Last Name"
@@ -155,8 +160,7 @@ const ProfileupdateForm = () => {
             />
             <TextField
               id="phoneNumber"
-              value={formData.phoneNumber}
-              onChange={handleChange}
+              {...formik.getFieldProps("phoneNumber")}
               size="small"
               name="phoneNumber"
               fullWidth
@@ -197,15 +201,9 @@ const ProfileupdateForm = () => {
           alignItems="center"
           spacing={2}
         >
-          <Button
-            variant="contained"
-            sx={{ textTransform: "capitalize" }}
-            color="error"
-            className="bg-red-500"
-            onClick={handleSubmit}
-          >
+          <button type="submit" className="bg-red-500 px-5 py-2">
             Save Changes
-          </Button>
+          </button>
         </Stack>
       </Paper>
     </Box>

@@ -5,6 +5,7 @@ import axios from "axios";
 
 import Cookies from "js-cookie";
 import instance from "./interceptors";
+import { baseurl } from "@/config/setting";
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL; // Replace with your Firebase URL
 
 // axios.defaults.withCredentials=true
@@ -141,13 +142,17 @@ export const post = async (endpint, data) => {
 };
 
 export const patch = async (endpint, data, id) => {
+
   const cookiesData = Cookies.get();
-  const token = cookiesData["headerPayload"] + "." + cookiesData["signature"];
+  let token = undefined;
+  if (cookiesData["headerPayload"]) {
+    token ='Bearer '+ cookiesData["headerPayload"] + "." + cookiesData["signature"];
+  }
   const option = {
     method: "patch",
-    url: baseURL + endpint + `/${id}`,
+    url: baseurl + endpint + `/${id}`,
     headers: {
-      Authorization: "Bearer " + token,
+      Authorization: token,
     },
     params: {},
     data: data,
@@ -157,7 +162,7 @@ export const patch = async (endpint, data, id) => {
   try {
     response = await instance.request(option);
   } catch (e) {
-    error = e.response.data;
+    error = e?.response;
 
     // throw new Error(JSON.stringify(e.response.data));
   }

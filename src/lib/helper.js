@@ -1,8 +1,9 @@
+import { baseurl } from "@/config/setting";
 import axios from "axios";
 import useSWR from "swr";
 
 
-import { apiUrl } from "@/utils/config";
+
 const AUTH_TOKEN = "asdjkashdjkashdjashduiasgdhiuasdijahsdiuhasuidhauisdhiauhdiuhaid"
 export const getToken = () => {
   window.localStorage.getItem(AUTH_TOKEN);
@@ -23,7 +24,7 @@ export const fetcher = (...args) => axios(...args).then((res) => res.data);
 
 export function useFetcher(endpoint) {
   const { data, error, isLoading } = useSWR(
-    `${apiUrl}${endpoint}?populate=*`,
+    `${baseurl}${endpoint}?populate=*`,
     fetcher
   );
 
@@ -36,7 +37,7 @@ export function useFetcher(endpoint) {
 
 export function useGetFetcher(endpoint,fetcherData) {
   const { data, error, isLoading } = useSWR(
-    `${apiUrl}${endpoint}?populate=*`,
+    `${baseurl}${endpoint}?populate=*`,
     fetcherData
   );
 

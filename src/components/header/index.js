@@ -285,7 +285,7 @@ export function AccountMenu() {
       >
         <MenuItem
           onClick={() => {
-            route.push("/my-account");
+            route.push(`/my-account/${userId?.user_id}`);
             handleClose();
           }}
         >

@@ -1,24 +1,20 @@
 import AddressAddForm from "@/components/Usermodule/AddressAddForm";
 import Addresslist from "@/components/Usermodule/Addresslist";
+import { baseurl } from "@/config/setting";
 import { useGlobalContext } from "@/context/globalContext";
 import MuiModal from "@/layout/modal";
 import Userlayout from "@/layout/user";
 import { fetcher, useFetcher, useGetFetcher } from "@/lib/helper";
-import { invokeExternalAPI } from "@/lib/http";
+import { get } from "@/lib/network/http";
 
-import { Close, LocationOn, Person, ShoppingBag } from "@mui/icons-material";
+import { Close, LocationOn } from "@mui/icons-material";
 import { Box, Button, Pagination, Stack, Typography } from "@mui/material";
-import { getSession, useSession } from "next-auth/react";
-import { calculateOverrideValues } from "next/dist/server/font-utils";
 import { useState } from "react";
 
 const Address = ({  }) => {
   // const session = useSession();
 
   const [openModal, setOpenModal] = useState(false);
-
-  const [call, setCall] = useState(false);
-  // const [NewData, setNewData] = useState(data);
 
 
 
@@ -54,21 +50,17 @@ const Address = ({  }) => {
         </Stack>
         <MuiModal
           heading={{ title: "Please add a Address", icon: <Close /> }}
-          Content=<AddressAddForm call={setCall} />
+          Content=<AddressAddForm
+            address={undefined}
+            setOpenModal={setOpenModal}
+          />
           classes={undefined}
-          maxWidth={"sm"} openModal={openModal} setOpenModal={setOpenModal}        />
-        {/* <Addresslist addresses={NewData?.data} /> */}
-        <Box
-          width={"100%"}
-          sx={{
-            display: "flex",
-            gap: 0.5,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Pagination count={10} variant="outlined" />
-        </Box>
+          maxWidth={"sm"}
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+        />
+        <Addresslist  />
+    
       </Box>
     </Userlayout>
   );
@@ -77,27 +69,14 @@ const Address = ({  }) => {
 export default Address;
 
 // export const getServerSideProps = async (ctx) => {
-//   const session = await getSession(ctx);
-//   console.log(session);
-
-//   const param = {
-//     "filters[user][$eq]": session.user.name,
-//   };
-  
-
-//   if (!session) {
-//     return {
-//       redirect: {
-//         destination: `/auth/signin?callbackUrl=${appBaseUrl}/address`,
-//         parmanent: false,
-//       },
-//     };
-//   }
+//   const { id } = ctx.params;
+//   console.log(id);
+//   const resData = await fetch(`${baseurl}/address`);
+//   const data = await resData.json();
 
 //   return {
 //     props: {
-//       session
-     
+//       data,
 //     },
 //   };
 // };
