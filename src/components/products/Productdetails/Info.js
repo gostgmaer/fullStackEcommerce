@@ -17,8 +17,9 @@ import {
   Thumbs,
 } from "swiper/modules";
 import Slider from "./details/children/Slider";
+import CustomImageSlider from "@/components/global/fields/SliderImage";
 const Info = ({ data }) => {
- // console.log(data);
+  console.log(data);
   // const [selected, setSelected] = useState(true);
   // const [selected, setSelected] = useState("");
   // const [type, setType] = useState("");
@@ -40,9 +41,10 @@ const Info = ({ data }) => {
           gap={"10px"}
           flexDirection="column"
           item
+          className=" h-[480px]"
           xs={8}
         >
-          <Slider data={data} />
+          <CustomImageSlider images={data.images} />
         </Grid>
         <Grid
           display={"flex"}
@@ -259,7 +261,7 @@ const Info = ({ data }) => {
 export default Info;
 
 const Showtextdata = ({ params }) => {
-//  console.log(params.length);
+  //  console.log(params.length);
   return (
     <>
       {" "}

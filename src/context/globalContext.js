@@ -17,6 +17,18 @@ const AppProvider = ({ children }) => {
   const [Rating, setRating] = useState(0);
   const [sort, setSort] = useState("relevance-desc");
   const [products, setProducts] = useState({});
+  const [categories, setCategories] = useState(undefined);
+
+
+  const fetchCategories = async (second) => {
+    const response = await get("/categories");
+    setCategories(response);
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
 
   const searchProducts = async (second) => {
    
@@ -64,7 +76,7 @@ let mysort=`${sortItem[0]}:${sortItem[1]}`
         setPage,
         searchProducts,
         limit,
-        setLimit,products,setSort,sort,brand, setBrand,price, setPrice
+        setLimit,products,setSort,sort,brand, setBrand,price, setPrice,categories
       }}
     >
       {children}

@@ -21,6 +21,7 @@ import {
   Mail,
 } from "@mui/icons-material";
 import Link from "next/link";
+import { useAuthContext } from "@/context/AuthContext";
 const socialLinks = [
     {
       label: "Facebook",
@@ -44,77 +45,76 @@ const socialLinks = [
     },
   ];
   
-const menuItems = [
-  {
-    label: "About",
-    url: "http://facebook.com",
-    icon: undefined,
-    tooltip: null,
-  },
-  {
-    label: "|",
-    url: undefined,
-    icon: undefined,
-    tooltip: undefined,
-  },
-  {
-    label: "Our Stores",
-    url: "http://instagram.com",
-    icon: undefined,
-    tooltip: undefined,
-  },
-  {
-    label: "|",
-    url: undefined,
-    icon: undefined,
-    tooltip: undefined,
-  },
-  {
-    label: "Contact",
-    url: "http://twitter.com",
-    icon: undefined,
-    tooltip: undefined,
-  },
-  {
-    label: "|",
-    url: undefined,
-    icon: undefined,
-    tooltip: undefined,
-  },
-  {
-    label: "FAQs",
-    url: "mailto:your@email",
-    icon: undefined,
-    tooltip: undefined,
-  },
-  {
-    label: "|",
-    url: undefined,
-    icon: undefined,
-    tooltip: undefined,
-  },
-  {
-    label: " Newsletter ",
-    url: "mailto:your@email",
-    icon: <Mail />,
-    tooltip: "Sign up for Newsletter",
-  },
-  {
-    label: "|",
-    url: undefined,
-    icon: undefined,
-    tooltip: undefined,
-  },
 
-  {
-    label: "Wishlist",
-    url: "/my-account/wishlist",
-    icon: <Favorite />,
-    tooltip: undefined,
-  },
-];
 
 function TopBar() {
+
+ const {userId}= useAuthContext()
+
+  const menuItems = [
+    {
+      label: "About",
+      url: "http://facebook.com",
+      icon: undefined,
+      tooltip: null,
+    },
+    {
+      label: "|",
+      url: undefined,
+      icon: undefined,
+      tooltip: undefined,
+    },
+    {
+      label: "Our Stores",
+      url: "http://instagram.com",
+      icon: undefined,
+      tooltip: undefined,
+    },
+    {
+      label: "|",
+      url: undefined,
+      icon: undefined,
+      tooltip: undefined,
+    },
+    {
+      label: "Contact",
+      url: "http://twitter.com",
+      icon: undefined,
+      tooltip: undefined,
+    },
+    {
+      label: "|",
+      url: undefined,
+      icon: undefined,
+      tooltip: undefined,
+    },
+    {
+      label: "FAQs",
+      url: "mailto:your@email",
+      icon: undefined,
+      tooltip: undefined,
+    },
+    {
+      label: "|",
+      url: undefined,
+      icon: undefined,
+      tooltip: undefined,
+    },
+    {
+      label: " Newsletter ",
+      url: "mailto:your@email",
+      icon: <Mail />,
+      tooltip: "Sign up for Newsletter",
+    },
+    {
+      label: "|",
+      url: undefined,
+      icon: undefined,
+      tooltip: undefined,
+    }
+   
+  ];
+
   return (
     <AppBar component={"div"} position="relative" color="primary" className="text-gray-200  !bg-[#446084]">
       <Container className="!flex  py-2">
