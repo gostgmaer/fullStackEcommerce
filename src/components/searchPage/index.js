@@ -277,7 +277,7 @@ export const BodySection = ({ props }) => {
 };
 
 export const Filter = ({ props }) => {
-  console.log(props);
+ // console.log(props);
   const {
     products,
     searchProducts,
@@ -304,7 +304,7 @@ export const Filter = ({ props }) => {
   const [value, setValue] = useState([0, 2000]);
 
   const handleChange = (event, newValue) => {
-    console.log(event.target.value);
+   // console.log(event.target.value);
     setPrice(event.target.value);
   };
   const ITEM_HEIGHT = 48;
@@ -343,7 +343,7 @@ export const Filter = ({ props }) => {
     } else if (e.target.checked === false) {
       newCate = newCate.filter((value) => value !== cate);
     }
-    console.log(newCate);
+    //console.log(newCate);
     setCategory(newCate);
   };
 
@@ -377,7 +377,7 @@ export const Filter = ({ props }) => {
             </Select>
           </FormControl> */}
 
-          <FormControl sx={{ m: 1, minWidth: 120,width:"100%" }} size="small">
+          {/* <FormControl sx={{ m: 1, minWidth: 120,width:"100%" }} size="small">
             <Select
               id="brand-select-small"
               value={category}
@@ -394,7 +394,7 @@ export const Filter = ({ props }) => {
                 </MenuItem>
               ))}
             </Select>
-          </FormControl>
+          </FormControl> */}
 
           {/* <RadioGroup
             aria-labelledby="demo-controlled-radio-buttons-categories"
@@ -479,7 +479,7 @@ export const Filter = ({ props }) => {
           />
         </Stack>
       </Stack>
-      <Stack gap="8px" mt={2}>
+      {/* <Stack gap="8px" mt={2}>
         <Typography variant="h5">Brands</Typography>
 
         <Stack width={"100%"}>
@@ -502,7 +502,7 @@ export const Filter = ({ props }) => {
             </Select>
           </FormControl>
         </Stack>
-      </Stack>
+      </Stack> */}
       <Stack gap="8px" mt={2}>
         <Typography variant="h5">Ratings</Typography>
 

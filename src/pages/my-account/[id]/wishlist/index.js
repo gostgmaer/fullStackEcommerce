@@ -62,7 +62,7 @@ const Index = () => {
 
 const WishListTable = (second) => {
   const wishlist = useSelector((state) => state["data"].wishList);
-  console.log(wishlist);
+  // console.log(wishlist);
   const dispatch = useDispatch();
   return (
     <TableContainer component={Paper}>

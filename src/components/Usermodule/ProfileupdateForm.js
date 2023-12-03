@@ -21,7 +21,7 @@ const ProfileupdateForm = () => {
   const getUserData = async () => {
     const request = await get(`/user/auth/profile`);
     setUserData(request.result);
-    console.log(request.result);
+   // console.log(request.result);
   };
 
   useEffect(() => {
@@ -49,7 +49,7 @@ const ProfileupdateForm = () => {
       profilePicture: image,
     };
     const request = await patch("/users", body, userData._id);
-    console.log(request);
+   // console.log(request);
   };
   return (
     <Box width={"100%"}>

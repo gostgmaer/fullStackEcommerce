@@ -101,7 +101,7 @@ export const Reviewform = ({ product }) => {
       product: product._id,
       images: value,
     };
-    console.log(body);
+   // console.log(body);
     const req = post(`/products/${product._id}/reviews`, body);
 
     // console.log(req);

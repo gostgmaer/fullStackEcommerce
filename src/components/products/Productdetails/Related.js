@@ -7,7 +7,7 @@ import React from "react";
 
 const Related = ({ data }) => {
   const router = useRouter();
-console.log(data);
+//console.log(data);
 
   return (
     <Box sx={{ width: "100%" }} mt={5}>

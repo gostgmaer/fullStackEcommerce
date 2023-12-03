@@ -91,7 +91,7 @@ export default function Review({ formik }) {
 }
 
 const PreviewProductcard = ({ data }) => {
-  console.log(data);
+ // console.log(data);
   return (
     <Paper
       sx={{

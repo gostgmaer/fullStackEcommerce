@@ -374,7 +374,7 @@ export const BillingAddressForm = ({}) => {
     },
     validationSchema: billingAddressValidationSchema,
     onSubmit: (values) => {
-      console.log("Form submitted:", values);
+    //  console.log("Form submitted:", values);
     },
   });
 

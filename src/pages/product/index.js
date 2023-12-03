@@ -1,14 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+
 import ProductListing from "@/components/searchPage";
-import { useAuthContext } from "@/context/AuthContext";
 import Layout from "@/layout";
 import Head from "next/head";
-import { useEffect } from "react";
-
-
-
-
-
 
 const Index = () => {
   return (

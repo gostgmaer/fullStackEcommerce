@@ -104,13 +104,13 @@ export default function PageValidation() {
     onSubmit: (values, { setSubmitting }) => {
       // Handle form submission logic here
 
-      console.log(values);
+    //  console.log(values);
       setSubmitting(false);
       submitData(values);
     },
   });
 
-  console.log(formik);
+//  console.log(formik);
   // useEffect(() => {
   //   protectedRouteCheck();
   // }, []);
@@ -183,7 +183,7 @@ export default function PageValidation() {
     };
 
     const response  = await  post('/payment/checkout/process',body)
-    console.log(response);
+   // console.log(response);
    
   };
 
