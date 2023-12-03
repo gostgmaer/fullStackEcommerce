@@ -24,14 +24,16 @@ import moment from "moment/moment";
 import { useRouter } from "next/router";
 import AddressAddForm from "./AddressAddForm";
 import { useEffect, useState } from "react";
-import { get } from "@/lib/network/http";
+import { del, get } from "@/lib/network/http";
 import { useAuthContext } from "@/context/AuthContext";
+import { Country } from "country-state-city";
+import { useAxios } from "@/lib/network/interceptors";
 const Addresslist = ({}) => {
   const { userId } = useAuthContext();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(6);
   const [address, setAddress] = useState(undefined);
-
+  const [axios, spinner] = useAxios();
   const fetchAddress = async (params) => {
     const query = {
       filter: JSON.stringify({
@@ -66,7 +68,7 @@ const Addresslist = ({}) => {
       >
         {address ? (
           address.results?.map((item) => (
-            <AddressItem key={item._id} data={item} />
+            <AddressItem key={item._id} data={item} alldata={fetchAddress} />
           ))
         ) : (
           <div>NO address Saved</div>
@@ -78,25 +80,38 @@ const Addresslist = ({}) => {
           display: "flex",
           gap: 0.5,
           alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "space-between",
+          mt:"10px",
+          p: "8px",
         }}
       >
+        <div>
+          <span>Total:{address?.total} </span>
+        </div>
         <Pagination
           page={page}
           onChange={(event, value) => setPage(value)}
-          count={10}
+          count={address?.total/limit}
           variant="outlined"
         />
       </Box>
+      {spinner}
     </Box>
   );
 };
 
 export default Addresslist;
 
-const AddressItem = ({ data }) => {
+const AddressItem = ({ data, alldata }) => {
   const [open, setOpen] = useState(false);
   const router = useRouter();
+
+  const handleDelete = async (id) => {
+    const request = await del("/address", data._id);
+    if (request["status"] === "OK") {
+      alldata();
+    }
+  };
 
   return (
     <Paper
@@ -115,10 +130,11 @@ const AddressItem = ({ data }) => {
         {data.addressname}
       </Typography>
       <Typography sx={{ flex: 1.5 }} variant="body2">
-        {data.city}, {data.country}
+        {data.apartment} , {data.street} , {data.city}, {data.state},{" "}
+        {Country.getCountryByCode(data.country).name} - {data.postalCode}
       </Typography>
       <Typography sx={{ flex: 0.5 }} variant="body2">
-        {data.postalCode}
+        {data.firstName} , {data.lastName}
       </Typography>
       <Typography sx={{ flex: 0.5 }} variant="body2">
         {data.phone}
@@ -133,7 +149,7 @@ const AddressItem = ({ data }) => {
         <IconButton onClick={() => setOpen(true)}>
           <Edit />
         </IconButton>
-        <IconButton>
+        <IconButton onClick={handleDelete}>
           <Delete />
         </IconButton>
       </Stack>

@@ -1,5 +1,3 @@
-"use client";
-
 import { useAuthContext } from "@/context/AuthContext";
 import { post } from "@/lib/network/http";
 import { useAxios } from "@/lib/network/interceptors";

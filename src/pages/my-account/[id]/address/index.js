@@ -6,17 +6,17 @@ import MuiModal from "@/layout/modal";
 import Userlayout from "@/layout/user";
 import { fetcher, useFetcher, useGetFetcher } from "@/lib/helper";
 import { get } from "@/lib/network/http";
+import { useAxios } from "@/lib/network/interceptors";
 
 import { Close, LocationOn } from "@mui/icons-material";
 import { Box, Button, Pagination, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 
-const Address = ({  }) => {
+const Address = ({}) => {
   // const session = useSession();
 
   const [openModal, setOpenModal] = useState(false);
-
-
+  const [axios, spinner] = useAxios();
 
   return (
     <Userlayout>
@@ -59,9 +59,9 @@ const Address = ({  }) => {
           openModal={openModal}
           setOpenModal={setOpenModal}
         />
-        <Addresslist  />
-    
+        <Addresslist />
       </Box>
+      {spinner}
     </Userlayout>
   );
 };

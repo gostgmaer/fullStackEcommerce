@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
 import { setToken } from "@/helper/function";
 import Cookies from "js-cookie";
-import { post } from "@/lib/network/http";
+import { get, post } from "@/lib/network/http";
+import moment from "moment";
 
 export const AuthContext = React.createContext(null);
 
@@ -13,6 +14,7 @@ export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = React.useState(undefined);
   const [authError, setAuthError] = useState(undefined);
   const [userId, setUserId] = useState(null);
+  const [profile, setProfile] = useState(undefined);
 
   const router = useRouter();
 
@@ -120,6 +122,15 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
+
+
+  const getUserData = async () => {
+    const request = await get(`/user/auth/profile`);
+    setProfile({...request.result,dateOfBirth:moment(request.result?.dateOfBirth).format('YYYY-MM-DD')});
+  };
+
+
+
   React.useEffect(() => {
     unsubscribe();
   }, []);
@@ -132,7 +143,7 @@ export const AuthContextProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, handleLoginAuth, signout, userId, authError }}
+      value={{ user, handleLoginAuth, signout, userId, authError,getUserData,profile }}
     >
       {children}
     </AuthContext.Provider>

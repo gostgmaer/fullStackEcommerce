@@ -11,49 +11,52 @@ import {
 import React, { useEffect, useState } from "react";
 import ImageUpload from "../global/fields/ImageUpload";
 import { get, patch } from "@/lib/network/http";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useFormik } from "formik";
+import { profileValidationSchema } from "@/utils/validation/validation";
 
-const ProfileupdateForm = () => {
-  const [profileData, setProfileData] = useState(undefined);
-  const [userData, setUserData] = useState(undefined);
+const initialValues = {
+  firstName: "",
+  lastName: "",
+  username: "",
+  email: "",
+  contactNumber: "",
+  profilePicture: "",
+  phoneNumber: "",
+  dateOfBirth: "",
+};
 
-  const getUserData = async () => {
-    const request = await get(`/user/auth/profile`);
-    setUserData(request.result);
-   // console.log(request.result);
-  };
-
-  useEffect(() => {
-    getUserData();
-  }, []);
-
+const ProfileupdateForm = ({ userData }) => {
   const params = useParams();
-
+  const route = useRouter();
+  console.log(userData);
   const formik = useFormik({
-    initialValues: userData,
+    initialValues: userData ? userData : initialValues,
+    validationSchema: profileValidationSchema,
 
     onSubmit: (values, { setSubmitting }) => {
-      // Handle form submission logic here
-
-      handleSubmit(values);
+      console.log(userData);
+      saveSubmit();
       setSubmitting(false);
     },
   });
 
   const [image, setImage] = useState(userData?.profilePicture);
 
-  const handleSubmit = async (values) => {
+  const saveSubmit = async () => {
+    console.log(formik.values);
     const body = {
-      ...values,
+      ...formik.values,
       profilePicture: image,
     };
     const request = await patch("/users", body, userData._id);
-   // console.log(request);
+    if (request["status"] === "OK") {
+      route.push(`/my-account/${userData._id}/profile`);
+    }
   };
   return (
     <Box width={"100%"}>
-      <Paper
+      <Box
         component={"form"}
         onSubmit={formik.handleSubmit}
         sx={{
@@ -201,11 +204,14 @@ const ProfileupdateForm = () => {
           alignItems="center"
           spacing={2}
         >
-          <button type="submit" className="bg-red-500 px-5 py-2">
+          <button
+            type="submit"
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          >
             Save Changes
           </button>
         </Stack>
-      </Paper>
+      </Box>
     </Box>
   );
 };

@@ -15,23 +15,23 @@ import {
 } from "@mui/material";
 import moment from "moment";
 import { getSession, signIn } from "next-auth/react";
+import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 const Profile = () => {
-  const { user, userId } = useAuthContext();
+  const { user, userId, getUserData, profile } = useAuthContext();
   const [loading, setloading] = useState(true);
   const [open, setopen] = useState(true);
-  const [profile, setProfile] = useState(undefined);
+  // const [profile, setProfile] = useState(undefined);
   const route = useRouter();
-  console.log(user);
 
-  const getUserData = async () => {
-    const data = await get(`/user/auth/profile`);
-    setProfile(data);
-  };
+  // const getUserData = async () => {
+  //   const data = await get(`/user/auth/profile`);
+  //   setProfile(data);
+  // };
 
   useEffect(() => {
     getUserData();
@@ -39,6 +39,12 @@ const Profile = () => {
 
   return (
     <Userlayout>
+        <Head>
+        <title>My Account Information</title>
+        <meta name="description" content={"This page used for update user profile information details"} />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      
+      </Head>
       <Box
         display={"flex"}
         flexDirection={"column"}
@@ -62,10 +68,12 @@ const Profile = () => {
             Edit Profile
           </Link>
         </Stack>
-       {profile && <div className=" w-full flex flex-col gap-5">
-        <UserCard user={profile.result} />
-        <ProfileDetails user={profile.result} />
-       </div>}
+        {profile && (
+          <div className=" w-full flex flex-col gap-5">
+            <UserCard user={profile} />
+            <ProfileDetails user={profile} />
+          </div>
+        )}
       </Box>
     </Userlayout>
   );
@@ -221,7 +229,8 @@ const ProfileDetails = ({ user }) => {
           }}
           variant="body2"
         >
-          Date of Birth: <span>{moment(user?.dateOfBirth).format("DD/MM/YYYY")}</span>
+          Date of Birth:{" "}
+          <span>{moment(user?.dateOfBirth).format("DD/MM/YYYY")}</span>
         </Typography>
       </Paper>
     </Stack>
