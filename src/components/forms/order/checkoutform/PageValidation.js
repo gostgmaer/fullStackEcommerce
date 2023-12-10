@@ -864,14 +864,8 @@ export default function PageValidation() {
               </div>
               <div className="container">
                 {activeStep == 0 ? (
-                  <button
-                    onClick={handleNext}
-                    disabled={formik.isSubmitting || !formik.isValid}
-                    type="button"
-                    className=" p-2 px-10 capitalize  w-full shadow-sm  h-10 bg-gray-500 text-white  hover:bg-gray-700 focus:outline-none focus:shadow-outline-indigo active:bg-gray-800 transition duration-300 rounded-none"
-                  >
-                    Preview order
-                  </button>
+                  <PayPalButton amount={10.10} onSuccess={handleCheckoutSuccess} onError={handleCheckoutError}/>
+           
                 ) : (
                   <button
                     type="submit"
@@ -1091,3 +1085,4 @@ const Address = ({ data }) => {
     </div>
   );
 };
+
