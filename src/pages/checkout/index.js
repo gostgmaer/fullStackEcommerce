@@ -1,11 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { BillingAddressForm } from "@/components/forms/order/checkout";
-import AddressForm from "@/components/forms/order/checkoutform/Address";
+
 import PageValidation from "@/components/forms/order/checkoutform/PageValidation";
-import PaymentForm from "@/components/forms/order/checkoutform/Payment";
-import Review from "@/components/forms/order/checkoutform/Preview";
-import Pricesumery from "@/components/forms/order/checkoutform/Pricesumery";
-import { useAuthContext } from "@/context/AuthContext";
+
 import Layout from "@/layout";
 
 import {
@@ -29,6 +24,7 @@ import { Formik } from "formik";
 
 import Head from "next/head";
 import { useRouter } from "next/router";
+import Script from "next/script";
 import { Fragment, useEffect, useState } from "react";
 
 const steps = ["Address Details", "Payment details", "Review your order"];
@@ -71,6 +67,9 @@ export default function Checkout() {
       <Head>
         <title>Checkout Page</title>
       </Head>
+      <Script id="paytm-info">
+
+      </Script>
       <Layout>
         <PageValidation />
        

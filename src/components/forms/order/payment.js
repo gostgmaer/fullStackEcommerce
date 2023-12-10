@@ -1,38 +1,71 @@
 import React from 'react';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
+import axios from 'axios';
 
 const PayPalButton = ({ amount, onSuccess, onError }) => {
     const initialOptions = {
         clientId: "AVOKlxjlTmE6ijU1P3hpFrC0X8ZtVa5vE9OAP51faqLik6zy9DvqNyKf2Mau_ZvJsJ-TKBmU_uTBvmMa",
-        currency: "USD",
+        currency: "INR",
         intent: "capture",
     };
-  const createOrder = (data, actions) => {
-    return actions.order.create({
-      purchase_units: [
-        {
-          amount: {
-            value: amount,
-          },
-        },
-      ],
-    });
-  };
 
-  const onApprove = (data, actions) => {
-    return actions.order.capture().then(function (details) {
-      // Call your backend to save the transaction details
-  //    console.log('Transaction completed by ' + details.payer.name.given_name);
+    const paypalCreateOrder = async () => {
+      try {
+        let response = await axios.post('/api/paypal/createorder', {
+          user_id: "store.getState().auth.user._id",
+          order_price: 20.00
+        })
+        return response.data.data.order.order_id
+      } catch (err) {
+        // Your custom code to show an error like showing a toast:
+        // toast.error('Some Error Occured')
+        return null
+      }
+    }
 
-      // Execute your onSuccess callback
-      onSuccess();
-    });
-  };
+    const paypalCaptureOrder = async (orderID) => {
+      try {
+        let response = await axios.post('/api/paypal/captureorder', {
+          orderID
+        })
+        if (response.data.success) {
+          // Order is successful
+          // Your custom code
+  
+          // Like showing a success toast:
+          // toast.success('Amount Added to Wallet')
+  
+          // And/Or Adding Balance to Redux Wallet
+          // dispatch(setWalletBalance({ balance: response.data.data.wallet.balance }))
+      }} catch (err) {
+        // Order is not successful
+        // Your custom code
+  
+        // Like showing an error toast
+        // toast.error('Some Error Occured')
+      }
+    }
+    
+
 
   return (
-    <PayPalScriptProvider options={initialOptions}>
-      <PayPalButtons createOrder={createOrder} onApprove={onApprove} onError={onError} />
-    </PayPalScriptProvider>
+    <PayPalScriptProvider
+    options={initialOptions}
+  >
+    <PayPalButtons
+      style={{
+        color: 'gold',
+        shape: 'rect',
+        label: 'pay',
+        height: 50
+      }}
+      createOrder={async (data, actions) => {
+        let order_id = await paypalCreateOrder()
+        return order_id + ''
+      }}
+      onApprove={async()=> await paypalCaptureOrder("asasdasd")}
+    />
+  </PayPalScriptProvider>
   );
 };
 
