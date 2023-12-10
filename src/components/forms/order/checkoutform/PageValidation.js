@@ -34,7 +34,7 @@ const { default: Input } = require("@/components/global/fields/input");
 import { Country, State, City } from "country-state-city";
 import { post } from "@/lib/network/http";
 // import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
-import PayPalButton from "../payment";
+// import PayPalButton from "../payment";
 // const steps = ["Address Details", "Review your order"];
 export default function PageValidation() {
   const cartData = useSelector((state) => state["data"].cartItems);
@@ -864,7 +864,7 @@ export default function PageValidation() {
               </div>
               <div className="container">
                 {activeStep == 0 ? (
-                  <button
+                 <button
                     onClick={handleNext}
                     disabled={formik.isSubmitting || !formik.isValid}
                     type="button"
@@ -1091,3 +1091,4 @@ const Address = ({ data }) => {
     </div>
   );
 };
+
