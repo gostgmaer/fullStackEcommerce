@@ -174,7 +174,8 @@ export default function PageValidation() {
     };
 
     const response = await post("/payment/checkout/process", body);
-    // console.log(response);
+router.push(response["results"]["href"])
+    // window.open(response["results"]["href"]);
   };
 
   const handlePaymentSuccess = () => {
@@ -864,7 +865,7 @@ export default function PageValidation() {
               </div>
               <div className="container">
                 {activeStep == 0 ? (
-                 <button
+                  <button
                     onClick={handleNext}
                     disabled={formik.isSubmitting || !formik.isValid}
                     type="button"
@@ -872,7 +873,6 @@ export default function PageValidation() {
                   >
                     Preview order
                   </button>
-           
                 ) : (
                   <button
                     type="submit"
@@ -1092,4 +1092,3 @@ const Address = ({ data }) => {
     </div>
   );
 };
-
