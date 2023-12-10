@@ -23,26 +23,17 @@ import {
 } from "@mui/material";
 import { useSelector } from "react-redux";
 import Image from "next/image";
-import { leftFillNum } from "@/lib/sevice";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
 import SelectField from "@/components/global/fields/SelectField";
 import { billingAddressValidationSchema } from "@/utils/validation/validation";
 import React from "react";
-import Link from "next/link";
 import MuiModal from "@/layout/modal";
-import { Close } from "@mui/icons-material";
 const { default: Input } = require("@/components/global/fields/input");
-const addresses = ["1 MUI Drive", "Reactville", "Anytown", "99999", "USA"];
-const payments = [
-  { name: "Card type", detail: "Visa" },
-  { name: "Card holder", detail: "Mr John Smith" },
-  { name: "Card number", detail: "xxxx-xxxx-xxxx-1234" },
-  { name: "Expiry date", detail: "04/2024" },
-];
 import { Country, State, City } from "country-state-city";
 import { post } from "@/lib/network/http";
+// import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 import PayPalButton from "../payment";
 // const steps = ["Address Details", "Review your order"];
 export default function PageValidation() {
@@ -104,13 +95,13 @@ export default function PageValidation() {
     onSubmit: (values, { setSubmitting }) => {
       // Handle form submission logic here
 
-    //  console.log(values);
+      //  console.log(values);
       setSubmitting(false);
       submitData(values);
     },
   });
 
-//  console.log(formik);
+  //  console.log(formik);
   // useEffect(() => {
   //   protectedRouteCheck();
   // }, []);
@@ -155,7 +146,7 @@ export default function PageValidation() {
     });
   };
 
-  const submitData  = async (values) => {
+  const submitData = async (values) => {
     const nonaddress = Object.fromEntries(
       Object.entries(values).filter(([key]) => keysToKeep.includes(key))
     );
@@ -182,20 +173,44 @@ export default function PageValidation() {
       products: productData,
     };
 
-    const response  = await  post('/payment/checkout/process',body)
-   // console.log(response);
-   
+    const response = await post("/payment/checkout/process", body);
+    // console.log(response);
   };
 
-
   const handlePaymentSuccess = () => {
-    console.log('Payment successful');
+    console.log("Payment successful");
     // Add your logic for handling a successful payment
   };
 
   const handlePaymentError = () => {
-    console.error('Payment failed');
+    console.error("Payment failed");
     // Add your logic for handling a failed payment
+  };
+
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    address: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleCheckoutSuccess = (details, data) => {
+    // Handle successful payment, e.g., update order status, show thank you message, etc.
+    console.log("Payment successful:", details, data);
+  };
+
+  const handleCheckoutCancel = (data) => {
+    // Handle when the user cancels the payment
+    console.log("Payment canceled:", data);
+  };
+
+  const handleCheckoutError = (err) => {
+    // Handle payment error
+    console.error("Payment error:", err);
   };
 
   return (
@@ -509,8 +524,12 @@ export default function PageValidation() {
                             type="checkbox"
                             id="notuseBillingAddressForShipping"
                             name="notuseBillingAddressForShipping"
-                            value={formik.values.notuseBillingAddressForShipping}
-                            checked={formik.values.notuseBillingAddressForShipping}
+                            value={
+                              formik.values.notuseBillingAddressForShipping
+                            }
+                            checked={
+                              formik.values.notuseBillingAddressForShipping
+                            }
                             {...formik.getFieldProps(
                               "notuseBillingAddressForShipping"
                             )}
@@ -845,24 +864,20 @@ export default function PageValidation() {
               </div>
               <div className="container">
                 {activeStep == 0 ? (
-                  <button
-                    onClick={handleNext}
-                    disabled={formik.isSubmitting || !formik.isValid}
-                    type="button"
-                    className=" p-2 px-10 capitalize  w-full shadow-sm  h-10 bg-gray-500 text-white  hover:bg-gray-700 focus:outline-none focus:shadow-outline-indigo active:bg-gray-800 transition duration-300 rounded-none"
-                  >
-                    Preview order
-                  </button>
+                  <PayPalButton amount={10.10} onSuccess={handleCheckoutSuccess} onError={handleCheckoutError}/>
+           
                 ) : (
-                  
-                  <button
+                  <div>
+                    {" "}
+                    <button
                     type="submit"
                     disabled={formik.isSubmitting || !formik.isValid}
                     className=" p-2 px-10 capitalize  w-full shadow-sm  h-10 bg-gray-500 text-white  hover:bg-gray-700 focus:outline-none focus:shadow-outline-indigo active:bg-gray-800 transition duration-300 rounded-none"
                   >
                     Place order
                   </button>
-                
+                   
+                  </div>
                 )}
               </div>
               <div className="container py-4">
@@ -1074,3 +1089,4 @@ const Address = ({ data }) => {
     </div>
   );
 };
+
