@@ -1,11 +1,32 @@
 import Layout from "@/layout";
+import { post } from "@/lib/network/http";
 import { Check, CheckBoxRounded, Shop } from "@mui/icons-material";
 import { Box, Button, Grid, Paper, Stack, Typography } from "@mui/material";
-import { useRouter } from "next/router";
-import React from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+import React, { useEffect } from "react";
 
 const Index = () => {
-  const router = useRouter()
+  const searchparama = useSearchParams();
+  const router = useRouter();
+
+  //   const { pathname, query } = useRouter()
+
+  const handleSuccessExecution = async () => {
+    // console.log(query);
+
+    const prams = {
+      token: searchparama.get("token"),
+      paymentId: searchparama.get("paymentId"),
+      payerId: searchparama.get("PayerID"),
+    };
+    const request = await post("/payment/checkout/process/complete", prams);
+    console.log(request);
+  };
+
+  useEffect(() => {
+    handleSuccessExecution();
+  }, []);
+
   return (
     <Layout>
       <Box
@@ -28,7 +49,7 @@ const Index = () => {
               variant="contained"
               size="large"
               color="error"
-              onClick={()=>router.push('/')}
+              onClick={() => router.push("/")}
               sx={{ mt: 2, textTransform: "capitalize" }}
             >
               Browse Products
@@ -41,6 +62,3 @@ const Index = () => {
 };
 
 export default Index;
-
-
-
