@@ -21,7 +21,7 @@ import {
   Typography,
   colors,
 } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import Image from "next/image";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
@@ -31,12 +31,14 @@ import { billingAddressValidationSchema } from "@/utils/validation/validation";
 import React from "react";
 import MuiModal from "@/layout/modal";
 const { default: Input } = require("@/components/global/fields/input");
+import { addToCart, removefromCart, updateCart,resetCart } from "@/store/cartReducer";
 import { Country, State, City } from "country-state-city";
 import { post } from "@/lib/network/http";
 // import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 // import PayPalButton from "../payment";
 // const steps = ["Address Details", "Review your order"];
 export default function PageValidation() {
+  const dispatch = useDispatch()
   const cartData = useSelector((state) => state["data"].cartItems);
   const [address, setAddress] = useState(undefined);
   const steper = [
@@ -164,6 +166,7 @@ export default function PageValidation() {
       email: values.email,
       phoneNumber: "+91" + values.billingphoneNumber,
       firstName: values.billingfirstName,
+      currency:"USD",
       lastName: values.billinglastName,
       username: values.email.split("@")[0],
       shipping: values.notuseBillingAddressForShipping
@@ -173,8 +176,9 @@ export default function PageValidation() {
       products: productData,
     };
 
+    dispatch(resetCart())
     const response = await post("/payment/checkout/process", body);
-router.push(response["results"]["href"])
+    router.push(response["results"]["href"])
     // window.open(response["results"]["href"]);
   };
 
@@ -1059,6 +1063,7 @@ const PrivacyPolicyModalContent = ({ setOpen }) => {
 
 function createAddressObject(prefix, inputData) {
   return {
+    addressname:prefix,
     firstName: inputData[`${prefix}firstName`],
     company: inputData[`${prefix}company`],
     lastName: inputData[`${prefix}lastName`],

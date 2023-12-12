@@ -1,34 +1,26 @@
+import { baseurl } from "@/config/setting";
 import Layout from "@/layout";
 import { post } from "@/lib/network/http";
 import { Check, CheckBoxRounded, Shop } from "@mui/icons-material";
 import { Box, Button, Grid, Paper, Stack, Typography } from "@mui/material";
+import axios from "axios";
+import Head from "next/head";
 import { useSearchParams, useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 
-const Index = () => {
+const Index = ({data}) => {
   const searchparama = useSearchParams();
   const router = useRouter();
 
-  //   const { pathname, query } = useRouter()
-
-  const handleSuccessExecution = async () => {
-    // console.log(query);
-
-    const prams = {
-      token: searchparama.get("token"),
-      paymentId: searchparama.get("paymentId"),
-      payerId: searchparama.get("PayerID"),
-    };
-    const request = await post("/payment/checkout/process/complete", prams);
-    console.log(request);
-  };
-
-  useEffect(() => {
-    handleSuccessExecution();
-  }, []);
+console.log(data);
 
   return (
     <Layout>
+    <Head>
+    <title>Payment Success </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+    </Head>
       <Box
         px={5}
         height={"100%"}
@@ -45,6 +37,7 @@ const Index = () => {
             <Typography>
               You will be receiving confirmation email with order details.
             </Typography>
+            <p>{JSON.stringify(data)}</p>
             <Button
               variant="contained"
               size="large"
@@ -62,3 +55,29 @@ const Index = () => {
 };
 
 export default Index;
+
+
+
+export async function getServerSideProps(ctx) {
+  try {
+    const { query } = ctx;
+
+   
+
+    const response = await axios.post(baseurl + "/payment/checkout/process/complete", query);
+
+    return {
+      props: {
+        data: response.data, // Assuming you want to pass the response data
+      },
+    };
+  } catch (error) {
+    console.error("Error:", error);
+
+    return {
+      props: {
+        data: null, // You might want to handle errors appropriately
+      },
+    };
+  }
+}
