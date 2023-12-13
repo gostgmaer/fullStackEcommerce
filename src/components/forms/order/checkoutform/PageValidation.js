@@ -176,9 +176,14 @@ export default function PageValidation() {
       products: productData,
     };
 
-    dispatch(resetCart())
+    
     const response = await post("/payment/checkout/process", body);
-    router.push(response["results"]["href"])
+    if (response) {
+     
+      router.push(response["results"]["href"])
+      dispatch(resetCart())
+    }
+   
     // window.open(response["results"]["href"]);
   };
 
@@ -217,6 +222,18 @@ export default function PageValidation() {
     // Handle payment error
     console.error("Payment error:", err);
   };
+
+  
+
+useEffect(() => {
+  if (cartData.length===0) {
+    router.push('/')
+  }
+  
+}, [cartData]);
+
+
+
 
   return (
     <Container>
