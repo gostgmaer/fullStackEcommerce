@@ -25,7 +25,7 @@ export const get = async (endpint, query, id) => {
     method: "get",
     url: reqUrl,
     headers: {
-      Authorization:  "Bearer " + token,
+      Authorization: "Bearer " + token,
     },
     params: query,
   };
@@ -65,23 +65,22 @@ export const getsingle = async (endpint, id, query) => {
   return response?.data ? response?.data : error; // or set initial value
 };
 
-export const serverGetsingle = async (endpint, id, query) => {
-  const cookiesData = Cookies.get();
-  const token = cookiesData["headerPayload"] + "." + cookiesData["signature"];
+export const serverMethod = async (endpint, params) => {
   const option = {
-    method: "get",
-    url: baseURL + endpint + `/${id}`,
+    method: params.method,
+    url: baseURL + endpint,
     headers: {
-      Authorization: "Bearer " + token,
+      Authorization: params?.token && "Bearer " + params.token,
     },
-    params: query,
+    params: params?.query,
+    data: params?.data,
   };
   let response;
   let error;
   try {
     response = await axios.request(option);
   } catch (e) {
-    error = e.response.data;
+    error = e.response;
 
     //  throw new Error(JSON.stringify(e.response.data));
   }
@@ -116,7 +115,8 @@ export const post = async (endpint, data) => {
   const cookiesData = Cookies.get();
   let token = undefined;
   if (cookiesData["headerPayload"]) {
-    token ='Bearer '+ cookiesData["headerPayload"] + "." + cookiesData["signature"];
+    token =
+      "Bearer " + cookiesData["headerPayload"] + "." + cookiesData["signature"];
   }
   const option = {
     method: "post",
@@ -142,11 +142,11 @@ export const post = async (endpint, data) => {
 };
 
 export const patch = async (endpint, data, id) => {
-
   const cookiesData = Cookies.get();
   let token = undefined;
   if (cookiesData["headerPayload"]) {
-    token ='Bearer '+ cookiesData["headerPayload"] + "." + cookiesData["signature"];
+    token =
+      "Bearer " + cookiesData["headerPayload"] + "." + cookiesData["signature"];
   }
   const option = {
     method: "patch",
