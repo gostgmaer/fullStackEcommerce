@@ -24,17 +24,7 @@ const Orders = () => {
           <span>My Orders</span>
         </Typography>
         <Orderlist />
-        <Box
-          width={"100%"}
-          sx={{
-            display: "flex",
-            gap: 0.5,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Pagination count={10} variant="outlined" />
-        </Box>
+       
       </Box>
     </Userlayout>
   );

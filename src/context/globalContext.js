@@ -26,7 +26,9 @@ const AppProvider = ({ children }) => {
   };
 
   useEffect(() => {
+   if (!categories) {
     fetchCategories();
+   }
   }, []);
 
 

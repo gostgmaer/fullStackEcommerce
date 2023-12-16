@@ -1,10 +1,14 @@
 import { orders } from "@/assets/mock/moreData";
+import { useAuthContext } from "@/context/AuthContext";
+import { get } from "@/lib/network/http";
+import { useAxios } from "@/lib/network/interceptors";
 import { ArrowForward, ArrowRight } from "@mui/icons-material";
 import {
   Box,
   Button,
   Grid,
   IconButton,
+  Pagination,
   Paper,
   Stack,
   TextField,
@@ -13,7 +17,33 @@ import {
 } from "@mui/material";
 import moment from "moment/moment";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 const Orderlist = () => {
+  const { userId } = useAuthContext();
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(6);
+  const [address, setAddress] = useState(undefined);
+  const [axios, spinner] = useAxios();
+  const fetchAddress = async (params) => {
+    const query = {
+      filter: JSON.stringify({
+        user: userId?.user_id,
+      }),
+      page: page,
+      limit: limit,
+      sort: undefined,
+    };
+
+    const data = await get(`/orders/user/${userId.user_id}`, query);
+    console.log(data);
+    setAddress(data);
+  };
+
+  useEffect(() => {
+    fetchAddress();
+  }, [limit, page]);
+
+
   return (
     <Box width={"100%"}>
       <Stack
@@ -24,17 +54,26 @@ const Orderlist = () => {
           justifyContent: "space-between",
           gap: 2,
           width: "100%",
-          fontSize: '16px !important',
+          fontSize: "16px !important",
           py: 1,
           px: 4,
-          
         }}
       >
-        <Typography variant="body2" sx={{ flex: 1 }}>Order #</Typography>
-        <Typography variant="body2" sx={{ flex: 1 }}>Status</Typography>
-        <Typography variant="body2" sx={{ flex: 1 }}>Date purchased</Typography>
-        <Typography variant="body2" sx={{ flex: 0.5 }}>Total</Typography>
-        <Typography variant="body2" sx={{ flex: 0.5,textAlign:"end" }}>Action</Typography>
+        <Typography variant="body2" sx={{ flex: 1 }}>
+          Order #
+        </Typography>
+        <Typography variant="body2" sx={{ flex: 1 }}>
+          Status
+        </Typography>
+        <Typography variant="body2" sx={{ flex: 1 }}>
+          Date purchased
+        </Typography>
+        <Typography variant="body2" sx={{ flex: 0.5 }}>
+          Total
+        </Typography>
+        <Typography variant="body2" sx={{ flex: 0.5, textAlign: "end" }}>
+          Action
+        </Typography>
       </Stack>
       <Stack
         sx={{
@@ -52,6 +91,17 @@ const Orderlist = () => {
           <OrderItem key={item.id} data={item} />
         ))}
       </Stack>
+      <Box
+        width={"100%"}
+        sx={{
+          display: "flex",
+          gap: 0.5,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Pagination count={10} variant="outlined" />
+      </Box>
     </Box>
   );
 };
@@ -120,10 +170,7 @@ const OrderItem = ({ data }) => {
         justifyContent={"flex-end"}
         gap={0.5}
       >
-        <IconButton
-         
-          onClick={() => router.push(`/my-account/order/${data.id}`)}
-        >
+        <IconButton onClick={() => router.push(`/my-account/order/${data.id}`)}>
           <ArrowForward />
         </IconButton>
       </Stack>
