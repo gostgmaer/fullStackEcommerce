@@ -1,5 +1,6 @@
 import LoginForm from "@/components/forms/auth/login";
 import Layout from "@/layout";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
@@ -11,11 +12,10 @@ const index = () => {
         <div className="mx-auto w-full max-w-md py-12 md:max-w-lg lg:max-w-xl 2xl:pb-8 2xl:pt-2">
           <div className="flex flex-col items-center">
             <Link className="mb-7 inline-block max-w-[64px] lg:mb-9" href="/">
-              <img
+              <Image
                 alt="Isomorphic"
                 loading="lazy"
-                width="61"
-                height="38"
+               height={50} width={50}
                 decoding="async"
                 data-nimg="1"
                 src="https://isomorphic-furyroad.vercel.app/_next/static/media/logo-short.18ca02a8.svg"
