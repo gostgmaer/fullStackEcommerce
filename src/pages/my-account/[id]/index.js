@@ -13,18 +13,18 @@ import {
   Typography,
   colors,
 } from "@mui/material";
-import { parse } from 'cookie';
+import { parse } from "cookie";
 import { getSession, signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-const Profile = ({data}) => {
+const Profile = ({ data }) => {
   const [loading, setloading] = useState(true);
   const [open, setopen] = useState(true);
-  const route = useRouter()
-  const { user,userId } = useAuthContext();
+  const route = useRouter();
+  const { user, userId } = useAuthContext();
   return (
     <Userlayout>
       <Box
@@ -46,7 +46,12 @@ const Profile = ({data}) => {
             <Person color="error" />
             <span>My profile</span>
           </Typography>
-          <Link className="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" href={`/my-account/${data?.result?._id}/profile/edit`}>Edit Profile</Link>
+          <Link
+            className="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            href={`/my-account/${data?.result?._id}/profile/edit`}
+          >
+            Edit Profile
+          </Link>
         </Stack>
         <UserCard data={data.result} />
         <ProfileDetails data={data.result} />
@@ -57,24 +62,29 @@ const Profile = ({data}) => {
 
 export default Profile;
 
-
-
-
-
 export const getServerSideProps = async (ctx) => {
+  const session = await getSession(ctx);
 
-  const {id} =  ctx.params
- const cookies = parse(ctx.req.headers.cookie || '');
- const token = cookies["headerPayload"] + "." + cookies["signature"];
- const params = {
-  method:"get",
-  token:token
- }
- const data = await serverMethod(`/users/${id}`, params);
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/auth/signin",
+        permanent: false,
+      },
+    };
+  }
+  const { id } = ctx.params;
+  const cookies = parse(ctx.req.headers.cookie || "");
+  const token = cookies["headerPayload"] + "." + cookies["signature"];
+  const params = {
+    method: "get",
+    token: token,
+  };
+  const data = await serverMethod(`/users/${id}`, params);
 
   return {
     props: {
-    data
+      data,
     },
   };
 };
