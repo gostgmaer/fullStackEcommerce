@@ -1,5 +1,7 @@
 import LoginForm from "@/components/forms/auth/login";
 import Layout from "@/layout";
+import Cookies from "js-cookie";
+import { getSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -64,3 +66,25 @@ const index = () => {
 };
 
 export default index;
+
+
+export async function getServerSideProps(context) {
+  // console.log(context);
+  const session = await getSession(context);
+
+  // console.log(session);
+  // if (!session) {
+  //   return {
+  //     redirect: {
+  //       destination: '/auth/signin',
+  //       permanent: false,
+  //     },
+  //   };
+  // }
+
+  return {
+    props: { session },
+  };
+}
+
+

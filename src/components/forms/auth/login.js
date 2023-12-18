@@ -20,7 +20,9 @@ const LoginForm = () => {
     },
     validationSchema: loginValidationSchema,
     onSubmit: async (values) => {
-      console.log(values);
+    
+     // handleLoginAuth(values)
+
       const res = await signIn("credentials", {
         redirect: false,
         ...values,
@@ -121,3 +123,6 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
+
+
+
