@@ -20,20 +20,30 @@ import { useDispatch, useSelector } from "react-redux";
 import EnhancedTable from "../elements/Table";
 import { CartAddItems } from "../global/products/Cart";
 import { removeFromWishlist } from "@/store/cartReducer";
-const Wishlist = ({ wishlist }) => {
+const TableItem = ({ wishlist }) => {
   const dispatch = useDispatch();
 
-  wishlist.forEach((element) => {
-    element["remove"] = (
-      <IconButton
-        className="border border-gray-400 rounded-full w-10 h-10"
-        onClick={() => dispatch(removeFromWishlist(element.id))}
-      >
-        <Close />
-      </IconButton>
-    );
-    element["action"] = <CartAddItems product={element} />;
-  });
+  const currData = wishlist.result.products
+
+
+
+// try {
+//   currData.map((element) => {
+//     console.log(element);
+//     element["remove"] = (
+//       <IconButton
+//         className="border border-gray-400 rounded-full w-10 h-10"
+//         onClick={() => dispatch(removeFromWishlist(element._id))}
+//       >
+//         <Close />
+//       </IconButton>
+//     );
+//     element["action"] = <CartAddItems product={element} />;
+//   });
+// } catch (error) {
+  
+//   console.log(error);
+// }
   // const action = (
   //   <>
   //     <CartAddItems />
@@ -44,12 +54,7 @@ const Wishlist = ({ wishlist }) => {
   // );
 
   const headCells = [
-    {
-      id: "remove",
-      numeric: false,
-      disablePadding: true,
-      label: "",
-    },
+  
     {
       id: "title",
       numeric: true,
@@ -57,19 +62,20 @@ const Wishlist = ({ wishlist }) => {
       label: "Product Name",
     },
     {
-      id: "price",
+      id: "salePrice",
       numeric: true,
       disablePadding: false,
       label: "Unit Price",
     },
     {
-      id: "stock",
+      id: "isAvailable",
       numeric: true,
       disablePadding: false,
       label: "Stock Status",
+      Boolean:true
     },
     {
-      id: "rating",
+      id: "remove",
       numeric: true,
       disablePadding: false,
       label: "Rating",
@@ -85,7 +91,7 @@ const Wishlist = ({ wishlist }) => {
   return (
     <Box width={"100%"}>
       <Box sx={{ flexGrow: 1, width: "100%" }}>
-        {wishlist.length !== 0 ? (
+        {wishlist.result.products !== 0 ? (
           <Grid
             container
             item
@@ -96,13 +102,12 @@ const Wishlist = ({ wishlist }) => {
             m="0"
             columns={12.8}
           >
-            {/* {wishlist.map((item) => (
-              <Productcard key={item.id} size={4} product={item} />
-            ))} */}
+            <EnhancedTable rows={wishlist.result.products} headCells={headCells} />
           </Grid>
         ) : (
           <Grid
             container
+           
             item
             gap={"10px"}
             justifyContent="center"
@@ -111,16 +116,19 @@ const Wishlist = ({ wishlist }) => {
             m="0"
             columns={12.8}
           >
-            No product on your wishlist
+            <div className="h-64 shadow w-full flex items-center justify-center font-medium text-xl">
+
+              No Item Has been add to Wishlist
+            </div>
           </Grid>
         )}
-        <EnhancedTable rows={wishlist} headCells={headCells} />
+
       </Box>
     </Box>
   );
 };
 
-export default Wishlist;
+export default TableItem;
 
 const OrderItem = ({ data }) => {
   const router = useRouter();
@@ -132,15 +140,15 @@ const OrderItem = ({ data }) => {
         ? colors.green[50]
         : (colors.red[100] && data.status === "Processing") ||
           data.status === "Pending"
-        ? colors.grey[200]
-        : colors.red[100],
+          ? colors.grey[200]
+          : colors.red[100],
     color:
       data.status === "Delivered"
         ? colors.green[600]
         : (colors.red[600] && data.status === "Processing") ||
           data.status === "Pending"
-        ? colors.grey[600]
-        : colors.red[600],
+          ? colors.grey[600]
+          : colors.red[600],
     padding: "2px 10px",
     borderRadius: 20,
   };

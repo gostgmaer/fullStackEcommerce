@@ -21,14 +21,14 @@ const Home = (props) => {
   
   // console.log(props);
 
-  const fetchHomeData = async () => {
-    const response = await get("/home/data");
-    setHomeData(response);
-  };
+  // const fetchHomeData = async () => {
+  //   const response = await get("/home/data");
+  //   setHomeData(response);
+  // };
 
-  useEffect(() => {
-    fetchHomeData();
-  }, []);
+  // useEffect(() => {
+  //   fetchHomeData();
+  // }, []);
 
   return (
     <>
@@ -40,7 +40,7 @@ const Home = (props) => {
       <Layout>
         <Heroslider data={productData?.mainCarouselData} />
         <Container>
-         {homeData?.results?.flashDeal && <FlashDeal data={props.data?.results?.flashDeal} />}
+         { <FlashDeal data={props.data?.results?.flashDeal} />}
           {props.data?.["results"]?.["featured"].length !=0 && <FeaturedItem data={props.data?.["results"]?.["featured"]} />}
           <CategoryList data={props.data?.["results"]["categories"]} />
         </Container>

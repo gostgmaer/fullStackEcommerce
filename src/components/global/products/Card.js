@@ -22,12 +22,29 @@ import MuiModal from "@/layout/modal";
 import Link from "next/link";
 import { CartAddItems } from "./Cart";
 import Image from "next/image";
+import { post } from "@/lib/network/http";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 const PCard = ({ product, size }) => {
   const [openModal, setOpenModal] = useState(false);
   const [index, setIndex] = useState(0);
-
+  const { data: session, status } = useSession();
+  const route =useRouter()
   const wishlist = useSelector((state) => state["data"].wishList);
   const dispatch = useDispatch();
+
+  const addWishlist = async ()=>{
+    if (!session) {
+      route.push("/auth/signin")
+    }else{
+      const res= await  post('/wishlists',{product:product._id})
+      console.log(res);
+      dispatch(addToWishlist(product))
+    }
+   
+  }
+
+
 
   return (
     <Grid
@@ -70,7 +87,7 @@ const PCard = ({ product, size }) => {
                       className=" border rounded-full h-10 w-10 flex items-center "
                       title={"Add to Wishlist"}
                       aria-label={"Add to Wishlist"}
-                      onClick={() => dispatch(addToWishlist(product))}
+                      onClick={addWishlist}
                     >
                       <Favorite className="" />
                     </IconButton>
