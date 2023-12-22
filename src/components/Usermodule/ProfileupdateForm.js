@@ -27,15 +27,14 @@ const initialValues = {
 };
 
 const ProfileupdateForm = ({ userData }) => {
+  const [user, setUser] = useState(undefined)
   const params = useParams();
   const route = useRouter();
-  console.log(userData);
   const formik = useFormik({
     initialValues: userData ? userData : initialValues,
     validationSchema: profileValidationSchema,
 
     onSubmit: (values, { setSubmitting }) => {
-      console.log(userData);
       saveSubmit();
       setSubmitting(false);
     },
@@ -49,11 +48,24 @@ const ProfileupdateForm = ({ userData }) => {
       ...formik.values,
       profilePicture: image,
     };
-    const request = await patch("/users", body, userData._id);
+    const request = await patch("/users", body, params.id);
     if (request["status"] === "OK") {
-      route.push(`/my-account/${userData._id}/profile`);
+      route.push(`/my-account/${params.id}/profile`);
     }
   };
+
+  const getprofile = async () => {
+    const request = await get('/user/auth/profile')
+    setImage(request.result.profilePicture)
+    setUser(request.result)
+    console.log(request);
+  }
+  useEffect(() => {
+
+    // getprofile()
+
+  }, []);
+
   return (
     <Box width={"100%"}>
       <Box

@@ -7,10 +7,32 @@ import { setToken } from "@/helper/function";
 import Cookies from "js-cookie";
 import { get, post } from "@/lib/network/http";
 import moment from "moment";
+import { useSession } from "next-auth/react";
+import { storeCookiesOfObject } from "@/lib/helper";
 
 export const AuthContext = React.createContext(null);
 
 export const AuthContextProvider = ({ children }) => {
+
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    // When the session changes (e.g., after successful login), set cookies
+    console.log(session);
+    if (session) {
+      // Cookies.set('access_token', session["user"]["accessToken"]);
+      // Cookies.set('refresh_token', session["user"]["refreshToken"]);
+
+      if (session.user["accessToken"]) {
+        const token = session.user["accessToken"].split(".");
+        setToken("headerPayload", `${token[0]}.${token[1]}`, session.expires);
+        setToken("signature", `${token[2]}`, session.expires);
+      }
+      storeCookiesOfObject(session["user"])
+    }
+  }, [session]);
+
+
   const [user, setUser] = React.useState(undefined);
   const [authError, setAuthError] = useState(undefined);
   const [userId, setUserId] = useState(null);
@@ -62,7 +84,7 @@ export const AuthContextProvider = ({ children }) => {
       } else {
         setAuthError(res);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const unsubscribe = async () => {
@@ -77,7 +99,7 @@ export const AuthContextProvider = ({ children }) => {
           const response = await post("/user/auth/verify/session");
 
           if (response) {
-         
+
             const decoded = jwtDecode(response["accessToken"]);
             const id = jwtDecode(response["id_token"]);
 
@@ -126,7 +148,7 @@ export const AuthContextProvider = ({ children }) => {
 
   const getUserData = async () => {
     const request = await get(`/user/auth/profile`);
-    setProfile({...request.result,dateOfBirth:moment(request.result?.dateOfBirth).format('YYYY-MM-DD')});
+    setProfile({ ...request.result, dateOfBirth: moment(request.result?.dateOfBirth).format('YYYY-MM-DD') });
   };
 
 
@@ -143,7 +165,7 @@ export const AuthContextProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, handleLoginAuth, signout, userId, authError,getUserData,profile }}
+      value={{ user, handleLoginAuth, signout, userId, authError, getUserData, profile }}
     >
       {children}
     </AuthContext.Provider>

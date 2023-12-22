@@ -2,14 +2,21 @@ import LoginForm from "@/components/forms/auth/login";
 import Layout from "@/layout";
 import Cookies from "js-cookie";
 import { getSession } from "next-auth/react";
+import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
 
-const index = () => {
+const index = (props) => {
   return (
     <Layout>
+      <Head>
+        <title>{props.title}</title>
+        <meta name="description" content="Your eCommerce Website Description" />
+        <meta name="keywords" content="ecommerce, online shopping, login" />
+        <meta name="author" content="Kishor Sarkar" />
+      </Head>
       <div className="flex w-full flex-col justify-center px-5">
         <div className="mx-auto w-full max-w-md py-12 md:max-w-lg lg:max-w-xl 2xl:pb-8 2xl:pt-2">
           <div className="flex flex-col items-center">
@@ -17,7 +24,7 @@ const index = () => {
               <Image
                 alt="Isomorphic"
                 loading="lazy"
-               height={50} width={50}
+                height={50} width={50}
                 decoding="async"
                 data-nimg="1"
                 src="https://isomorphic-furyroad.vercel.app/_next/static/media/logo-short.18ca02a8.svg"
@@ -72,19 +79,18 @@ export async function getServerSideProps(context) {
   // console.log(context);
   const session = await getSession(context);
 
-  // console.log(session);
-  // if (!session) {
-  //   return {
-  //     redirect: {
-  //       destination: '/auth/signin',
-  //       permanent: false,
-  //     },
-  //   };
-  // }
-
-  return {
-    props: { session },
-  };
+  if (session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      }
+    }
+  } else {
+    return {
+      props: { title: "Ecommerce Login" }
+    }
+  }
 }
 
 

@@ -3,10 +3,11 @@ import Userlayout from "@/layout/user";
 
 import { Person, ShoppingBag } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
+import { getSession } from "next-auth/react";
 
-const Orders = () => {
+const Orders = (props) => {
   return (
-    <Userlayout>
+    <Userlayout  user={props.session}>
       <Box
         display={"flex"}
         flexDirection={"column"}
@@ -50,3 +51,32 @@ export default Orders;
 //     },
 //   };
 // };
+
+export const getServerSideProps = async (ctx) => {
+
+  const session = await getSession(ctx);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/auth/signin',
+        permanent: false,
+      },
+    };
+  } else {
+    // const cookies = parse(ctx.req.headers.cookie || '');
+    // const token = cookies["headerPayload"] + "." + cookies["signature"];
+    // const params = {
+    //   method: "get",
+    //   token: token
+    // }
+    // const result = await serverMethod(`/user/auth/profile`, params);
+
+    // const data = result.result
+    return {
+      props: {
+        session
+      },
+    };
+  }
+};

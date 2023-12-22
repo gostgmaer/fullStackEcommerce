@@ -5,7 +5,6 @@ import {
   ShoppingCart,
   Logout,
   Search,
-  PersonAdd,
   Settings,
 } from "@mui/icons-material";
 
@@ -31,7 +30,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-
 import CartBlock from "../cart";
 import { useGlobalContext } from "@/context/globalContext";
 import TopBar from "../global/header/topbar";
@@ -39,10 +37,14 @@ import Image from "next/image";
 import { get } from "@/lib/network/http";
 import { useAuthContext } from "@/context/AuthContext";
 import React from "react";
+import { signOut, useSession } from "next-auth/react";
+import Cookies from "js-cookie";
 
 function Header(props) {
   const { state, setState } = useGlobalContext();
   const [scrollPosition, setScrollPosition] = useState(null);
+  const { data: session, status } = useSession();
+
   const handleScroll = () => {
     const position = window.pageYOffset;
     setScrollPosition(position);
@@ -65,7 +67,7 @@ function Header(props) {
       }}
     >
       <TopBar />
-      <Navigation />
+      <Navigation data={session} />
       {/* <MainSearchbar/> */}
 
       {state && <CartBlock />}
@@ -75,7 +77,7 @@ function Header(props) {
 
 export default Header;
 
-function Navigation() {
+function Navigation({data}) {
   const route = useRouter();
   const { state, setState, searchProducts,categories } = useGlobalContext();
   const { userId } = useAuthContext();
@@ -92,10 +94,12 @@ function Navigation() {
     return null;
   }
 
+
   const fetchData = (params) => {
      route.push(`/product/search?search=${searchData}`);
     searchProducts();
   };
+
 
   return (
     <AppBar
@@ -190,16 +194,16 @@ function Navigation() {
             </Badge>
           </IconButton>
 
-          <AccountMenu />
+          <AccountMenu user={data?.["user"]} />
         </Box>
       </Container>
     </AppBar>
   );
 }
 
-export function AccountMenu() {
+export function AccountMenu({user}) {
   const route = useRouter();
-  const { user, userId, signout } = useAuthContext();
+  // const { user, userId, signout } = useAuthContext();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -208,10 +212,21 @@ export function AccountMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogout = ()=>{
+    handleClose;
+    signOut()
+    window.sessionStorage.clear();
+    window.localStorage.clear();
+    const cookies = Cookies.get();
+    for (const cookie in cookies) {
+      Cookies.remove(cookie);
+    }
+  }
   return (
     <React.Fragment>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
-        {userId ? (
+        {user ? (
           <Tooltip title="Account settings">
             <IconButton
               onClick={handleClick}
@@ -223,7 +238,7 @@ export function AccountMenu() {
             >
               <Avatar
                 sx={{ width: 32, height: 32 }}
-                src={user?.["profilePicture"]}
+                src={user?.["image"]}
               ></Avatar>
             </IconButton>
           </Tooltip>
@@ -279,13 +294,13 @@ export function AccountMenu() {
       >
         <MenuItem
           onClick={() => {
-            route.push(`/my-account/${userId?.user_id}`);
+            route.push(`/my-account/${user?.id}`);
             handleClose();
           }}
         >
           <Avatar
             sx={{ width: 32, height: 32 }}
-            src={user?.["profilePicture"]}
+            src={user?.["image"]}
           ></Avatar>{" "}
           My account
         </MenuItem>
@@ -304,10 +319,7 @@ export function AccountMenu() {
           Settings
         </MenuItem>
         <MenuItem
-          onClick={() => {
-            handleClose;
-            signout();
-          }}
+          onClick={handleLogout}
         >
           <ListItemIcon>
             <Logout fontSize="small" />

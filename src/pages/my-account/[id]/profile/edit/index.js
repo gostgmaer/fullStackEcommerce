@@ -2,8 +2,9 @@ import ProfileupdateForm from "@/components/Usermodule/ProfileupdateForm";
 import { useAuthContext } from "@/context/AuthContext";
 import Layout from "@/layout";
 import Cookies from "js-cookie";
+import { parse } from 'cookie';
 import Userlayout from "@/layout/user";
-import { get } from "@/lib/network/http";
+import { get, serverMethod } from "@/lib/network/http";
 import { Person } from "@mui/icons-material";
 import {
   Backdrop,
@@ -16,11 +17,11 @@ import {
   colors,
 } from "@mui/material";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import Head from "next/head";
-const UpdateProfile = () => {
+import { getSession } from "next-auth/react";
+const UpdateProfile = (props) => {
   const route = useRouter();
-  const { userId,profile } = useAuthContext();
+  // const { userId,profile } = useAuthContext();
   // const [userData, setUserData] = useState(undefined);
 
   // const getUserData = async () => {
@@ -33,7 +34,7 @@ const UpdateProfile = () => {
   // }, []);
 
   return (
-    <Userlayout>
+    <Userlayout user={props.session}>
       <Head>
         <title>Profile Update</title>
         <meta name="description" content={"This page used for update user profile information details"} />
@@ -65,14 +66,14 @@ const UpdateProfile = () => {
               sx={{ textTransform: "capitalize" }}
               color="error"
               onClick={() =>
-                route.push(`/my-account/${userId?.user_id}/profile`)
+                route.push(`/my-account/${props.session.user?.id}/profile`)
               }
             >
               Back to Profile
             </Button>
           </Stack>
         </Box>
-        <ProfileupdateForm userData={profile}></ProfileupdateForm>
+        <ProfileupdateForm userData={props.data}></ProfileupdateForm>
       </Box>
     </Userlayout>
   );
@@ -80,16 +81,31 @@ const UpdateProfile = () => {
 
 export default UpdateProfile;
 
-// export const getServerSideProps = async (ctx) => {
+export const getServerSideProps = async (ctx) => {
 
-//   // console.log(session);
-//   const cookiesData = Cookies.get('')
-//   const token = cookiesData?.["headerPayload"] + "." + cookiesData?.["signature"];
+  const session = await getSession(ctx);
 
-//   console.log(token);
-//   return {
-//     props: {
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/auth/signin',
+        permanent: false,
+      },
+    };
+  } else {
+    const cookies = parse(ctx.req.headers.cookie || '');
+    const token = cookies["headerPayload"] + "." + cookies["signature"];
+    const params = {
+      method: "get",
+      token: token
+    }
+    const result = await serverMethod(`/user/auth/profile`, params);
 
-//     },
-//   };
-// };
+    const data = result.result
+    return {
+      props: {
+        data,session
+      },
+    };
+  }
+};

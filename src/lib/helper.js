@@ -1,7 +1,7 @@
 import { baseurl } from "@/config/setting";
 import axios from "axios";
 import useSWR from "swr";
-
+import Cookies from 'js-cookie';
 
 
 const AUTH_TOKEN = "asdjkashdjkashdjashduiasgdhiuasdijahsdiuhasuidhauisdhiauhdiuhaid"
@@ -46,4 +46,18 @@ export function useGetFetcher(endpoint,fetcherData) {
     isLoading,
     isError: error,
   };
+}
+
+
+
+
+export function storeCookiesOfObject(data) {
+  if (data) {
+    const userKeys = Object.keys(data);
+
+    userKeys.forEach(key => {
+      const value = data[key];
+      Cookies.set(key, value);
+    });
+  }
 }

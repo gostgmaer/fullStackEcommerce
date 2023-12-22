@@ -10,16 +10,17 @@ import { useAxios } from "@/lib/network/interceptors";
 
 import { Close, LocationOn } from "@mui/icons-material";
 import { Box, Button, Pagination, Stack, Typography } from "@mui/material";
+import { getSession } from "next-auth/react";
 import { useState } from "react";
 
-const Address = ({}) => {
+const Address = (props) => {
   // const session = useSession();
 
   const [openModal, setOpenModal] = useState(false);
   const [axios, spinner] = useAxios();
 
   return (
-    <Userlayout>
+    <Userlayout  user={props.session}>
       <Box
         display={"flex"}
         flexDirection={"column"}
@@ -50,7 +51,7 @@ const Address = ({}) => {
         </Stack>
         <MuiModal
           heading={{ title: "Please add a Address", icon: <Close /> }}
-          Content=<AddressAddForm
+          Content= <AddressAddForm
             address={undefined}
             setOpenModal={setOpenModal}
           />
@@ -68,15 +69,31 @@ const Address = ({}) => {
 
 export default Address;
 
-// export const getServerSideProps = async (ctx) => {
-//   const { id } = ctx.params;
-//   console.log(id);
-//   const resData = await fetch(`${baseurl}/address`);
-//   const data = await resData.json();
+export const getServerSideProps = async (ctx) => {
 
-//   return {
-//     props: {
-//       data,
-//     },
-//   };
-// };
+  const session = await getSession(ctx);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/auth/signin',
+        permanent: false,
+      },
+    };
+  } else {
+    // const cookies = parse(ctx.req.headers.cookie || '');
+    // const token = cookies["headerPayload"] + "." + cookies["signature"];
+    // const params = {
+    //   method: "get",
+    //   token: token
+    // }
+    // const result = await serverMethod(`/user/auth/profile`, params);
+
+    // const data = result.result
+    return {
+      props: {
+        session
+      },
+    };
+  }
+};

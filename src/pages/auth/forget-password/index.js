@@ -1,12 +1,20 @@
 import ForgetForm from "@/components/forms/auth/forgetForm";
 import ResetForm from "@/components/forms/auth/resetForm";
 import Layout from "@/layout";
+import { getSession } from "next-auth/react";
+import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 
-const index = () => {
+const index = (props) => {
   return (
     <Layout>
+        <Head>
+        <title>{props.title}</title>
+        <meta name="description" content="Your eCommerce Website Description" />
+        <meta name="keywords" content="ecommerce, online shopping, Forget Password" />
+        <meta name="author" content="Kishor Sarkar" />
+      </Head>
       <div className="flex w-full flex-col justify-center px-5">
         <div className="mx-auto w-full max-w-md py-12 md:max-w-lg lg:max-w-xl 2xl:pb-8 2xl:pt-2">
           <div className="flex flex-col items-center">
@@ -43,3 +51,21 @@ const index = () => {
 };
 
 export default index;
+
+
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  if (session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      }
+    }
+  } else {
+    return {
+      props: { title: "Ecommerce Signup" }
+    }
+  }
+}
