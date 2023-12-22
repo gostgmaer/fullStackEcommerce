@@ -11,11 +11,14 @@ import { Container } from "@mui/material";
 import { get } from "@/lib/network/http";
 import { FeaturedItem, FlashDeal, HomeFooter, NewArrived } from "@/components/homecomponents/elements";
 import { baseurl } from "@/config/setting";
+import { useSession } from "next-auth/react";
 
 const Home = (props) => {
   const [openModal, setOpenModal] = useState(true);
   const [homeData, setHomeData] = useState(undefined);
 
+  const { data: session, status } = useSession();
+  
   // console.log(props);
 
   const fetchHomeData = async () => {

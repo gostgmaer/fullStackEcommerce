@@ -11,6 +11,7 @@ const LoginForm = () => {
   const { handleLoginAuth, user, userId, authError } = useAuthContext();
   const { data: session } = useSession();
 
+  console.log(session);
   const route = useRouter();
 
   const formik = useFormik({

@@ -17,14 +17,15 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { ProfileDetails, UserCard } from "@/components/Usermodule/Profile";
-const Profile = ({data}) => {
+import { getSession } from "next-auth/react";
+const Profile = ({ data }) => {
   return (
     <Userlayout>
-        <Head>
+      <Head>
         <title>My Account Information</title>
         <meta name="description" content={"This page used for update user profile information details"} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-      
+
       </Head>
       <Box
         display={"flex"}
@@ -67,18 +68,34 @@ export default Profile;
 
 export const getServerSideProps = async (ctx) => {
 
-  const {id} =  ctx.params
- const cookies = parse(ctx.req.headers.cookie || '');
- const token = cookies["headerPayload"] + "." + cookies["signature"];
- const params = {
-  method:"get",
-  token:token
- }
- const data = await serverMethod(`/users/${id}`, params);
+  const session = await getSession(ctx);
 
-  return {
-    props: {
-    data
-    },
-  };
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/auth/signin',
+        permanent: false,
+      },
+    };
+  } else {
+    const cookies = parse(ctx.req.headers.cookie || '');
+    const token = cookies["headerPayload"] + "." + cookies["signature"];
+    const params = {
+      method: "get",
+      token: token
+    }
+    const result = await serverMethod(`/user/auth/profile`, params);
+
+    const data = result.result
+    return {
+      props: {
+        data
+      },
+    };
+  }
+
+
+
+
+
 };

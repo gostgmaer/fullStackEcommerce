@@ -80,16 +80,15 @@ const UpdateProfile = () => {
 
 export default UpdateProfile;
 
-// export const getServerSideProps = async (ctx) => {
+export const getServerSideProps = async (ctx) => {
 
-//   // console.log(session);
-//   const cookiesData = Cookies.get('')
-//   const token = cookiesData?.["headerPayload"] + "." + cookiesData?.["signature"];
+  const cookiesData = Cookies.get('')
+  const token = cookiesData?.["headerPayload"] + "." + cookiesData?.["signature"];
 
-//   console.log(token);
-//   return {
-//     props: {
+  console.log(token);
+  return {
+    props: {
 
-//     },
-//   };
-// };
+    },
+  };
+};

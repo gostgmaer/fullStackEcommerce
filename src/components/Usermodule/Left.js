@@ -10,6 +10,7 @@ import {
   SupervisedUserCircle,
 } from "@mui/icons-material";
 import { Box, Paper, Stack, Typography } from "@mui/material";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -17,6 +18,9 @@ const Left = () => {
   // console.log(ClassNames);
   const router = useRouter();
   const { userId}= useAuthContext()
+
+  const { data: session, status } = useSession();
+
 
   const prodileUrl = {
     display: "flex",
@@ -33,14 +37,14 @@ const Left = () => {
       items: [
         {
           id: 1,
-          url: `/my-account/${userId?.user_id}/order`,
+          url: `/my-account/${session?.user?.["id"]}/order`,
           text: "Order",
           icon: <ShoppingBagOutlined />,
           count: 5,
         },
         {
           id: 2,
-          url: `/my-account/${userId?.user_id}/wishlist`,
+          url: `/my-account/${session?.user?.["id"]}/wishlist`,
           text: "Wishlist",
           icon: <FavoriteOutlined />,
           count: 3,
@@ -54,14 +58,14 @@ const Left = () => {
       items: [
         {
           id: 1,
-          url: `/my-account/${userId?.user_id}/profile`,
+          url: `/my-account/${session.user?.["id"]}/profile`,
           text: "Profile info",
           icon: <Person />,
           count: 2,
         },
         {
           id: 2,
-          url: `/my-account/${userId?.user_id}/address`,
+          url: `/my-account/${session.user?.["id"]}/address`,
           text: "My Addresses",
           icon: <LocationCity />,
           count: 3,

@@ -39,10 +39,13 @@ import Image from "next/image";
 import { get } from "@/lib/network/http";
 import { useAuthContext } from "@/context/AuthContext";
 import React from "react";
+import { useSession } from "next-auth/react";
 
 function Header(props) {
   const { state, setState } = useGlobalContext();
   const [scrollPosition, setScrollPosition] = useState(null);
+  const { data: session, status } = useSession();
+
   const handleScroll = () => {
     const position = window.pageYOffset;
     setScrollPosition(position);
@@ -51,6 +54,10 @@ function Header(props) {
   useEffect(() => {
     handleScroll();
   }, [scrollPosition]);
+
+
+
+
 
   return (
     <Box
@@ -65,7 +72,7 @@ function Header(props) {
       }}
     >
       <TopBar />
-      <Navigation />
+      <Navigation data={session} />
       {/* <MainSearchbar/> */}
 
       {state && <CartBlock />}
@@ -75,7 +82,7 @@ function Header(props) {
 
 export default Header;
 
-function Navigation() {
+function Navigation({data}) {
   const route = useRouter();
   const { state, setState, searchProducts,categories } = useGlobalContext();
   const { userId } = useAuthContext();
@@ -92,10 +99,12 @@ function Navigation() {
     return null;
   }
 
+
   const fetchData = (params) => {
      route.push(`/product/search?search=${searchData}`);
     searchProducts();
   };
+  console.log(data);
 
   return (
     <AppBar
@@ -190,16 +199,16 @@ function Navigation() {
             </Badge>
           </IconButton>
 
-          <AccountMenu />
+          <AccountMenu user={data?.["user"]} />
         </Box>
       </Container>
     </AppBar>
   );
 }
 
-export function AccountMenu() {
+export function AccountMenu({user}) {
   const route = useRouter();
-  const { user, userId, signout } = useAuthContext();
+  // const { user, userId, signout } = useAuthContext();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -211,7 +220,7 @@ export function AccountMenu() {
   return (
     <React.Fragment>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
-        {userId ? (
+        {user ? (
           <Tooltip title="Account settings">
             <IconButton
               onClick={handleClick}
@@ -223,7 +232,7 @@ export function AccountMenu() {
             >
               <Avatar
                 sx={{ width: 32, height: 32 }}
-                src={user?.["profilePicture"]}
+                src={user?.["image"]}
               ></Avatar>
             </IconButton>
           </Tooltip>
@@ -279,13 +288,13 @@ export function AccountMenu() {
       >
         <MenuItem
           onClick={() => {
-            route.push(`/my-account/${userId?.user_id}`);
+            route.push(`/my-account/${user?.id}`);
             handleClose();
           }}
         >
           <Avatar
             sx={{ width: 32, height: 32 }}
-            src={user?.["profilePicture"]}
+            src={user?.["image"]}
           ></Avatar>{" "}
           My account
         </MenuItem>
@@ -306,7 +315,7 @@ export function AccountMenu() {
         <MenuItem
           onClick={() => {
             handleClose;
-            signout();
+         
           }}
         >
           <ListItemIcon>
