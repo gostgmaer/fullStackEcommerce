@@ -20,13 +20,13 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-const Profile = ({ data }) => {
+const Profile = ({ data,session }) => {
   const [loading, setloading] = useState(true);
   const [open, setopen] = useState(true);
   const route = useRouter();
   const { user, userId } = useAuthContext();
   return (
-    <Userlayout>
+    <Userlayout user={session}>
       <Box
         display={"flex"}
         flexDirection={"column"}
@@ -84,7 +84,7 @@ export const getServerSideProps = async (ctx) => {
 
   return {
     props: {
-      data,
+      data,session
     },
   };
 };

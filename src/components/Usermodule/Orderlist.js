@@ -18,23 +18,24 @@ import {
 import moment from "moment/moment";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-const Orderlist = () => {
+const Orderlist = ({user}) => {
   const { userId } = useAuthContext();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(6);
   const [address, setAddress] = useState(undefined);
   const [axios, spinner] = useAxios();
+  console.log(user);
   const fetchAddress = async (params) => {
     const query = {
       filter: JSON.stringify({
-        user: userId?.user_id,
+        user: user.user?.id,
       }),
       page: page,
       limit: limit,
       sort: undefined,
     };
 
-    const data = await get(`/orders/user/${userId.user_id}`, query);
+    const data = await get(`/orders/user/${user.user.id}`, query);
     console.log(data);
     setAddress(data);
   };

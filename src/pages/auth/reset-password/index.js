@@ -1,11 +1,18 @@
 import ResetForm from "@/components/forms/auth/resetForm";
 import Layout from "@/layout";
+import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 
-const index = () => {
+const index = (props) => {
   return (
     <Layout>
+        <Head>
+        <title>Reset Password</title>
+        <meta name="description" content="Your eCommerce Website Description" />
+        <meta name="keywords" content="ecommerce, online shopping, reset Password" />
+        <meta name="author" content="Kishor Sarkar" />
+      </Head>
       <div className="flex w-full flex-col justify-center px-5">
         <div className="mx-auto w-full max-w-md py-12 md:max-w-lg lg:max-w-xl 2xl:pb-8 2xl:pt-2">
           <div className="flex flex-col items-center">

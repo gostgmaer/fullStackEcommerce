@@ -18,9 +18,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { ProfileDetails, UserCard } from "@/components/Usermodule/Profile";
 import { getSession } from "next-auth/react";
-const Profile = ({ data }) => {
+const Profile = ({ data,session }) => {
   return (
-    <Userlayout>
+    <Userlayout  user={session}>
       <Head>
         <title>My Account Information</title>
         <meta name="description" content={"This page used for update user profile information details"} />
@@ -46,7 +46,7 @@ const Profile = ({ data }) => {
             <Person color="error" />
             <span>My profile</span>
           </Typography>
-          <Link href={`/my-account/${data?.result?._id}/profile/edit`}>
+          <Link href={`/my-account/${data?._id}/profile/edit`}>
             Edit Profile
           </Link>
         </Stack>
@@ -89,7 +89,7 @@ export const getServerSideProps = async (ctx) => {
     const data = result.result
     return {
       props: {
-        data
+        data,session
       },
     };
   }

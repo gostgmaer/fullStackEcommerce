@@ -5,7 +5,6 @@ import {
   ShoppingCart,
   Logout,
   Search,
-  PersonAdd,
   Settings,
 } from "@mui/icons-material";
 
@@ -31,7 +30,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-
 import CartBlock from "../cart";
 import { useGlobalContext } from "@/context/globalContext";
 import TopBar from "../global/header/topbar";
@@ -39,7 +37,8 @@ import Image from "next/image";
 import { get } from "@/lib/network/http";
 import { useAuthContext } from "@/context/AuthContext";
 import React from "react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import Cookies from "js-cookie";
 
 function Header(props) {
   const { state, setState } = useGlobalContext();
@@ -54,10 +53,6 @@ function Header(props) {
   useEffect(() => {
     handleScroll();
   }, [scrollPosition]);
-
-
-
-
 
   return (
     <Box
@@ -104,7 +99,7 @@ function Navigation({data}) {
      route.push(`/product/search?search=${searchData}`);
     searchProducts();
   };
-  console.log(data);
+
 
   return (
     <AppBar
@@ -217,6 +212,17 @@ export function AccountMenu({user}) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogout = ()=>{
+    handleClose;
+    signOut()
+    window.sessionStorage.clear();
+    window.localStorage.clear();
+    const cookies = Cookies.get();
+    for (const cookie in cookies) {
+      Cookies.remove(cookie);
+    }
+  }
   return (
     <React.Fragment>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
@@ -313,10 +319,7 @@ export function AccountMenu({user}) {
           Settings
         </MenuItem>
         <MenuItem
-          onClick={() => {
-            handleClose;
-         
-          }}
+          onClick={handleLogout}
         >
           <ListItemIcon>
             <Logout fontSize="small" />

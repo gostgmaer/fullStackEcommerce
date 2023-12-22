@@ -10,11 +10,11 @@ import {
   SupervisedUserCircle,
 } from "@mui/icons-material";
 import { Box, Paper, Stack, Typography } from "@mui/material";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-const Left = () => {
+const Left = ({user}) => {
   // console.log(ClassNames);
   const router = useRouter();
   const { userId}= useAuthContext()
@@ -58,14 +58,14 @@ const Left = () => {
       items: [
         {
           id: 1,
-          url: `/my-account/${session.user?.["id"]}/profile`,
+          url: `/my-account/${session?.user?.["id"]}/profile`,
           text: "Profile info",
           icon: <Person />,
           count: 2,
         },
         {
           id: 2,
-          url: `/my-account/${session.user?.["id"]}/address`,
+          url: `/my-account/${session?.user?.["id"]}/address`,
           text: "My Addresses",
           icon: <LocationCity />,
           count: 3,
@@ -214,3 +214,15 @@ const Left = () => {
 };
 
 export default Left;
+
+
+// export async function getServerSideProps(context) {
+//   // console.log(context);
+//   const session = await getSession(context);
+
+//   if (session) {
+//     return {
+//       props: { session }
+//     }
+//   }
+// }

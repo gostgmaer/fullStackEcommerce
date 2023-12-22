@@ -62,7 +62,7 @@ const ChangePassword = () => {
               Current Password
             </span>
             <PasswordField
-              placeholder="current_password"
+              placeholder="current password"
               name="current_password"
               value={formik.values.current_password}
               handleChange={formik.handleChange}

@@ -4,7 +4,7 @@ import Header from "@/components/header";
 import { Box, Grid, Stack } from "@mui/material";
 import React, { Fragment } from "react";
 
-const Userlayout = ({ children }) => {
+const Userlayout = ({ children,user }) => {
   return (
     <Fragment>
       <Header />
@@ -19,7 +19,7 @@ const Userlayout = ({ children }) => {
             columns={16}
           >
             <Grid item xs={4}>
-              <Left />
+              <Left user={user} />
             </Grid>
             <Grid item xs={11.5}>
               {children}

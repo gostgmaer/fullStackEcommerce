@@ -1,6 +1,7 @@
 import { Box, Paper, Stack, Typography, colors } from "@mui/material";
 import moment from "moment";
 import Image from "next/image";
+import Link from "next/link";
 
 export const UserCard = ({ data }) => {
 
@@ -32,9 +33,9 @@ export const UserCard = ({ data }) => {
             <span>Balance: $5421</span>
           </Stack>
         </Box>
-        <Typography color={colors.red[300]} variant="button">
-          Silver User
-        </Typography>
+        <Link href={`/my-account/${data._id}/change-password`} >
+       Change Password
+        </Link>
       </Paper>
       <Paper
         sx={{
