@@ -178,7 +178,7 @@ function Navigation({data}) {
             <Badge badgeContent={wishlist?.length.toString()} color="error">
               <Favorite
                 onClick={() =>
-                  route.push(userId?`/my-account/${userId?.user_id}/wishlist`:'/auth/signin')
+                  route.push(data?`/my-account/${data.user?.id}/wishlist`:'/auth/signin')
                 }
               />
             </Badge>

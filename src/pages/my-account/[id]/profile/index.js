@@ -46,12 +46,12 @@ const Profile = ({ data,session }) => {
             <Person color="error" />
             <span>My profile</span>
           </Typography>
-          <Link href={`/my-account/${data?._id}/profile/edit`}>
+          <Link href={`/my-account/${data?._id}/profile/edit`} className="bg-gray-500 hover:bg-gray-800 text-white font-bold py-2 text-center px-4 rounded">
             Edit Profile
           </Link>
         </Stack>
         {data && (
-          <div className=" w-full flex flex-col gap-5">
+          <div className=" w-full flex flex-col  gap-5">
             <UserCard data={data} />
             <ProfileDetails data={data} />
           </div>

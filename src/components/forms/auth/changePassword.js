@@ -4,6 +4,7 @@ import { useAuthContext } from "@/context/AuthContext";
 import { post } from "@/lib/network/http";
 
 import { useAxios } from "@/lib/network/interceptors";
+import { notifySuccess } from "@/lib/notify/notification";
 
 import { resetPasswordValidation } from "@/utils/validation/validation";
 import { KeyboardArrowRight } from "@mui/icons-material";
@@ -21,11 +22,11 @@ const ChangePassword = () => {
   const handleSubmit = async (values) => {
     try {
       const reset = await post(
-        `/user/auth/reset-password/${param.getAll("token")[0]}`,
+        `/user/auth/change-password`,
         { password: values.password }
       );
       if (reset.status == "OK") {
-        router.push("/auth/login");
+       notifySuccess(reset.message,2000)
       }
     } catch (error) {
       const myErr = error?.["message"];

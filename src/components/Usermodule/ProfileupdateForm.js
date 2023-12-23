@@ -14,6 +14,7 @@ import { get, patch } from "@/lib/network/http";
 import { useParams, useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import { profileValidationSchema } from "@/utils/validation/validation";
+import { notifySuccess } from "@/lib/notify/notification";
 
 const initialValues = {
   firstName: "",
@@ -45,12 +46,16 @@ const ProfileupdateForm = ({ userData }) => {
   const saveSubmit = async () => {
     console.log(formik.values);
     const body = {
-      ...formik.values,
+      firstName: formik.values.firstName,
+      lastName: formik.values.lastName,
+      phoneNumber: formik.values.phoneNumber,
+      dateOfBirth: formik.values.dateOfBirth,
       profilePicture: image,
     };
     const request = await patch("/users", body, params.id);
     if (request["status"] === "OK") {
-      route.push(`/my-account/${params.id}/profile`);
+      // route.push(`/my-account/${params.id}/profile`);
+      notifySuccess(request["message"],3000)
     }
   };
 
