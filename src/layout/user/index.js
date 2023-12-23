@@ -1,15 +1,15 @@
 import Left from "@/components/Usermodule/Left";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
-import { Box, Grid, Stack } from "@mui/material";
+import { Box, Container, Grid, Stack } from "@mui/material";
 import React, { Fragment } from "react";
 
 const Userlayout = ({ children,user }) => {
   return (
     <Fragment>
       <Header />
-      <Box className="elements" minHeight={"100vh"} sx={{ width: "100%" }}>
-        <Stack my={5} mx={4}>
+      <Container className=" min-h-screen ">
+        <Stack  mt={5} >
           <Grid
             container
             spacing={2}
@@ -26,7 +26,7 @@ const Userlayout = ({ children,user }) => {
             </Grid>
           </Grid>
         </Stack>
-      </Box>
+      </Container>
 
       <Footer />
     </Fragment>
