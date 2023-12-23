@@ -2,11 +2,13 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuthContext } from "./AuthContext";
 import { get, post } from "@/lib/network/http";
+import { useSession } from "next-auth/react";
 const AppContext = createContext(null);
 
 const AppProvider = ({ children }) => {
   const { user, userId } = useAuthContext();
   const [state, setState] = useState(false);
+  const [wishlistData, setWishlistData] = useState(undefined);
   const [openModal, setOpenModal] = useState(false);
   const [searchData, setSearchData] = useState("");
   const [category, setCategory] = useState("");
@@ -18,7 +20,7 @@ const AppProvider = ({ children }) => {
   const [sort, setSort] = useState("relevance-desc");
   const [products, setProducts] = useState({});
   const [categories, setCategories] = useState(undefined);
-
+  const { data: session, status } = useSession();
 
   const fetchCategories = async (second) => {
     const response = await get("/categories");
@@ -26,32 +28,34 @@ const AppProvider = ({ children }) => {
   };
 
   useEffect(() => {
-   if (!categories) {
-    fetchCategories();
-   }
-  }, []);
+    if (!categories) {
+      fetchCategories();
+    }
+  }, [categories]);
 
 
   const searchProducts = async (second) => {
-   
-var sortItem = sort.split('-');
 
-let mysort=`${sortItem[0]}:${sortItem[1]}`
-  // const [sortKey, sortOrder] = sort.split("-");
-  // myObject[sortKey] = sortOrder
+    var sortItem = sort.split('-');
 
-// console.log(mysort);
+
+
+    let mysort = `${sortItem[0]}:${sortItem[1]}`
+    // const [sortKey, sortOrder] = sort.split("-");
+    // myObject[sortKey] = sortOrder
+
+    // console.log(mysort);
 
     const query = {
-      filter: JSON.stringify({  
+      filter: JSON.stringify({
         match: {
           title: searchData,
         },
         startwith: {
           title: searchData,
-        },  
+        },
         categories: category,
-        brands:brand,salePrice:price
+        brands: brand, salePrice: price
       }),
       page: page,
       limit: limit,
@@ -61,7 +65,17 @@ let mysort=`${sortItem[0]}:${sortItem[1]}`
     setProducts(res)
     // console.log(res);
   };
-  
+
+  const getWishlist = async (second) => {
+    const res= await get('/wishlists/fetch')
+    setWishlistData(res)
+    console.log(res);
+  }
+  useEffect(() => {
+    if (session) {
+      getWishlist()
+    }
+  }, [session]);
 
   return (
     <AppContext.Provider
@@ -78,7 +92,7 @@ let mysort=`${sortItem[0]}:${sortItem[1]}`
         setPage,
         searchProducts,
         limit,
-        setLimit,products,setSort,sort,brand, setBrand,price, setPrice,categories
+        setLimit, products, setSort, sort, brand, setBrand, price, setPrice, categories, getWishlist
       }}
     >
       {children}

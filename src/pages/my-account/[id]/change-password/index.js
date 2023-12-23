@@ -7,7 +7,7 @@ import { getSession } from "next-auth/react";
 
 const Orders = (props) => {
   return (
-    <Userlayout  user={props.session}>
+    <Userlayout user={props.session}>
       <Box
         display={"flex"}
         flexDirection={"column"}
@@ -18,13 +18,13 @@ const Orders = (props) => {
         <Typography
           fontWeight={600}
           width={"100%"}
-          fontSize={20}
+          fontSize={24}
           sx={{ display: "flex", gap: 0.5, alignItems: "center" }}
         >
-        
-        Changed Password
+
+          Changed Password
         </Typography>
-        <ChangePassword/>
+        <ChangePassword />
       </Box>
     </Userlayout>
   );

@@ -27,8 +27,8 @@ const Index = ({ data }) => {
       <Layout>
         <Container  component={"div"} className=" my-20" >
           <Info data={data.results.currentProd} />
-          <ProductDetails data={data.results.currentProd} />
-          <Related data={data.results.related} />
+          {/* <ProductDetails data={data.results.currentProd} /> */}
+          {/* <Related data={data.results.related} /> */}
         </Container>
       </Layout>
     </>
@@ -41,7 +41,6 @@ export const getServerSideProps = async (ctx) => {
   const id = ctx.params["productId"];
   const resData = await fetch(`${baseurl}/product/details?slug=${id}`);
   const data = await resData.json();
-
   return {
     props: {
       data,

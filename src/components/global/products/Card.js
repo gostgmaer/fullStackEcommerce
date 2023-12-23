@@ -25,6 +25,7 @@ import Image from "next/image";
 import { post } from "@/lib/network/http";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { notifySuccess } from "@/lib/notify/notification";
 const PCard = ({ product, size }) => {
   const [openModal, setOpenModal] = useState(false);
   const [index, setIndex] = useState(0);
@@ -32,16 +33,15 @@ const PCard = ({ product, size }) => {
   const route =useRouter()
   const wishlist = useSelector((state) => state["data"].wishList);
   const dispatch = useDispatch();
-
+  const { getWishlist } = useGlobalContext()
   const addWishlist = async ()=>{
     if (!session) {
       route.push("/auth/signin")
     }else{
       const res= await  post('/wishlists',{product:product._id})
-      console.log(res);
       dispatch(addToWishlist(product))
+      getWishlist()
     }
-   
   }
 
 
@@ -200,10 +200,32 @@ const PCard = ({ product, size }) => {
 export default PCard;
 
 const ProductDetails = ({ product }) => {
+  const { data: session, status } = useSession();
+  const route =useRouter()
   const [index, setIndex] = useState(0);
-
+  const { getWishlist } = useGlobalContext()
   const wishlist = useSelector((state) => state["data"].wishList);
   const dispatch = useDispatch();
+
+  const addWishlist = async ()=>{
+    if (!session) {
+      route.push("/auth/signin")
+    }else{
+      const res= await  post('/wishlists',{product:product._id})
+      dispatch(addToWishlist(product))
+      getWishlist()
+    }
+  }
+  // const RemoveWishList = async () => {
+  //   const res = await post(`/wishlists/${product._id}/remove`, { product: product._id })
+  //   if (res.status == "OK") {
+  //     dispatch(removeFromWishlist(product._id))
+  //     getWishlist()
+  //     notifySuccess(res.message, 2000)
+  //   }
+
+  // }
+
 
   return (
     <div className="product-content flex overflow-hidden gap-5">
@@ -229,7 +251,7 @@ const ProductDetails = ({ product }) => {
               className=" border rounded-full h-10 w-10 flex items-center "
               title={"Add to Wishlist"}
               aria-label={"Add to Wishlist"}
-              onClick={() => dispatch(addToWishlist(product))}
+              onClick={addWishlist}
             >
               <Favorite className="" />
             </IconButton>

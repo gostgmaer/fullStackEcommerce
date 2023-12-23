@@ -5,37 +5,43 @@ import Link from "next/link";
 
 export const UserCard = ({ data }) => {
 
+  console.log(data);
   return (
-    <Stack direction={"row"} width={"100%"} justifyContent={"space-between"}>
+    <Stack direction={"row"} width={"100%"} justifyContent={"space-between"} className="h-32">
       <Paper
         sx={{
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
           gap: 2,
-          width: "45%",
+          width: "65%",
           p: 1,
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <Image
             width={75}
-            height={75}
+            height={100}
             style={{ borderRadius: "50%" }}
             src={data.profilePicture}
             className=" w-20 h-20"
             alt=""
           />
           <Stack>
-            <strong>
+            <strong className="text-3xl">
               {data.firstName} {data.lastName}
             </strong>
-            <span>Balance: $5421</span>
+            <span className="font-semibold">{data.username}</span>
           </Stack>
         </Box>
-        <Link href={`/my-account/${data._id}/change-password`} >
+       <div className=" flex flex-col gap-2">
+       <Link className="bg-blue-500 hover:bg-blue-800 text-white font-bold py-2 text-center px-3 rounded" href={`/my-account/${data._id}/change-password`} >
        Change Password
         </Link>
+        <Link className="bg-blue-500 hover:bg-blue-800 text-white font-bold py-2 text-center px-3 rounded" href={`/my-account/${data._id}/profile/edit`} >
+       Update Profile
+        </Link>
+       </div>
       </Paper>
       <Paper
         sx={{
@@ -66,28 +72,14 @@ export const UserCard = ({ data }) => {
         <span>16</span>
         Order Delivared
       </Paper>
-      <Paper
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          flexDirection: "column",
-          gap: 0.5,
-          fontSize: 14,
-          width: "15%",
-          p: 1,
-        }}
-      >
-        <span>16</span>
-        Order Cancel
-      </Paper>
+     
     </Stack>
   );
 };
 
 export const ProfileDetails = ({ data }) => {
   return (
-    <Stack direction={"row"} width={"100%"} justifyContent={"space-between"}>
+    <Stack direction={"row"} width={"100%"} justifyContent={"space-between"} className="h-24">
       <Paper
         sx={{
           display: "flex",

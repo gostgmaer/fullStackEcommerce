@@ -86,6 +86,7 @@ const CartTable = (second) => {
   const cartData = useSelector((state) => state["data"].cartItems);
 
   const dispatch = useDispatch();
+  console.log(cartData);
 
   return (
     <TableContainer component={Paper}>
@@ -130,12 +131,12 @@ const CartTable = (second) => {
                     <Link href={`/product/${row["product"].slug}`}>{row["product"].title}</Link>
                   </div>
                 </TableCell>
-                <TableCell align="left">{row["product"].salePrice}</TableCell>
+                <TableCell align="left">${row["product"].price?.toFixed(2)}</TableCell>
 
                 <TableCell align="left">
                   <CartUpdate data={row} />
                 </TableCell>
-                <TableCell align="right">{row.subtotal}</TableCell>
+                <TableCell align="right">${row.subtotal.toFixed(2)}</TableCell>
               </TableRow>
             ))}
           </TableBody>

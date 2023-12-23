@@ -230,7 +230,7 @@ const Info = ({ data }) => {
                 }}
                 variant="subtitle1"
               >
-                Brand: <span>{data.brandName}</span>
+                Brand: <span>{data?.brandName.name}</span>
               </Typography>
               {/* <Typography
                 sx={{

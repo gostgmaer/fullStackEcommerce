@@ -27,7 +27,8 @@ import Head from "next/head";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { serverMethod } from "@/lib/network/http";
-import TableItem from "@/components/Usermodule/Wishlist";
+import WishlistItems from "@/components/Usermodule/Wishlist";
+
 
 const Index = (props) => {
   return (
@@ -57,7 +58,8 @@ const Index = (props) => {
             <span>My Wishlist</span>
           </Typography>
         </Stack>
-        <TableItem wishlist={props.data}/>
+        <WishlistItems data={props} />
+        {/* <TableItem wishlist={props.data}/> */}
         {/* <WishListTable data={props.data} /> */}
       </Box>
     </Userlayout>
