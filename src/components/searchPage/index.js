@@ -1,4 +1,7 @@
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Box,
   Button,
   Checkbox,
@@ -6,6 +9,7 @@ import {
   FormControl,
   FormControlLabel,
   FormGroup,
+  FormLabel,
   Grid,
   IconButton,
   Input,
@@ -33,6 +37,7 @@ import {
   Circle,
   Filter1Outlined,
   FilterAlt,
+  ExpandMore,
 } from "@mui/icons-material";
 // import Filter from "./child/Filter";
 import { useGlobalContext } from "@/context/globalContext";
@@ -43,6 +48,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { get } from "@/lib/network/http";
 import SwipeableTemporaryDrawer from "@/layout/drawer";
 import PaginationBlock from "../global/fields/PaginationBlock";
+import LeftFilterSection from "./child/leftsection";
+
 
 const ProductListing = ({ props }) => {
   const {
@@ -62,31 +69,15 @@ const ProductListing = ({ props }) => {
     setBrand,
     limit,
     setLimit,
-    setSort,
+    setSort,filters, setFilters,
     sort,
     price,
   } = useGlobalContext();
-
-  // const getProducts =async ()=>{
-  //   const res=  await get('/products')
-  //   console.log(res);
-  //   setProduct(res)
-  // }
-
-  // console.log(props);
-
   useEffect(() => {
     searchProducts();
-  }, [sort, limit, page, category, searchData, brand, price]);
+  }, [sort, limit, page, searchData,filters]);
   const params = useSearchParams();
-  // params.append()
-  // route.push({
-  //   query: {
-  //     filter: 'categories',
-  //   },
-  // })
 
-  // params.set
 
   return (
     <Container>
@@ -117,17 +108,7 @@ export const FilterSection = ({ props }) => {
     // Add more sort options as needed
   ];
 
-  const toggleDrawer = (anchor, open) => (event) => {
-    if (
-      event &&
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
 
-    setState({ ...state, [anchor]: open });
-  };
 
   return (
     <>
@@ -142,13 +123,9 @@ export const FilterSection = ({ props }) => {
       >
         <Box className=" flex gap-2">
           <p>
-            {/* <Button onClick={toggleDrawer("left", true)}>{"left"}</Button> */}
-            <button
-              className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
-              onClick={toggleDrawer("left", true)}
-            >
-              <FilterAlt /> Filter
-            </button>
+
+
+
           </p>
           <div className=" flex flex-col">
             <p className=" leading-4">
@@ -195,9 +172,7 @@ export const FilterSection = ({ props }) => {
           </Box>
         </Box>
       </Box>
-      <SwipeableTemporaryDrawer state={state} toggleDrawer={toggleDrawer}>
-        <Filter props={props} />
-      </SwipeableTemporaryDrawer>
+
     </>
   );
 };
@@ -231,12 +206,12 @@ export const BodySection = ({ props }) => {
       py={2}
       display={"flex"}
       alignItems={"flex-start"}
-      gap={5}
+      gap={2}
       component={"section"}
     >
-      {/* <Box flex={1} bgcolor={colors.grey[50]}>
+      <Box flex={1.2}>
         <Filter props={props} />
-      </Box> */}
+      </Box>
       <Box flex={3}>
         <Box sx={{ flexGrow: 1 }}>
           <Grid
@@ -250,7 +225,7 @@ export const BodySection = ({ props }) => {
             columns={12.17}
           >
             {products?.["results"]?.map((item) => (
-              <PCard key={item._id} size={3} product={item} />
+              <PCard key={item._id} size={4} product={item} />
             ))}
           </Grid>
         </Box>
@@ -270,8 +245,8 @@ export const BodySection = ({ props }) => {
               page={page}
               onChange={handleChange}
             /> */}
-            <PaginationBlock page={page} setPage={setPage} count={products.total} rowsPerPage={limit} setRowsPerPage={setLimit} perPage={[24,48,64]}/>
-            
+            <PaginationBlock page={page} setPage={setPage} count={products.total} rowsPerPage={limit} setRowsPerPage={setLimit} perPage={[24, 48, 64]} />
+
           </Stack>
         </Box>
       </Box>
@@ -280,7 +255,7 @@ export const BodySection = ({ props }) => {
 };
 
 export const Filter = ({ props }) => {
- // console.log(props);
+  // console.log(props);
   const {
     products,
     searchProducts,
@@ -301,266 +276,217 @@ export const Filter = ({ props }) => {
     setSort,
     price,
     setPrice,
-    sort,
+    sort,filters, setFilters
   } = useGlobalContext();
 
-  const [value, setValue] = useState([0, 2000]);
 
-  const handleChange = (event, newValue) => {
-   // console.log(event.target.value);
-    setPrice(event.target.value);
-  };
-  const ITEM_HEIGHT = 48;
-  const ITEM_PADDING_TOP = 8;
-  const MenuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-        width: 150,
-      },
-    },
+
+  const handlePriceRangeChange = (event, newPriceRange) => {
+    // The value will only change when the mouse leaves the slider
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      priceRange: newPriceRange,
+    }));
   };
 
-  const names = [
-    "Oliver Hansen",
-    "Van Henry",
-    "April Tucker",
-    "Ralph Hubbard",
-    "Omar Alexander",
-    "Carlos Abbott",
-    "Miriam Wagner",
-    "Bradley Wilkerson",
-    "Virginia Andrews",
-    "Kelly Snyder",
-  ];
+  const handleCheckboxChanges = (filterType, itemId) => {
+    setFilters((prevFilters) => {
+      const selectedItems = prevFilters[filterType];
+      const index = selectedItems.indexOf(itemId);
+      const updatedItems = [...selectedItems];
 
-  const [personName, setPersonName] = React.useState([]);
+      if (index === -1) {
+        // Item not selected, add it
+        updatedItems.push(itemId);
+      } else {
+        // Item already selected, remove it
+        updatedItems.splice(index, 1);
+      }
 
-  var newCate = [];
-
-  const handleSelectChange = (e) => {
-    const cate = e.target.value;
-
-    if (e.target.checked === true && !newCate.includes(cate)) {
-      newCate.push(cate);
-    } else if (e.target.checked === false) {
-      newCate = newCate.filter((value) => value !== cate);
-    }
-    //console.log(newCate);
-    setCategory(newCate);
+      return {
+        ...prevFilters,
+        [filterType]: updatedItems,
+      };
+    });
+    console.log(filters);
   };
 
-  const [height, setHeight] = useState(false);
+
+  const handleClearFilter = (filterType) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [filterType]: [], // Reset the selected values for the given filter type
+    }));
+  };
+
+
   return (
-    <Paper sx={{ padding: "18px 27px", gap: 5, borderRadius: "" }}>
-      <Stack gap="8px">
-        <Typography variant="h5">Categories</Typography>
-
-        <Box>
-          {/* <FormControl sx={{ m: 1, width: 250 }}>
-            <InputLabel id="demo-multiple-checkbox-label">
-              Categories
-            </InputLabel>
-            <Select
-              labelId="demo-multiple-checkbox-label"
-              id="demo-multiple-checkbox"
-              multiple
-              value={personName}
-              onChange={handleSelectChange}
-              input={<OutlinedInput label="Tag" />}
-              renderValue={(selected) => selected.join(", ")}
-              MenuProps={MenuProps}
-            >
-              {names.map((name) => (
-                <MenuItem key={name} value={name}>
-                  <Checkbox checked={personName.indexOf(name) > -1} />
-                  <ListItemText primary={name} />
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl> */}
-
-          {/* <FormControl sx={{ m: 1, minWidth: 120,width:"100%" }} size="small">
-            <Select
-              id="brand-select-small"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              placeholder="Select"
-            >
-              <MenuItem defaultValue={""} value="">
-                <em>Select</em>
-              </MenuItem>
-
-              {props.categories.results.map((item) => (
-                <MenuItem key={item._id} value={item._id}>
-                  {item.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl> */}
-
-          {/* <RadioGroup
-            aria-labelledby="demo-controlled-radio-buttons-categories"
-            name="controlled-radio-buttons-categories"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            {props.categories.results.map((item) => (
-              <FormControlLabel
-                key={item._id}
-                value={item._id}
-                control={<Radio />}
-                label={item.name}
-              />
-            ))}
-          </RadioGroup> */}
-
+    <Paper sx={{ padding: "", gap: 5, borderRadius: "" }}>
+      <Accordion>
+        <AccordionSummary expandIcon={<ExpandMore />}>
+          <Typography >
+            Category
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+      <div className=" text-right">  <button className=" text-red-800 font-semibold" onClick={() => handleClearFilter('category')}>Clear All</button></div>
           <FormGroup>
-            {props.categories.results.map((item) => (
+            {props.categories.results.map((category, checked) => (
               <FormControlLabel
-                key={item._id}
+                key={category._id}
                 control={
-                  <Radio
-                    value={item._id}
-                    onChange={(e) => setCategory(e.target.value)}
+                  <Checkbox
+                    checked={filters.category.includes(category._id)}
+                    onChange={() => handleCheckboxChanges('category', category._id)}
                   />
                 }
-                label={item.name}
+                label={category.name}
               />
             ))}
           </FormGroup>
-        </Box>
-      </Stack>
-      <Stack gap="8px" mt={2}>
-        <Typography variant="h5">Price Range</Typography>
-
-        <Stack width={"100%"}>
-          <Stack direction={"row"}>
-            <Input
-              sx={{ flex: 1 }}
-              type="number"
-              value={price?.[0]}
-              slotProps={{
-                input: {
-                  min: 0,
-                  max: 999999,
-                  step: 1,
-                },
-              }}
-            ></Input>
-            <Stack
-              direction={"row"}
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              -
-            </Stack>
-            <Input
-              type="number"
-              sx={{ flex: 1 }}
-              value={price?.[1]}
-              slotProps={{
-                input: {
-                  min: 0,
-                  max: 999999,
-                  step: 1,
-                },
-              }}
-            ></Input>
-          </Stack>
-          <Slider
-            value={price}
-            min={0}
-            step={1}
-            max={1000}
-            onChange={handleChange}
-            valueLabelDisplay="auto"
-            aria-labelledby="non-linear-slider"
-          />
-        </Stack>
-      </Stack>
-      <Stack gap="8px" mt={2}>
-        <Typography variant="h5">Brands</Typography>
-
-        <Stack width={"100%"}>
-          <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-            <Select
-              id="brand-select-small"
-              value={brand}
-              defaultValue={""}
-              onChange={(e) => setBrand(e.target.value)}
-              placeholder="Select"
-            >
-              <MenuItem defaultChecked value="">
-                <em>None</em>
-              </MenuItem>
-
-              {props.brands.results.map((item) => (
-                <MenuItem key={item._id} value={item._id}>
-                  {item.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Stack>
-      </Stack>
-      <Stack gap="8px" mt={2}>
-        <Typography variant="h5">Ratings</Typography>
-
-        <Stack width={"100%"}>
-          <FormGroup className=" flex flex-col-reverse">
-            {ArrayData.slice(0, 5).map((item) => (
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary expandIcon={<ExpandMore />}>
+          <Typography >
+            Brands
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <FormGroup>
+            {props.brands.results.map((brand, index) => (
               <FormControlLabel
-                key={item}
-                control={<Checkbox />}
-                label={
-                  <Rating
-                    key={item}
-                    name="read-only-rating"
-                    value={item + 1}
-                    readOnly
+                key={index}
+                control={
+                  <Checkbox
+                    checked={filters.brands.includes(brand._id)}
+                    onChange={() => handleCheckboxChanges('brands', brand._id)}
                   />
                 }
+                label={brand.name}
               />
             ))}
           </FormGroup>
-        </Stack>
-      </Stack>
-      {/* <Stack gap="8px" mt={2}>
-        <Typography variant="h5">Colors</Typography>
-
-        <Stack direction={"row"} width={"100%"}>
-          {colorArray.map((item) => (
-            // @ts-ignore
-            <Circle
-              key={item}
-              sx={{ cursor: "pointer" }}
-              color={`${item}`}
-              fontSize="large"
-            />
-          ))}
-        </Stack>
-      </Stack> */}
-      {/* <Stack gap="8px" mt={2}>
-        <Typography variant="h5">Status</Typography>
-
-        <Stack  width={"100%"}>
-        
-            {colorArray.slice(0,3).map((item) => (
-               // @ts-ignore
-               <FormControlLabel
-                key={item}
-                control={<Checkbox />}
-                label={`Label ${item}`}
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary expandIcon={<ExpandMore />}>
+          <Typography >
+            Price Range
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Slider
+            value={filters.priceRange}
+            onChange={handlePriceRangeChange}
+            onChangeCommitted={handlePriceRangeChange}
+            valueLabelDisplay="auto"
+            valueLabelFormat={(value) => `$${value}`}
+            min={0}
+            max={100}
+          />
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary expandIcon={<ExpandMore />}>
+          <Typography >
+            Rating
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <FormGroup>
+            {ArrayData.slice(0, 5).reverse().map((rate, index) => (
+              <FormControlLabel
+                key={index}
+                control={
+                  <Checkbox
+                    checked={filters.rating.includes(rate)}
+                    onChange={() => handleCheckboxChanges('rating', rate)}
+                  />
+                }
+                label={<Rating
+                  key={rate}
+                  name="read-only-rating"
+                  value={rate + 1}
+                  readOnly
+                />}
               />
-             
             ))}
-        
-        </Stack>
-      </Stack> */}
+          </FormGroup>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary expandIcon={<ExpandMore />}>
+          <Typography >
+            Tags
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <FormGroup>
+            {props?.tags?.results.map((tag, index) => (
+              <FormControlLabel
+                key={index}
+                control={
+                  <Checkbox
+                    checked={filters.tags.includes(tag._id)}
+                    onChange={() => handleCheckboxChanges('tag', tag._id)}
+                  />
+                }
+                label={tag.name}
+              />
+            ))}
+          </FormGroup>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary expandIcon={<ExpandMore />}>
+          <Typography >
+            Availability
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+        <FormGroup>
+            {["in stock","out of Stock"].map((stock, index) => (
+              <FormControlLabel
+                key={index}
+                control={
+                  <Checkbox
+                    checked={filters.stock.includes(stock)}
+                    onChange={() => handleCheckboxChanges('stock', stock)}
+                  />
+                }
+                label={stock}
+              />
+            ))}
+          </FormGroup>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary expandIcon={<ExpandMore />}>
+          <Typography >
+            Discount
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+        <FormGroup>
+            {["10","20","30","40","50","60"].map((discount, index) => (
+              <FormControlLabel
+                key={index}
+                control={
+                  <Checkbox
+                    checked={filters.discount.includes(discount)}
+                    onChange={() => handleCheckboxChanges('discount', discount)}
+                  />
+                }
+                label={`${discount}%`}
+              />
+            ))}
+          </FormGroup>
+        </AccordionDetails>
+      </Accordion>
+    
+   
+      
     </Paper>
   );
 };
