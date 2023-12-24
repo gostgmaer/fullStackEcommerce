@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import { parse } from "cookie";
 import { getSession, signIn } from "next-auth/react";
+import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -27,6 +28,11 @@ const Profile = ({ data,session }) => {
   const { user, userId } = useAuthContext();
   return (
     <Userlayout user={session}>
+          <Head>
+        <title>
+         Ecommerce {session.user.name} My Account
+        </title>
+      </Head>
       <Box
         display={"flex"}
         flexDirection={"column"}

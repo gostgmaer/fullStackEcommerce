@@ -15,7 +15,7 @@ const AppProvider = ({ children }) => {
   const [searchData, setSearchData] = useState("");
   const [category, setCategory] = useState("");
   const [brand, setBrand] = useState("");
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(24);
   const [price, setPrice] = useState(undefined);
   const [Rating, setRating] = useState(0);
@@ -64,7 +64,7 @@ const AppProvider = ({ children }) => {
         categories: category,
         brandName: brand, salePrice: price,search:searchData
       }),
-      page: page,
+      page: page+1,
       limit: limit,
       sort: mysort,
     };
