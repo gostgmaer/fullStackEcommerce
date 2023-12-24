@@ -62,7 +62,7 @@ const AppProvider = ({ children }) => {
           title: searchData,
         },
         categories: category,
-        brands: brand, salePrice: price,search:searchData
+        brandName: brand, salePrice: price,search:searchData
       }),
       page: page,
       limit: limit,

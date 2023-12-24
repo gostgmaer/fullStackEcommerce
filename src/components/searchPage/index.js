@@ -412,7 +412,7 @@ export const Filter = ({ props }) => {
             ))}
           </RadioGroup> */}
 
-          {/* <FormGroup>
+          <FormGroup>
             {props.categories.results.map((item) => (
               <FormControlLabel
                 key={item._id}
@@ -425,7 +425,7 @@ export const Filter = ({ props }) => {
                 label={item.name}
               />
             ))}
-          </FormGroup> */}
+          </FormGroup>
         </Box>
       </Stack>
       <Stack gap="8px" mt={2}>
@@ -479,7 +479,7 @@ export const Filter = ({ props }) => {
           />
         </Stack>
       </Stack>
-      {/* <Stack gap="8px" mt={2}>
+      <Stack gap="8px" mt={2}>
         <Typography variant="h5">Brands</Typography>
 
         <Stack width={"100%"}>
@@ -487,6 +487,7 @@ export const Filter = ({ props }) => {
             <Select
               id="brand-select-small"
               value={brand}
+              defaultValue={""}
               onChange={(e) => setBrand(e.target.value)}
               placeholder="Select"
             >
@@ -502,7 +503,7 @@ export const Filter = ({ props }) => {
             </Select>
           </FormControl>
         </Stack>
-      </Stack> */}
+      </Stack>
       <Stack gap="8px" mt={2}>
         <Typography variant="h5">Ratings</Typography>
 
