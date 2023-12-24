@@ -18,3 +18,14 @@ const Index = () => {
 };
 
 export default Index;
+
+
+export async function getServerSideProps(context) {
+ 
+  return {
+    redirect: {
+      destination: `/product/search`,
+      permanent: false,
+    },
+  };
+}
