@@ -19,44 +19,7 @@ const Home = (props) => {
 
   const { data: session, status } = useSession();
 
-  // URL to extract query parameters from
-  const url = "https://www.flipkart.com/mobiles/pr?sid=tyy%2C4io&p%5B%5D=facets.processor_brand%255B%255D%3DMediatek&otracker=nmenu_sub_Electronics_0_Realme&p%5B%5D=facets.sim_type%255B%255D%3DDual%2BSim&p%5B%5D=facets.internal_storage%255B%255D%3D256%2BGB%2B%2526%2BAbove&p%5B%5D=facets.rating%255B%255D%3D4%25E2%2598%2585%2B%2526%2Babove&p%5B%5D=facets.rating%255B%255D%3D3%25E2%2598%2585%2B%2526%2Babove&p%5B%5D=facets.operating_system%255B%255D%3DAndroid&p%5B%5D=facets.screen_size%255B%255D%3D6.4%2Binch%2B%2526%2BAbove&p%5B%5D=facets.battery_capacity%255B%255D%3D4000%2B-%2B4999%2BmAh&p%5B%5D=facets.network_type%255B%255D%3D2G&p%5B%5D=facets.brand%255B%255D%3Drealme&p%5B%5D=facets.brand%255B%255D%3DOPPO&p%5B%5D=facets.offer_type%255B%255D%3DNo%2BCost%2BEMI&p%5B%5D=facets.ram%255B%255D%3D4%2BGB&p%5B%5D=facets.ram%255B%255D%3D8%2BGB%2Band%2BAbove&p%5B%5D=facets.ram%255B%255D%3D6%2BGB&p%5B%5D=facets.resolution_type%255B%255D%3DFull%2BHD";
 
-  // Function to extract query parameters from the URL
-  function getQueryParams(url) {
-    const params = new URL(url).searchParams;
-    const queryParams = {};
-    console.log(params);
-
-    params.forEach((value, key) => {
-      console.log(key);
-      queryParams[key] = value;
-    });
-
-    return queryParams;
-  }
-
-  // Get query parameters from the URL
-  const queryParams = getQueryParams(url);
-
-  // Convert the object to JSON
-  const jsonParams = JSON.stringify(queryParams, null, 2);
-
-  // Display the JSON
-  console.log(jsonParams);
-
-
-
-  // console.log(props);
-
-  // const fetchHomeData = async () => {
-  //   const response = await get("/home/data");
-  //   setHomeData(response);
-  // };
-
-  // useEffect(() => {
-  //   fetchHomeData();
-  // }, []);
 
   return (
     <>
