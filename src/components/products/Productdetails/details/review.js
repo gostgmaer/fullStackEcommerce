@@ -28,7 +28,7 @@ const ReviewBlock = ({ data }) => {
   const route = useRouter();
   const [review, setReview] = useState(null);
 
-  // console.log(data);
+  // //console.log(data);
   // const getReview = async () => {
   //   const req = await get(`/products/${data["_id"]}/reviews`);
   //   setReview(req);
@@ -37,14 +37,14 @@ const ReviewBlock = ({ data }) => {
   // const getRelated = async (second) => {
   //   const filter = JSON.stringify({ categories: "Man" });
   //   const relatedProducts = await fetch(`${apiUrl}/products?filter=${filter}`);
-  //   console.log(relatedProducts);
+  //   //console.log(relatedProducts);
   //  }
 
   // useEffect(() => {
   //   getRelated()
   // }, []);
 
-  // console.log(session);
+  // //console.log(session);
 
   return (
     <Box
@@ -101,10 +101,10 @@ export const Reviewform = ({ product }) => {
       product: product._id,
       images: value,
     };
-   // console.log(body);
+   // //console.log(body);
     const req = post(`/products/${product._id}/reviews`, body);
 
-    // console.log(req);
+    // //console.log(req);
   };
 
   function getLabelText(value) {
@@ -122,7 +122,7 @@ export const Reviewform = ({ product }) => {
       // Simulating an asynchronous submission (e.g., API call)
       setTimeout(() => {
         // Submit logic here (you can make an API call)
-        console.log('Form submitted:', values);
+        //console.log('Form submitted:', values);
         const body = {
           title: values.title,
           rating: values.rating,
@@ -130,7 +130,7 @@ export const Reviewform = ({ product }) => {
           product: product._id,
           images: value,
         };
-        console.log(body);
+        //console.log(body);
         const req = post(`/products/${product._id}/reviews`, body);
         // Reset the form after successful submission
         resetForm();

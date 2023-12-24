@@ -1,3 +1,3 @@
 const validationCheckout = (params) => {
-  return console.log("data");
+  return //console.log("data");
 };

@@ -30,7 +30,7 @@ export default function SwipeableTemporaryDrawer({
             anchor={"left"}
             open={state[anchor]}
             variant="persistent"
-             onClose={()=>{console.log("click")}}
+             onClose={()=>{//console.log("click")}}
             onOpen={toggleDrawer(anchor, true)}
           >
             <Box

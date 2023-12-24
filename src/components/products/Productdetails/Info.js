@@ -19,7 +19,7 @@ import {
 import Slider from "./details/children/Slider";
 import CustomImageSlider from "@/components/global/fields/SliderImage";
 const Info = ({ data }) => {
-  console.log(data);
+  //console.log(data);
   // const [selected, setSelected] = useState(true);
   // const [selected, setSelected] = useState("");
   // const [type, setType] = useState("");
@@ -261,7 +261,7 @@ const Info = ({ data }) => {
 export default Info;
 
 const Showtextdata = ({ params }) => {
-  //  console.log(params.length);
+  //  //console.log(params.length);
   return (
     <>
       {" "}

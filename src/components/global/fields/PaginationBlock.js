@@ -10,7 +10,7 @@ export default function PaginationBlock({page, setPage, count, rowsPerPage, setR
     };
 
     const handleChangeRowsPerPage = (event) => {
-        console.log(event);
+        //console.log(event);
         setRowsPerPage(parseInt(event.target.value, 5));
         setPage(0);
 

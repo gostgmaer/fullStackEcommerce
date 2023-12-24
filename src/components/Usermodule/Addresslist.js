@@ -47,7 +47,7 @@ const Addresslist = ({ }) => {
     };
 
     const data = await get("/address", query);
-    console.log(data);
+    //console.log(data);
     setAddress(data);
   };
 

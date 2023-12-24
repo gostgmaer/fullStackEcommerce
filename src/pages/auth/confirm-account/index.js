@@ -1,6 +1,7 @@
 import ConfirmForm from '@/components/forms/auth/confirmAccount'
 import Layout from '@/layout'
 import Head from 'next/head'
+import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
@@ -9,9 +10,9 @@ const index = (props) => {
     <Layout>
 
       <Head>
-        <title>{props.title}</title>
+        <title>{"Confirm Your Account"}</title>
         <meta name="description" content="Your eCommerce Website Description" />
-        <meta name="keywords" content="ecommerce, online shopping, Forget Password" />
+        <meta name="keywords" content="ecommerce, online shopping" />
         <meta name="author" content="Kishor Sarkar" />
       </Head>
 
@@ -19,11 +20,11 @@ const index = (props) => {
         <div className="mx-auto w-full max-w-md py-12 md:max-w-lg lg:max-w-xl 2xl:pb-8 2xl:pt-2">
           <div className="flex flex-col items-center">
             <Link className="mb-7 inline-block max-w-[64px] lg:mb-9" href="/">
-              <img
+              <Image
                 alt="Isomorphic"
                 loading="lazy"
-                width="61"
-                height="38"
+                width={61}
+                height={38}
                 decoding="async"
                 data-nimg="1"
                 src="https://isomorphic-furyroad.vercel.app/_next/static/media/logo-short.18ca02a8.svg"

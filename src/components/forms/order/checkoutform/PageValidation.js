@@ -97,13 +97,13 @@ export default function PageValidation() {
     onSubmit: (values, { setSubmitting }) => {
       // Handle form submission logic here
 
-      //  console.log(values);
+      //  //console.log(values);
       setSubmitting(false);
       submitData(values);
     },
   });
 
-  //  console.log(formik);
+  //  //console.log(formik);
   // useEffect(() => {
   //   protectedRouteCheck();
   // }, []);
@@ -188,7 +188,7 @@ export default function PageValidation() {
   };
 
   const handlePaymentSuccess = () => {
-    console.log("Payment successful");
+    //console.log("Payment successful");
     // Add your logic for handling a successful payment
   };
 
@@ -210,12 +210,12 @@ export default function PageValidation() {
 
   const handleCheckoutSuccess = (details, data) => {
     // Handle successful payment, e.g., update order status, show thank you message, etc.
-    console.log("Payment successful:", details, data);
+    //console.log("Payment successful:", details, data);
   };
 
   const handleCheckoutCancel = (data) => {
     // Handle when the user cancels the payment
-    console.log("Payment canceled:", data);
+    //console.log("Payment canceled:", data);
   };
 
   const handleCheckoutError = (err) => {
@@ -938,7 +938,7 @@ useEffect(() => {
 }
 
 const PreviewProductcard = ({ data }) => {
-  // console.log(data);
+  // //console.log(data);
   return (
     <Paper
       sx={{

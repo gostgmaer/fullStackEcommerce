@@ -225,7 +225,7 @@ export default function EnhancedTable({
   multi = false,
   isSort = false,
 }) {
-  console.log(rows);
+  //console.log(rows);
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);

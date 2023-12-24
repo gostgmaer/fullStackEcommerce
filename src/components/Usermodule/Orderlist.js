@@ -24,7 +24,7 @@ const Orderlist = ({user}) => {
   const [limit, setLimit] = useState(6);
   const [address, setAddress] = useState(undefined);
   const [axios, spinner] = useAxios();
-  console.log(user);
+  //console.log(user);
   const fetchAddress = async (params) => {
     const query = {
       filter: JSON.stringify({
@@ -36,7 +36,7 @@ const Orderlist = ({user}) => {
     };
 
     const data = await get(`/orders/user/${user.user.id}`, query);
-    console.log(data);
+    //console.log(data);
     setAddress(data);
   };
 
@@ -111,7 +111,7 @@ export default Orderlist;
 
 const OrderItem = ({ data }) => {
   const router = useRouter();
-  // console.log(data);
+  // //console.log(data);
 
   const StyleColor = {
     backgroundColor:

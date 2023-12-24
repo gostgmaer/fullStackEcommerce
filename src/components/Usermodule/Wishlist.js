@@ -29,7 +29,7 @@
 
 // // try {
 // //   currData.map((element) => {
-// //     console.log(element);
+// //     //console.log(element);
 // //     element["remove"] = (
 // //       <IconButton
 // //         className="border border-gray-400 rounded-full w-10 h-10"
@@ -42,7 +42,7 @@
 // //   });
 // // } catch (error) {
 
-// //   console.log(error);
+// //   //console.log(error);
 // // }
 //   // const action = (
 //   //   <>
@@ -132,7 +132,7 @@
 
 // const OrderItem = ({ data }) => {
 //   const router = useRouter();
-//   // console.log(data);
+//   // //console.log(data);
 
 //   const StyleColor = {
 //     backgroundColor:
@@ -297,7 +297,7 @@ const WishlistItems = ({ data }) => {
   //   };
 
   //   const data = await get(`/orders/user/${user.user.id}`, query);
-  //   console.log(data);
+  //   //console.log(data);
   //   setAddress(data);
   // };
 

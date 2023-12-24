@@ -12,7 +12,7 @@ export async function getServerSideProps(ctx) {
   try {
     const { query } = ctx;
 
-    console.log(query);
+    //console.log(query);
 
     const response = await axios.post(baseurl + "/payment/checkout/process/cancel", query);
 

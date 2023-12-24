@@ -7,7 +7,7 @@ import CategoryBlock from "../elements/Categorycard";
 import { SwiperSlide } from "swiper/react";
 
 const CategoryList = ({ data }) => {
-// console.log(data);
+// //console.log(data);
   return (
     <Fragment>
       <Elementlist

@@ -51,7 +51,7 @@ const AppProvider = ({ children }) => {
     // const [sortKey, sortOrder] = sort.split("-");
     // myObject[sortKey] = sortOrder
 
-    // console.log(mysort);
+    // //console.log(mysort);
 
     const query = {
       filter: JSON.stringify({
@@ -86,15 +86,15 @@ const AppProvider = ({ children }) => {
     //   sort: mysort,
     // }
 
-    // console.log(search);
+    // //console.log(search);
 
     // const queryString = objectToQueryString(search);
-    // console.log(queryString);
+    // //console.log(queryString);
     // const cleanQuery = deleteEmptyKeys(search)
     const urlWithQueryParams = generateUrlFromNestedObject({...query,filter:query.filter});
-    // console.log('Generated URL:', urlWithQueryParams);
+    // //console.log('Generated URL:', urlWithQueryParams);
     const parsedObject = parseUrlWithQueryParams(`${urlWithQueryParams}`);
-    // console.log('Parsed Object:', parsedObject);
+    // //console.log('Parsed Object:', parsedObject);
 
     router.push(`${pathname}${urlWithQueryParams}`);
     const res = await get("/product/search/data", query);
@@ -105,7 +105,7 @@ const AppProvider = ({ children }) => {
   const getWishlist = async (second) => {
     const res= await get('/wishlists/fetch')
     setWishlistData(res)
-    console.log(res);
+    //console.log(res);
   }
   useEffect(() => {
     if (session) {

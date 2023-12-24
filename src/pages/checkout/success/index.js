@@ -12,7 +12,7 @@ const Index = ({data}) => {
   const searchparama = useSearchParams();
   const router = useRouter();
 
-console.log(data);
+//console.log(data);
 
   return (
     <Layout>

@@ -44,7 +44,7 @@ const ProfileupdateForm = ({ userData }) => {
   const [image, setImage] = useState(userData?.profilePicture);
 
   const saveSubmit = async () => {
-    console.log(formik.values);
+    //console.log(formik.values);
     const body = {
       firstName: formik.values.firstName,
       lastName: formik.values.lastName,
@@ -63,7 +63,7 @@ const ProfileupdateForm = ({ userData }) => {
     const request = await get('/user/auth/profile')
     setImage(request.result.profilePicture)
     setUser(request.result)
-    console.log(request);
+    //console.log(request);
   }
   useEffect(() => {
 

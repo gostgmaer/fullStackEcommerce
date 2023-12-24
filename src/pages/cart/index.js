@@ -86,7 +86,7 @@ const CartTable = (second) => {
   const cartData = useSelector((state) => state["data"].cartItems);
 
   const dispatch = useDispatch();
-  console.log(cartData);
+  //console.log(cartData);
 
   return (
     <TableContainer component={Paper}>

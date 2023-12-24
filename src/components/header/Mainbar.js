@@ -49,7 +49,7 @@ const Mainbar = () => {
   const handleLogoutHandler = (e) => {
     try {
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
 
     setAnchorEl(null);
@@ -167,7 +167,7 @@ export default Mainbar;
 //   const cartItem = useSelector((state) => state["data"].cartItems);
 //   const wishlist = useSelector((state) => state["data"].wishList);
 
-//   console.log(wishlist);
+//   //console.log(wishlist);
 
 //   return {
 //     props: { newData: wishlist }, // will be passed to the page component as props

@@ -15,7 +15,7 @@ const Index = ({ data }) => {
 
   // const product = data.find((data) => data.slug === params?.["productId"]);
   // const relatedProduct = data;
-   console.log(data);
+   //console.log(data);
   return (
     <>
       <Head>

@@ -59,7 +59,7 @@ export default function Checkout() {
   const route = useRouter();
 
   const handlePayment = (params) => {
-    // console.log(params);
+    // //console.log(params);
   };
 
   return (

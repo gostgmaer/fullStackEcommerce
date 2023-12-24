@@ -94,7 +94,7 @@ export const DescriptionBlock = ({ product }) => {
 };
 
 export const SpecificationsBlock = ({ product }) => {
-//  console.log(product);
+//  //console.log(product);
   return (
     <Box
       className="elements"

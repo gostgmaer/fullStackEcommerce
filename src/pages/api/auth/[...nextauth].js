@@ -21,13 +21,13 @@ import Cookies from 'js-cookie';
 //             headers: { "Content-Type": "application/json" },
 //           });
 
-//           // console.log(apiCookies);
+//           // //console.log(apiCookies);
 //           const user = await response.json();
 
 //           if (user.access_token) {
 //             const access_token = jwtDecode(user.access_token);
 //             const userInfo = jwtDecode(user.id_token);
-//             // console.log(access_token,userInfo);
+//             // //console.log(access_token,userInfo);
 //             const userSession = {
 //               ...user,
 //               ...userInfo,

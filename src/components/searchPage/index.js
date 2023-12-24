@@ -69,11 +69,11 @@ const ProductListing = ({ props }) => {
 
   // const getProducts =async ()=>{
   //   const res=  await get('/products')
-  //   console.log(res);
+  //   //console.log(res);
   //   setProduct(res)
   // }
 
-  // console.log(props);
+  // //console.log(props);
 
   useEffect(() => {
     searchProducts();
@@ -280,7 +280,7 @@ export const BodySection = ({ props }) => {
 };
 
 export const Filter = ({ props }) => {
- // console.log(props);
+ // //console.log(props);
   const {
     products,
     searchProducts,
@@ -307,7 +307,7 @@ export const Filter = ({ props }) => {
   const [value, setValue] = useState([0, 2000]);
 
   const handleChange = (event, newValue) => {
-   // console.log(event.target.value);
+   // //console.log(event.target.value);
     setPrice(event.target.value);
   };
   const ITEM_HEIGHT = 48;
@@ -346,7 +346,7 @@ export const Filter = ({ props }) => {
     } else if (e.target.checked === false) {
       newCate = newCate.filter((value) => value !== cate);
     }
-    //console.log(newCate);
+    ////console.log(newCate);
     setCategory(newCate);
   };
 

@@ -26,12 +26,12 @@ import { Fragment, useEffect, useState } from "react";
 
 export default function PaymentForm({ formik }) {
   const [value, setValue] = useState("");
-  // console.log(formik);
+  // //console.log(formik);
 
   const handleChange = (event) => {
     setValue(event.target.value);
-    // console.log(event);
-    // console.log(value);
+    // //console.log(event);
+    // //console.log(value);
   };
   return (
     <Paper

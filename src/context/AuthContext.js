@@ -18,7 +18,7 @@ export const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     // When the session changes (e.g., after successful login), set cookies
-    console.log(session);
+    //console.log(session);
     if (session) {
       // Cookies.set('access_token', session["user"]["accessToken"]);
       // Cookies.set('refresh_token', session["user"]["refreshToken"]);
@@ -42,7 +42,7 @@ export const AuthContextProvider = ({ children }) => {
 
   const handleLoginAuth = async (body) => {
     // const res = await post("/user/auth/login", body);
-    // console.log(res);
+    // //console.log(res);
     try {
       const res = await post("/user/auth/login", body);
       if (res.statusCode != 200) {
@@ -62,7 +62,7 @@ export const AuthContextProvider = ({ children }) => {
         setAuthError(undefined);
       }
     } catch (err) {
-      console.log(err);
+      //console.log(err);
     }
   };
 

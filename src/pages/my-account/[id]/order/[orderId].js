@@ -307,7 +307,7 @@ const AddressAndSummery = (params) => {
 
 // export const getServerSideProps = async (ctx) => {
 //   const session = await getSession(ctx);
-//   // console.log(session);
+//   // //console.log(session);
 //   if (!session) {
 //     return {
 //       redirect: {

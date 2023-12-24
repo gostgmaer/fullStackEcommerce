@@ -74,7 +74,7 @@ import { Country, State, City } from "country-state-city";
 //     },
 //     validationSchema: billingAddressValidationSchema,
 //     onSubmit: (values) => {
-//       console.log("Form submitted:", values);
+//       //console.log("Form submitted:", values);
 //     },
 //   });
 
@@ -374,7 +374,7 @@ export const BillingAddressForm = ({}) => {
     },
     validationSchema: billingAddressValidationSchema,
     onSubmit: (values) => {
-    //  console.log("Form submitted:", values);
+    //  //console.log("Form submitted:", values);
     },
   });
 
@@ -1141,12 +1141,12 @@ const OrderdetailsData = ({ formik, handleNext, step }) => {
 
 export function PaymentForm({ formik }) {
   const [value, setValue] = useState("");
-  // console.log(formik);
+  // //console.log(formik);
 
   const handleChange = (event) => {
     setValue(event.target.value);
-    // console.log(event);
-    // console.log(value);
+    // //console.log(event);
+    // //console.log(value);
   };
   return (
     <Paper
@@ -1630,7 +1630,7 @@ const PrivacyPolicyModalContent = ({ setOpen }) => {
 
 
 const PreviewProductcard = ({ data }) => {
-  // console.log(data);
+  // //console.log(data);
   return (
     <Paper
       sx={{
