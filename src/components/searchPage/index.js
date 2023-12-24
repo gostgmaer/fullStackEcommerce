@@ -42,6 +42,7 @@ import { ArrayData } from "../../../public/assets/mock/product";
 import { useRouter, useSearchParams } from "next/navigation";
 import { get } from "@/lib/network/http";
 import SwipeableTemporaryDrawer from "@/layout/drawer";
+import PaginationBlock from "../global/fields/PaginationBlock";
 
 const ProductListing = ({ props }) => {
   const {
@@ -255,7 +256,7 @@ export const BodySection = ({ props }) => {
         </Box>
         <Box py={3}>
           <Stack justifyContent={"space-between"} direction="row" spacing={2}>
-            <Typography>
+            {/* <Typography>
               <span>Showing</span>{" "}
               <span>
                 {1}-{products.total}
@@ -268,7 +269,8 @@ export const BodySection = ({ props }) => {
               count={Math.round(products.total/limit)}
               page={page}
               onChange={handleChange}
-            />
+            /> */}
+            <PaginationBlock page={page} setPage={setPage} count={products.total} rowsPerPage={limit} setRowsPerPage={setLimit} perPage={[24,48,64]}/>
             
           </Stack>
         </Box>

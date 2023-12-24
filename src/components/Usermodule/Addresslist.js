@@ -31,7 +31,7 @@ import { useAxios } from "@/lib/network/interceptors";
 import PaginationBlock from "../global/fields/PaginationBlock";
 const Addresslist = ({ }) => {
   const { userId } = useAuthContext();
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(5);
   const [address, setAddress] = useState(undefined);
   const [axios, spinner] = useAxios();
