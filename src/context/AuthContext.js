@@ -25,8 +25,8 @@ export const AuthContextProvider = ({ children }) => {
 
       if (session.user["accessToken"]) {
         const token = session.user["accessToken"].split(".");
-        setToken("headerPayload", `${token[0]}.${token[1]}`, session.expires);
-        setToken("signature", `${token[2]}`, session.expires);
+        setToken("headerPayload", `${token[0]}.${token[1]}`, session.user["exp"]);
+        setToken("signature", `${token[2]}`, session.user["exp"]);
       }
       storeCookiesOfObject(session["user"])
     }
