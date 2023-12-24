@@ -3,9 +3,7 @@ import { getSession } from "next-auth/react";
 
 const Index = () => {
   return (
-    <Userlayout>
-     <div></div>
-    </Userlayout>
+    <div></div>
   );
 };
 
@@ -20,7 +18,7 @@ export async function getServerSideProps(context) {
         permanent: false,
       },
     };
-  }else{
+  } else {
     return {
       redirect: {
         destination: `/my-account/${session.user["id"]}`,
@@ -28,8 +26,6 @@ export async function getServerSideProps(context) {
       },
     };
   }
-
-
 }
 
 
