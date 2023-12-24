@@ -11,6 +11,7 @@ import { useAxios } from "@/lib/network/interceptors";
 import { Close, LocationOn } from "@mui/icons-material";
 import { Box, Button, Pagination, Stack, Typography } from "@mui/material";
 import { getSession } from "next-auth/react";
+import Head from "next/head";
 import { useState } from "react";
 
 const Address = (props) => {
@@ -21,6 +22,11 @@ const Address = (props) => {
 
   return (
     <Userlayout  user={props.session}>
+      <Head>
+        <title>
+         Ecommerce {props.session.user.name} Address
+        </title>
+      </Head>
       <Box
         display={"flex"}
         flexDirection={"column"}

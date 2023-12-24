@@ -265,10 +265,11 @@ export const BodySection = ({ props }) => {
             </Typography>
             <Pagination
               variant="outlined"
-              count={products?.results ? products?.results : 1}
+              count={Math.round(products.total/limit)}
               page={page}
               onChange={handleChange}
             />
+            
           </Stack>
         </Box>
       </Box>

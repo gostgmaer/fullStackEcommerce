@@ -4,10 +4,16 @@ import Userlayout from "@/layout/user";
 import { Person, ShoppingBag } from "@mui/icons-material";
 import { Box, Pagination, Typography } from "@mui/material";
 import { getSession } from "next-auth/react";
+import Head from "next/head";
 
 const Orders = (props) => {
   return (
     <Userlayout  user={props.session}>
+       <Head>
+        <title>
+         Ecommerce {props.session.user.name} Order List
+        </title>
+      </Head>
       <Box
         display={"flex"}
         flexDirection={"column"}

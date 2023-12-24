@@ -28,18 +28,20 @@ import { del, get } from "@/lib/network/http";
 import { useAuthContext } from "@/context/AuthContext";
 import { Country } from "country-state-city";
 import { useAxios } from "@/lib/network/interceptors";
-const Addresslist = ({}) => {
+import PaginationBlock from "../global/fields/PaginationBlock";
+const Addresslist = ({ }) => {
   const { userId } = useAuthContext();
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(6);
+  const [limit, setLimit] = useState(5);
   const [address, setAddress] = useState(undefined);
   const [axios, spinner] = useAxios();
+  const perpage =[5,10,20,25,50,100]
   const fetchAddress = async (params) => {
     const query = {
       filter: JSON.stringify({
         user: userId?.user_id,
       }),
-      page: page,
+      page: page+1,
       limit: limit,
       sort: undefined,
     };
@@ -52,50 +54,39 @@ const Addresslist = ({}) => {
   useEffect(() => {
     fetchAddress();
   }, [limit, page]);
+
   return (
     <Box width={"100%"}>
-      <Stack
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 1,
-          width: "100%",
-          fontSize: 2,
-          py: 1,
-          px: 1,
-        }}
-      >
-        {address ? (
-          address.results?.map((item) => (
+
+      {address ? <>
+        <Stack className=" flex items-center justify-between gap-4 w-full text-2xl py-4 px-4">
+
+          {address.results?.map((item) => (
             <AddressItem key={item._id} data={item} alldata={fetchAddress} />
-          ))
-        ) : (
-          <div>NO address Saved</div>
-        )}
-      </Stack>
-      <Box
-        width={"100%"}
-        sx={{
-          display: "flex",
-          gap: 0.5,
-          alignItems: "center",
-          justifyContent: "space-between",
-          mt:"10px",
-          p: "8px",
-        }}
-      >
-        <div>
+          ))}
+
+        </Stack>
+        <Box className="flex gap-2 items-center justify-between mt-2 p-2 w-full">
+        {/* <div>
           <span>Total:{address?.total} </span>
-        </div>
-        <Pagination
+        </div> */}
+        {/* <Pagination
           page={page}
           onChange={(event, value) => setPage(value)}
-          count={address?.total/limit}
+          count={Math.round(address?.total / limit)}
           variant="outlined"
-        />
+        /> */}
+        <PaginationBlock
+            page={page}
+            setPage={setPage}
+            count={address?.total}
+            rowsPerPage={limit}
+            setRowsPerPage={setLimit} perPage={perpage}        />
       </Box>
-      {spinner}
+      </> : <div>NO address Saved</div>}
+
+      
+      
     </Box>
   );
 };
