@@ -10,7 +10,7 @@ import {
 import { Box, Button, colors, Grid, Typography } from "@mui/material";
 import Smallproductcard from "../elements/Smallproductcard";
 const FeatureItems = ({ data }) => {
-  // //console.log(data);
+  // console.log(data);
   return (
     <Box  py={1} component={"section"}>
       <Box

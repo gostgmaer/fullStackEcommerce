@@ -15,7 +15,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 const Left = ({user}) => {
-  // //console.log(ClassNames);
+  // console.log(ClassNames);
   const router = useRouter();
   const { userId}= useAuthContext()
 
@@ -217,7 +217,7 @@ export default Left;
 
 
 // export async function getServerSideProps(context) {
-//   // //console.log(context);
+//   // console.log(context);
 //   const session = await getSession(context);
 
 //   if (session) {

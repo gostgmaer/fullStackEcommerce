@@ -32,7 +32,7 @@ import {
 } from "@/store/cartReducer";
 
 const Productcard = ({ product, size }) => {
-  // //console.log(product);
+  // console.log(product);
   // const Item = styled(Paper)(({ theme }) => ({
   //   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   //   ...theme.typography.body2,

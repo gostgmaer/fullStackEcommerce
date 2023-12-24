@@ -151,7 +151,7 @@ const NoCartData = (params) => {
 
 const HascartData = ({ data }) => {
   const dispatch = useDispatch();
- // //console.log(data);
+ // console.log(data);
   return (
     <Box
       sx={{

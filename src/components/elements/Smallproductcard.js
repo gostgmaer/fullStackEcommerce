@@ -23,7 +23,7 @@ import { Item } from "./Item";
 import Link from "next/link";
 
 const Smallproductcard = ({ issale, height, size, product }) => {
-  // //console.log(product);
+  // console.log(product);
   return (
     <Grid item xs={size ? size : 3}>
       <Item sx={{ boxShadow: "none", background: "transparent" }}>

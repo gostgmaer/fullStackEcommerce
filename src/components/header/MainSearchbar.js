@@ -20,7 +20,7 @@ const MainSearchbar = () => {
   const [value, setValue] = useState("");
   const opencate = Boolean(anchorElcate);
   useEffect(() => {
-   // //console.log(value);
+   // console.log(value);
   }, [value]);
 
   const handleClickcate = (event) => {

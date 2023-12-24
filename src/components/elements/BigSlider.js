@@ -4,7 +4,7 @@ import Link from "next/link";
 import React from "react";
 
 const BigSlider = ({ data }) => {
-  // //console.log(data);
+  // console.log(data);
   return (
     <Grid
       container

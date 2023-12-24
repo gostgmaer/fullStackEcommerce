@@ -26,7 +26,16 @@ const AppProvider = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-
+  const [filters, setFilters] = useState({
+    category: [],
+    brands: [],
+    tags: [],
+    rating: [],
+    priceRange: [0, 99999],
+    stock: [],
+    discount: []
+    // Add more filter types if needed
+  });
 
   const fetchCategories = async (second) => {
     const response = await get("/categories");
@@ -41,17 +50,13 @@ const AppProvider = ({ children }) => {
 
 
   const searchProducts = async (second) => {
-    // const current = new URLSearchParams(Array.from(searchParams.entries())); // -> has to use this form
-  
+
     var sortItem = sort.split('-');
-
-
-
     let mysort = `${sortItem[0]}:${sortItem[1]}`
     // const [sortKey, sortOrder] = sort.split("-");
     // myObject[sortKey] = sortOrder
 
-    // //console.log(mysort);
+    // console.log(mysort);
 
     const query = {
       filter: JSON.stringify({
@@ -62,14 +67,14 @@ const AppProvider = ({ children }) => {
           title: searchData,
         },
         categories: category,
-        brandName: brand, salePrice: price,search:searchData
+        brandName: brand, salePrice: price, search: searchData
       }),
-      page: page+1,
+      page: page + 1,
       limit: limit,
       sort: mysort,
     };
 
-  
+
     // const search = {
     //   filter: {
     //     match: {
@@ -86,26 +91,27 @@ const AppProvider = ({ children }) => {
     //   sort: mysort,
     // }
 
-    // //console.log(search);
-
+     
+    const checkQuerydata = generateUrlFromNestedObject({ ...query, filter: filters });
+    console.log(checkQuerydata);
     // const queryString = objectToQueryString(search);
-    // //console.log(queryString);
+    // console.log(queryString);
     // const cleanQuery = deleteEmptyKeys(search)
-    const urlWithQueryParams = generateUrlFromNestedObject({...query,filter:query.filter});
-    // //console.log('Generated URL:', urlWithQueryParams);
-    const parsedObject = parseUrlWithQueryParams(`${urlWithQueryParams}`);
-    // //console.log('Parsed Object:', parsedObject);
+    const urlWithQueryParams = generateUrlFromNestedObject({ ...query, filter: query.filter });
+    // console.log('Generated URL:', urlWithQueryParams);
+    const parsedObject = parseUrlWithQueryParams(`${checkQuerydata}`);
+    console.log('Parsed Object:', parsedObject);
 
-    router.push(`${pathname}${urlWithQueryParams}`);
+    router.push(`${pathname}${checkQuerydata}`);
     const res = await get("/product/search/data", query);
     setProducts(res)
-   
+
   };
 
   const getWishlist = async (second) => {
-    const res= await get('/wishlists/fetch')
+    const res = await get('/wishlists/fetch')
     setWishlistData(res)
-    //console.log(res);
+    console.log(res);
   }
   useEffect(() => {
     if (session) {
@@ -126,7 +132,7 @@ const AppProvider = ({ children }) => {
         setCategory,
         page,
         setPage,
-        searchProducts,
+        searchProducts, filters, setFilters,
         limit,
         setLimit, products, setSort, sort, brand, setBrand, price, setPrice, categories, getWishlist
       }}

@@ -163,7 +163,7 @@ function Navigation({data}) {
             />
             <button
               className="  text-gray-100 hover:bg-gray-800 h-10 bg-gray-500  w-20 rounded-full"
-              onClick={fetchData}
+              onClick={()=>route.push('/product/search')}
             >
               <Search />
             </button>

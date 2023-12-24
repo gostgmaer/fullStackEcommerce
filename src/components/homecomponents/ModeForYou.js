@@ -4,7 +4,7 @@ import Productcard from "../elements/Productcard";
 import PCard from "../global/products/Card";
 
 const ModeForYou = ({ data }) => {
- //  //console.log(data);
+ //  console.log(data);
   return (
     <Fragment>
       <Elementlist

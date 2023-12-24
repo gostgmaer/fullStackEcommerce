@@ -20,7 +20,7 @@ const Filter = () => {
   let colorArray =['action','primary','secondary','error','info','success','warning']
 
   const handleChange = (event, newValue) => {
-    // //console.log(event);
+    // console.log(event);
     setValue(event.target.value);
   };
 

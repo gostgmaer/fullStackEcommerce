@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export const UserCard = ({ data }) => {
 
-  //console.log(data);
+  console.log(data);
   return (
     <Stack direction={"row"} width={"100%"} justifyContent={"space-between"} className="h-32">
       <Paper

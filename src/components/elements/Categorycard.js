@@ -11,7 +11,7 @@ import { Item } from "./Item";
 import Image from "next/image";
 
 const CatagoryCard = ({ category }) => {
-  // //console.log(category);
+  // console.log(category);
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
     ...theme.typography.body2,
