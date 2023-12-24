@@ -15,7 +15,7 @@ const Index = ({ data }) => {
 
   // const product = data.find((data) => data.slug === params?.["productId"]);
   // const relatedProduct = data;
-  // console.log(product);
+   console.log(data);
   return (
     <>
       <Head>
@@ -27,8 +27,8 @@ const Index = ({ data }) => {
       <Layout>
         <Container  component={"div"} className=" my-20" >
           <Info data={data.results.currentProd} />
-          {/* <ProductDetails data={data.results.currentProd} /> */}
-          {/* <Related data={data.results.related} /> */}
+          <ProductDetails data={data.results.currentProd} />
+          <Related data={data.results.related} />
         </Container>
       </Layout>
     </>
