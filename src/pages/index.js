@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import MuiModal from "@/layout/modal";
 import React from "react";
 import { Container } from "@mui/material";
-import { get } from "@/lib/network/http";
+import { get, serverMethod } from "@/lib/network/http";
 import { FeaturedItem, FlashDeal, HomeFooter, NewArrived } from "@/components/homecomponents/elements";
 import { baseurl } from "@/config/setting";
 import { useSession } from "next-auth/react";
@@ -59,20 +59,29 @@ const Home = (props) => {
 export default Home;
 
 export async function getServerSideProps() {
-  // Fetch data from external API
-  const res = await fetch(`${baseurl}/home/data`)
-  const data = await res.json()
+
+  const params = {
+    method: "get"
+  }
+  const category = await serverMethod('/public/categories',params)
+  const resdata = await serverMethod('/public/home/data',params)
+
+  const result= {
+    featured:resdata.results.featured,
+    flashDeal: resdata.results.flashDeal,
+    newArive: resdata.results.flashDeal,
+    categories:category.results
+  }
+  const pageData = {
+    title:"Ecommerce website/APP"
+  }
+
+  const data = {
+    ...resdata,results: result
+  }
 
   // Pass data to the page via props
-  return { props: { data } }
+  return { props: { data,pageData }
 }
 
-// export const getServerSideProps = async () => {
-//   const resData = await fetch(`http://localhost:3500/api/home/data`);
-//   const homeData = await resData.json();
-//   return {
-//     props: {
-//       homeData,
-//     },
-//   };
-// };
+}

@@ -39,7 +39,7 @@ export default Index;
 
 export const getServerSideProps = async (ctx) => {
   const id = ctx.params["productId"];
-  const resData = await fetch(`${baseurl}/product/details?slug=${id}`);
+  const resData = await fetch(`${baseurl}/public/product/details?slug=${id}`);
   const data = await resData.json();
   return {
     props: {

@@ -31,52 +31,28 @@ import {
 import React, { useEffect, useState } from "react";
 import {
   Apps,
-  ArrowDropDown,
-  ArrowRight,
   ViewList,
-  Circle,
-  Filter1Outlined,
-  FilterAlt,
   ExpandMore,
 } from "@mui/icons-material";
 // import Filter from "./child/Filter";
 import { useGlobalContext } from "@/context/globalContext";
 import PCard from "../global/products/Card";
 import { ArrayData } from "../../../public/assets/mock/product";
-
-import { useRouter, useSearchParams } from "next/navigation";
-import { get } from "@/lib/network/http";
-import SwipeableTemporaryDrawer from "@/layout/drawer";
 import PaginationBlock from "../global/fields/PaginationBlock";
-import LeftFilterSection from "./child/leftsection";
-
 
 const ProductListing = ({ props }) => {
   const {
-    products,
     searchProducts,
-    state,
-    setState,
-    openModal,
-    setOpenModal,
     searchData,
-    setSearchData,
-    category,
-    setCategory,
     page,
-    setPage,
-    brand,
-    setBrand,
     limit,
-    setLimit,
-    setSort,filters, setFilters,
-    sort,
-    price,
+    filters,sort
   } = useGlobalContext();
+
   useEffect(() => {
     searchProducts();
-  }, [sort, limit, page, searchData,filters]);
-  const params = useSearchParams();
+  }, [sort, limit, page, searchData, filters]);
+
 
 
   return (
@@ -90,14 +66,8 @@ const ProductListing = ({ props }) => {
 export default ProductListing;
 
 export const FilterSection = ({ props }) => {
-  const { products, searchProducts, setSort, sort } = useGlobalContext();
-  // const [personName, setPersonName] = React.useState("Relevance");
-  const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
-  });
+  const { setSort, sort } = useGlobalContext();
+
 
   const sortOptions = [
     { label: "Relevance", value: "relevance-desc", default: true },
@@ -105,7 +75,6 @@ export const FilterSection = ({ props }) => {
     { label: "Price: High to Low", value: "salePrice-desc" },
     { label: "Newest Arrivals", value: "createdAt-desc" },
     { label: "Customer Ratings", value: "ratings-desc" },
-    // Add more sort options as needed
   ];
 
 
@@ -132,7 +101,7 @@ export const FilterSection = ({ props }) => {
               Searching for “ <strong> mobile phone</strong> ”
             </p>
             <p>
-              <strong>{products?.total} </strong> results found
+              <strong>{props.data.total} </strong> results found
             </p>
           </div>
         </Box>
@@ -179,27 +148,15 @@ export const FilterSection = ({ props }) => {
 
 export const BodySection = ({ props }) => {
   const {
-    products,
-    searchProducts,
-    state,
-    setState,
-    openModal,
-    setOpenModal,
-    searchData,
-    setSearchData,
-    category,
-    setCategory,
+
     page,
     setPage,
     limit,
     setLimit,
-    setSort,
-    sort,
+
   } = useGlobalContext();
 
-  const handleChange = (event, value) => {
-    setPage(value);
-  };
+
 
   return (
     <Box
@@ -224,28 +181,15 @@ export const BodySection = ({ props }) => {
             m="0"
             columns={12.17}
           >
-            {products?.["results"]?.map((item) => (
+            {props.data.results?.["results"]?.map((item) => (
               <PCard key={item._id} size={4} product={item} />
             ))}
           </Grid>
         </Box>
         <Box py={3}>
           <Stack justifyContent={"space-between"} direction="row" spacing={2}>
-            {/* <Typography>
-              <span>Showing</span>{" "}
-              <span>
-                {1}-{products.total}
-              </span>{" "}
-              of
-              <span>{products.total}</span> Products
-            </Typography>
-            <Pagination
-              variant="outlined"
-              count={Math.round(products.total/limit)}
-              page={page}
-              onChange={handleChange}
-            /> */}
-            <PaginationBlock page={page} setPage={setPage} count={products.total} rowsPerPage={limit} setRowsPerPage={setLimit} perPage={[24, 48, 64]} />
+
+            <PaginationBlock page={page} setPage={setPage} count={props.data.total} rowsPerPage={limit} setRowsPerPage={setLimit} perPage={[24, 48, 64]} />
 
           </Stack>
         </Box>
@@ -256,31 +200,11 @@ export const BodySection = ({ props }) => {
 
 export const Filter = ({ props }) => {
   // console.log(props);
-  const {
-    products,
-    searchProducts,
-    state,
-    setState,
-    openModal,
-    setOpenModal,
-    searchData,
-    setSearchData,
-    category,
-    setCategory,
-    page,
-    setPage,
-    brand,
-    setBrand,
-    limit,
-    setLimit,
-    setSort,
-    price,
-    setPrice,
-    sort,filters, setFilters
+  const { filters, setFilters
   } = useGlobalContext();
 
 
-
+  console.log("Filter", props);
   const handlePriceRangeChange = (event, newPriceRange) => {
     // The value will only change when the mouse leaves the slider
     setFilters((prevFilters) => ({
@@ -329,7 +253,7 @@ export const Filter = ({ props }) => {
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-      <div className=" text-right">  <button className=" text-red-800 font-semibold" onClick={() => handleClearFilter('category')}>Clear All</button></div>
+          <div className=" text-right">  <button className=" text-red-800 font-semibold" onClick={() => handleClearFilter('category')}>Clear All</button></div>
           <FormGroup>
             {props.categories.results.map((category, checked) => (
               <FormControlLabel
@@ -445,8 +369,8 @@ export const Filter = ({ props }) => {
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-        <FormGroup>
-            {["in stock","out of Stock"].map((stock, index) => (
+          <FormGroup>
+            {["in stock", "out of Stock"].map((stock, index) => (
               <FormControlLabel
                 key={index}
                 control={
@@ -468,8 +392,8 @@ export const Filter = ({ props }) => {
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-        <FormGroup>
-            {["10","20","30","40","50","60"].map((discount, index) => (
+          <FormGroup>
+            {["10", "20", "30", "40", "50", "60"].map((discount, index) => (
               <FormControlLabel
                 key={index}
                 control={
@@ -484,9 +408,9 @@ export const Filter = ({ props }) => {
           </FormGroup>
         </AccordionDetails>
       </Accordion>
-    
-   
-      
+
+
+
     </Paper>
   );
 };

@@ -39,7 +39,13 @@ import { useAuthContext } from "@/context/AuthContext";
 import React from "react";
 import { signOut, useSession } from "next-auth/react";
 import Cookies from "js-cookie";
+import { usePathname } from "next/navigation";
 
+const fetchCategories = async ()=>{
+  const response = await get("/categories");
+  console.log(response);
+  return response
+}
 function Header(props) {
   const { state, setState } = useGlobalContext();
   const [scrollPosition, setScrollPosition] = useState(null);
@@ -77,28 +83,43 @@ function Header(props) {
 
 export default Header;
 
-function Navigation({data}) {
+function Navigation({ data }) {
   const route = useRouter();
-  const { state, setState, searchProducts,categories } = useGlobalContext();
+  const path = usePathname()
+  const { state, setState, searchProducts, categories } = useGlobalContext();
   const { userId } = useAuthContext();
   const cartItem = useSelector((state) => state["data"].cartItems);
   const wishlist = useSelector((state) => state["data"].wishList);
   const [searchData, setSearchData] = useState("");
 
   const [hydrated, setHydrated] = useState(false);
+
+// const cate= fetchCategories()
+
+// console.log(cate);
+
+
   useEffect(() => {
     setHydrated(true);
   }, []);
   if (!hydrated) {
-    // Returns null on first render, so the client and server match
     return null;
   }
 
 
-  const fetchData = (params) => {
-     route.push(`/product/search?search=${searchData}`);
-    searchProducts();
-  };
+  // const fetchData = (params) => {
+  //   searchProducts();
+  // };
+
+
+  const handleClickSearch = () => {
+    if (path === "/product/search") {
+      searchProducts();
+    }else{
+      route.push('/product/search')
+    }
+
+  }
 
 
   return (
@@ -163,7 +184,7 @@ function Navigation({data}) {
             />
             <button
               className="  text-gray-100 hover:bg-gray-800 h-10 bg-gray-500  w-20 rounded-full"
-              onClick={()=>route.push('/product/search')}
+              onClick={handleClickSearch}
             >
               <Search />
             </button>
@@ -178,7 +199,7 @@ function Navigation({data}) {
             <Badge badgeContent={wishlist?.length.toString()} color="error">
               <Favorite
                 onClick={() =>
-                  route.push(data?`/my-account/${data.user?.id}/wishlist`:'/auth/signin')
+                  route.push(data ? `/my-account/${data.user?.id}/wishlist` : '/auth/signin')
                 }
               />
             </Badge>
@@ -201,7 +222,7 @@ function Navigation({data}) {
   );
 }
 
-export function AccountMenu({user}) {
+export function AccountMenu({ user }) {
   const route = useRouter();
   // const { user, userId, signout } = useAuthContext();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -213,7 +234,7 @@ export function AccountMenu({user}) {
     setAnchorEl(null);
   };
 
-  const handleLogout = ()=>{
+  const handleLogout = () => {
     handleClose;
     signOut()
     window.sessionStorage.clear();
@@ -330,3 +351,5 @@ export function AccountMenu({user}) {
     </React.Fragment>
   );
 }
+
+

@@ -61,3 +61,44 @@ export function storeCookiesOfObject(data) {
     });
   }
 }
+
+export function convertToNestedObject(flatObject) {
+  const result = {};
+
+  // Object.keys(flatObject).forEach((key) => {
+  //   const keys = key.split('.');
+  //   let currentObj = result;
+
+  //   keys.forEach((nestedKey, index) => {
+  //     if (index === keys.length - 1) {
+  //       currentObj[nestedKey] = flatObject[key];
+  //     } else {
+  //       currentObj[nestedKey] = currentObj[nestedKey] || {};
+  //       currentObj = currentObj[nestedKey];
+  //     }
+  //   });
+  // });
+  Object.keys(flatObject).forEach((key) => {
+    const keys = key.split('.');
+    let currentObj = result;
+
+    keys.forEach((nestedKey, index) => {
+      // Check if the current nestedKey is numeric
+      const isNumericKey = /^\d+$/.test(nestedKey);
+
+      if (index === keys.length - 1) {
+        if (isNumericKey) {
+          currentObj = currentObj[nestedKey] || [];
+          currentObj.push(flatObject[key]);
+        } else {
+          currentObj[nestedKey] = flatObject[key];
+        }
+      } else {
+        currentObj[nestedKey] = currentObj[nestedKey] || {};
+        currentObj = currentObj[nestedKey];
+      }
+    });
+  });
+
+  return result;
+}
