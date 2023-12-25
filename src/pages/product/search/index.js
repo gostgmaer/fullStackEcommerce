@@ -1,14 +1,13 @@
 import ProductListing from "@/components/searchPage";
-import BodySection from "@/components/searchPage/Bodysection";
-import FilterSection from "@/components/searchPage/Topsection";
-import { baseurl } from "@/config/setting";
+import { parseUrlWithQueryParams } from "@/helper/function";
 import Layout from "@/layout";
-import SwipeableTemporaryDrawer from "@/layout/drawer";
-import { Box } from "@mui/material";
 import Head from "next/head";
 import React from "react";
+var Url = require('url-parse');
 
-const Search = ({categories,brands}) => {
+import { serverMethod } from "@/lib/network/http";
+
+const Search = (props) => {
 
   return (
     <Layout>
@@ -18,36 +17,32 @@ const Search = ({categories,brands}) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      
-      <ProductListing props={{categories,brands}} />
+
+      <ProductListing props={props} />
     </Layout>
   );
 };
 
 export default Search;
 
-// export const getServerSideProps = async (ctx) => {
-//   const id = ctx.params["productId"];
-//   const resData = await fetch(`${baseurl}/product/details?slug=${id}`);
-//   const data = await resData.json();
 
-//   return {
-//     props: {
-//       data,
-//     },
-//   };
-// };
 
 export const getServerSideProps = async (ctx) => {
-  const resbrands = await fetch(`${baseurl}/brands`);
-  const brands = await resbrands.json();
-  const rescategories = await fetch(`${baseurl}/categories`);
-  const categories = await rescategories.json();
-
+const currParam ={
+  method: "get"
+}
+const categories = await serverMethod("/public/brands", currParam);
+const brands = await serverMethod("/public/categories", currParam);
+  var url = new Url(ctx.resolvedUrl);
+  const parsedObject = parseUrlWithQueryParams(`${url.query}`);
+  const params = {
+    method: "get", query: {...parsedObject,filter:JSON.stringify(parsedObject.filter)}
+  }
+  const data = await serverMethod("/public/product/search", params);
   return {
     props: {
       categories,
-      brands,
+      brands,data
     },
   };
 };

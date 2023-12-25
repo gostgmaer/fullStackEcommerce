@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useAuthContext } from "./AuthContext";
 import { get, post } from "@/lib/network/http";
 import { useSession } from "next-auth/react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { ReadonlyURLSearchParams, useParams, usePathname, useRouter, useSearchParams, useSelectedLayoutSegments, } from "next/navigation";
 import { generateUrlFromNestedObject, parseUrlWithQueryParams } from "@/helper/function";
+var Url = require('url-parse');
 const AppContext = createContext(null);
 
 const AppProvider = ({ children }) => {
@@ -25,7 +26,8 @@ const AppProvider = ({ children }) => {
   const { data: session, status } = useSession();
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams();const params= useParams()
+
   const [filters, setFilters] = useState({
     category: [],
     brands: [],
@@ -38,7 +40,7 @@ const AppProvider = ({ children }) => {
   });
 
   const fetchCategories = async (second) => {
-    const response = await get("/categories");
+    const response = await get("/public/categories");
     setCategories(response);
   };
 
@@ -59,52 +61,31 @@ const AppProvider = ({ children }) => {
     // console.log(mysort);
 
     const query = {
-      filter: JSON.stringify({
+      filter: {
         match: {
           title: searchData,
         },
         startwith: {
           title: searchData,
-        },
-        categories: category,
-        brandName: brand, salePrice: price, search: searchData
-      }),
+        }, ...filters, search: searchData
+      },
       page: page + 1,
       limit: limit,
       sort: mysort,
     };
 
+    const checkQuerydata = generateUrlFromNestedObject({ ...query, filter: query.filter });
+    // const success = router.push(`${pathname}${checkQuerydata}`)
 
-    // const search = {
-    //   filter: {
-    //     match: {
-    //       title: searchData,
-    //     },
-    //     startwith: {
-    //       title: searchData,
-    //     },
-    //     categories: category,
-    //     brands: brand, salePrice: price
-    //   },
-    //   page: page,
-    //   limit: limit,
-    //   sort: mysort,
-    // }
-
-     
-    const checkQuerydata = generateUrlFromNestedObject({ ...query, filter: filters });
-    console.log(checkQuerydata);
-    // const queryString = objectToQueryString(search);
-    // console.log(queryString);
-    // const cleanQuery = deleteEmptyKeys(search)
-    const urlWithQueryParams = generateUrlFromNestedObject({ ...query, filter: query.filter });
-    // console.log('Generated URL:', urlWithQueryParams);
-    const parsedObject = parseUrlWithQueryParams(`${checkQuerydata}`);
-    console.log('Parsed Object:', parsedObject);
-
-    router.push(`${pathname}${checkQuerydata}`);
-    const res = await get("/product/search/data", query);
-    setProducts(res)
+    router.replace(`${pathname}${checkQuerydata}`)
+    
+    // var currentURL = window.location.href;
+    // var url = new Url(currentURL);
+    // console.log(url.query);
+    // const parsedObject = parseUrlWithQueryParams(`${url.query}`);
+    // console.log(query.filter);
+    // const res = await get("/public/product/search", {...query,filter:JSON.stringify(query.filter)});
+    // setProducts(res)
 
   };
 
@@ -118,6 +99,26 @@ const AppProvider = ({ children }) => {
       getWishlist()
     }
   }, [session]);
+
+
+  // function navigateToPath(fullPath) {
+
+  //   return new Promise((resolve, reject) => {
+     
+  //     setTimeout(() => {
+  //       // Assuming router.push returns a promise or you can use an async function
+  //       router.push(fullPath)
+  //         .then(() => {
+  //           resolve(true);
+  //         })
+  //         .catch((error) => {
+  //           // Handle any errors during navigation
+  //           reject(error);
+  //         });
+  //     }, 1000); // Simulating an asynchronous operation (e.g., API call)
+  //   });
+  // }
+
 
   return (
     <AppContext.Provider
