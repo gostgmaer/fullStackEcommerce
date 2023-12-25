@@ -204,10 +204,14 @@ export const Filter = ({ props }) => {
   const { filters, setFilters
   } = useGlobalContext();
 
+  const [price, setPrice] = useState([0,999]);
 
   // console.log("Filter", props);
   const handlePriceRangeChange = (event, newPriceRange) => {
-    // The value will only change when the mouse leaves the slider
+    setPrice(newPriceRange)
+  };
+
+  const handlePriceRangeChangeCommit = (event, newPriceRange) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
       salePrice: newPriceRange,
@@ -238,12 +242,10 @@ export const Filter = ({ props }) => {
 
 
   const handleClearFilter = (filterType) => {
-
-
+    setPrice([0,999])
     setFilters((prevFilters) => ({
-      
       ...prevFilters,
-      [filterType]: filterType==="salePrice"?[0,99999]: [], // Reset the selected values for the given filter type
+      [filterType]: filterType==="salePrice"?[0,999]: [], // Reset the selected values for the given filter type
     }));
   };
 
@@ -305,16 +307,17 @@ export const Filter = ({ props }) => {
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-        <div className=" text-right">  <button className=" text-red-800 font-semibold" onClick={() => handleClearFilter('salePrice')}>Clear All</button></div>
+        <div className=" text-right">  <button  className=" text-red-800 font-semibold" onClick={() => handleClearFilter('salePrice')}>Clear All</button></div>
  
           <Slider
-            value={filters.salePrice}
+            value={price}
             onChange={handlePriceRangeChange}
-            onChangeCommitted={handlePriceRangeChange}
+            onChangeCommitted={handlePriceRangeChangeCommit}
+            
             valueLabelDisplay="auto"
             valueLabelFormat={(value) => `$${value}`}
             min={0}
-            max={99999}
+            max={999}
           />
         </AccordionDetails>
       </Accordion>
