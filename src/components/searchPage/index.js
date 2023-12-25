@@ -46,7 +46,7 @@ const ProductListing = ({ props }) => {
     searchData,
     page,
     limit,
-    filters,sort
+    filters, sort
   } = useGlobalContext();
 
   useEffect(() => {
@@ -88,7 +88,7 @@ export const FilterSection = ({ props }) => {
         alignItems={"center"}
         component={"section"}
         bgcolor={colors.grey[50]}
-      
+
       >
         <Box className=" flex gap-2">
           <p>
@@ -204,7 +204,7 @@ export const Filter = ({ props }) => {
   const { filters, setFilters
   } = useGlobalContext();
 
-  const [price, setPrice] = useState([0,999]);
+  const [price, setPrice] = useState([0, 999]);
 
   // console.log("Filter", props);
   const handlePriceRangeChange = (event, newPriceRange) => {
@@ -242,10 +242,10 @@ export const Filter = ({ props }) => {
 
 
   const handleClearFilter = (filterType) => {
-    setPrice([0,999])
+    setPrice([0, 999])
     setFilters((prevFilters) => ({
       ...prevFilters,
-      [filterType]: filterType==="salePrice"?[0,999]: [], // Reset the selected values for the given filter type
+      [filterType]: filterType === "salePrice" ? [0, 999] : [], // Reset the selected values for the given filter type
     }));
   };
 
@@ -283,7 +283,7 @@ export const Filter = ({ props }) => {
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-        <div className=" text-right">  <button className=" text-red-800 font-semibold" onClick={() => handleClearFilter('brandName')}>Clear All</button></div>
+          <div className=" text-right">  <button className=" text-red-800 font-semibold" onClick={() => handleClearFilter('brandName')}>Clear All</button></div>
           <FormGroup>
             {props.brands.results.map((brand, index) => (
               <FormControlLabel
@@ -307,13 +307,13 @@ export const Filter = ({ props }) => {
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-        <div className=" text-right">  <button  className=" text-red-800 font-semibold" onClick={() => handleClearFilter('salePrice')}>Clear All</button></div>
- 
+          <div className=" text-right">  <button className=" text-red-800 font-semibold" onClick={() => handleClearFilter('salePrice')}>Clear All</button></div>
+
           <Slider
             value={price}
             onChange={handlePriceRangeChange}
             onChangeCommitted={handlePriceRangeChangeCommit}
-            
+
             valueLabelDisplay="auto"
             valueLabelFormat={(value) => `$${value}`}
             min={0}
@@ -328,8 +328,8 @@ export const Filter = ({ props }) => {
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-        <div className=" text-right">  <button className=" text-red-800 font-semibold" onClick={() => handleClearFilter('rating')}>Clear All</button></div>
- 
+          <div className=" text-right">  <button className=" text-red-800 font-semibold" onClick={() => handleClearFilter('rating')}>Clear All</button></div>
+
           <FormGroup>
             {ArrayData.slice(0, 5).reverse().map((rate, index) => (
               <FormControlLabel
@@ -358,8 +358,8 @@ export const Filter = ({ props }) => {
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-        <div className=" text-right">  <button className=" text-red-800 font-semibold" onClick={() => handleClearFilter('tags')}>Clear All</button></div>
- 
+          <div className=" text-right">  <button className=" text-red-800 font-semibold" onClick={() => handleClearFilter('tags')}>Clear All</button></div>
+
 
           <FormGroup>
             {props?.tags?.results.map((tag, index) => (
@@ -384,19 +384,19 @@ export const Filter = ({ props }) => {
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-        <div className=" text-right">  <button className=" text-red-800 font-semibold" onClick={() => handleClearFilter('isAvailable')}>Clear All</button></div>
- 
+          <div className=" text-right">  <button className=" text-red-800 font-semibold" onClick={() => handleClearFilter('isAvailable')}>Clear All</button></div>
+
           <FormGroup>
-            {["in stock", "out of Stock"].map((stock, index) => (
+            {[{ name: "Available", value: true }, { name: "out of Stock", value: false }].map((stock, index) => (
               <FormControlLabel
                 key={index}
                 control={
                   <Checkbox
-                    checked={filters.isAvailable.includes(stock)}
-                    onChange={() => handleCheckboxChanges('isAvailable', stock)}
+                    checked={filters.isAvailable.includes(stock.value)}
+                    onChange={() => handleCheckboxChanges('isAvailable', stock.value)}
                   />
                 }
-                label={stock}
+                label={stock.name}
               />
             ))}
           </FormGroup>
@@ -410,8 +410,8 @@ export const Filter = ({ props }) => {
         </AccordionSummary>
         <AccordionDetails>
 
-        <div className=" text-right">  <button className=" text-red-800 font-semibold" onClick={() => handleClearFilter('discount')}>Clear All</button></div>
- 
+          <div className=" text-right">  <button className=" text-red-800 font-semibold" onClick={() => handleClearFilter('discount')}>Clear All</button></div>
+
           <FormGroup>
             {["10", "20", "30", "40", "50", "60"].map((discount, index) => (
               <FormControlLabel
