@@ -6,6 +6,7 @@ import React from "react";
 var Url = require('url-parse');
 
 import { serverMethod } from "@/lib/network/http";
+import { convertNumericKeysToObject, convertObject, transformKeysToObject } from "@/lib/helper";
 
 const Search = (props) => {
 
@@ -31,10 +32,14 @@ export const getServerSideProps = async (ctx) => {
 const currParam ={
   method: "get"
 }
-const categories = await serverMethod("/public/brands", currParam);
-const brands = await serverMethod("/public/categories", currParam);
+const categories = await serverMethod("/public/categories", currParam);
+const brands = await serverMethod("/public/brands", currParam);
+const tags = await serverMethod("/public/tags", currParam);
   var url = new Url(ctx.resolvedUrl);
   const parsedObject = parseUrlWithQueryParams(`${url.query}`);
+
+  const nwObject = convertObject(parsedObject)
+
   const params = {
     method: "get", query: {...parsedObject,filter:JSON.stringify(parsedObject.filter)}
   }
@@ -42,7 +47,7 @@ const brands = await serverMethod("/public/categories", currParam);
   return {
     props: {
       categories,
-      brands,data
+      brands,data,tags
     },
   };
 };

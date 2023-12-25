@@ -181,7 +181,7 @@ export const BodySection = ({ props }) => {
             m="0"
             columns={12.17}
           >
-            {props.data.results?.["results"]?.map((item) => (
+            {props.data.results?.map((item) => (
               <PCard key={item._id} size={4} product={item} />
             ))}
           </Grid>
@@ -209,7 +209,7 @@ export const Filter = ({ props }) => {
     // The value will only change when the mouse leaves the slider
     setFilters((prevFilters) => ({
       ...prevFilters,
-      priceRange: newPriceRange,
+      salePrice: newPriceRange,
     }));
   };
 
@@ -260,8 +260,8 @@ export const Filter = ({ props }) => {
                 key={category._id}
                 control={
                   <Checkbox
-                    checked={filters.category.includes(category._id)}
-                    onChange={() => handleCheckboxChanges('category', category._id)}
+                    checked={filters.categories.includes(category._id)}
+                    onChange={() => handleCheckboxChanges('categories', category._id)}
                   />
                 }
                 label={category.name}
@@ -283,8 +283,8 @@ export const Filter = ({ props }) => {
                 key={index}
                 control={
                   <Checkbox
-                    checked={filters.brands.includes(brand._id)}
-                    onChange={() => handleCheckboxChanges('brands', brand._id)}
+                    checked={filters.brandName.includes(brand._id)}
+                    onChange={() => handleCheckboxChanges('brandName', brand._id)}
                   />
                 }
                 label={brand.name}
@@ -301,7 +301,7 @@ export const Filter = ({ props }) => {
         </AccordionSummary>
         <AccordionDetails>
           <Slider
-            value={filters.priceRange}
+            value={filters.salePrice}
             onChange={handlePriceRangeChange}
             onChangeCommitted={handlePriceRangeChange}
             valueLabelDisplay="auto"
@@ -352,11 +352,11 @@ export const Filter = ({ props }) => {
                 key={index}
                 control={
                   <Checkbox
-                    checked={filters.tags.includes(tag._id)}
-                    onChange={() => handleCheckboxChanges('tag', tag._id)}
+                    checked={filters.tags.includes(tag)}
+                    onChange={() => handleCheckboxChanges('tags', tag)}
                   />
                 }
-                label={tag.name}
+                label={tag}
               />
             ))}
           </FormGroup>
@@ -375,8 +375,8 @@ export const Filter = ({ props }) => {
                 key={index}
                 control={
                   <Checkbox
-                    checked={filters.stock.includes(stock)}
-                    onChange={() => handleCheckboxChanges('stock', stock)}
+                    checked={filters.isAvailable.includes(stock)}
+                    onChange={() => handleCheckboxChanges('isAvailable', stock)}
                   />
                 }
                 label={stock}
