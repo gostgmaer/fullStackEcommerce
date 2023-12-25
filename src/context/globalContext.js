@@ -33,7 +33,7 @@ const AppProvider = ({ children }) => {
     brandName: [],
     tags: [],
     rating: [],
-    salePrice: [0, 99999],
+    salePrice: [0, 999],
     isAvailable: [],
     discount: []
     // Add more filter types if needed
