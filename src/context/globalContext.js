@@ -29,12 +29,12 @@ const AppProvider = ({ children }) => {
   const searchParams = useSearchParams();const params= useParams()
 
   const [filters, setFilters] = useState({
-    category: [],
-    brands: [],
+    categories: [],
+    brandName: [],
     tags: [],
     rating: [],
-    priceRange: [0, 99999],
-    stock: [],
+    salePrice: [0, 99999],
+    isAvailable: [],
     discount: []
     // Add more filter types if needed
   });
@@ -78,7 +78,7 @@ const AppProvider = ({ children }) => {
     // const success = router.push(`${pathname}${checkQuerydata}`)
 
     router.replace(`${pathname}${checkQuerydata}`)
-    
+
     // var currentURL = window.location.href;
     // var url = new Url(currentURL);
     // console.log(url.query);
