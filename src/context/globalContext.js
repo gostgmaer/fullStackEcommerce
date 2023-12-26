@@ -26,7 +26,7 @@ const AppProvider = ({ children }) => {
   const { data: session, status } = useSession();
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();const params= useParams()
+  const searchParams = useSearchParams(); const params = useParams()
 
   const [filters, setFilters] = useState({
     categories: [],
@@ -62,12 +62,7 @@ const AppProvider = ({ children }) => {
 
     const query = {
       filter: {
-        match: {
-          title: searchData,
-        },
-        startwith: {
-          title: searchData,
-        }, ...filters, search: searchData
+        ...filters, search: searchData
       },
       page: page + 1,
       limit: limit,
@@ -104,7 +99,7 @@ const AppProvider = ({ children }) => {
   // function navigateToPath(fullPath) {
 
   //   return new Promise((resolve, reject) => {
-     
+
   //     setTimeout(() => {
   //       // Assuming router.push returns a promise or you can use an async function
   //       router.push(fullPath)
@@ -135,7 +130,7 @@ const AppProvider = ({ children }) => {
         setPage,
         searchProducts, filters, setFilters,
         limit,
-        setLimit, products, setSort, sort, brand, setBrand, price, setPrice, categories, getWishlist
+        setLimit, products, setSort, sort, brand, setBrand, price, setPrice, categories, getWishlist,
       }}
     >
       {children}
