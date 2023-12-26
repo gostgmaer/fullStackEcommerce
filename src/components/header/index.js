@@ -86,11 +86,11 @@ export default Header;
 function Navigation({ data }) {
   const route = useRouter();
   const path = usePathname()
-  const { state, setState, searchProducts, categories } = useGlobalContext();
+  const { state, setState, searchProducts, categories,searchData, setSearchData } = useGlobalContext();
   const { userId } = useAuthContext();
   const cartItem = useSelector((state) => state["data"].cartItems);
   const wishlist = useSelector((state) => state["data"].wishList);
-  const [searchData, setSearchData] = useState("");
+  // const [searchData, setSearchData] = useState("");
 
   const [hydrated, setHydrated] = useState(false);
 

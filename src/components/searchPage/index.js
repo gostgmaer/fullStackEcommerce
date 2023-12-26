@@ -51,7 +51,7 @@ const ProductListing = ({ props }) => {
 
   useEffect(() => {
     searchProducts();
-  }, [sort, limit, page, searchData, filters]);
+  }, [sort, limit, page, filters]);
 
 
 
@@ -66,9 +66,7 @@ const ProductListing = ({ props }) => {
 export default ProductListing;
 
 export const FilterSection = ({ props }) => {
-  const { setSort, sort } = useGlobalContext();
-
-
+  const { setSort, sort,searchData } = useGlobalContext();
   const sortOptions = [
     { label: "Relevance", value: "relevance-desc", default: true },
     { label: "Price: Low to High", value: "salePrice-asc" },
@@ -76,9 +74,6 @@ export const FilterSection = ({ props }) => {
     { label: "Newest Arrivals", value: "createdAt-desc" },
     { label: "Customer Ratings", value: "ratings-desc" },
   ];
-
-
-
   return (
     <>
       <Box
@@ -92,14 +87,11 @@ export const FilterSection = ({ props }) => {
       >
         <Box className=" flex gap-2">
           <p>
-
-
-
           </p>
           <div className=" flex flex-col">
-            <p className=" leading-4">
-              Searching for “ <strong> mobile phone</strong> ”
-            </p>
+          { searchData !="" &&  <p className=" leading-4">
+              Searching for “ <strong> {searchData}</strong> ”
+            </p>}
             <p>
               <strong>{props.data.total} </strong> results found
             </p>
