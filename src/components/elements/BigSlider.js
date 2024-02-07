@@ -58,10 +58,12 @@ const BigSlider = ({ data }) => {
         />
       )}
       {data?.video && (
-        <video
-          src={data.video}
-          className="w-full h-full object-cover absolute -z-0 object-top bg-gray-800 opacity-60"
-        ></video>
+
+        <video  autoPlay className="w-full h-full object-cover absolute -z-0 object-top bg-gray-800 opacity-60">
+          <source src={data.video} type="video/mp4"  />
+          Your browser does not support the video tag.
+        </video>
+
       )}
     </Grid>
   );

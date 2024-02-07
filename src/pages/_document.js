@@ -1,5 +1,5 @@
-import { Html, Head, Main, NextScript } from 'next/document'
-import { ToastContainer } from 'react-toastify'
+import { Html, Head, Main, NextScript } from "next/document";
+import { ToastContainer } from "react-toastify";
 
 export default function Document() {
   return (
@@ -8,12 +8,14 @@ export default function Document() {
         {/* <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0"/> */}
       </Head>
       <body>
-        <main> <Main />
+        <main>
+        
+          <Main />
           <NextScript />
         </main>
 
         <ToastContainer />
       </body>
     </Html>
-  )
+  );
 }

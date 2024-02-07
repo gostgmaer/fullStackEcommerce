@@ -187,7 +187,7 @@ const PCard = ({ product, size }) => {
       </Item>
       <MuiModal
         heading={undefined}
-        Content={<ProductDetails product={product} />}
+        Content={<ProductDetails product={product} setOpenModal={setOpenModal} />}
         classes={undefined}
         maxWidth={""}
         openModal={openModal}
@@ -199,7 +199,7 @@ const PCard = ({ product, size }) => {
 
 export default PCard;
 
-const ProductDetails = ({ product }) => {
+const ProductDetails = ({ product,setOpenModal }) => {
   const { data: session, status } = useSession();
   const route =useRouter()
   const [index, setIndex] = useState(0);
@@ -230,7 +230,7 @@ const ProductDetails = ({ product }) => {
   return (
     <div className="product-content flex overflow-hidden gap-5">
       <div className="product-gallery large-6 col flex-1 relative">
-        <Link href={`/product/${product.slug}`} aria-label={product?.title}>
+        <Link href={`/product/${product.slug}`} aria-label={product?.title} onClick={()=>setOpenModal(false)}>
           <Image
             width={420}
             onMouseOver={() => setIndex(1)}
@@ -307,6 +307,7 @@ const ProductDetails = ({ product }) => {
           <Link
             href={`/product/${product.slug}`}
             className=" font-bold text-xl"
+            onClick={()=>setOpenModal(false)}
           >
             {product?.title ? product?.title : " This is a product? Title"}
           </Link>

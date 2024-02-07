@@ -63,25 +63,26 @@ export async function getServerSideProps() {
   const params = {
     method: "get"
   }
-  const category = await serverMethod('/public/categories',params)
-  const resdata = await serverMethod('/public/home/data',params)
+  const category = await serverMethod('/public/categories', params)
+  const resdata = await serverMethod('/public/home/data', params)
 
-  const result= {
-    featured:resdata.results.featured,
+  const result = {
+    featured: resdata.results.featured,
     flashDeal: resdata.results.flashDeal,
     newArive: resdata.results.flashDeal,
-    categories:category.results
+    categories: category.results
   }
   const pageData = {
-    title:"Ecommerce website/APP"
+    title: "Ecommerce website/APP"
   }
 
   const data = {
-    ...resdata,results: result
+    ...resdata, results: result
   }
 
   // Pass data to the page via props
-  return { props: { data,pageData }
-}
+  return {
+    props: { data, pageData }
+  }
 
 }

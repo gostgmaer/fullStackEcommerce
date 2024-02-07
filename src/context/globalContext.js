@@ -55,10 +55,6 @@ const AppProvider = ({ children }) => {
 
     var sortItem = sort.split('-');
     let mysort = `${sortItem[0]}:${sortItem[1]}`
-    // const [sortKey, sortOrder] = sort.split("-");
-    // myObject[sortKey] = sortOrder
-
-    // console.log(mysort);
 
     const query = {
       filter: {
@@ -70,17 +66,7 @@ const AppProvider = ({ children }) => {
     };
 
     const checkQuerydata = generateUrlFromNestedObject({ ...query, filter: query.filter });
-    // const success = router.push(`${pathname}${checkQuerydata}`)
-
     router.replace(`${pathname}${checkQuerydata}`)
-
-    // var currentURL = window.location.href;
-    // var url = new Url(currentURL);
-    // console.log(url.query);
-    // const parsedObject = parseUrlWithQueryParams(`${url.query}`);
-    // console.log(query.filter);
-    // const res = await get("/public/product/search", {...query,filter:JSON.stringify(query.filter)});
-    // setProducts(res)
 
   };
 

@@ -21,7 +21,7 @@ const CustomImageSlider = ({ images }) => {
   };
 
   return (
-    <div className="relative w-1/2 mx-auto">
+    <div className="relative w-1/2 mx-auto w-full">
       <div className="overflow-hidden w-full">
         <div
           className="flex transition-transform ease-in-out duration-300"
