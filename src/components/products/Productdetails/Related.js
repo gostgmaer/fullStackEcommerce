@@ -7,8 +7,6 @@ import React from "react";
 
 const Related = ({ data }) => {
   const router = useRouter();
-//console.log(data);
-
   return (
     <Box sx={{ width: "100%" }} mt={5}>
       <Elementlist
@@ -17,8 +15,8 @@ const Related = ({ data }) => {
         isSlide={undefined}
         slideItem={undefined}
       >
-        {data.slice(0, 8).map((item) => (
-          <PCard key={item.id} product={item} size={3} />
+        {data.slice(0, 8).map((item,index) => (
+          <PCard key={index} product={item} size={3} />
         ))}
       </Elementlist>
     </Box>

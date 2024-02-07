@@ -1,39 +1,23 @@
 import { Check, KeyboardArrowDown, ShoppingBag } from "@mui/icons-material";
 import { Box, Grid, Rating, Typography, colors, Button } from "@mui/material";
-import Image from "next/image";
-import React, { useState } from "react";
-import ImageSlider from "./details/ImageSlider";
+import React from "react";
 import { CartAddItems } from "@/components/global/products/Cart";
 import { Select, selectClasses, Option } from "@mui/joy";
 import Link from "next/link";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/pagination";
-import {
-  Pagination,
-  Navigation,
-  Autoplay,
-  FreeMode,
-  Thumbs,
-} from "swiper/modules";
-import Slider from "./details/children/Slider";
-import CustomImageSlider from "@/components/global/fields/SliderImage";
-const Info = ({ data }) => {
-  console.log(data);
-  // const [selected, setSelected] = useState(true);
-  // const [selected, setSelected] = useState("");
-  // const [type, setType] = useState("");
 
+import {SingleImageslider} from "@/components/global/products/slider";
+const Info = ({ data }) => {
   return (
     <Box width={"100%"}>
       <Grid
         container
-        gap={5}
-        alignItems={"center"}
+        gap={2}
+      alignItems={'flex-start'}
         justifyContent={"space-between"}
         spacing={2}
         columns={16.6}
       >
+     
         <Grid
           display={"flex"}
           justifyContent={"space-between"}
@@ -41,10 +25,12 @@ const Info = ({ data }) => {
           gap={"10px"}
           flexDirection="column"
           item
-          className=" h-[480px]"
+          className=" h-[525px]"
           xs={8}
         >
-          <CustomImageSlider images={data.images} />
+          {/* <CustomImageSlider images={data.images} /> */}
+          <SingleImageslider images={data.images} />
+          {/* <SLiderDomp images={data.images}/> */}
         </Grid>
         <Grid
           display={"flex"}
@@ -264,27 +250,12 @@ const Showtextdata = ({ params }) => {
   //  console.log(params.length);
   return (
     <>
-      {" "}
+
       <span>({params.length}) </span>{" "}
     </>
   );
 };
 
-const ImageGallery = ({ images }) => {
-  const [thumbsSwiper, setThumbsSwiper] = useState({});
-  return (
-    <div className="  ">
-      <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
-        <SwiperSlide>Slide 1</SwiperSlide>
-        <SwiperSlide>Slide 2</SwiperSlide>
-        <SwiperSlide>Slide 3</SwiperSlide>
-        <SwiperSlide>Slide 4</SwiperSlide>
-        <SwiperSlide>Slide 5</SwiperSlide>
-        <SwiperSlide>Slide 6</SwiperSlide>
-        <SwiperSlide>Slide 7</SwiperSlide>
-        <SwiperSlide>Slide 8</SwiperSlide>
-        <SwiperSlide>Slide 9</SwiperSlide>
-      </Swiper>
-    </div>
-  );
-};
+
+
+
