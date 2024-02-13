@@ -23,6 +23,7 @@ import Image from "next/image";
 import MuiModal from "@/layout/modal";
 import { reviewValidationSchema } from "@/utils/validation/validation";
 import Input from "@/components/global/fields/input";
+import { useSession } from "next-auth/react";
 
 const ReviewBlock = ({ data }) => {
   const route = useRouter();
@@ -46,6 +47,10 @@ const ReviewBlock = ({ data }) => {
 
   // console.log(session);
 
+
+  const { data: session } = useSession();
+
+
   return (
     <Box
       className="elements"
@@ -54,7 +59,7 @@ const ReviewBlock = ({ data }) => {
         p: 5,
       }}
     >
-      {<Reviewform product={data} />}
+      {session && <Reviewform product={data} />}
       {data?.reviews && (
         <Box
           display={"flex"}
