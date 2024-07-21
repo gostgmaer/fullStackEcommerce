@@ -21,7 +21,7 @@ import {
   Typography,
   colors,
 } from "@mui/material";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
@@ -31,9 +31,10 @@ import { billingAddressValidationSchema } from "@/utils/validation/validation";
 import React from "react";
 import MuiModal from "@/layout/modal";
 const { default: Input } = require("@/components/global/fields/input");
-import { addToCart, removefromCart, updateCart,resetCart } from "@/store/cartReducer";
+import { addToCart, removefromCart, updateCart, resetCart } from "@/store/cartReducer";
 import { Country, State, City } from "country-state-city";
 import { post } from "@/lib/network/http";
+import { useSession } from "next-auth/react";
 // import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 // import PayPalButton from "../payment";
 // const steps = ["Address Details", "Review your order"];
@@ -166,7 +167,7 @@ export default function PageValidation() {
       email: values.email,
       phoneNumber: "+91" + values.billingphoneNumber,
       firstName: values.billingfirstName,
-      currency:"USD",
+      currency: "USD",
       lastName: values.billinglastName,
       username: values.email.split("@")[0],
       shipping: values.notuseBillingAddressForShipping
@@ -176,14 +177,14 @@ export default function PageValidation() {
       products: productData,
     };
 
-    
+
     const response = await post("/payment/checkout/process", body);
     if (response) {
-     
+
       router.push(response["results"]["href"])
       dispatch(resetCart())
     }
-   
+
     // window.open(response["results"]["href"]);
   };
 
@@ -223,15 +224,16 @@ export default function PageValidation() {
     console.error("Payment error:", err);
   };
 
-  
 
-useEffect(() => {
-  if (cartData.length===0) {
-    router.push('/')
-  }
-  
-}, [cartData]);
 
+  useEffect(() => {
+    if (cartData.length === 0) {
+      router.push('/')
+    }
+
+  }, [cartData]);
+
+  const { data: session } = useSession();
 
 
 
@@ -517,7 +519,7 @@ useEffect(() => {
                             </p>
                           )}
                       </div>
-                      <div className="col-span-2">
+                      {!session && <div className="col-span-2">
                         <label
                           htmlFor="accountCreate"
                           className="flex items-center"
@@ -535,7 +537,7 @@ useEffect(() => {
                             Create an account?
                           </span>
                         </label>
-                      </div>
+                      </div>}
 
                       <div className="col-span-2">
                         <label
@@ -788,7 +790,7 @@ useEffect(() => {
             flex={1}
             position={"sticky"}
             top={0}
-            // sx={{ my: 2, position: "sticky", top: 0 }}
+          // sx={{ my: 2, position: "sticky", top: 0 }}
           >
             <div className="">
               <p className=" text-2xl  text-gray-600 font-semibold ">
@@ -1080,7 +1082,7 @@ const PrivacyPolicyModalContent = ({ setOpen }) => {
 
 function createAddressObject(prefix, inputData) {
   return {
-    addressname:prefix,
+    addressname: prefix,
     firstName: inputData[`${prefix}firstName`],
     company: inputData[`${prefix}company`],
     lastName: inputData[`${prefix}lastName`],

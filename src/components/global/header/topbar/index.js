@@ -54,7 +54,7 @@ function TopBar() {
   const menuItems = [
     {
       label: "About",
-      url: "http://facebook.com",
+      url: "/about",
       icon: undefined,
       tooltip: null,
     },
@@ -64,21 +64,11 @@ function TopBar() {
       icon: undefined,
       tooltip: undefined,
     },
-    {
-      label: "Our Stores",
-      url: "http://instagram.com",
-      icon: undefined,
-      tooltip: undefined,
-    },
-    {
-      label: "|",
-      url: undefined,
-      icon: undefined,
-      tooltip: undefined,
-    },
+    
+  
     {
       label: "Contact",
-      url: "http://twitter.com",
+      url: "/contact",
       icon: undefined,
       tooltip: undefined,
     },
@@ -88,18 +78,7 @@ function TopBar() {
       icon: undefined,
       tooltip: undefined,
     },
-    {
-      label: "FAQs",
-      url: "mailto:your@email",
-      icon: undefined,
-      tooltip: undefined,
-    },
-    {
-      label: "|",
-      url: undefined,
-      icon: undefined,
-      tooltip: undefined,
-    },
+   
     {
       label: " Newsletter ",
       url: "mailto:your@email",
