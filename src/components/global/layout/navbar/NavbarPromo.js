@@ -1,37 +1,39 @@
 import { Fragment, useState, useEffect } from "react";
 import Link from "next/link";
 import { Transition, Popover } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/outline";
-import SettingServices from "@services/SettingServices";
-import useTranslation from "next-translate/useTranslation";
-import { useRouter } from "next/router";
+// import SettingServices from "@services/SettingServices";
+// import useTranslation from "next-translate/useTranslation";
+
+import { FiChevronDown, FiChevronUp } from "react-icons/fi";
+import { content } from "@/assets/jsonfile/content";
+import { useRouter } from "next/navigation";
 //internal import
-import { pages } from "@utils/data";
-import Category from "@component/category/Category";
-import { notifyError } from "@utils/toast";
+// import { pages } from "@utils/data";
+// import Category from "@component/category/Category";
+// import { notifyError } from "@utils/toast";
 
 const NavbarPromo = () => {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
 
   const router = useRouter();
-  const { locale } = router;
+  // const { locale } = router;
   const [data, setData] = useState([]);
   const [currentLang, setCurrentLang] = useState({});
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await SettingServices.getAllLanguages();
-        setData(res);
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const res = await SettingServices.getAllLanguages();
+  //       setData(res);
 
-        const result = res?.find((lang) => lang?.iso_code === locale);
-        setCurrentLang(result);
-      } catch (err) {
-        notifyError(err);
-        // console.log("error on getting lang", err);
-      }
-    })();
-  }, []);
+  //       const result = res?.find((lang) => lang?.iso_code === locale);
+  //       setCurrentLang(result);
+  //     } catch (err) {
+  //       notifyError(err);
+  //       // console.log("error on getting lang", err);
+  //     }
+  //   })();
+  // }, []);
 
   return (
     <>
@@ -48,9 +50,9 @@ const NavbarPromo = () => {
                     <Popover className="relative font-serif">
                       <Popover.Button className="group inline-flex items-center py-2 hover:text-emerald-600 focus:outline-none">
                         <span className="font-serif text-sm font-medium">
-                          {t("common:Categories")}
+                          {content.Categories}
                         </span>
-                        <ChevronDownIcon
+                        <FiChevronDown
                           className="ml-1 h-3 w-3 group-hover:text-emerald-600"
                           aria-hidden="true"
                         />
@@ -66,27 +68,33 @@ const NavbarPromo = () => {
                         leaveTo="opacity-0 translate-y-1"
                       >
                         <Popover.Panel className="absolute z-10 -ml-1 mt-1 transform w-screen max-w-xs c-h-65vh bg-white">
-                          <div className="rounded-md shadow-lg ring-1 ring-black ring-opacity-5 overflow-y-scroll flex-grow scrollbar-hide w-full h-full" style="height: 50%;">
-                            <Category />
+                          <div
+                            className="rounded-md shadow-lg ring-1 ring-black ring-opacity-5 overflow-y-scroll flex-grow scrollbar-hide w-full h-full"
+                            style={{ height: "50" }}
+                          >
+                            {/* <Category /> */}
                           </div>
                         </Popover.Panel>
                       </Transition>
                     </Popover>
 
-                    <Link href="/about-us">
-                      <a className="font-serif mx-4 py-2 text-sm font-medium hover:text-emerald-600">
-                        {t("common:About Us")}
-                      </a>
+                    <Link
+                      href="/about-us"
+                      className="font-serif mx-4 py-2 text-sm font-medium hover:text-emerald-600"
+                    >
+                      {content["About Us"]}
                     </Link>
-                    <Link href="/contact-us">
-                      <a className="font-serif mx-4 py-2 text-sm font-medium hover:text-emerald-600">
-                        {t("common:Contact Us")}
-                      </a>
+                    <Link
+                      href="/contact-us"
+                      className="font-serif mx-4 py-2 text-sm font-medium hover:text-emerald-600"
+                    >
+                      {content["Contact Us"]}
                     </Link>
-                    <Link href="/faq">
-                      <a className="font-serif mx-4 py-2 text-sm font-medium hover:text-emerald-600">
-                        {t("FAQ")}
-                      </a>
+                    <Link
+                      href="/faq"
+                      className="font-serif mx-4 py-2 text-sm font-medium hover:text-emerald-600"
+                    >
+                      {content.FAQ}
                     </Link>
                     {/* <Popover className="relative font-serif">
                       <Popover.Button className="group inline-flex items-center py-2 text-sm font-medium hover:text-emerald-600 focus:outline-none">
@@ -129,14 +137,15 @@ const NavbarPromo = () => {
                         </Popover.Panel>
                       </Transition>
                     </Popover> */}
-                    <Link href="/offer">
-                      <a className="relative inline-flex items-center h-6 bg-red-100 font-serif ml-4 py-0 px-2 rounded text-sm font-medium text-red-500 hover:text-emerald-600">
-                        {t("common:Offers")}
-                        <div className="absolute flex w-2 h-2 left-auto -right-1 -top-1">
-                          <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-red-400 opacity-75"></span>
-                          <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-                        </div>
-                      </a>
+                    <Link
+                      href="/offer"
+                      className="relative inline-flex items-center h-6 bg-red-100 font-serif ml-4 py-0 px-2 rounded text-sm font-medium text-red-500 hover:text-emerald-600"
+                    >
+                      {content.Offers}
+                      <div className="absolute flex w-2 h-2 left-auto -right-1 -top-1">
+                        <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-red-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                      </div>
                     </Link>
                   </Popover.Group>
                 </div>
@@ -173,15 +182,17 @@ const NavbarPromo = () => {
               </div>
             </div> */}
 
-            <Link href="/privacy-policy">
-              <a className="font-serif mx-4 py-2 text-sm font-medium hover:text-emerald-600">
-                {t("common:Privacy Policy")}
-              </a>
+            <Link
+              href="/privacy-policy"
+              className="font-serif mx-4 py-2 text-sm font-medium hover:text-emerald-600"
+            >
+              {content["Privacy Policy"]}
             </Link>
-            <Link href="/terms-and-conditions">
-              <a className="font-serif mx-4 py-2 text-sm font-medium hover:text-emerald-600">
-                {t("common:Terms & Conditions")}
-              </a>
+            <Link
+              href="/terms-and-conditions"
+              className="font-serif mx-4 py-2 text-sm font-medium hover:text-emerald-600"
+            >
+              {content["Terms & Conditions"]}
             </Link>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import useTranslation from "next-translate/useTranslation";
+
 import Layout from "@/components/global/layout/Layout";
 import PageHeader from "@/components/global/layout/header/PageHeader";
 
@@ -8,7 +8,7 @@ import PageHeader from "@/components/global/layout/header/PageHeader";
 
 
 const AboutUs = () => {
-  const { t } = useTranslation();
+
 
   return (
     <Layout title="About Us" description="This is about us page">
@@ -19,12 +19,12 @@ const AboutUs = () => {
           <div className="grid grid-flow-row lg:grid-cols-2 gap-4 lg:gap-16 items-center">
             <div className="">
               <h3 className="text-xl lg:text-3xl mb-2 font-serif font-semibold">
-                {t("common:about-section-title")}
+              about-section-title
               </h3>
               <div className="mt-3 text-base opacity-90 leading-7">
-                <p>{t("common:about-section-top-paragraph1")}</p>
+                {/* <p>{t("common:about-section-top-paragraph1")}</p>
 
-                <p>{t("common:about-section-top-paragraph2")}</p>
+                <p>{t("common:about-section-top-paragraph2")}</p> */}
               </div>
               <div className="grid md:grid-cols-2 gap-6 lg:grid-cols-2 xl:gap-6 mt-8">
                 <div className="p-8 bg-indigo-50 shadow-sm rounded-lg">
@@ -32,18 +32,18 @@ const AboutUs = () => {
                     10K
                   </span>
                   <h4 className="text-lg font-serif font-bold mb-1">
-                    {t("common:about-listed-products-box-title")}
+                    {/* {t("common:about-listed-products-box-title")} */}
                   </h4>
                   <p className="mb-0 opacity-90 leading-7">
-                    {t("common:about-listed-products-box-text")}
+                    {/* {t("common:about-listed-products-box-text")} */}
                   </p>
                 </div>
                 <div className="p-8 bg-indigo-50 shadow-sm rounded-lg">
                   <span className="text-3xl block font-extrabold font-serif mb-4 text-gray-800">8K</span>
                   <h4 className="text-lg font-serif font-bold mb-1">
-                    {t("common:about-customer-box-title")}
+                    {/* {t("common:about-customer-box-title")} */}
                   </h4>
-                  <p className="mb-0 opacity-90 leading-7">{t("common:about-customers-box-text")}</p>
+                  {/* <p className="mb-0 opacity-90 leading-7">{t("common:about-customers-box-text")}</p> */}
                 </div>
               </div>
             </div>
@@ -52,9 +52,9 @@ const AboutUs = () => {
             </div>
           </div>
           <div className="mt-10 lg:mt-16 text-base opacity-90 leading-7">
-            <p>{t("common:about-section-top-paragraph3")}</p>
+            {/* <p>{t("common:about-section-top-paragraph3")}</p>
 
-            <p>{t("common:about-section-top-paragraph4")}</p>
+            <p>{t("common:about-section-top-paragraph4")}</p> */}
           </div>
           <div className="mt-10 lg:mt-12 flex flex-col sm:grid gap-4">
             <Image
@@ -71,10 +71,10 @@ const AboutUs = () => {
             <div className="relative flex flex-col sm:flex-row sm:items-end justify-between mb-8">
               <div className="max-w-2xl">
                 <h3 className="text-xl lg:text-3xl mb-2 font-serif font-semibold">
-                  {t("common:about-our-founder-title")}
+                  {/* {t("common:about-our-founder-title")} */}
                 </h3>
                 <p className="mt-2 md:mt-3 font-normal block text-base">
-                  {t("common:about-our-founder-paragraph")}
+                  {/* {t("common:about-our-founder-paragraph")} */}
                 </p>
               </div>
             </div>
@@ -89,7 +89,7 @@ const AboutUs = () => {
                 />
                 <div className="py-4">
                   <h5 className="text-lg font-semibold font-serif">Joshinim</h5>
-                  <span className="opacity-75 text-sm">{t("common:co-founder-executive")}</span>
+                  {/* <span className="opacity-75 text-sm">{t("common:co-founder-executive")}</span> */}
                 </div>
               </div>
               {/* <div className="max-w-sm">
