@@ -37,79 +37,36 @@ export const resetPasswordValidation = Yup.object().shape({
 });
 
 const requiredMsg = "This field is required";
+export const productSchema = Yup.object().shape({
+  title: Yup.string().required('Title is required'),
+  slug: Yup.string().required('Slug is required'),
+  sku: Yup.string().required('SKU is required'),
+  productType: Yup.string().required('Product Type is required'),
+  categories: Yup.string().required('Categories is required'),
+  descriptions: Yup.string().required('Description is required'),
+ 
+  price: Yup.number().min(0, 'Price must be a non-negative number').required('Price is required'),
+  costPrice: Yup.number().min(0, 'Cost Price must be a non-negative number').required('Cost Price is required'),
+  retailPrice: Yup.number().min(0, 'Retail Price must be a non-negative number').required('Retail Price is required'),
+  salePrice: Yup.number().min(0, 'Sale Price must be a non-negative number').required('Sale Price is required'),
+  // trackInventory: Yup.string().required('Tracking Inventory is required'),
+  currentStockLevel: Yup.number().min(0, 'Current Stock Level must be a non-negative number').required('Current Stock Level is required'),
+  lowStockLevel: Yup.number().min(0, 'Low Stock Level must be a non-negative number').required('Low Stock Level is required'),
+  gtin: Yup.string().required('GTIN is required'),
+  manufacturerPartNumber: Yup.string().required('Manufacturer Part Number is required'),
+  brandName: Yup.string().required('Brand Name is required'),
+  productUPCEAN: Yup.string().required('Product UPC/EAN is required'),
+  pageTitle: Yup.string().required('SEO Title is required'),
+  metaDescription: Yup.string(),
+  metaKeywords:Yup.string(),
 
-export const ProductValidation = Yup.object().shape({
-  title: Yup.string().required(requiredMsg),
-  sku: Yup.string().required(requiredMsg),
-  productType: Yup.string().required(requiredMsg),
-  categories: Yup.string().required(requiredMsg),
-  descriptions: Yup.string().required(requiredMsg),
-  price: Yup.string().required(requiredMsg),
-  costPrice: Yup.string().optional(),
-  trackInventory: Yup.string().required(requiredMsg),
-  currentStockLevel: Yup.string().required(requiredMsg),
-  lowStockLevel: Yup.string().required(requiredMsg),
-  gtin: Yup.string().required(requiredMsg),
-  brandName: Yup.string().required(requiredMsg),
+})
+
+export const validateCategory = Yup.object().shape({
+  name: Yup.string().required('Name is required'),
+  slug: Yup.string().required('Slug is required'),
+  parent_category: Yup.string(),
+  display_type: Yup.string(),
+  descriptions: Yup.string(),
 });
 
-export const billingAddressValidationSchema = Yup.object().shape({
-  email: Yup.string()
-    .email("Invalid email address")
-    .required("Email is required"),
-  billingfirstName: Yup.string().required("First Name is required"),
-  billingcompany: Yup.string(),
-  billinglastName: Yup.string().required("Last Name is required"),
-  billingphoneNumber: Yup.string()
-    .matches(/^[0-9]+$/, "Must be a number")
-    .length(10, "Phone number must be exactly 10 digits")
-    .required("Phone number is Required"),
-  billingapartment: Yup.string(),
-  billingstreet: Yup.string().required("Street is required"),
-  billingcity: Yup.string().required("City is required"),
-  billingstate: Yup.string().required("State is required"),
-  billingpostalCode: Yup.string()
-    .required("Postal Code is required")
-    .matches(/^[0-9]+$/, "Must be a number")
-    .length(6, "Pincode Should be 6 digit"),
-  billingcountry: Yup.string().required("Country is required"),
-  accountCreate: Yup.boolean(),
-  notuseBillingAddressForShipping: Yup.boolean(),
-
-  additionalNotes: Yup.string(),
-  payment_method: Yup.string().required("Payment Method is required"),
-});
-
-export const shippingAddressValidationSchema = Yup.object({
-  // Add more validation as needed
-});
-
-export const reviewValidationSchema = Yup.object().shape({
-  title: Yup.string().required("title is required"),
-
-  rating: Yup.number()
-    .required("Rating is required")
-    .min(1, "Rating must be at least 1")
-    .max(5, "Rating can not be more than 5"),
-  review: Yup.string().required("Review is required"),
-});
-
-const phoneReg = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
-export const AddressvalidationSchema = Yup.object().shape({
-  addressname: Yup.string().required(),
-  phone: Yup.string().matches(phoneReg, "Phone Number is not Valid").required(),
-  street: Yup.string().required(),
-  city: Yup.string().required(),
-  country: Yup.string().required(),
-  postalCode: Yup.string().required(),
-  state: Yup.string().required(),
-  lastName: Yup.string().required(),
-  firstName: Yup.string().required(),
-});
-
-export const profileValidationSchema = Yup.object({
-  firstName: Yup.string().required("Required"),
-  lastName: Yup.string().required("Required"),
-  phoneNumber: Yup.string().required("Required"),
-  dateOfBirth: Yup.date().required("Required"),
-});

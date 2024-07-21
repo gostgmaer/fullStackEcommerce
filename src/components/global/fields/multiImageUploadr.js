@@ -51,7 +51,7 @@ const MultiImageUploadr = ({ selectedFiles, setSelectedFiles, label }) => {
   };
 
   const onFileUpload = (file) => {
-    // console.log(file);
+    // //console.log(file);
     if (!file) return;
 
     const storageRef = ref(firebaseStorage, `/Images/${file?.name}`);
@@ -65,7 +65,7 @@ const MultiImageUploadr = ({ selectedFiles, setSelectedFiles, label }) => {
         );
       },
       (err) => {
-        console.log(err);
+        //console.log(err);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((url) => {
@@ -80,7 +80,7 @@ const MultiImageUploadr = ({ selectedFiles, setSelectedFiles, label }) => {
   };
 
   return (
-    <div className="mb-4 w-full">
+    <div className="mb-4">
       <label className="block text-gray-700 text-sm font-bold mb-2">
         {label}
       </label>
@@ -144,7 +144,6 @@ const MultiImageUploadr = ({ selectedFiles, setSelectedFiles, label }) => {
                 </div>
                 <button
                   onClick={() => handleRemoveFile(index)}
-                  type="button"
                   className="ml-2 text-red-500 hover:text-red-700 focus:outline-none"
                 >
                   Remove

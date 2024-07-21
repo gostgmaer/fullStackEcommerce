@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 
-const PasswordField = ({ value, handleChange, placeholder, name ,...rest}) => {
+const PasswordField = ({ value, handleChange, placeholder, name }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -21,7 +21,6 @@ const PasswordField = ({ value, handleChange, placeholder, name ,...rest}) => {
         onChange={handleChange}
         autoComplete="off"
         required
-        {...rest}
       />
 
       <button className="px-2" type="button" onClick={togglePasswordVisibility}>

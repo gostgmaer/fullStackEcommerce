@@ -1,122 +1,100 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useAuthContext } from "./AuthContext";
-import { get, post } from "@/lib/network/http";
+import { createContext, useContext, useState } from "react";
+
 import { useSession } from "next-auth/react";
-import { ReadonlyURLSearchParams, useParams, usePathname, useRouter, useSearchParams, useSelectedLayoutSegments, } from "next/navigation";
-import { generateUrlFromNestedObject, parseUrlWithQueryParams } from "@/helper/function";
-var Url = require('url-parse');
+import {
+  ReadonlyURLSearchParams,
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+  useSelectedLayoutSegments,
+} from "next/navigation";
+import {
+  generateUrlFromNestedObject,
+  parseUrlWithQueryParams,
+} from "@/lib/helper/functions";
+import qs from "qs";
+import { get } from "@/lib/helper/network";
+import { appId, propertyContainer } from "@/setting";
+
+var Url = require("url-parse");
 const AppContext = createContext(null);
 
 const AppProvider = ({ children }) => {
-  const { user, userId } = useAuthContext();
-  const [state, setState] = useState(false);
-  const [wishlistData, setWishlistData] = useState(undefined);
-  const [openModal, setOpenModal] = useState(false);
-  const [searchData, setSearchData] = useState("");
-  const [category, setCategory] = useState("");
-  const [brand, setBrand] = useState("");
-  const [page, setPage] = useState(0);
-  const [limit, setLimit] = useState(24);
-  const [price, setPrice] = useState(undefined);
-  const [Rating, setRating] = useState(0);
-  const [sort, setSort] = useState("relevance-desc");
-  const [products, setProducts] = useState({});
-  const [categories, setCategories] = useState(undefined);
-  const { data: session, status } = useSession();
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams(); const params = useParams()
+  const searchParams = useSearchParams();
+  const params = useParams();
 
+  const [openModal, setOpenModal] = useState(false);
   const [filters, setFilters] = useState({
-    categories: [],
-    brandName: [],
-    tags: [],
-    rating: [],
-    salePrice: [0, 999],
-    isAvailable: [],
-    discount: []
-    // Add more filter types if needed
+    price_per_night: "",
+    priceMax: "",
+    location: { city: "" },
+    name: "",
+    type: "",
+    priceRange: "",
+    bedrooms: "",
+    bathrooms: "",
+    squareFootage: "",
+    year_of_construction: "",
+    amenities: [],
+    // parking: false,
+    // floor: { number: 0 },
+    is_furnished: "",
+    search: "",
   });
+  const [pages, setPages] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const [selectedSort, setSelectedSort] = useState("popularity-desc");
+  const [searchData, setSearchData] = useState(undefined);
 
-  const fetchCategories = async (second) => {
-    const response = await get("/public/categories");
-    setCategories(response);
+  const { data: session, status } = useSession();
+
+  const handleSearch = () => {
+    // console.log(filters);
+    var sortItem = selectedSort.split("-");
+    let mysort = `${sortItem[0]}:${sortItem[1]}`;
+    const paramsQuery = { filter: filters, page: pages, limit, sort: mysort };
+    const checkQuerydata = generateUrlFromNestedObject({ ...paramsQuery });
+    router.replace(`/properties/search${checkQuerydata}`);
   };
+  const fetchSearchData = async (second) => {
+    var currentURL = window.location.href;
+    var url = new Url(currentURL);
+    const parsedObject = parseUrlWithQueryParams(`${url.query}`);
 
-  useEffect(() => {
-    if (!categories) {
-      fetchCategories();
-    }
-  }, [categories]);
-
-
-  const searchProducts = async (second) => {
-
-    var sortItem = sort.split('-');
-    let mysort = `${sortItem[0]}:${sortItem[1]}`
-
-    const query = {
-      filter: {
-        ...filters, search: searchData
-      },
-      page: page + 1,
-      limit: limit,
-      sort: mysort,
+    const query = parsedObject ? parsedObject : {};
+    const params = {
+      ...query,
+      filter: JSON.stringify(query.filter),
     };
-
-    const checkQuerydata = generateUrlFromNestedObject({ ...query, filter: query.filter });
-    router.replace(`${pathname}${checkQuerydata}`)
-
+    const request = await get(
+      `/realestate/record`,
+      params
+    );
+    setSearchData(request)
+   
   };
 
-  const getWishlist = async (second) => {
-    const res = await get('/wishlists/fetch')
-    setWishlistData(res)
-    console.log(res);
-  }
-  useEffect(() => {
-    if (session) {
-      getWishlist()
-    }
-  }, [session]);
-
-
-  // function navigateToPath(fullPath) {
-
-  //   return new Promise((resolve, reject) => {
-
-  //     setTimeout(() => {
-  //       // Assuming router.push returns a promise or you can use an async function
-  //       router.push(fullPath)
-  //         .then(() => {
-  //           resolve(true);
-  //         })
-  //         .catch((error) => {
-  //           // Handle any errors during navigation
-  //           reject(error);
-  //         });
-  //     }, 1000); // Simulating an asynchronous operation (e.g., API call)
-  //   });
-  // }
-
+  const handleFilterChange = (name, value) => {
+    setFilters((prevFilters) => ({ ...prevFilters, [name]: value }));
+  };
 
   return (
     <AppContext.Provider
       value={{
-        state,
-        setState,
-        openModal,
-        setOpenModal,
-        searchData,
-        setSearchData,
-        category,
-        setCategory,
-        page,
-        setPage,
-        searchProducts, filters, setFilters,
+        filters,
+        setFilters,
+        handleSearch,
+        handleFilterChange,
+        pages,
+        setPages,
         limit,
-        setLimit, products, setSort, sort, brand, setBrand, price, setPrice, categories, getWishlist,
+        setLimit,
+        selectedSort,
+        setSelectedSort,
+        fetchSearchData,searchData
       }}
     >
       {children}
@@ -129,4 +107,3 @@ export const useGlobalContext = () => {
 };
 
 export { AppContext, AppProvider };
-
