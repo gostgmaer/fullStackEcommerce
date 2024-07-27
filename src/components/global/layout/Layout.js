@@ -1,17 +1,14 @@
 import Head from "next/head";
 import { ToastContainer } from "react-toastify";
-
 import NavBarTop from "./navbar/NavBarTop";
 import Navbar from "./navbar/Navbar";
 import MobileFooter from "./footer/MobileFooter";
 import Footer from "./footer/Footer";
 
-
 export const metadata = {
   title: "Ecommerce Dashboard",
   description: "Created by kishor sarkar",
 };
-
 
 const Layout = ({ children }) => {
   return (

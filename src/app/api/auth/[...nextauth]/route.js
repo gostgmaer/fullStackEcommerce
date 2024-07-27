@@ -1,8 +1,10 @@
 
 import CredentialsProvider from "next-auth/providers/credentials";
+import GitHubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/github";
 import Cookies from 'js-cookie';
 import NextAuth from 'next-auth'
-import { baseurl, secret } from "@/config/setting";
+import { baseurl, githubClient, githubSecret, googleClient, googleSecret, secret } from "@/config/setting";
 import { jwtDecode } from "jwt-decode";
 export const handler = NextAuth({
   providers: [
@@ -44,6 +46,21 @@ export const handler = NextAuth({
         return null
       },
     }),
+    GitHubProvider({
+      clientId: githubClient,
+      clientSecret: githubSecret
+    }),
+    GoogleProvider({
+      clientId: googleClient,
+      clientSecret: googleSecret,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code"
+        }
+      }
+    })
     // ...add more providers here
   ],
   secret: process.env.NEXTAUTH_SECRET,

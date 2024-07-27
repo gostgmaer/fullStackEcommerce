@@ -1,8 +1,9 @@
 import React from 'react';
+import MainModal from './MainModal';
+import Common from '@/components/elements/login/Common';
 
 //internal import
-import Common from '@component/login/Common';
-import MainModal from '@component/modal/MainModal';
+
 
 const LoginModal = ({ modalOpen, setModalOpen }) => {
   return (
@@ -14,4 +15,4 @@ const LoginModal = ({ modalOpen, setModalOpen }) => {
   );
 };
 
-export default React.memo(LoginModal);
+export default LoginModal;

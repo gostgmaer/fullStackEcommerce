@@ -3,28 +3,25 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Input = ({ label, type, additionalAttrs, classes, icon, id }) => {
   const [showPassword, setShowPassword] = useState(false);
-
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
   return (
-    <div className="flex flex-col w-full">
-      <label className="block">
-        <span className=" block text-sm capitalize font-semibold  mb-1.5">
-          {label} :{" "}
-        </span>
-        <span
-          className={`flex items-center peer  w-full transition duration-200  rounded-md bg-transparent focus:ring-[0.6px]  ${
-            icon && "border pl-3.5 h-10 leading-[40px]"
-          }  ${type === "password" && "border h-10 leading-[40px]"}`}
+    <div className="flex flex-col w-full mb-1">
+      <div className="block">
+       { label && <label className=" block text-sm capitalize font-semibold  mb-1.5">
+          {label}  <span className=" text-red-500 align-sub font-bold text-lg">{additionalAttrs.required && '*'}</span> :{" "}
+        </label>}
+        <div
+          className={`flex items-center peer  w-full transition duration-200  rounded-md bg-transparent  ${icon && "border pl-3.5 h-10 leading-[40px]"
+            }  ${type === "password" && "border h-10 leading-[40px]"}`}
         >
           {icon && <button className="pr-1">{icon}</button>}
           <input
-            className={` rounded w-full  leading-tight focus:outline-none  border px-3.5 h-10 ${
-              type === "password" && "pr-0"
-            }  ${classes && classes}`}
-            type={showPassword && type ==="password" ? "text" : type}
+            className={` rounded w-full  leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500   border px-3.5 h-10 ${type === "password" && "pr-0"
+              }  ${classes && classes}`}
+            type={showPassword && type === "password" ? "text" : type}
             name={id ? id : label.trim().replace(/\s+/g, "_").toLowerCase()}
             id={id ? id : label.trim().replace(/\s+/g, "_").toLowerCase()}
             {...additionalAttrs} // Spread additional attributes/props
@@ -51,8 +48,8 @@ const Input = ({ label, type, additionalAttrs, classes, icon, id }) => {
               </button>
             </>
           )}
-        </span>
-      </label>
+        </div>
+      </div>
     </div>
   );
 };

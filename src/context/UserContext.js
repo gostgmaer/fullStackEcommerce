@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 import React, { createContext, useReducer } from 'react';
 
-export const UserContext = createContext();
+export const UserContext = createContext(null);
 
 const initialState = {
   userInfo: Cookies.get('userInfo')

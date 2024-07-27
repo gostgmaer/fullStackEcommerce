@@ -12,6 +12,7 @@ import dynamic from "next/dynamic";
 import { UserContext } from "@/context/UserContext";
 import { useRouter } from "next/navigation";
 import { content } from "@/assets/jsonfile/content";
+import LoginModal from "../../modal/LoginModal";
 
 const NavBarTop = () => {
 
@@ -42,9 +43,9 @@ const NavBarTop = () => {
 
   return (
     <>
-      {/* {modalOpen && (
+     {modalOpen && (
         <LoginModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
-      )} */}
+      )}
 
       <div className="hidden lg:block bg-gray-100">
         <div className="max-w-screen-2xl mx-auto px-3 sm:px-10">
@@ -100,7 +101,7 @@ const NavBarTop = () => {
                 <>
                   {" "}
                   <button
-                    // onClick={() => setModalOpen(!modalOpen)}
+                    onClick={() => setModalOpen(!modalOpen)}
                     className="flex items-center font-medium hover:text-emerald-600"
                   >
                     <span className="mr-1">

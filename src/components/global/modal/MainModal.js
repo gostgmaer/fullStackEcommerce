@@ -3,7 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { IoClose } from "react-icons/io5";
 
 const MainModal = ({ modalOpen, setModalOpen, children }) => {
-  const cancelButtonRef = useRef();
+  // const cancelButtonRef = useRef();
 
   return (
     <>
@@ -12,7 +12,7 @@ const MainModal = ({ modalOpen, setModalOpen, children }) => {
           as="div"
           className="fixed inset-0 z-30 overflow-y-auto text-center"
           onClose={() => setModalOpen(false)}
-          initialFocus={cancelButtonRef}
+       
         >
           <div className="min-h-screen px-4">
             <Transition.Child
@@ -24,7 +24,9 @@ const MainModal = ({ modalOpen, setModalOpen, children }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 "
             >
-              <Dialog.Overlay className="fixed inset-0 bg-black opacity-60" />
+              <Dialog className="fixed inset-0 bg-black opacity-60" onClose={function (value) {
+                throw new Error("Function not implemented.");
+              } } />
             </Transition.Child>
 
             {/* This element is to trick the browser into centering the modal contents. */}
@@ -58,4 +60,4 @@ const MainModal = ({ modalOpen, setModalOpen, children }) => {
   );
 };
 
-export default React.memo(MainModal);
+export default MainModal;
