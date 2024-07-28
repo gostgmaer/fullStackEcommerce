@@ -65,17 +65,20 @@ export const handler = NextAuth({
   ],
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: '/auth/signin',
+    signIn: '/auth/login',
   },
   session: {
     strategy: "jwt",
   },
+
+
   callbacks: {
     async jwt({ token, user, account }) {
+     
       if (account && user) {
         const access_token = jwtDecode(user["access_token"]);
         const userInfo = jwtDecode(user["id_token"]);
-       
+
         Cookies.set('access_token', user["access_token"]);
         Cookies.set('refresh_token', user["refresh_token"]);
         return {
@@ -88,11 +91,21 @@ export const handler = NextAuth({
 
       return token
     },
-
     async session({ session, token }) {
-      session.user = token
-      return session
-    },
+      // Add the access token to the session object
+
+       console.log(token);
+
+      if (token.accessToken) {
+        session["accessToken"] = token.accessToken;
+      }
+      if (token.id) {
+        session.user["id"] = token.id;
+        session.user.email = token.email;
+        session.user.name = token.name;
+      }
+      return session;
+    }
   },
   theme: {
     colorScheme: 'auto', // "auto" | "dark" | "light"

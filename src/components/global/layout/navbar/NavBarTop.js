@@ -100,15 +100,15 @@ const NavBarTop = () => {
               ) : (
                 <>
                   {" "}
-                  <button
-                    onClick={() => setModalOpen(!modalOpen)}
+                  <Link
+                   href={'/auth/login'}
                     className="flex items-center font-medium hover:text-emerald-600"
                   >
                     <span className="mr-1">
                       <FiUser />
                     </span>
                     {content.Login}
-                  </button>
+                  </Link>
                 </>
               )}
             </div>

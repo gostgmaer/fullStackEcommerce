@@ -1,44 +1,69 @@
 "use client";
-import PasswordField from "@/components/global/fields/PasswordField";
+
 import { useAuthContext } from "@/context/authContext";
-import { post } from "@/lib/http";
-import { useAxios } from "@/lib/interceptors";
+import { patch } from "@/helper/network";
+import { notifyerror, notifySuccess } from "@/utils/notify/notice";
+
 import { resetPasswordValidation } from "@/utils/validation/validation";
 import { useFormik } from "formik";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { MdArrowRight, MdKeyboardArrowRight } from "react-icons/md";
+import Input from "../../fields/input";
 
 const ResetForm = () => {
 
   const { handleLoginAuth, user, userId } = useAuthContext();
-  const router = useRouter();
+  // const router = useRouter();
 
-  const [axios, spinner] = useAxios();
-  const [error, setError] = useState(undefined);
+
+  // const [error, setError] = useState(undefined);
   const param = useSearchParams();
 
-  
-  const handleSubmit = async (values) => {
-    try {
-      const reset = await post(
-        `/user/auth/reset-password/${param.getAll("token")[0]}`,
-        { password: values.password }
-      );
-      if (reset.status == "OK") {
-        router.push("/auth/login");
-      }
-    } catch (error) {
-      const myErr = error?.["message"];
-      setError(JSON.parse(myErr));
-    }
-  };
+
+ 
 
   useEffect(() => {
     if (userId) {
-      router.push("/dashboard");
+      router.push("/");
     }
   }, []);
+
+  const router = useRouter();
+  const handleSubmit = async (values) => {
+    try {
+      const res = await patch(
+        `/user/auth/reset-password/${param.getAll("token")[0]}`,
+        { password: values.password }
+      );
+      if (res) {
+        if (res) {
+          return res
+        }
+
+      }
+    } catch (error) {
+      notifyerror("Error")
+    }
+  };
+
+
+
+
+
+
+  // const formik = useFormik({
+  //   initialValues: {
+  //     password: "",
+  //     confirmPassword: "",
+  //   },
+  //   validationSchema: resetPasswordValidation,
+  //   validateOnBlur: true,
+  //   validateOnChange: true,
+  //   onSubmit: (values) => {
+  //     handleSubmit(values);
+  //   },
+  // });
 
 
 
@@ -47,59 +72,74 @@ const ResetForm = () => {
     initialValues: {
       password: "",
       confirmPassword: "",
+
     },
     validationSchema: resetPasswordValidation,
-    validateOnBlur: true,
-    validateOnChange: true,
-    onSubmit: (values) => {
-      handleSubmit(values);
+    onSubmit: async (values, { setSubmitting, resetForm, setValues }) => {
+      setSubmitting(true)
+      const res = await handleSubmit(values)
+
+      const messages = {
+        start: "Starting API call...",
+        inProgress: "API call in progress...",
+        success: "API call successful!",
+        failure: "API call failed",
+      };
+
+
+      if (res["statusCode"] === 200) {
+
+        notifySuccess('Register Successfully! Please Login with New Password')
+        resetForm()
+        setSubmitting(false)
+        router.push("/auth/login");
+
+
+      } else {
+        setSubmitting(false)
+        notifyerror(res["message"])
+      }
     },
   });
 
+
+
+
   return (
     <form onSubmit={formik.handleSubmit}>
-      <div className="space-y-5 text-black">
-        <div className="rizzui-password-root flex flex-col [&amp;>label>span]:font-medium">
-          <label className="block">
-            <span className="rizzui-password-label block text-sm mb-1.5">
-              Password
-            </span>
-            <PasswordField
-              placeholder="Password"
-              name="password"
-              value={formik.values.password}
-              handleChange={formik.handleChange}
-            />
-          </label>
+      <div className="flex flex-col gap-x-4 gap-y-5 md:grid md:grid-cols-2 lg:gap-5 text-black">
+        <div className=" col-span-full ">
+          <Input label={"Password"} type={"password"} additionalAttrs={{
+            ...formik.getFieldProps("password"),
+            placeholder: "********", required: true
+          }} classes={undefined} icon={undefined} id={"password"} />
+          {formik.errors.password && formik.touched.password && (
+            <div className="text-red-500 text-sm">{formik.errors.password}</div>
+          )}
         </div>
-        <div className="rizzui-password-root flex flex-col [&amp;>label>span]:font-medium">
-          <label className="block" htmlFor="confirm-password">
-            <span className="rizzui-password-label block text-sm mb-1.5">
-              Confirm Password
-            </span>
-            <PasswordField
-              placeholder="Confirm Password"
-              name="confirmPassword"
-              value={formik.values.confirmPassword}
-              handleChange={formik.handleChange}
-            />
-          </label>
+        <div className="col-span-full">
+          <Input label={"Password"} type={"password"} additionalAttrs={{
+            ...formik.getFieldProps("password"),
+            placeholder: "********", required: true
+          }} classes={undefined} icon={undefined} id={"password"} />
+          {formik.errors.password && formik.touched.password && (
+            <div className="text-red-500 text-sm">{formik.errors.password}</div>
+          )}
         </div>
 
         <button
-          className="rizzui-button  disabled:bg-gray-400 inline-flex font-medium items-center justify-center active:enabled:translate-y-px focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-50 transition-colors duration-200 px-8 py-2.5 text-base  rounded-md border border-transparent focus-visible:ring-offset-2 bg-gray-900 hover:enabled::bg-gray-800 active:enabled:bg-gray-1000 focus-visible:ring-gray-900/30 text-gray-0 w-full text-white"
+          className=" disabled:text-gray-400 disabled:bg-gray-300 col-span-2 inline-flex font-medium items-center bg-gray-700 hover:enabled::bg-gray-800 active:enabled:bg-gray-1000 focus-visible:ring-gray-900/30 text-gray-0  text-white justify-center active:enabled:translate-y-px focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-50 transition-colors duration-200 px-5 py-2 text-base h-12 rounded-md border border-transparent focus-visible:ring-offset-2 bg-blue hover:enabled:bg-gray-900 focus-visible:ring-blue/30  w-full"
           type="submit"
-          disabled={!formik.isValid}
+          disabled={!formik.isValid || formik.isSubmitting}
         >
-          <span>Confirm Password</span>{" "}
-      <MdKeyboardArrowRight/>
+          <span>{formik.isSubmitting ? "" : 'Confirm Password'}</span>{" "}
+
         </button>
+
+
+
       </div>
-      {error && (
-        <div className={`error text-red-500 font-medium text-sm py-2 ${error["statusCode"]==200 && " text-green-700"} `}>
-          <p className="text-center">{error.message}</p>
-        </div>
-      )}
+
     </form>
   );
 };

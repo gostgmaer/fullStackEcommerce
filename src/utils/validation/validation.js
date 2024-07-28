@@ -36,8 +36,9 @@ export const contactUsValidation = Yup.object().shape({
 
 export const forgetPasswordValidation = Yup.object().shape({
   email: Yup.string()
-    .email("Invalid email address")
-    .required("Email is required"),
+  .email("Invalid email address")
+  .matches(emailValidationRegex, "Invalid email address")
+  .required("Email is required"),
 });
 
 export const resetPasswordValidation = Yup.object().shape({
