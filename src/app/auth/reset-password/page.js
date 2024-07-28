@@ -1,36 +1,26 @@
-import Right from "@/components/pages/auth/right";
-import LoginForm from "@/components/pages/auth/forms/login";
+
+import ResetForm from "@/components/global/common/forms/resetForm";
+import Layout from "@/components/global/layout/Layout";
 import Link from "next/link";
-import ResetForm from "@/components/pages/auth/forms/resetForm";
-import PublicLayout from "@/components/layout/public/publicLayout";
+
 
 const Index = () => {
   return (
-    <PublicLayout>
-      <div className="flex w-full flex-col justify-center px-5">
-        <div className="mx-auto w-full max-w-md py-12 md:max-w-lg lg:max-w-xl 2xl:pb-8 2xl:pt-2">
+    <Layout>
+      <div className="flex w-full flex-col justify-center  sm:p-5 lg:p-8">
+        <div className="mx-auto text-left justify-center  w-full max-w-lg px-4 py-8 sm:p-10 overflow-hidden align-middle transition-all transform bg-white shadow-xl rounded-2xl">
           <div className="flex flex-col items-center">
-            <a className="mb-7 inline-block max-w-[64px] lg:mb-9" href="/">
-              {/* <img
-                alt="Isomorphic"
-                loading="lazy"
-                width="61"
-                height="38"
-                decoding="async"
-                data-nimg="1"
-                src="https://isomorphic-furyroad.vercel.app/_next/static/media/logo-short.18ca02a8.svg"
-              /> */}
-            </a>
-            <h2 className="rizzui-title-h2 mb-7 text-center text-[28px] font-bold leading-snug md:text-3xl md:!leading-normal lg:mb-10 lg:text-4xl">
-            Reset your password.
+
+            <h2 className="rizzui-title-h2  text-center text-[22px] font-bold leading-snug md:text-2xl md:!leading-normal  lg:text-3xl">
+              Reset your password.
             </h2>
           </div>
-        
+
 
 
           <ResetForm />
           <p className="mt-6 text-center text-[15px] leading-loose text-gray-500 md:mt-7 lg:mt-9 lg:text-base">
-            Don&lsquo;t wont to reset?
+            Don&lsquo;t wont to reset? 
             <Link
               className="font-semibold text-gray-700 transition-colors hover:text-primary ml-1"
               href="/auth/login"
@@ -40,7 +30,7 @@ const Index = () => {
           </p>
         </div>
       </div>
-    </PublicLayout>
+    </Layout>
   );
 };
 

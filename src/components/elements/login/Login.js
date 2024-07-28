@@ -5,6 +5,8 @@ import { post } from "@/helper/network";
 import { notifyerror, notifySuccess } from "@/utils/notify/notice";
 import { useFormik } from "formik";
 import { loginValidationSchema } from "@/utils/validation/validation";
+import { FaFacebook, FaGoogle } from "react-icons/fa";
+import { signIn } from "next-auth/react";
 
 const Login = ({ setShowResetPassword, setModalOpen }) => {
 
@@ -109,9 +111,37 @@ const Login = ({ setShowResetPassword, setModalOpen }) => {
             type="submit"
             disabled={!formik.isValid || formik.isSubmitting}
           >
-            <span>{formik.isSubmitting ? "" : 'Login'}</span>{" "}
+            <span>{formik.isSubmitting ? "Submitting..." : 'Login'}</span>{" "}
 
           </button>
+
+          <div className="before:content-[' '] relative  mt-0.5 flex items-center  before:absolute before:left-0 before:top-1/2 before:h-px before:w-full before:bg-gray-100 mb-5 2xl:mb-7 justify-center">
+              <span className="relative z-10 inline-block bg-white text-sm font-medium text-gray-500 dark:bg-gray-50 2xl:text-base p-2.5">
+                Or
+              </span>
+            </div>
+          <div className="col-span-full">
+              <button
+                className="rizzui-button inline-flex font-medium items-center text-white justify-center active:enabled:translate-y-px focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-50 transition-colors duration-200 px-4 py-2 text-sm rounded-md border border-transparent focus-visible:ring-offset-2 bg-gray-900 hover:enabled::bg-gray-800 active:enabled:bg-gray-1000 focus-visible:ring-gray-900/30 text-gray-0 h-11 w-full"
+                type="button"
+                onClick={async () => await signIn("google")}
+              >
+                <FaGoogle className="h-4 w-4 mr-1 text-yellow-400" />
+                <span className="truncate">Signin with Google</span>
+              </button>
+              </div>
+              <div className="col-span-full">
+                
+              <button
+                className="rizzui-button inline-flex font-medium items-center justify-center active:enabled:translate-y-px focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-50 transition-colors duration-200 px-4 py-2 text-sm rounded-md border border-transparent focus-visible:ring-offset-2 bg-blue-600 hover:enabled:bg-blue-dark focus-visible:ring-blue/30 text-white h-11 w-full"
+                type="button"
+                onClick={async () => await signIn("github")}
+              >
+                <FaFacebook className="h-4 w-4 mr-1" />
+                <span className="truncate">Signin with Github</span>
+              </button>
+              </div>
+
         </div>
       </form>
 

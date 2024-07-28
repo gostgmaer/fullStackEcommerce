@@ -17,7 +17,7 @@ const Input = ({ label, type, additionalAttrs, classes, icon, id }) => {
           className={`flex items-center peer  w-full transition duration-200  rounded-md bg-transparent  ${icon && "border pl-3.5 h-10 leading-[40px]"
             }  ${type === "password" && "border h-10 leading-[40px]"}`}
         >
-          {icon && <button className="pr-1">{icon}</button>}
+          {icon && <button className="pr-3.5">{icon}</button>}
           <input
             className={` rounded w-full  leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500   border px-3.5 h-10 ${type === "password" && "pr-0"
               }  ${classes && classes}`}
