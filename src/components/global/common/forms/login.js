@@ -6,7 +6,7 @@ import { loginValidationSchema } from "@/utils/validation/validation";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-import { useSession, signIn, signOut } from "next-auth/react"
+import { useSession, signIn, signOut } from "next-auth/react";
 import Input from "@/components/global/fields/input";
 import { notifyerror } from "@/utils/notify/notice";
 import { MdEmail, MdLock } from "react-icons/md";
@@ -15,7 +15,7 @@ import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
 const LoginForm = () => {
   const { data: session, status } = useSession();
   // const { handleLoginAuth, user, userId, authError } = useAuthContext();
-  const [authError, setAuthError] = useState(undefined);
+  // const [authError, setAuthError] = useState(undefined);
   const route = useRouter();
   console.log(session, status);
   const formik = useFormik({
@@ -44,44 +44,54 @@ const LoginForm = () => {
           } else {
             route.push("/");
           }
-
         } else {
           route.push("/");
         }
       } else {
-
-        notifyerror(res.error, 5000)
+        notifyerror(res.error, 5000);
       }
     },
   });
-
 
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="space-y-4 lg:space-y-5">
         <div className="col-span-full ">
-          <Input label={""} type={"text"} additionalAttrs={{
-            ...formik.getFieldProps("email"),
-            placeholder: "Email", required: true
-          }} classes={undefined} icon={<MdEmail />} id={"email"} />
-
+          <Input
+            label={""}
+            type={"text"}
+            additionalAttrs={{
+              ...formik.getFieldProps("email"),
+              placeholder: "Email",
+              required: true,
+            }}
+            classes={undefined}
+            icon={<MdEmail />}
+            id={"email"}
+          />
 
           {formik.touched.email && formik.errors.email && (
             <div className="text-red-500 text-sm">{formik.errors.email}</div>
           )}
         </div>
         <div className="col-span-full ">
-          <Input label={""} type={"password"} additionalAttrs={{
-            ...formik.getFieldProps("password"),
-            placeholder: "Password", required: true
-          }} classes={undefined} icon={<MdLock />} id={"password"} />
-
+          <Input
+            label={""}
+            type={"password"}
+            additionalAttrs={{
+              ...formik.getFieldProps("password"),
+              placeholder: "Password",
+              required: true,
+            }}
+            classes={undefined}
+            icon={<MdLock />}
+            id={"password"}
+          />
 
           {formik.touched.password && formik.errors.password && (
             <div className="text-red-500 text-sm">{formik.errors.password}</div>
           )}
         </div>
-
 
         <div className="flex items-center justify-between pb-1">
           <div className=" flex flex-col [&amp;>label>span]:font-medium">
@@ -110,8 +120,7 @@ const LoginForm = () => {
           type="submit"
           disabled={!formik.isValid || formik.isSubmitting}
         >
-          <span>{formik.isSubmitting ? "Submitting..." : 'Login'}</span>{" "}
-
+          <span>{formik.isSubmitting ? "Submitting..." : "Login"}</span>{" "}
         </button>
         <div className="before:content-[' '] relative  mt-0.5 flex items-center  before:absolute before:left-0 before:top-1/2 before:h-px before:w-full before:bg-gray-100   justify-center">
           <span className="relative z-10 inline-block bg-white text-sm font-medium text-gray-500 dark:bg-gray-50 2xl:text-base ">
@@ -129,7 +138,6 @@ const LoginForm = () => {
           </button>
         </div>
         <div className="col-span-full">
-
           <button
             className="rizzui-button inline-flex font-medium items-center justify-center active:enabled:translate-y-px focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-50 transition-colors duration-200 px-4 py-2 text-sm rounded-md border border-transparent focus-visible:ring-offset-2 bg-blue-600 hover:enabled:bg-blue-dark focus-visible:ring-blue/30 text-white h-11 w-full"
             type="button"
@@ -140,7 +148,6 @@ const LoginForm = () => {
           </button>
         </div>
       </div>
-
     </form>
   );
 };
