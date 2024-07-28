@@ -75,7 +75,7 @@ const Contact = () => {
                         <Input label={"First name"} type={"text"} additionalAttrs={{
                             ...formik.getFieldProps("firstName"),
                             placeholder: "First name", required: true
-                        }} classes={undefined} icon={undefined} id={"firstName"} formik />
+                        }} classes={undefined} icon={undefined} id={"firstName"}  />
 
 
                         {formik.touched.firstName && formik.errors.firstName && (
@@ -86,7 +86,7 @@ const Contact = () => {
                         <Input label={"Last name"} type={"text"} additionalAttrs={{
                             ...formik.getFieldProps("lastName"),
                             placeholder: "Last name", required: true
-                        }} classes={undefined} icon={undefined} id={"lastName"} formik />
+                        }} classes={undefined} icon={undefined} id={"lastName"}  />
 
 
                         {formik.touched.lastName && formik.errors.lastName && (
@@ -97,7 +97,7 @@ const Contact = () => {
                         <Input label={"Phone Number"} type={"text"} additionalAttrs={{
                             ...formik.getFieldProps("phone"),
                             placeholder: "Phone Number",
-                        }} classes={undefined} icon={undefined} id={"phone"} formik />
+                        }} classes={undefined} icon={undefined} id={"phone"}  />
 
 
 
@@ -106,7 +106,7 @@ const Contact = () => {
                         <Input label={"Company"} type={"text"} additionalAttrs={{
                             ...formik.getFieldProps("company"),
                             placeholder: "Company",
-                        }} classes={undefined} icon={undefined} id={"company"} formik />
+                        }} classes={undefined} icon={undefined} id={"company"}  />
 
 
 
@@ -115,7 +115,7 @@ const Contact = () => {
                         <Input label={"Email Address"} type={"text"} additionalAttrs={{
                             ...formik.getFieldProps("email"),
                             placeholder: "email", required: true
-                        }} classes={undefined} icon={undefined} id={"email"} formik />
+                        }} classes={undefined} icon={undefined} id={"email"}  />
                         {formik.errors.email && formik.touched.email && (
                             <div className="text-red-500 text-sm">{formik.errors.email}</div>
                         )}
@@ -124,7 +124,7 @@ const Contact = () => {
                         <Input label={"Subject"} type={"text"} additionalAttrs={{
                             ...formik.getFieldProps("subject"),
                             placeholder: "Your Subject", required: true
-                        }} classes={undefined} icon={undefined} id={"subject"} formik />
+                        }} classes={undefined} icon={undefined} id={"subject"}  />
                         {formik.errors.subject && formik.touched.subject && (
                             <div className="text-red-500 text-sm">{formik.errors.subject}</div>
                         )}

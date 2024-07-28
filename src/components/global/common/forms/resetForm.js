@@ -48,26 +48,6 @@ const ResetForm = () => {
   };
 
 
-
-
-
-
-  // const formik = useFormik({
-  //   initialValues: {
-  //     password: "",
-  //     confirmPassword: "",
-  //   },
-  //   validationSchema: resetPasswordValidation,
-  //   validateOnBlur: true,
-  //   validateOnChange: true,
-  //   onSubmit: (values) => {
-  //     handleSubmit(values);
-  //   },
-  // });
-
-
-
-
   const formik = useFormik({
     initialValues: {
       password: "",
