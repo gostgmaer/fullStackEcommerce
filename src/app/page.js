@@ -1,6 +1,6 @@
 
 "use client"
-import { popularProducts } from "@/assets/fakeData/Products";
+import { attributes, popularProducts } from "@/assets/fakeData/Products";
 import { content } from "@/assets/jsonfile/content";
 import Banner from "@/components/elements/banner/Banner";
 import MainCarousel from "@/components/elements/carousel/MainCarousel";
@@ -8,7 +8,6 @@ import StickyCart from "@/components/elements/cart/StickyCart";
 // import FeatureCategory from "@/components/elements/category/FeatureCategory";
 import OfferCard from "@/components/elements/offer/OfferCard";
 import ProductCard from "@/components/elements/product/ProductCard";
-
 import Layout from "@/components/global/layout/Layout";
 
 
@@ -16,6 +15,8 @@ import Layout from "@/components/global/layout/Layout";
 //   title: "This is HomePage",
 //   description: "Ths is Description",
 // };
+
+
 export default function Home() {
   return (
     <Layout  >
@@ -65,10 +66,10 @@ export default function Home() {
                   <h2 className="text-xl lg:text-2xl mb-2 font-serif font-semibold">
 
                     {content["popular-products-title"]}
-                    {/* {t("common:popular-products-title")} */}
+                 
                   </h2>
                   <p className="text-base font-sans text-gray-600 leading-6">
-                    {/* {t("common:popular-products-sub-title")} */}
+                 
 
                     {content["popular-products-sub-title"]}
                   </p>
@@ -81,7 +82,7 @@ export default function Home() {
                       <ProductCard
                         key={product._id}
                         product={product}
-                        attributes={null}
+                        attributes={attributes}
                       />
                     ))}
                   </div>

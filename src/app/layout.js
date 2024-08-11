@@ -2,7 +2,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ProviderTheme } from '../utils/ProviderTheme'
 import NextAuthProvider from "@/context/sessionContext";
-
+import { Provider } from 'react-redux'
+import { store } from "@/store";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -13,15 +14,20 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <NextAuthProvider>
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-
-        <ProviderTheme>
-          {children}
-        </ProviderTheme>
-      </body>
+      <html lang="en" suppressHydrationWarning>
+        {/* <Provider store={store}>
 
 
-    </html></NextAuthProvider>
+
+        </Provider> */}
+
+        
+<body className={inter.className}>
+
+<ProviderTheme>
+  {children}
+</ProviderTheme>
+</body>
+      </html></NextAuthProvider>
   );
 }

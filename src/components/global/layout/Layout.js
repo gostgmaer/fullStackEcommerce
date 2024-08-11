@@ -15,7 +15,7 @@ const Layout = ({ children }) => {
     <>
       <ToastContainer />
       <div className="font-sans dark:text-gray-100  text-gray-800 bg-gray-50 dark:bg-gray-800">
-       
+
         <NavBarTop />
         <Navbar />
         <div className="">{children}</div>
