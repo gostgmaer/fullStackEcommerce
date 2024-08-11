@@ -2,7 +2,6 @@
 import React from 'react'
 import { useFormik } from 'formik';
 import { contactUsValidation } from '@/utils/validation/validation';
-import PasswordField from '@/components/global/fields/PasswordField';
 import { MdArrowForward } from 'react-icons/md';
 import Label from '@/components/global/fields/Label';
 import Input from '@/components/global/fields/input';

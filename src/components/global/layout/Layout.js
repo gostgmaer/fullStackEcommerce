@@ -14,11 +14,11 @@ const Layout = ({ children }) => {
   return (
     <>
       <ToastContainer />
-      <div className="font-sans">
+      <div className="font-sans dark:text-gray-100  text-gray-800 bg-gray-50 dark:bg-gray-800">
        
         <NavBarTop />
         <Navbar />
-        <div className="bg-gray-50">{children}</div>
+        <div className="">{children}</div>
         {/* <MobileFooter /> */}
         <div className="w-full">
           {/* <FooterTop /> */}

@@ -1,42 +1,48 @@
-"use client"
-
-
-// import Discount from "@/components/global/common/Discount";
-// import ProductModal from "@/components/global/modal/ProductModal";
+import Discount from "@component/common/Discount";
+import Price from "@component/common/Price";
+import Stock from "@component/common/Stock";
+import ProductModal from "@component/modal/ProductModal";
+import useAddToCart from "@hooks/useAddToCart";
+import useAsync from "@hooks/useAsync";
+import SettingServices from "@services/SettingServices";
+import { notifyError } from "@utils/toast";
+import { showingTranslateValue } from "@utils/translate";
+import useTranslation from "next-translate/useTranslation";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useState } from "react";
 import { IoAdd, IoBagAddSharp, IoRemove } from "react-icons/io5";
+import { useCart } from "react-use-cart";
 
 const ProductCard = ({ product, attributes }) => {
-  // const { items, addItem, updateItemQuantity, inCart } = useCart();
-  // const { handleIncreaseQuantity } = useAddToCart();
-  // const { lang } = useTranslation("ns1"); // default namespace (optional)
+  const { items, addItem, updateItemQuantity, inCart } = useCart();
+  const { handleIncreaseQuantity } = useAddToCart();
+  const { lang } = useTranslation("ns1"); // default namespace (optional)
   const [modalOpen, setModalOpen] = useState(false);
 
-  // const { data: globalSetting } = useAsync(SettingServices.getGlobalSetting);
+  const { data: globalSetting } = useAsync(SettingServices.getGlobalSetting);
 
-  // const currency = globalSetting?.default_currency || "$";
+  const currency = globalSetting?.default_currency || "$";
 
   // console.log('attributes in product cart',attributes)
 
-  // const handleAddItem = (p) => {
-  //   if (p.stock < 1) return notifyError("Insufficient stock!");
+  const handleAddItem = (p) => {
+    if (p.stock < 1) return notifyError("Insufficient stock!");
 
-  //   if (p?.variants?.length > 0) {
-  //     setModalOpen(!modalOpen);
-  //     return;
-  //   }
-  //   const newItem = {
-  //     ...p,
-  //     title: showingTranslateValue(p?.title, lang),
-  //     id: p._id,
-  //     variant: p.prices,
-  //     price: p.prices.price,
-  //     originalPrice: product.prices?.originalPrice,
-  //   };
-  //   addItem(newItem);
-  // };
+    if (p?.variants?.length > 0) {
+      setModalOpen(!modalOpen);
+      return;
+    }
+    const newItem = {
+      ...p,
+      title: showingTranslateValue(p?.title, lang),
+      id: p._id,
+      variant: p.prices,
+      price: p.prices.price,
+      originalPrice: product.prices?.originalPrice,
+    };
+    addItem(newItem);
+  };
 
   const handleModalOpen = (event, id) => {
     setModalOpen(event);
@@ -44,15 +50,15 @@ const ProductCard = ({ product, attributes }) => {
 
   return (
     <>
-      {/* {modalOpen && (
+      {modalOpen && (
         <ProductModal
           modalOpen={modalOpen}
           setModalOpen={setModalOpen}
           product={product}
-          currency={"$"}
+          currency={currency}
           attributes={attributes}
         />
-      )} */}
+      )}
 
       <div className="group box-border overflow-hidden flex rounded-md shadow-sm pe-0 flex-col items-center bg-white relative">
         <div
@@ -60,14 +66,14 @@ const ProductCard = ({ product, attributes }) => {
           className="relative flex justify-center w-full cursor-pointer pt-2"
         >
           <div className="left-3">
-            {/* <Stock product={product} stock={product.stock} card /> */}
+            <Stock product={product} stock={product.stock} card />
           </div>
 
-          {/* <Discount product={{...product}} /> */}
+          <Discount product={product} />
 
-          {product?.image?.[0] ? (
+          {product?.image[0] ? (
             <Image
-              src={product?.image?.[0]}
+              src={product.image[0]}
               width={210}
               height={210}
               alt="product"
@@ -90,22 +96,21 @@ const ProductCard = ({ product, attributes }) => {
             </span>
             <h2 className="text-heading truncate mb-0 block text-sm font-medium text-gray-600">
               <span className="line-clamp-2">
-                {/* {showingTranslateValue(product?.title, lang)} */}
-                {product?.title}
+                {showingTranslateValue(product?.title, lang)}
               </span>
             </h2>
           </div>
 
           <div className="flex justify-between items-center text-heading text-sm sm:text-base space-s-2 md:text-base lg:text-xl">
-            {/* <Price
+            <Price
               card
               product={product}
               currency={currency}
               price={product.prices.price}
               originalPrice={product?.prices?.originalPrice}
-            /> */}
+            />
 
-            {/* {inCart(product._id) ? (
+            {inCart(product._id) ? (
               <div>
                 {items.map(
                   (item) =>
@@ -152,7 +157,7 @@ const ProductCard = ({ product, attributes }) => {
                   <IoBagAddSharp />
                 </span>{" "}
               </button>
-            )} */}
+            )}
           </div>
         </div>
       </div>
@@ -160,4 +165,4 @@ const ProductCard = ({ product, attributes }) => {
   );
 };
 
-export default ProductCard
+export default dynamic(() => Promise.resolve(ProductCard), { ssr: false });

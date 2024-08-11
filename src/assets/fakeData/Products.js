@@ -1,14 +1,15 @@
-function importAll(r) {
-  let images = {};
-  r.keys().map((item) => {
-    images[item.replace("./", "")] = r(item);
-  });
-  return images;
-}
+// function importAll(r) {
+//   let images = {};
+//   r.keys().forEach((item) => {
+//     images[item.replace("./", "")] = r(item);
+//   });
+//   return images;
+// }
 
-const images = importAll(
-  require.context("../assets/img", false, /\.(png|jpe?g|svg)$/)
-);
+// const images = importAll(
+//   require.context("../assets/img", false, /\.(png|jpe?g|svg)$/)
+// );
+
 
 export const Products = [
   {
@@ -22,7 +23,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.216Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-1.png"],
+   // image: images["product-1.png"],
 
     originalPrice: 12,
     parent: "Fruits & Vegetable",
@@ -46,7 +47,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.216Z",
     description:
       "In a botanical sense, a fruit is the fleshy or dry ripened ovary of a flowering plant, enclosing the seed or seeds. Apricots, bananas, and grapes, as well as bean pods, corn grains, tomatoes, cucumbers, and (in their shells) acorns and almonds, are all technically fruits.",
-    image: images["product-2.png"],
+   // image: images["product-2.png"],
     originalPrice: 13,
     parent: "Fruits & Vegetable",
     quantity: 0,
@@ -69,7 +70,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.216Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-3.png"],
+   // image: images["product-3.png"],
     originalPrice: 15,
     parent: "Fruits & Vegetable",
     quantity: 0,
@@ -92,7 +93,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.216Z",
     description:
       "In a botanical sense, a fruit is the fleshy or dry ripened ovary of a flowering plant, enclosing the seed or seeds. Apricots, bananas, and grapes, as well as bean pods, corn grains, tomatoes, cucumbers, and (in their shells) acorns and almonds, are all technically fruits.",
-    image: images["product-4.png"],
+   // image: images["product-4.png"],
     originalPrice: 15,
     parent: "Fruits & Vegetable",
     quantity: 29,
@@ -115,7 +116,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.216Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-5.png"],
+   // image: images["product-5.png"],
     originalPrice: 15,
     parent: "Fruits & Vegetable",
     quantity: 42,
@@ -138,7 +139,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.216Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-6.png"],
+   // image: images["product-6.png"],
     originalPrice: 14,
     parent: "Fruits & Vegetable",
     quantity: 83,
@@ -161,7 +162,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.216Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-7.png"],
+   // image: images["product-7.png"],
     originalPrice: 15,
     parent: "Fruits & Vegetable",
     quantity: 0,
@@ -184,7 +185,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.216Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-8.png"],
+   // image: images["product-8.png"],
     originalPrice: 12,
     parent: "Fruits & Vegetable",
     quantity: 54,
@@ -207,7 +208,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.215Z",
     description:
       "In a botanical sense, a fruit is the fleshy or dry ripened ovary of a flowering plant, enclosing the seed or seeds. Apricots, bananas, and grapes, as well as bean pods, corn grains, tomatoes, cucumbers, and (in their shells) acorns and almonds, are all technically fruits.",
-    image: images["product-9.png"],
+   // image: images["product-9.png"],
     originalPrice: 13,
     parent: "Fruits & Vegetable",
     quantity: 13,
@@ -230,7 +231,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.215Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-10.png"],
+   // image: images["product-10.png"],
     originalPrice: 15,
     parent: "Fruits & Vegetable",
     quantity: 76,
@@ -253,7 +254,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.215Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-11.png"],
+   // image: images["product-11.png"],
     originalPrice: 11,
     parent: "Fruits & Vegetable",
     quantity: 110,
@@ -276,7 +277,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.215Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-12.png"],
+   // image: images["product-12.png"],
     originalPrice: 15,
     parent: "Fruits & Vegetable",
     quantity: 0,
@@ -299,7 +300,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.215Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-13.png"],
+   // image: images["product-13.png"],
     originalPrice: 15,
     parent: "Fruits & Vegetable",
     quantity: 89,
@@ -322,7 +323,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.215Z",
     description:
       "In a botanical sense, a fruit is the fleshy or dry ripened ovary of a flowering plant, enclosing the seed or seeds. Apricots, bananas, and grapes, as well as bean pods, corn grains, tomatoes, cucumbers, and (in their shells) acorns and almonds, are all technically fruits.",
-    image: images["product-14.png"],
+   // image: images["product-14.png"],
     originalPrice: 14,
     parent: "Fruits & Vegetable",
     quantity: 80,
@@ -345,7 +346,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.215Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-15.png"],
+   // image: images["product-15.png"],
     originalPrice: 15,
     parent: "Fruits & Vegetable",
     quantity: 94,
@@ -368,7 +369,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.215Z",
     description:
       "In a botanical sense, a fruit is the fleshy or dry ripened ovary of a flowering plant, enclosing the seed or seeds. Apricots, bananas, and grapes, as well as bean pods, corn grains, tomatoes, cucumbers, and (in their shells) acorns and almonds, are all technically fruits.",
-    image: images["product-16.png"],
+   // image: images["product-16.png"],
     originalPrice: 12,
     parent: "Fruits & Vegetable",
     quantity: 49,
@@ -391,7 +392,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.215Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-17.png"],
+   // image: images["product-17.png"],
     originalPrice: 12,
     parent: "Fruits & Vegetable",
     quantity: 145,
@@ -414,7 +415,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.215Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-18.png"],
+   // image: images["product-18.png"],
     originalPrice: 14,
     parent: "Fruits & Vegetable",
     quantity: 146,
@@ -437,7 +438,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.215Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-19.png"],
+   // image: images["product-19.png"],
     originalPrice: 16,
     parent: "Fruits & Vegetable",
     quantity: 60,
@@ -460,7 +461,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.215Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-20.png"],
+   // image: images["product-20.png"],
     originalPrice: 15,
     parent: "Fruits & Vegetable",
     quantity: 0,
@@ -483,7 +484,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.215Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-21.png"],
+   // image: images["product-21.png"],
     originalPrice: 15,
     parent: "Fruits & Vegetable",
     quantity: 89,
@@ -506,7 +507,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.215Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-22.png"],
+   // image: images["product-22.png"],
     originalPrice: 14,
     parent: "Fruits & Vegetable",
     quantity: 58,
@@ -529,7 +530,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.215Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-23.png"],
+   // image: images["product-23.png"],
     originalPrice: 13,
     parent: "Fruits & Vegetable",
     quantity: 70,
@@ -552,7 +553,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.215Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-24.png"],
+   // image: images["product-24.png"],
     originalPrice: 15,
     parent: "Fruits & Vegetable",
     quantity: 100,
@@ -575,7 +576,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.214Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-25.png"],
+   // image: images["product-25.png"],
     originalPrice: 15,
     parent: "Fruits & Vegetable",
     quantity: 5,
@@ -598,7 +599,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.214Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-26.png"],
+   // image: images["product-26.png"],
     originalPrice: 14,
     parent: "Fruits & Vegetable",
     quantity: 40,
@@ -621,7 +622,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.214Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-27.png"],
+   // image: images["product-27.png"],
     originalPrice: 12,
     parent: "Fruits & Vegetable",
     quantity: 99,
@@ -644,7 +645,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.214Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-28.png"],
+   // image: images["product-28.png"],
     originalPrice: 11,
     parent: "Fruits & Vegetable",
     quantity: 180,
@@ -667,7 +668,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.214Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-29.png"],
+   // image: images["product-29.png"],
     originalPrice: 13,
     parent: "Fruits & Vegetable",
     quantity: 140,
@@ -690,7 +691,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.214Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-30.png"],
+   // image: images["product-30.png"],
     originalPrice: 12,
     parent: "Fruits & Vegetable",
     quantity: 118,
@@ -713,7 +714,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.214Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-31.png"],
+   // image: images["product-31.png"],
     originalPrice: 13,
     parent: "Fruits & Vegetable",
     quantity: 160,
@@ -736,7 +737,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.214Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-32.png"],
+   // image: images["product-32.png"],
     originalPrice: 13,
     parent: "Fruits & Vegetable",
     quantity: 6,
@@ -759,7 +760,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.214Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-33.png"],
+   // image: images["product-33.png"],
     originalPrice: 15,
     parent: "Fruits & Vegetable",
     quantity: 84,
@@ -782,7 +783,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.214Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-34.png"],
+   // image: images["product-34.png"],
     originalPrice: 12,
     parent: "Fruits & Vegetable",
     quantity: 100,
@@ -805,7 +806,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.214Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-35.png"],
+   // image: images["product-35.png"],
     originalPrice: 15,
     parent: "Fruits & Vegetable",
     quantity: 120,
@@ -828,7 +829,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.214Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-36.png"],
+   // image: images["product-36.png"],
     originalPrice: 14,
     parent: "Fruits & Vegetable",
     quantity: 109,
@@ -851,7 +852,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.214Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-37.png"],
+   // image: images["product-37.png"],
     originalPrice: 15,
     parent: "Fruits & Vegetable",
     quantity: 6,
@@ -874,7 +875,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.214Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-38.png"],
+   // image: images["product-38.png"],
     originalPrice: 15,
     parent: "Fruits & Vegetable",
     quantity: 100,
@@ -897,7 +898,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.214Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-39.png"],
+   // image: images["product-39.png"],
     originalPrice: 15,
     parent: "Fruits & Vegetable",
     quantity: 100,
@@ -920,7 +921,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.213Z",
     description:
       "In a botanical sense, a fruit is the fleshy or dry ripened ovary of a flowering plant, enclosing the seed or seeds. Apricots, bananas, and grapes, as well as bean pods, corn grains, tomatoes, cucumbers, and (in their shells) acorns and almonds, are all technically fruits.",
-    image: images["product-40.png"],
+   // image: images["product-40.png"],
     originalPrice: 10,
     parent: "Fruits & Vegetable",
     quantity: 170,
@@ -943,7 +944,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.213Z",
     description:
       "In a botanical sense, a fruit is the fleshy or dry ripened ovary of a flowering plant, enclosing the seed or seeds. Apricots, bananas, and grapes, as well as bean pods, corn grains, tomatoes, cucumbers, and (in their shells) acorns and almonds, are all technically fruits.",
-    image: images["product-41.png"],
+   // image: images["product-41.png"],
     originalPrice: 14,
     parent: "Fruits & Vegetable",
     quantity: 130,
@@ -966,7 +967,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.213Z",
     description:
       "In a botanical sense, a fruit is the fleshy or dry ripened ovary of a flowering plant, enclosing the seed or seeds. Apricots, bananas, and grapes, as well as bean pods, corn grains, tomatoes, cucumbers, and (in their shells) acorns and almonds, are all technically fruits.",
-    image: images["product-42.png"],
+   // image: images["product-42.png"],
     originalPrice: 15,
     parent: "Fruits & Vegetable",
     quantity: 100,
@@ -989,7 +990,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.213Z",
     description:
       "In a botanical sense, a fruit is the fleshy or dry ripened ovary of a flowering plant, enclosing the seed or seeds. Apricots, bananas, and grapes, as well as bean pods, corn grains, tomatoes, cucumbers, and (in their shells) acorns and almonds, are all technically fruits.",
-    image: images["product-43.png"],
+   // image: images["product-43.png"],
     originalPrice: 12,
     parent: "Fruits & Vegetable",
     quantity: 168,
@@ -1012,7 +1013,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.213Z",
     description:
       "In a botanical sense, a fruit is the fleshy or dry ripened ovary of a flowering plant, enclosing the seed or seeds. Apricots, bananas, and grapes, as well as bean pods, corn grains, tomatoes, cucumbers, and (in their shells) acorns and almonds, are all technically fruits.",
-    image: images["product-44.png"],
+   // image: images["product-44.png"],
     originalPrice: 13,
     parent: "Fruits & Vegetable",
     quantity: 100,
@@ -1035,7 +1036,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.213Z",
     description:
       "Dried fruit is fruit from which the majority of the original water content has been removed either naturally, through sun drying, or through the use of specialized dryers or dehydrators. ... Nearly half of the dried fruits sold are raisins, followed by dates, prunes, figs, apricots, peaches, apples, and pears.",
-    image: images["product-45.png"],
+   // image: images["product-45.png"],
     originalPrice: 12,
     parent: "Fruits & Vegetable",
     quantity: 100,
@@ -1058,7 +1059,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.213Z",
     description:
       "Dried fruit is fruit from which the majority of the original water content has been removed either naturally, through sun drying, or through the use of specialized dryers or dehydrators. ... Nearly half of the dried fruits sold are raisins, followed by dates, prunes, figs, apricots, peaches, apples, and pears.",
-    image: images["product-46.png"],
+   // image: images["product-46.png"],
     originalPrice: 13,
     parent: "Fruits & Vegetable",
     quantity: 110,
@@ -1081,7 +1082,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.213Z",
     description:
       "Dried fruit is fruit from which the majority of the original water content has been removed either naturally, through sun drying, or through the use of specialized dryers or dehydrators. ... Nearly half of the dried fruits sold are raisins, followed by dates, prunes, figs, apricots, peaches, apples, and pears.",
-    image: images["product-47.png"],
+   // image: images["product-47.png"],
     originalPrice: 11,
     parent: "Fruits & Vegetable",
     quantity: 99,
@@ -1104,7 +1105,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.213Z",
     description:
       "Dried fruit is fruit from which the majority of the original water content has been removed either naturally, through sun drying, or through the use of specialized dryers or dehydrators. ... Nearly half of the dried fruits sold are raisins, followed by dates, prunes, figs, apricots, peaches, apples, and pears.",
-    image: images["product-48.png"],
+   // image: images["product-48.png"],
     originalPrice: 13,
     parent: "Fruits & Vegetable",
     quantity: 99,
@@ -1127,7 +1128,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.213Z",
     description:
       "Dried fruit is fruit from which the majority of the original water content has been removed either naturally, through sun drying, or through the use of specialized dryers or dehydrators. ... Nearly half of the dried fruits sold are raisins, followed by dates, prunes, figs, apricots, peaches, apples, and pears.",
-    image: images["product-49.png"],
+   // image: images["product-49.png"],
     originalPrice: 15,
     parent: "Fruits & Vegetable",
     quantity: 100,
@@ -1150,7 +1151,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.213Z",
     description:
       "Organic food is food produced by methods complying with the standards of organic farming. Standards vary worldwide, but organic farming features practices that cycle resources, promote ecological balance, and conserve biodiversity.",
-    image: images["product-50.png"],
+   // image: images["product-50.png"],
     originalPrice: 12,
     parent: "Organic Food",
     quantity: 70,
@@ -1173,7 +1174,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.213Z",
     description:
       "Organic food is food produced by methods complying with the standards of organic farming. Standards vary worldwide, but organic farming features practices that cycle resources, promote ecological balance, and conserve biodiversity.",
-    image: images["product-51.png"],
+   // image: images["product-51.png"],
     originalPrice: 10,
     parent: "Organic Food",
     quantity: 64,
@@ -1196,7 +1197,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.213Z",
     description:
       "Organic food is food produced by methods complying with the standards of organic farming. Standards vary worldwide, but organic farming features practices that cycle resources, promote ecological balance, and conserve biodiversity.",
-    image: images["product-52.png"],
+   // image: images["product-52.png"],
     originalPrice: 11,
     parent: "Organic Food",
     quantity: 59,
@@ -1219,7 +1220,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.213Z",
     description:
       "Organic food is food produced by methods complying with the standards of organic farming. Standards vary worldwide, but organic farming features practices that cycle resources, promote ecological balance, and conserve biodiversity.",
-    image: images["product-53.png"],
+   // image: images["product-53.png"],
     originalPrice: 12,
     parent: "Organic Food",
     quantity: 67,
@@ -1242,7 +1243,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.213Z",
     description:
       "Organic food is food produced by methods complying with the standards of organic farming. Standards vary worldwide, but organic farming features practices that cycle resources, promote ecological balance, and conserve biodiversity.",
-    image: images["product-54.png"],
+   // image: images["product-54.png"],
     originalPrice: 12,
     parent: "Organic Food",
     quantity: 65,
@@ -1265,7 +1266,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.212Z",
     description:
       "Organic food is food produced by methods complying with the standards of organic farming. Standards vary worldwide, but organic farming features practices that cycle resources, promote ecological balance, and conserve biodiversity.",
-    image: images["product-55.png"],
+   // image: images["product-55.png"],
     originalPrice: 6,
     parent: "Organic Food",
     quantity: 70,
@@ -1288,7 +1289,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.212Z",
     description:
       "Organic food is food produced by methods complying with the standards of organic farming. Standards vary worldwide, but organic farming features practices that cycle resources, promote ecological balance, and conserve biodiversity.",
-    image: images["product-56.png"],
+   // image: images["product-56.png"],
     originalPrice: 11,
     parent: "Organic Food",
     quantity: 69,
@@ -1311,7 +1312,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.212Z",
     description:
       "Organic food is food produced by methods complying with the standards of organic farming. Standards vary worldwide, but organic farming features practices that cycle resources, promote ecological balance, and conserve biodiversity.",
-    image: images["product-57.png"],
+   // image: images["product-57.png"],
 
     originalPrice: 11,
     parent: "Organic Food",
@@ -1335,7 +1336,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.212Z",
     description:
       "A fish is an animal which lives and breathes in water. All fish are vertebrates (have a backbone) and most breathe through gills and have fins and scales. ... There are three classes of fish: jawless, cartilaginous, and bony. All fish have a backbone.",
-    image: images["product-58.png"],
+   // image: images["product-58.png"],
     originalPrice: 12,
     parent: "Fish & Meat",
     quantity: 93,
@@ -1358,7 +1359,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.212Z",
     description:
       "A fish is an animal which lives and breathes in water. All fish are vertebrates (have a backbone) and most breathe through gills and have fins and scales. ... There are three classes of fish: jawless, cartilaginous, and bony. All fish have a backbone.",
-    image: images["product-59.png"],
+   // image: images["product-59.png"],
     originalPrice: 12,
     parent: "Fish & Meat",
     quantity: 74,
@@ -1381,7 +1382,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.211Z",
     description:
       "A fish is an animal which lives and breathes in water. All fish are vertebrates (have a backbone) and most breathe through gills and have fins and scales. ... There are three classes of fish: jawless, cartilaginous, and bony. All fish have a backbone.",
-    image: images["product-60.png"],
+   // image: images["product-60.png"],
     originalPrice: 15,
     parent: "Fish & Meat",
     quantity: -0,
@@ -1404,7 +1405,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.211Z",
     description:
       "A fish is an animal which lives and breathes in water. All fish are vertebrates (have a backbone) and most breathe through gills and have fins and scales. ... There are three classes of fish: jawless, cartilaginous, and bony. All fish have a backbone.",
-    image: images["product-61.png"],
+   // image: images["product-61.png"],
     originalPrice: 12,
     parent: "Fish & Meat",
     quantity: 0,
@@ -1427,7 +1428,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.211Z",
     description:
       "A fish is an animal which lives and breathes in water. All fish are vertebrates (have a backbone) and most breathe through gills and have fins and scales. ... There are three classes of fish: jawless, cartilaginous, and bony. All fish have a backbone.",
-    image: images["product-61.png"],
+   // image: images["product-61.png"],
     originalPrice: 11,
     parent: "Fish & Meat",
     quantity: 51,
@@ -1450,7 +1451,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.211Z",
     description:
       "A fish is an animal which lives and breathes in water. All fish are vertebrates (have a backbone) and most breathe through gills and have fins and scales. ... There are three classes of fish: jawless, cartilaginous, and bony. All fish have a backbone.",
-    image: images["product-62.png"],
+   // image: images["product-62.png"],
     originalPrice: 12,
     parent: "Fish & Meat",
     quantity: 68,
@@ -1473,7 +1474,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.211Z",
     description:
       "A fish is an animal which lives and breathes in water. All fish are vertebrates (have a backbone) and most breathe through gills and have fins and scales. ... There are three classes of fish: jawless, cartilaginous, and bony. All fish have a backbone.",
-    image: images["product-63.png"],
+   // image: images["product-63.png"],
     originalPrice: 14,
     parent: "Fish & Meat",
     quantity: 47,
@@ -1496,7 +1497,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.211Z",
     description:
       "Beef, flesh of mature cattle, as distinguished from veal, the flesh of calves. The best beef is obtained from early maturing, special beef breeds. High-quality beef has firm, velvety, fine-grained lean, bright red in colour and well-marbled. The fat is smooth, creamy white, and well distributed.",
-    image: images["product-64.png"],
+   // image: images["product-64.png"],
     originalPrice: 18,
     parent: "Fish & Meat",
     quantity: 57,
@@ -1519,7 +1520,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.211Z",
     description:
       "Beef, flesh of mature cattle, as distinguished from veal, the flesh of calves. The best beef is obtained from early maturing, special beef breeds. High-quality beef has firm, velvety, fine-grained lean, bright red in colour and well-marbled. The fat is smooth, creamy white, and well distributed.",
-    image: images["product-65.png"],
+   // image: images["product-65.png"],
     originalPrice: 19,
     parent: "Fish & Meat",
     quantity: 10,
@@ -1542,7 +1543,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.211Z",
     description:
       "Beef, flesh of mature cattle, as distinguished from veal, the flesh of calves. The best beef is obtained from early maturing, special beef breeds. High-quality beef has firm, velvety, fine-grained lean, bright red in colour and well-marbled. The fat is smooth, creamy white, and well distributed.",
-    image: images["product-66.png"],
+   // image: images["product-66.png"],
     originalPrice: 15,
     parent: "Fish & Meat",
     quantity: 40,
@@ -1565,7 +1566,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.211Z",
     description:
       "Beef, flesh of mature cattle, as distinguished from veal, the flesh of calves. The best beef is obtained from early maturing, special beef breeds. High-quality beef has firm, velvety, fine-grained lean, bright red in colour and well-marbled. The fat is smooth, creamy white, and well distributed.",
-    image: images["product-67.png"],
+   // image: images["product-67.png"],
     originalPrice: 19,
     parent: "Fish & Meat",
     quantity: 60,
@@ -1588,7 +1589,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.211Z",
     description:
       "Beef, flesh of mature cattle, as distinguished from veal, the flesh of calves. The best beef is obtained from early maturing, special beef breeds. High-quality beef has firm, velvety, fine-grained lean, bright red in colour and well-marbled. The fat is smooth, creamy white, and well distributed.",
-    image: images["product-68.png"],
+   // image: images["product-68.png"],
     originalPrice: 18,
     parent: "Fish & Meat",
     quantity: 40,
@@ -1611,7 +1612,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.211Z",
     description:
       "Coffee is a brewed drink prepared from roasted coffee beans, the seeds of berries from certain Coffea species. ... Coffee is darkly colored, bitter, slightly acidic and has a stimulating effect in humans, primarily due to its caffeine content.",
-    image: images["product-69.png"],
+   // image: images["product-69.png"],
     originalPrice: 6,
     parent: "Drinks",
     quantity: 100,
@@ -1634,7 +1635,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.211Z",
     description:
       "Coffee is a brewed drink prepared from roasted coffee beans, the seeds of berries from certain Coffea species. ... Coffee is darkly colored, bitter, slightly acidic and has a stimulating effect in humans, primarily due to its caffeine content.",
-    image: images["product-70.png"],
+   // image: images["product-70.png"],
     originalPrice: 9,
     parent: "Drinks",
     quantity: 100,
@@ -1657,7 +1658,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.211Z",
     description:
       "Coffee is a brewed drink prepared from roasted coffee beans, the seeds of berries from certain Coffea species. ... Coffee is darkly colored, bitter, slightly acidic and has a stimulating effect in humans, primarily due to its caffeine content.",
-    image: images["product-71.png"],
+   // image: images["product-71.png"],
     originalPrice: 7,
     parent: "Drinks",
     quantity: 100,
@@ -1680,7 +1681,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.211Z",
     description:
       "Coffee is a brewed drink prepared from roasted coffee beans, the seeds of berries from certain Coffea species. ... Coffee is darkly colored, bitter, slightly acidic and has a stimulating effect in humans, primarily due to its caffeine content.",
-    image: images["product-72.png"],
+   // image: images["product-72.png"],
     originalPrice: 8,
     parent: "Drinks",
     quantity: 100,
@@ -1703,7 +1704,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.211Z",
     description:
       "Coffee is a brewed drink prepared from roasted coffee beans, the seeds of berries from certain Coffea species. ... Coffee is darkly colored, bitter, slightly acidic and has a stimulating effect in humans, primarily due to its caffeine content.",
-    image: images["product-73.png"],
+   // image: images["product-73.png"],
     originalPrice: 10,
     parent: "Drinks",
     quantity: 100,
@@ -1726,7 +1727,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.211Z",
     description:
       "Energy drink, any beverage that contains high levels of a stimulant ingredient, usually caffeine, as well as sugar and often supplements, such as vitamins or carnitine, and that is promoted as a product capable of enhancing mental alertness and physical performance.",
-    image: images["product-74.png"],
+   // image: images["product-74.png"],
     originalPrice: 9,
     parent: "Drinks",
     quantity: 100,
@@ -1749,7 +1750,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.210Z",
     description:
       "Energy drink, any beverage that contains high levels of a stimulant ingredient, usually caffeine, as well as sugar and often supplements, such as vitamins or carnitine, and that is promoted as a product capable of enhancing mental alertness and physical performance.",
-    image: images["product-75.png"],
+   // image: images["product-75.png"],
     originalPrice: 8,
     parent: "Drinks",
     quantity: 5,
@@ -1772,7 +1773,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.210Z",
     description:
       "Energy drink, any beverage that contains high levels of a stimulant ingredient, usually caffeine, as well as sugar and often supplements, such as vitamins or carnitine, and that is promoted as a product capable of enhancing mental alertness and physical performance.",
-    image: images["product-76.png"],
+   // image: images["product-76.png"],
 
     originalPrice: 7,
     parent: "Drinks",
@@ -1796,7 +1797,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.210Z",
     description:
       "Energy drink, any beverage that contains high levels of a stimulant ingredient, usually caffeine, as well as sugar and often supplements, such as vitamins or carnitine, and that is promoted as a product capable of enhancing mental alertness and physical performance.",
-    image: images["product-77.png"],
+   // image: images["product-77.png"],
     originalPrice: 13,
     parent: "Drinks",
     quantity: 100,
@@ -1819,7 +1820,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.210Z",
     description:
       "Energy drink, any beverage that contains high levels of a stimulant ingredient, usually caffeine, as well as sugar and often supplements, such as vitamins or carnitine, and that is promoted as a product capable of enhancing mental alertness and physical performance.",
-    image: images["product-78.png"],
+   // image: images["product-78.png"],
 
     originalPrice: 9,
     parent: "Drinks",
@@ -1843,7 +1844,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.210Z",
     description:
       "Juice is a drink made from the extraction or pressing of the natural liquid contained in fruit and vegetables. It can also refer to liquids that are flavored with concentrate or other biological food sources, such as meat or seafood, such as clam juice.",
-    image: images["product-79.png"],
+   // image: images["product-79.png"],
 
     originalPrice: 11,
     parent: "Drinks",
@@ -1867,7 +1868,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.210Z",
     description:
       "Juice is a drink made from the extraction or pressing of the natural liquid contained in fruit and vegetables. It can also refer to liquids that are flavored with concentrate or other biological food sources, such as meat or seafood, such as clam juice.",
-    image: images["product-80.png"],
+   // image: images["product-80.png"],
 
     originalPrice: 9,
     parent: "Drinks",
@@ -1891,7 +1892,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.210Z",
     description:
       "Juice is a drink made from the extraction or pressing of the natural liquid contained in fruit and vegetables. It can also refer to liquids that are flavored with concentrate or other biological food sources, such as meat or seafood, such as clam juice.",
-    image: images["product-81.png"],
+   // image: images["product-81.png"],
 
     originalPrice: 10,
     parent: "Drinks",
@@ -1915,7 +1916,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.210Z",
     description:
       "Juice is a drink made from the extraction or pressing of the natural liquid contained in fruit and vegetables. It can also refer to liquids that are flavored with concentrate or other biological food sources, such as meat or seafood, such as clam juice.",
-    image: images["product-82.png"],
+   // image: images["product-82.png"],
 
     originalPrice: 11,
     parent: "Drinks",
@@ -1939,7 +1940,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.210Z",
     description:
       "Juice is a drink made from the extraction or pressing of the natural liquid contained in fruit and vegetables. It can also refer to liquids that are flavored with concentrate or other biological food sources, such as meat or seafood, such as clam juice.",
-    image: images["product-83.png"],
+   // image: images["product-83.png"],
     originalPrice: 10,
     parent: "Drinks",
     quantity: 100,
@@ -1962,7 +1963,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.210Z",
     description:
       "Tea is an aromatic beverage prepared by pouring hot or boiling water over cured or fresh leaves of Camellia sinensis, an evergreen shrub native to China and East Asia. After water, it is the most widely consumed drink in the world. ... Tea has a stimulating effect in humans primarily due to its caffeine content.",
-    image: images["product-84.png"],
+   // image: images["product-84.png"],
     originalPrice: 6,
     parent: "Drinks",
     quantity: 100,
@@ -1985,7 +1986,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.210Z",
     description:
       "Tea is an aromatic beverage prepared by pouring hot or boiling water over cured or fresh leaves of Camellia sinensis, an evergreen shrub native to China and East Asia. After water, it is the most widely consumed drink in the world. ... Tea has a stimulating effect in humans primarily due to its caffeine content.",
-    image: images["product-85.png"],
+   // image: images["product-85.png"],
     originalPrice: 5,
     parent: "Drinks",
     quantity: 100,
@@ -2008,7 +2009,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.210Z",
     description:
       "Tea is an aromatic beverage prepared by pouring hot or boiling water over cured or fresh leaves of Camellia sinensis, an evergreen shrub native to China and East Asia. After water, it is the most widely consumed drink in the world. ... Tea has a stimulating effect in humans primarily due to its caffeine content.",
-    image: images["product-86.png"],
+   // image: images["product-86.png"],
     originalPrice: 7,
     parent: "Drinks",
     quantity: 100,
@@ -2031,7 +2032,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.210Z",
     description:
       "Tea is an aromatic beverage prepared by pouring hot or boiling water over cured or fresh leaves of Camellia sinensis, an evergreen shrub native to China and East Asia. After water, it is the most widely consumed drink in the world. ... Tea has a stimulating effect in humans primarily due to its caffeine content.",
-    image: images["product-87.png"],
+   // image: images["product-87.png"],
     originalPrice: 7,
     parent: "Drinks",
     quantity: 100,
@@ -2054,7 +2055,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.209Z",
     description:
       "Tea is an aromatic beverage prepared by pouring hot or boiling water over cured or fresh leaves of Camellia sinensis, an evergreen shrub native to China and East Asia. After water, it is the most widely consumed drink in the world. ... Tea has a stimulating effect in humans primarily due to its caffeine content.",
-    image: images["product-88.png"],
+   // image: images["product-88.png"],
     originalPrice: 8,
     parent: "Drinks",
     quantity: 100,
@@ -2077,7 +2078,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.209Z",
     description:
       "water, a substance composed of the chemical elements hydrogen and oxygen and existing in gaseous, liquid, and solid states. It is one of the most plentiful and essential of compounds. A tasteless and odourless liquid at room temperature, it has the important ability to dissolve many other substances.",
-    image: images["product-89.png"],
+   // image: images["product-89.png"],
     originalPrice: 7,
     parent: "Drinks",
     quantity: 100,
@@ -2100,7 +2101,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.209Z",
     description:
       "water, a substance composed of the chemical elements hydrogen and oxygen and existing in gaseous, liquid, and solid states. It is one of the most plentiful and essential of compounds. A tasteless and odourless liquid at room temperature, it has the important ability to dissolve many other substances.",
-    image: images["product-90.png"],
+   // image: images["product-90.png"],
     originalPrice: 7,
     parent: "Drinks",
     quantity: 100,
@@ -2123,7 +2124,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.209Z",
     description:
       "water, a substance composed of the chemical elements hydrogen and oxygen and existing in gaseous, liquid, and solid states. It is one of the most plentiful and essential of compounds. A tasteless and odourless liquid at room temperature, it has the important ability to dissolve many other substances.",
-    image: images["product-91.png"],
+   // image: images["product-91.png"],
     originalPrice: 8,
     parent: "Drinks",
     quantity: 8,
@@ -2146,7 +2147,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.209Z",
     description:
       "water, a substance composed of the chemical elements hydrogen and oxygen and existing in gaseous, liquid, and solid states. It is one of the most plentiful and essential of compounds. A tasteless and odourless liquid at room temperature, it has the important ability to dissolve many other substances.",
-    image: images["product-92.png"],
+   // image: images["product-92.png"],
 
     originalPrice: 6,
     parent: "Drinks",
@@ -2170,7 +2171,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.209Z",
     description:
       "water, a substance composed of the chemical elements hydrogen and oxygen and existing in gaseous, liquid, and solid states. It is one of the most plentiful and essential of compounds. A tasteless and odourless liquid at room temperature, it has the important ability to dissolve many other substances.",
-    image: images["product-93.png"],
+   // image: images["product-93.png"],
     originalPrice: 5,
     parent: "Drinks",
     quantity: 100,
@@ -2193,7 +2194,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.209Z",
     description:
       "A fish is an animal which lives and breathes in water. All fish are vertebrates (have a backbone) and most breathe through gills and have fins and scales. ... There are three classes of fish: jawless, cartilaginous, and bony. All fish have a backbone.",
-    image: images["product-94.png"],
+   // image: images["product-94.png"],
     originalPrice: 12,
     parent: "Fresh Seafood",
     quantity: 100,
@@ -2216,7 +2217,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.209Z",
     description:
       "A fish is an animal which lives and breathes in water. All fish are vertebrates (have a backbone) and most breathe through gills and have fins and scales. ... There are three classes of fish: jawless, cartilaginous, and bony. All fish have a backbone.",
-    image: images["product-95.png"],
+   // image: images["product-95.png"],
     originalPrice: 12,
     parent: "Fresh Seafood",
     quantity: 96,
@@ -2239,7 +2240,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.209Z",
     description:
       "A fish is an animal which lives and breathes in water. All fish are vertebrates (have a backbone) and most breathe through gills and have fins and scales. ... There are three classes of fish: jawless, cartilaginous, and bony. All fish have a backbone.",
-    image: images["product-96.png"],
+   // image: images["product-96.png"],
     originalPrice: 15,
     parent: "Fresh Seafood",
     quantity: 4,
@@ -2262,7 +2263,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.209Z",
     description:
       "A fish is an animal which lives and breathes in water. All fish are vertebrates (have a backbone) and most breathe through gills and have fins and scales. ... There are three classes of fish: jawless, cartilaginous, and bony. All fish have a backbone.",
-    image: images["product-97.png"],
+   // image: images["product-97.png"],
     originalPrice: 12,
     parent: "Fresh Seafood",
     quantity: 36,
@@ -2285,7 +2286,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.209Z",
     description:
       "A fish is an animal which lives and breathes in water. All fish are vertebrates (have a backbone) and most breathe through gills and have fins and scales. ... There are three classes of fish: jawless, cartilaginous, and bony. All fish have a backbone.",
-    image: images["product-98.png"],
+   // image: images["product-98.png"],
     originalPrice: 11,
     parent: "Fresh Seafood",
     quantity: 57,
@@ -2308,7 +2309,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.209Z",
     description:
       "A fish is an animal which lives and breathes in water. All fish are vertebrates (have a backbone) and most breathe through gills and have fins and scales. ... There are three classes of fish: jawless, cartilaginous, and bony. All fish have a backbone.",
-    image: images["product-99.png"],
+   // image: images["product-99.png"],
     originalPrice: 12,
     parent: "Fresh Seafood",
     quantity: 69,
@@ -2331,7 +2332,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.209Z",
     description:
       "A fish is an animal which lives and breathes in water. All fish are vertebrates (have a backbone) and most breathe through gills and have fins and scales. ... There are three classes of fish: jawless, cartilaginous, and bony. All fish have a backbone.",
-    image: images["product-100.png"],
+   // image: images["product-100.png"],
     originalPrice: 14,
     parent: "Fresh Seafood",
     quantity: 49,
@@ -2354,7 +2355,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.209Z",
     description:
       "Spice mixes are blended spices or herbs. ... Blends such as chili powder, curry powder, herbes de Provence, garlic salt, and other seasoned salts are traditionally sold pre-made by grocers, and sometimes baking blends such as pumpkin pie spice are also available.",
-    image: images["product-101.png"],
+   // image: images["product-101.png"],
     originalPrice: 12,
     parent: "Cooking Essentials",
     quantity: 100,
@@ -2377,7 +2378,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.209Z",
     description:
       "Spice mixes are blended spices or herbs. ... Blends such as chili powder, curry powder, herbes de Provence, garlic salt, and other seasoned salts are traditionally sold pre-made by grocers, and sometimes baking blends such as pumpkin pie spice are also available.",
-    image: images["product-102.png"],
+   // image: images["product-102.png"],
     originalPrice: 10,
     parent: "Cooking Essentials",
     quantity: 100,
@@ -2400,7 +2401,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.208Z",
     description:
       "Flour, finely ground cereal grains or other starchy portions of plants, used in various food products and as a basic ingredient of baked goods. Flour made from wheat grains is the most satisfactory type for baked products that require spongy structure. ... The outer layers and internal structures of a kernel of wheat.",
-    image: images["product-103.png"],
+   // image: images["product-103.png"],
     originalPrice: 10,
     parent: "Cooking Essentials",
     quantity: 100,
@@ -2423,7 +2424,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.208Z",
     description:
       "Flour, finely ground cereal grains or other starchy portions of plants, used in various food products and as a basic ingredient of baked goods. Flour made from wheat grains is the most satisfactory type for baked products that require spongy structure. ... The outer layers and internal structures of a kernel of wheat.",
-    image: images["product-104.png"],
+   // image: images["product-104.png"],
     originalPrice: 9,
     parent: "Cooking Essentials",
     quantity: 69,
@@ -2446,7 +2447,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.208Z",
     description:
       "Flour, finely ground cereal grains or other starchy portions of plants, used in various food products and as a basic ingredient of baked goods. Flour made from wheat grains is the most satisfactory type for baked products that require spongy structure. ... The outer layers and internal structures of a kernel of wheat.",
-    image: images["product-105.png"],
+   // image: images["product-105.png"],
     originalPrice: 11,
     parent: "Cooking Essentials",
     quantity: 11,
@@ -2469,7 +2470,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.208Z",
     description:
       "Flour, finely ground cereal grains or other starchy portions of plants, used in various food products and as a basic ingredient of baked goods. Flour made from wheat grains is the most satisfactory type for baked products that require spongy structure. ... The outer layers and internal structures of a kernel of wheat.",
-    image: images["product-106.png"],
+   // image: images["product-106.png"],
     originalPrice: 10,
     parent: "Cooking Essentials",
     quantity: 99,
@@ -2492,7 +2493,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.208Z",
     description:
       "Flour, finely ground cereal grains or other starchy portions of plants, used in various food products and as a basic ingredient of baked goods. Flour made from wheat grains is the most satisfactory type for baked products that require spongy structure. ... The outer layers and internal structures of a kernel of wheat.",
-    image: images["product-107.png"],
+   // image: images["product-107.png"],
     originalPrice: 12,
     parent: "Cooking Essentials",
     quantity: 100,
@@ -2515,7 +2516,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.208Z",
     description:
       "Cooking oil is plant, animal, or synthetic fat used in frying, baking, and other types of cooking. ... Cooking oil is typically a liquid at room temperature, although some oils that contain saturated fat, such as coconut oil, palm oil and palm kernel oil are solid.",
-    image: images["product-108.png"],
+   // image: images["product-108.png"],
     originalPrice: 10,
     parent: "Cooking Essentials",
     quantity: 100,
@@ -2538,7 +2539,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.208Z",
     description:
       "Cooking oil is plant, animal, or synthetic fat used in frying, baking, and other types of cooking. ... Cooking oil is typically a liquid at room temperature, although some oils that contain saturated fat, such as coconut oil, palm oil and palm kernel oil are solid.",
-    image: images["product-109.png"],
+   // image: images["product-109.png"],
     originalPrice: 11,
     parent: "Cooking Essentials",
     quantity: 55,
@@ -2561,7 +2562,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.208Z",
     description:
       "Cooking oil is plant, animal, or synthetic fat used in frying, baking, and other types of cooking. ... Cooking oil is typically a liquid at room temperature, although some oils that contain saturated fat, such as coconut oil, palm oil and palm kernel oil are solid.",
-    image: images["product-110.png"],
+   // image: images["product-110.png"],
     originalPrice: 8,
     parent: "Cooking Essentials",
     quantity: 100,
@@ -2584,7 +2585,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.208Z",
     description:
       "Cooking oil is plant, animal, or synthetic fat used in frying, baking, and other types of cooking. ... Cooking oil is typically a liquid at room temperature, although some oils that contain saturated fat, such as coconut oil, palm oil and palm kernel oil are solid.",
-    image: images["product-111.png"],
+   // image: images["product-111.png"],
     originalPrice: 9,
     parent: "Cooking Essentials",
     quantity: 100,
@@ -2607,7 +2608,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.208Z",
     description:
       "Cooking oil is plant, animal, or synthetic fat used in frying, baking, and other types of cooking. ... Cooking oil is typically a liquid at room temperature, although some oils that contain saturated fat, such as coconut oil, palm oil and palm kernel oil are solid.",
-    image: images["product-112.png"],
+   // image: images["product-112.png"],
     originalPrice: 10,
     parent: "Cooking Essentials",
     quantity: 100,
@@ -2630,7 +2631,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.208Z",
     description:
       "rice, (Oryza sativa), edible starchy cereal grain and the grass plant (family Poaceae) by which it is produced. ... Rice is cooked by boiling, or it can be ground into a flour. It is eaten alone and in a great variety of soups, side dishes, and main dishes in Asian, Middle Eastern, and many other cuisines.",
-    image: images["product-113.png"],
+   // image: images["product-113.png"],
     originalPrice: 12,
     parent: "Cooking Essentials",
     quantity: 100,
@@ -2653,7 +2654,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.208Z",
     description:
       "rice, (Oryza sativa), edible starchy cereal grain and the grass plant (family Poaceae) by which it is produced. ... Rice is cooked by boiling, or it can be ground into a flour. It is eaten alone and in a great variety of soups, side dishes, and main dishes in Asian, Middle Eastern, and many other cuisines.",
-    image: images["product-114.png"],
+   // image: images["product-114.png"],
     originalPrice: 14,
     parent: "Cooking Essentials",
     quantity: 5,
@@ -2676,7 +2677,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.208Z",
     description:
       "rice, (Oryza sativa), edible starchy cereal grain and the grass plant (family Poaceae) by which it is produced. ... Rice is cooked by boiling, or it can be ground into a flour. It is eaten alone and in a great variety of soups, side dishes, and main dishes in Asian, Middle Eastern, and many other cuisines.",
-    image: images["product-115.png"],
+   // image: images["product-115.png"],
     originalPrice: 15,
     parent: "Cooking Essentials",
     quantity: 100,
@@ -2699,7 +2700,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.208Z",
     description:
       "rice, (Oryza sativa), edible starchy cereal grain and the grass plant (family Poaceae) by which it is produced. ... Rice is cooked by boiling, or it can be ground into a flour. It is eaten alone and in a great variety of soups, side dishes, and main dishes in Asian, Middle Eastern, and many other cuisines.",
-    image: images["product-116.png"],
+   // image: images["product-116.png"],
     originalPrice: 13,
     parent: "Cooking Essentials",
     quantity: 100,
@@ -2722,7 +2723,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.208Z",
     description:
       "rice, (Oryza sativa), edible starchy cereal grain and the grass plant (family Poaceae) by which it is produced. ... Rice is cooked by boiling, or it can be ground into a flour. It is eaten alone and in a great variety of soups, side dishes, and main dishes in Asian, Middle Eastern, and many other cuisines.",
-    image: images["product-117.png"],
+   // image: images["product-117.png"],
     originalPrice: 10,
     parent: "Cooking Essentials",
     quantity: 100,
@@ -2745,7 +2746,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.208Z",
     description:
       "Any vegetable that has been dehydrated or dried in order to extend the shelf life and to concentrate the flavor. Popular dried vegetables include sun-dried tomatoes, onions, carrots, and chiles.",
-    image: images["product-118.png"],
+   // image: images["product-118.png"],
     originalPrice: 9,
     parent: "Cooking Essentials",
     quantity: 100,
@@ -2768,7 +2769,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.207Z",
     description:
       "Any vegetable that has been dehydrated or dried in order to extend the shelf life and to concentrate the flavor. Popular dried vegetables include sun-dried tomatoes, onions, carrots, and chiles.",
-    image: images["product-119.png"],
+   // image: images["product-119.png"],
     originalPrice: 12,
     parent: "Cooking Essentials",
     quantity: 99,
@@ -2791,7 +2792,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.207Z",
     description:
       "Any vegetable that has been dehydrated or dried in order to extend the shelf life and to concentrate the flavor. Popular dried vegetables include sun-dried tomatoes, onions, carrots, and chiles.",
-    image: images["product-120.png"],
+   // image: images["product-120.png"],
     originalPrice: 10,
     parent: "Cooking Essentials",
     quantity: 149,
@@ -2814,7 +2815,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.207Z",
     description:
       "Any vegetable that has been dehydrated or dried in order to extend the shelf life and to concentrate the flavor. Popular dried vegetables include sun-dried tomatoes, onions, carrots, and chiles.",
-    image: images["product-121.png"],
+   // image: images["product-121.png"],
     originalPrice: 13,
     parent: "Cooking Essentials",
     quantity: 100,
@@ -2837,7 +2838,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.207Z",
     description:
       "Cake is a form of sweet food made from flour, sugar, and other ingredients, that is usually baked. ... The most commonly used cake ingredients include flour, sugar, eggs, butter or oil or margarine, a liquid, and a leavening agent, such as baking soda or baking powder.",
-    image: images["product-122.png"],
+   // image: images["product-122.png"],
     originalPrice: 8,
     parent: "Biscuits & Cakes",
     quantity: 100,
@@ -2860,7 +2861,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.207Z",
     description:
       "Cake is a form of sweet food made from flour, sugar, and other ingredients, that is usually baked. ... The most commonly used cake ingredients include flour, sugar, eggs, butter or oil or margarine, a liquid, and a leavening agent, such as baking soda or baking powder.",
-    image: images["product-123.png"],
+   // image: images["product-123.png"],
     originalPrice: 13,
     parent: "Biscuits & Cakes",
     quantity: 8,
@@ -2883,7 +2884,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.207Z",
     description:
       "Cake is a form of sweet food made from flour, sugar, and other ingredients, that is usually baked. ... The most commonly used cake ingredients include flour, sugar, eggs, butter or oil or margarine, a liquid, and a leavening agent, such as baking soda or baking powder.",
-    image: images["product-124.png"],
+   // image: images["product-124.png"],
     originalPrice: 9,
     parent: "Biscuits & Cakes",
     quantity: 96,
@@ -2906,7 +2907,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.207Z",
     description:
       "Cake is a form of sweet food made from flour, sugar, and other ingredients, that is usually baked. ... The most commonly used cake ingredients include flour, sugar, eggs, butter or oil or margarine, a liquid, and a leavening agent, such as baking soda or baking powder.",
-    image: images["product-125.png"],
+   // image: images["product-125.png"],
     originalPrice: 10,
     parent: "Biscuits & Cakes",
     quantity: 100,
@@ -2929,7 +2930,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.207Z",
     description:
       "Cake is a form of sweet food made from flour, sugar, and other ingredients, that is usually baked. ... The most commonly used cake ingredients include flour, sugar, eggs, butter or oil or margarine, a liquid, and a leavening agent, such as baking soda or baking powder.",
-    image: images["product-126.png"],
+   // image: images["product-126.png"],
     originalPrice: 11,
     parent: "Biscuits & Cakes",
     quantity: 100,
@@ -2952,7 +2953,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.207Z",
     description:
       "A biscuit is a flour-based baked food product. In most countries, particularly in the Commonwealth and Ireland, biscuits are typically hard, flat and unleavened. They are usually sweet and may be made with sugar, chocolate, icing, jam, ginger or cinnamon. They can also be savoury and similar to crackers.",
-    image: images["product-126.png"],
+   // image: images["product-126.png"],
     originalPrice: 9,
     parent: "Biscuits & Cakes",
     quantity: 100,
@@ -2975,7 +2976,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.207Z",
     description:
       "A biscuit is a flour-based baked food product. In most countries, particularly in the Commonwealth and Ireland, biscuits are typically hard, flat and unleavened. They are usually sweet and may be made with sugar, chocolate, icing, jam, ginger or cinnamon. They can also be savoury and similar to crackers.",
-    image: images["product-127.png"],
+   // image: images["product-127.png"],
     originalPrice: 8,
     parent: "Biscuits & Cakes",
     quantity: 100,
@@ -2998,7 +2999,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.207Z",
     description:
       "A biscuit is a flour-based baked food product. In most countries, particularly in the Commonwealth and Ireland, biscuits are typically hard, flat and unleavened. They are usually sweet and may be made with sugar, chocolate, icing, jam, ginger or cinnamon. They can also be savoury and similar to crackers.",
-    image: images["product-128.png"],
+   // image: images["product-128.png"],
     originalPrice: 11,
     parent: "Biscuits & Cakes",
     quantity: 100,
@@ -3021,7 +3022,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.207Z",
     description:
       "A biscuit is a flour-based baked food product. In most countries, particularly in the Commonwealth and Ireland, biscuits are typically hard, flat and unleavened. They are usually sweet and may be made with sugar, chocolate, icing, jam, ginger or cinnamon. They can also be savoury and similar to crackers.",
-    image: images["product-129.png"],
+   // image: images["product-129.png"],
     originalPrice: 13,
     parent: "Biscuits & Cakes",
     quantity: 140,
@@ -3044,7 +3045,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.207Z",
     description:
       "A biscuit is a flour-based baked food product. In most countries, particularly in the Commonwealth and Ireland, biscuits are typically hard, flat and unleavened. They are usually sweet and may be made with sugar, chocolate, icing, jam, ginger or cinnamon. They can also be savoury and similar to crackers.",
-    image: images["product-130.png"],
+   // image: images["product-130.png"],
     originalPrice: 10,
     parent: "Biscuits & Cakes",
     quantity: 8,
@@ -3067,7 +3068,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.207Z",
     description:
       "sauce, liquid or semiliquid mixture that is added to a food as it cooks or that is served with it. Sauces provide flavour, moisture, and a contrast in texture and colour. They may also serve as a medium in which food is contained, for example, the velouté sauce of creamed chicken.",
-    image: images["product-131.png"],
+   // image: images["product-131.png"],
     originalPrice: 10,
     parent: "Sauces & Pickles",
     quantity: 50,
@@ -3090,7 +3091,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.207Z",
     description:
       "sauce, liquid or semiliquid mixture that is added to a food as it cooks or that is served with it. Sauces provide flavour, moisture, and a contrast in texture and colour. They may also serve as a medium in which food is contained, for example, the velouté sauce of creamed chicken.",
-    image: images["product-132.png"],
+   // image: images["product-132.png"],
     originalPrice: 11,
     parent: "Sauces & Pickles",
     quantity: 50,
@@ -3113,7 +3114,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.206Z",
     description:
       "sauce, liquid or semiliquid mixture that is added to a food as it cooks or that is served with it. Sauces provide flavour, moisture, and a contrast in texture and colour. They may also serve as a medium in which food is contained, for example, the velouté sauce of creamed chicken.",
-    image: images["product-133.png"],
+   // image: images["product-133.png"],
     originalPrice: 11,
     parent: "Sauces & Pickles",
     quantity: 79,
@@ -3136,7 +3137,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.206Z",
     description:
       "sauce, liquid or semiliquid mixture that is added to a food as it cooks or that is served with it. Sauces provide flavour, moisture, and a contrast in texture and colour. They may also serve as a medium in which food is contained, for example, the velouté sauce of creamed chicken.",
-    image: images["product-134.png"],
+   // image: images["product-134.png"],
     originalPrice: 10,
     parent: "Sauces & Pickles",
     quantity: 70,
@@ -3159,7 +3160,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.206Z",
     description:
       "sauce, liquid or semiliquid mixture that is added to a food as it cooks or that is served with it. Sauces provide flavour, moisture, and a contrast in texture and colour. They may also serve as a medium in which food is contained, for example, the velouté sauce of creamed chicken.",
-    image: images["product-135.png"],
+   // image: images["product-135.png"],
     originalPrice: 12,
     parent: "Sauces & Pickles",
     quantity: 40,
@@ -3182,7 +3183,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.206Z",
     description:
       "The acetic acid in vinegar or the lactic acid produced by brine gives the pickle its salty, sour taste. ... Bread-and-butter pickles, for example, have a distinctly sweet taste because sugar and other sweeteners are added to the brine. Like tomatoes, cucumbers (and thus, pickles) are technically fruits.",
-    image: images["product-136.png"],
+   // image: images["product-136.png"],
     originalPrice: 14,
     parent: "Sauces & Pickles",
     quantity: 30,
@@ -3205,7 +3206,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.206Z",
     description:
       "The acetic acid in vinegar or the lactic acid produced by brine gives the pickle its salty, sour taste. ... Bread-and-butter pickles, for example, have a distinctly sweet taste because sugar and other sweeteners are added to the brine. Like tomatoes, cucumbers (and thus, pickles) are technically fruits.",
-    image: images["product-137.png"],
+   // image: images["product-137.png"],
     originalPrice: 13,
     parent: "Sauces & Pickles",
     quantity: 30,
@@ -3229,7 +3230,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.206Z",
     description:
       "The acetic acid in vinegar or the lactic acid produced by brine gives the pickle its salty, sour taste. ... Bread-and-butter pickles, for example, have a distinctly sweet taste because sugar and other sweeteners are added to the brine. Like tomatoes, cucumbers (and thus, pickles) are technically fruits.",
-    image: images["product-138.png"],
+   // image: images["product-138.png"],
     originalPrice: 12,
     parent: "Sauces & Pickles",
     quantity: 70,
@@ -3252,7 +3253,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.206Z",
     description:
       "The acetic acid in vinegar or the lactic acid produced by brine gives the pickle its salty, sour taste. ... Bread-and-butter pickles, for example, have a distinctly sweet taste because sugar and other sweeteners are added to the brine. Like tomatoes, cucumbers (and thus, pickles) are technically fruits.",
-    image: images["product-139.png"],
+   // image: images["product-139.png"],
     originalPrice: 13,
     parent: "Sauces & Pickles",
     quantity: 70,
@@ -3275,7 +3276,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.206Z",
     description:
       " The definition of a breakfast food is a food that is eaten primarily for the first meal of the day commonly including: cereal, toast, eggs, pancakes, waffles, pastries, sausage or bacon. An example of a breakfast food is oatmeal. An example of a breakfast food is french toast with scrambled eggs.",
-    image: images["product-140.png"],
+   // image: images["product-140.png"],
     originalPrice: 10,
     parent: "Breakfast",
     quantity: 50,
@@ -3298,7 +3299,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.206Z",
     description:
       " The definition of a breakfast food is a food that is eaten primarily for the first meal of the day commonly including: cereal, toast, eggs, pancakes, waffles, pastries, sausage or bacon. An example of a breakfast food is oatmeal. An example of a breakfast food is french toast with scrambled eggs.",
-    image: images["product-141.png"],
+   // image: images["product-141.png"],
     originalPrice: 9,
     parent: "Breakfast",
     quantity: 39,
@@ -3321,7 +3322,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.206Z",
     description:
       " The definition of a breakfast food is a food that is eaten primarily for the first meal of the day commonly including: cereal, toast, eggs, pancakes, waffles, pastries, sausage or bacon. An example of a breakfast food is oatmeal. An example of a breakfast food is french toast with scrambled eggs.",
-    image: images["product-142.png"],
+   // image: images["product-142.png"],
     originalPrice: 10,
     parent: "Breakfast",
     quantity: 90,
@@ -3344,7 +3345,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.206Z",
     description:
       " The definition of a breakfast food is a food that is eaten primarily for the first meal of the day commonly including: cereal, toast, eggs, pancakes, waffles, pastries, sausage or bacon. An example of a breakfast food is oatmeal. An example of a breakfast food is french toast with scrambled eggs.",
-    image: images["product-143.png"],
+   // image: images["product-143.png"],
     originalPrice: 11,
     parent: "Breakfast",
     quantity: 86,
@@ -3367,7 +3368,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.206Z",
     description:
       " The definition of a breakfast food is a food that is eaten primarily for the first meal of the day commonly including: cereal, toast, eggs, pancakes, waffles, pastries, sausage or bacon. An example of a breakfast food is oatmeal. An example of a breakfast food is french toast with scrambled eggs.",
-    image: images["product-144.png"],
+   // image: images["product-144.png"],
     originalPrice: 7,
     parent: "Breakfast",
     quantity: 40,
@@ -3390,7 +3391,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.206Z",
     description:
       " The definition of a breakfast food is a food that is eaten primarily for the first meal of the day commonly including: cereal, toast, eggs, pancakes, waffles, pastries, sausage or bacon. An example of a breakfast food is oatmeal. An example of a breakfast food is french toast with scrambled eggs.",
-    image: images["product-145.png"],
+   // image: images["product-145.png"],
     originalPrice: 11,
     parent: "Breakfast",
     quantity: 40,
@@ -3413,7 +3414,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.206Z",
     description:
       " The definition of a breakfast food is a food that is eaten primarily for the first meal of the day commonly including: cereal, toast, eggs, pancakes, waffles, pastries, sausage or bacon. An example of a breakfast food is oatmeal. An example of a breakfast food is french toast with scrambled eggs.",
-    image: images["product-146.png"],
+   // image: images["product-146.png"],
     originalPrice: 5,
     parent: "Breakfast",
     quantity: 60,
@@ -3436,7 +3437,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.206Z",
     description:
       " The definition of a breakfast food is a food that is eaten primarily for the first meal of the day commonly including: cereal, toast, eggs, pancakes, waffles, pastries, sausage or bacon. An example of a breakfast food is oatmeal. An example of a breakfast food is french toast with scrambled eggs.",
-    image: images["product-147.png"],
+   // image: images["product-147.png"],
     originalPrice: 10,
     parent: "Breakfast",
     quantity: 60,
@@ -3459,7 +3460,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.205Z",
     description:
       " The definition of a breakfast food is a food that is eaten primarily for the first meal of the day commonly including: cereal, toast, eggs, pancakes, waffles, pastries, sausage or bacon. An example of a breakfast food is oatmeal. An example of a breakfast food is french toast with scrambled eggs.",
-    image: images["product-148.png"],
+   // image: images["product-148.png"],
     originalPrice: 5,
     parent: "Breakfast",
     quantity: 60,
@@ -3482,7 +3483,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.205Z",
     description:
       " The definition of a breakfast food is a food that is eaten primarily for the first meal of the day commonly including: cereal, toast, eggs, pancakes, waffles, pastries, sausage or bacon. An example of a breakfast food is oatmeal. An example of a breakfast food is french toast with scrambled eggs.",
-    image: images["product-149.png"],
+   // image: images["product-149.png"],
     originalPrice: 7,
     parent: "Breakfast",
     quantity: 60,
@@ -3505,7 +3506,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.205Z",
     description:
       "Butter, a yellow-to-white solid emulsion of fat globules, water, and inorganic salts produced by churning the cream from cows' milk. ... Butter is a high-energy food, containing approximately 715 calories per 100 grams. It has a high content of butterfat, or milk fat (at least 80 percent), but is low in protein.",
-    image: images["product-150.png"],
+   // image: images["product-150.png"],
     originalPrice: 9,
     parent: "Milk & Dairy",
     quantity: 100,
@@ -3528,7 +3529,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.205Z",
     description:
       "Butter, a yellow-to-white solid emulsion of fat globules, water, and inorganic salts produced by churning the cream from cows' milk. ... Butter is a high-energy food, containing approximately 715 calories per 100 grams. It has a high content of butterfat, or milk fat (at least 80 percent), but is low in protein.",
-    image: images["product-151.png"],
+   // image: images["product-151.png"],
     originalPrice: 10,
     parent: "Milk & Dairy",
     quantity: 100,
@@ -3551,7 +3552,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.205Z",
     description:
       "Butter, a yellow-to-white solid emulsion of fat globules, water, and inorganic salts produced by churning the cream from cows' milk. ... Butter is a high-energy food, containing approximately 715 calories per 100 grams. It has a high content of butterfat, or milk fat (at least 80 percent), but is low in protein.",
-    image: images["product-152.png"],
+   // image: images["product-152.png"],
     originalPrice: 13,
     parent: "Milk & Dairy",
     quantity: 7,
@@ -3574,7 +3575,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.205Z",
     description:
       "Butter, a yellow-to-white solid emulsion of fat globules, water, and inorganic salts produced by churning the cream from cows' milk. ... Butter is a high-energy food, containing approximately 715 calories per 100 grams. It has a high content of butterfat, or milk fat (at least 80 percent), but is low in protein.",
-    image: images["product-153.png"],
+   // image: images["product-153.png"],
     originalPrice: 10,
     parent: "Milk & Dairy",
     quantity: 100,
@@ -3597,7 +3598,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.205Z",
     description:
       "Butter, a yellow-to-white solid emulsion of fat globules, water, and inorganic salts produced by churning the cream from cows' milk. ... Butter is a high-energy food, containing approximately 715 calories per 100 grams. It has a high content of butterfat, or milk fat (at least 80 percent), but is low in protein.",
-    image: images["product-154.png"],
+   // image: images["product-154.png"],
     originalPrice: 14,
     parent: "Milk & Dairy",
     quantity: 100,
@@ -3620,7 +3621,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.205Z",
     description:
       "a room, building, or establishment where milk is kept and butter or cheese is made. 2a : the department of farming or of a farm that is concerned with the production of milk, butter, and cheese. b : a farm devoted to such production.",
-    image: images["product-155.png"],
+   // image: images["product-155.png"],
     originalPrice: 13,
     parent: "Milk & Dairy",
     quantity: 100,
@@ -3643,7 +3644,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.205Z",
     description:
       "a room, building, or establishment where milk is kept and butter or cheese is made. 2a : the department of farming or of a farm that is concerned with the production of milk, butter, and cheese. b : a farm devoted to such production.",
-    image: images["product-156.png"],
+   // image: images["product-156.png"],
     originalPrice: 11,
     parent: "Milk & Dairy",
     quantity: 100,
@@ -3666,7 +3667,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.205Z",
     description:
       "a room, building, or establishment where milk is kept and butter or cheese is made. 2a : the department of farming or of a farm that is concerned with the production of milk, butter, and cheese. b : a farm devoted to such production.",
-    image: images["product-157.png"],
+   // image: images["product-157.png"],
     originalPrice: 9,
     parent: "Milk & Dairy",
     quantity: 100,
@@ -3689,7 +3690,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.204Z",
     description:
       "a room, building, or establishment where milk is kept and butter or cheese is made. 2a : the department of farming or of a farm that is concerned with the production of milk, butter, and cheese. b : a farm devoted to such production.",
-    image: images["product-158.png"],
+   // image: images["product-158.png"],
     originalPrice: 11,
     parent: "Milk & Dairy",
     quantity: 10,
@@ -3712,7 +3713,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.204Z",
     description:
       "a room, building, or establishment where milk is kept and butter or cheese is made. 2a : the department of farming or of a farm that is concerned with the production of milk, butter, and cheese. b : a farm devoted to such production.",
-    image: images["product-159.png"],
+   // image: images["product-159.png"],
 
     originalPrice: 10,
     parent: "Milk & Dairy",
@@ -3736,7 +3737,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.204Z",
     description:
       "Ice cream is a frozen dairy dessert obtained by freezing the ice cream mix with continuous agitation. It contains milk products, sweetening materials, stabilizers, colors, flavors, and egg products. Ice cream had its origins in Europe and was introduced later in the United States where it developed into an industry.",
-    image: images["product-160.png"],
+   // image: images["product-160.png"],
     originalPrice: 8,
     parent: "Milk & Dairy",
     quantity: 99,
@@ -3759,7 +3760,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.204Z",
     description:
       "Ice cream is a frozen dairy dessert obtained by freezing the ice cream mix with continuous agitation. It contains milk products, sweetening materials, stabilizers, colors, flavors, and egg products. Ice cream had its origins in Europe and was introduced later in the United States where it developed into an industry.",
-    image: images["product-161.png"],
+   // image: images["product-161.png"],
     originalPrice: 10,
     parent: "Milk & Dairy",
     quantity: 7,
@@ -3782,7 +3783,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.204Z",
     description:
       "Ice cream is a frozen dairy dessert obtained by freezing the ice cream mix with continuous agitation. It contains milk products, sweetening materials, stabilizers, colors, flavors, and egg products. Ice cream had its origins in Europe and was introduced later in the United States where it developed into an industry.",
-    image: images["product-162.png"],
+   // image: images["product-162.png"],
     originalPrice: 9,
     parent: "Milk & Dairy",
     quantity: 100,
@@ -3805,7 +3806,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.204Z",
     description:
       "Ice cream is a frozen dairy dessert obtained by freezing the ice cream mix with continuous agitation. It contains milk products, sweetening materials, stabilizers, colors, flavors, and egg products. Ice cream had its origins in Europe and was introduced later in the United States where it developed into an industry.",
-    image: images["product-163.png"],
+   // image: images["product-163.png"],
     originalPrice: 11,
     parent: "Milk & Dairy",
     quantity: 5,
@@ -3828,7 +3829,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.204Z",
     description:
       "Ice cream is a frozen dairy dessert obtained by freezing the ice cream mix with continuous agitation. It contains milk products, sweetening materials, stabilizers, colors, flavors, and egg products. Ice cream had its origins in Europe and was introduced later in the United States where it developed into an industry.",
-    image: images["product-164.png"],
+   // image: images["product-164.png"],
     originalPrice: 9,
     parent: "Milk & Dairy",
     quantity: 100,
@@ -3851,7 +3852,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.204Z",
     description:
       "a device used to disperse chemicals intended to mask or eliminate unpleasant odors The bathrooms should also have matching towels, soap and tissue dispensers, and a candle or plug-in air freshener with a pleasant scent.",
-    image: images["product-165.png"],
+   // image: images["product-165.png"],
     originalPrice: 8,
     parent: "Household Tools",
     quantity: 99,
@@ -3874,7 +3875,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.203Z",
     description:
       "a device used to disperse chemicals intended to mask or eliminate unpleasant odors The bathrooms should also have matching towels, soap and tissue dispensers, and a candle or plug-in air freshener with a pleasant scent.",
-    image: images["product-166.png"],
+   // image: images["product-166.png"],
     originalPrice: 6,
     parent: "Household Tools",
     quantity: 100,
@@ -3897,7 +3898,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.203Z",
     description:
       "a device used to disperse chemicals intended to mask or eliminate unpleasant odors The bathrooms should also have matching towels, soap and tissue dispensers, and a candle or plug-in air freshener with a pleasant scent.",
-    image: images["product-167.png"],
+   // image: images["product-167.png"],
     originalPrice: 7,
     parent: "Household Tools",
     quantity: 8,
@@ -3920,7 +3921,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.203Z",
     description:
       "a device used to disperse chemicals intended to mask or eliminate unpleasant odors The bathrooms should also have matching towels, soap and tissue dispensers, and a candle or plug-in air freshener with a pleasant scent.",
-    image: images["product-168.png"],
+   // image: images["product-168.png"],
     originalPrice: 5,
     parent: "Household Tools",
     quantity: 100,
@@ -3943,7 +3944,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.203Z",
     description:
       "a device used to disperse chemicals intended to mask or eliminate unpleasant odors The bathrooms should also have matching towels, soap and tissue dispensers, and a candle or plug-in air freshener with a pleasant scent.",
-    image: images["product-169.png"],
+   // image: images["product-169.png"],
     originalPrice: 9,
     parent: "Household Tools",
     quantity: 100,
@@ -3966,7 +3967,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.203Z",
     description:
       "A Cleaner, or Custodian, is responsible for keeping offices, homes, hotels or other public areas neat and organized. Their main duties include sweeping, mopping and vacuuming floors, dusting countertops, ceilings and furniture and sanitizing bathrooms, kitchens or other public areas.",
-    image: images["product-170.png"],
+   // image: images["product-170.png"],
     originalPrice: 10,
     parent: "Household Tools",
     quantity: 100,
@@ -3989,7 +3990,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.203Z",
     description:
       "A Cleaner, or Custodian, is responsible for keeping offices, homes, hotels or other public areas neat and organized. Their main duties include sweeping, mopping and vacuuming floors, dusting countertops, ceilings and furniture and sanitizing bathrooms, kitchens or other public areas.",
-    image: images["product-171.png"],
+   // image: images["product-171.png"],
     originalPrice: 9,
     parent: "Household Tools",
     quantity: 140,
@@ -4012,7 +4013,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.203Z",
     description:
       "A Cleaner, or Custodian, is responsible for keeping offices, homes, hotels or other public areas neat and organized. Their main duties include sweeping, mopping and vacuuming floors, dusting countertops, ceilings and furniture and sanitizing bathrooms, kitchens or other public areas.",
-    image: images["product-172.png"],
+   // image: images["product-172.png"],
     originalPrice: 8,
     parent: "Household Tools",
     quantity: 100,
@@ -4035,7 +4036,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.202Z",
     description:
       "A Cleaner, or Custodian, is responsible for keeping offices, homes, hotels or other public areas neat and organized. Their main duties include sweeping, mopping and vacuuming floors, dusting countertops, ceilings and furniture and sanitizing bathrooms, kitchens or other public areas.",
-    image: images["product-173.png"],
+   // image: images["product-173.png"],
     originalPrice: 7,
     parent: "Household Tools",
     quantity: 100,
@@ -4058,7 +4059,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.202Z",
     description:
       "A Cleaner, or Custodian, is responsible for keeping offices, homes, hotels or other public areas neat and organized. Their main duties include sweeping, mopping and vacuuming floors, dusting countertops, ceilings and furniture and sanitizing bathrooms, kitchens or other public areas.",
-    image: images["product-174.png"],
+   // image: images["product-174.png"],
     originalPrice: 8,
     parent: "Household Tools",
     quantity: 73,
@@ -4081,7 +4082,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.201Z",
     description:
       "A variety of accurate and specific tools and products created and designed in various colors, materials, mechanisms, shapes, sizes and styles to clean easily, effectively and efficiently. Cleaning tools are vital to clean especially when your form of employment involves cleaning.",
-    image: images["product-175.png"],
+   // image: images["product-175.png"],
     originalPrice: 11,
     parent: "Household Tools",
     quantity: 30,
@@ -4104,7 +4105,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.201Z",
     description:
       "A variety of accurate and specific tools and products created and designed in various colors, materials, mechanisms, shapes, sizes and styles to clean easily, effectively and efficiently. Cleaning tools are vital to clean especially when your form of employment involves cleaning.",
-    image: images["product-176.png"],
+   // image: images["product-176.png"],
     originalPrice: 12,
     parent: "Household Tools",
     quantity: 100,
@@ -4127,7 +4128,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.201Z",
     description:
       "A variety of accurate and specific tools and products created and designed in various colors, materials, mechanisms, shapes, sizes and styles to clean easily, effectively and efficiently. Cleaning tools are vital to clean especially when your form of employment involves cleaning.",
-    image: images["product-177.png"],
+   // image: images["product-177.png"],
     originalPrice: 8,
     parent: "Household Tools",
     quantity: 100,
@@ -4150,7 +4151,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.201Z",
     description:
       "A variety of accurate and specific tools and products created and designed in various colors, materials, mechanisms, shapes, sizes and styles to clean easily, effectively and efficiently. Cleaning tools are vital to clean especially when your form of employment involves cleaning.",
-    image: images["product-178.png"],
+   // image: images["product-178.png"],
     originalPrice: 9,
     parent: "Household Tools",
     quantity: 6,
@@ -4173,7 +4174,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.201Z",
     description:
       "A variety of accurate and specific tools and products created and designed in various colors, materials, mechanisms, shapes, sizes and styles to clean easily, effectively and efficiently. Cleaning tools are vital to clean especially when your form of employment involves cleaning.",
-    image: images["product-179.png"],
+   // image: images["product-179.png"],
     originalPrice: 7,
     parent: "Household Tools",
     quantity: 100,
@@ -4196,7 +4197,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.201Z",
     description:
       "A laundry service is a service in a hotel that washes and irons clothes for guests. Almost all hotels have a laundry service. If you hand in clothes one day you should get them back a day or two later. The laundry service will wash, dry, and iron your clothes.",
-    image: images["product-180.png"],
+   // image: images["product-180.png"],
     originalPrice: 12,
     parent: "Household Tools",
     quantity: 130,
@@ -4219,7 +4220,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.201Z",
     description:
       "A laundry service is a service in a hotel that washes and irons clothes for guests. Almost all hotels have a laundry service. If you hand in clothes one day you should get them back a day or two later. The laundry service will wash, dry, and iron your clothes.",
-    image: images["product-181.png"],
+   // image: images["product-181.png"],
     originalPrice: 11,
     parent: "Household Tools",
     quantity: 100,
@@ -4242,7 +4243,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.201Z",
     description:
       "A laundry service is a service in a hotel that washes and irons clothes for guests. Almost all hotels have a laundry service. If you hand in clothes one day you should get them back a day or two later. The laundry service will wash, dry, and iron your clothes.",
-    image: images["product-182.png"],
+   // image: images["product-182.png"],
     originalPrice: 12,
     parent: "Household Tools",
     quantity: 100,
@@ -4265,7 +4266,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.201Z",
     description:
       "A laundry service is a service in a hotel that washes and irons clothes for guests. Almost all hotels have a laundry service. If you hand in clothes one day you should get them back a day or two later. The laundry service will wash, dry, and iron your clothes.",
-    image: images["product-183.png"],
+   // image: images["product-183.png"],
     originalPrice: 13,
     parent: "Household Tools",
     quantity: 100,
@@ -4288,7 +4289,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.200Z",
     description:
       "A laundry service is a service in a hotel that washes and irons clothes for guests. Almost all hotels have a laundry service. If you hand in clothes one day you should get them back a day or two later. The laundry service will wash, dry, and iron your clothes.",
-    image: images["product-184.png"],
+   // image: images["product-184.png"],
 
     originalPrice: 12,
     parent: "Household Tools",
@@ -4312,7 +4313,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.200Z",
     description:
       "Pest control is the regulation or management of a species defined as a pest, a member of the animal kingdom that impacts adversely on human activities. ... This can be achieved by monitoring the crop, only applying insecticides when necessary, and by growing varieties and crops which are resistant to pests.",
-    image: images["product-185.png"],
+   // image: images["product-185.png"],
     originalPrice: 12,
     parent: "Household Tools",
     quantity: 100,
@@ -4335,7 +4336,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.200Z",
     description:
       "Pest control is the regulation or management of a species defined as a pest, a member of the animal kingdom that impacts adversely on human activities. ... This can be achieved by monitoring the crop, only applying insecticides when necessary, and by growing varieties and crops which are resistant to pests.",
-    image: images["product-186.png"],
+   // image: images["product-186.png"],
     originalPrice: 10,
     parent: "Household Tools",
     quantity: 120,
@@ -4358,7 +4359,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.200Z",
     description:
       "Pest control is the regulation or management of a species defined as a pest, a member of the animal kingdom that impacts adversely on human activities. ... This can be achieved by monitoring the crop, only applying insecticides when necessary, and by growing varieties and crops which are resistant to pests.",
-    image: images["product-187.png"],
+   // image: images["product-187.png"],
     originalPrice: 12,
     parent: "Household Tools",
     quantity: 100,
@@ -4381,7 +4382,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.200Z",
     description:
       "Pest control is the regulation or management of a species defined as a pest, a member of the animal kingdom that impacts adversely on human activities. ... This can be achieved by monitoring the crop, only applying insecticides when necessary, and by growing varieties and crops which are resistant to pests.",
-    image: images["product-188.png"],
+   // image: images["product-188.png"],
     originalPrice: 14,
     parent: "Household Tools",
     quantity: 6,
@@ -4404,7 +4405,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.200Z",
     description:
       "Pest control is the regulation or management of a species defined as a pest, a member of the animal kingdom that impacts adversely on human activities. ... This can be achieved by monitoring the crop, only applying insecticides when necessary, and by growing varieties and crops which are resistant to pests.",
-    image: images["product-189.png"],
+   // image: images["product-189.png"],
     originalPrice: 12,
     parent: "Household Tools",
     quantity: 100,
@@ -4427,7 +4428,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.200Z",
     description:
       "Water filtering is a method used to filter out undesired chemical compounds, organic and inorganic materials, and biological contaminants from water. The purpose of water filtration is to provide clean drinking water.",
-    image: images["product-190.png"],
+   // image: images["product-190.png"],
     originalPrice: 10,
     parent: "Household Tools",
     quantity: 100,
@@ -4450,7 +4451,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.200Z",
     description:
       "Water filtering is a method used to filter out undesired chemical compounds, organic and inorganic materials, and biological contaminants from water. The purpose of water filtration is to provide clean drinking water.",
-    image: images["product-191.png"],
+   // image: images["product-191.png"],
     originalPrice: 11,
     parent: "Household Tools",
     quantity: 7,
@@ -4473,7 +4474,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.200Z",
     description:
       "Water filtering is a method used to filter out undesired chemical compounds, organic and inorganic materials, and biological contaminants from water. The purpose of water filtration is to provide clean drinking water.",
-    image: images["product-192.png"],
+   // image: images["product-192.png"],
     originalPrice: 12,
     parent: "Household Tools",
     quantity: 100,
@@ -4496,7 +4497,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.200Z",
     description:
       "Water filtering is a method used to filter out undesired chemical compounds, organic and inorganic materials, and biological contaminants from water. The purpose of water filtration is to provide clean drinking water.",
-    image: images["product-193.png"],
+   // image: images["product-193.png"],
     originalPrice: 14,
     parent: "Household Tools",
     quantity: 60,
@@ -4519,7 +4520,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.200Z",
     description:
       "Water filtering is a method used to filter out undesired chemical compounds, organic and inorganic materials, and biological contaminants from water. The purpose of water filtration is to provide clean drinking water.",
-    image: images["product-194.png"],
+   // image: images["product-194.png"],
     originalPrice: 12,
     parent: "Household Tools",
     quantity: 100,
@@ -4542,7 +4543,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.199Z",
     description:
       "Many species of birds make fun, engaging pets. If you're considering bird ownership, the care requirements include providing good housing, nutritious food, and keeping an eye on the bird's health. You'll also need to provide plenty of enrichment and interaction, to keep your pet bird happy and alert.",
-    image: images["product-195.png"],
+   // image: images["product-195.png"],
     originalPrice: 12,
     parent: "Pet Care",
     quantity: 150,
@@ -4565,7 +4566,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.199Z",
     description:
       "Many species of birds make fun, engaging pets. If you're considering bird ownership, the care requirements include providing good housing, nutritious food, and keeping an eye on the bird's health. You'll also need to provide plenty of enrichment and interaction, to keep your pet bird happy and alert.",
-    image: images["product-196.png"],
+   // image: images["product-196.png"],
     originalPrice: 13,
     parent: "Pet Care",
     quantity: 100,
@@ -4588,7 +4589,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.199Z",
     description:
       "Many species of birds make fun, engaging pets. If you're considering bird ownership, the care requirements include providing good housing, nutritious food, and keeping an eye on the bird's health. You'll also need to provide plenty of enrichment and interaction, to keep your pet bird happy and alert.",
-    image: images["product-197.png"],
+   // image: images["product-197.png"],
     originalPrice: 12,
     parent: "Pet Care",
     quantity: 7,
@@ -4611,7 +4612,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.199Z",
     description:
       "Many species of birds make fun, engaging pets. If you're considering bird ownership, the care requirements include providing good housing, nutritious food, and keeping an eye on the bird's health. You'll also need to provide plenty of enrichment and interaction, to keep your pet bird happy and alert.",
-    image: images["product-198.png"],
+   // image: images["product-198.png"],
     originalPrice: 8,
     parent: "Pet Care",
     quantity: 80,
@@ -4634,7 +4635,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.199Z",
     description:
       "Many species of birds make fun, engaging pets. If you're considering bird ownership, the care requirements include providing good housing, nutritious food, and keeping an eye on the bird's health. You'll also need to provide plenty of enrichment and interaction, to keep your pet bird happy and alert.",
-    image: images["product-199.png"],
+   // image: images["product-199.png"],
     originalPrice: 7,
     parent: "Pet Care",
     quantity: 100,
@@ -4657,7 +4658,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.199Z",
     description:
       "Provide plenty of human companionship. Provide regular, suitable meals with a constant supply of fresh water. Provide a clean and comfortable bed. Provide the cat with outdoor access or be prepared to empty and clean a litter tray on a daily basis.",
-    image: images["product-200.png"],
+   // image: images["product-200.png"],
     originalPrice: 11,
     parent: "Pet Care",
     quantity: 130,
@@ -4680,7 +4681,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.199Z",
     description:
       "Provide plenty of human companionship. Provide regular, suitable meals with a constant supply of fresh water. Provide a clean and comfortable bed. Provide the cat with outdoor access or be prepared to empty and clean a litter tray on a daily basis.",
-    image: images["product-201.png"],
+   // image: images["product-201.png"],
     originalPrice: 13,
     parent: "Pet Care",
     quantity: 100,
@@ -4703,7 +4704,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.199Z",
     description:
       "Provide plenty of human companionship. Provide regular, suitable meals with a constant supply of fresh water. Provide a clean and comfortable bed. Provide the cat with outdoor access or be prepared to empty and clean a litter tray on a daily basis.",
-    image: images["product-202.png"],
+   // image: images["product-202.png"],
     originalPrice: 14,
     parent: "Pet Care",
     quantity: 80,
@@ -4726,7 +4727,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.199Z",
     description:
       "Provide plenty of human companionship. Provide regular, suitable meals with a constant supply of fresh water. Provide a clean and comfortable bed. Provide the cat with outdoor access or be prepared to empty and clean a litter tray on a daily basis.",
-    image: images["product-203.png"],
+   // image: images["product-203.png"],
     originalPrice: 12,
     parent: "Pet Care",
     quantity: 100,
@@ -4749,7 +4750,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.199Z",
     description:
       "Provide plenty of human companionship. Provide regular, suitable meals with a constant supply of fresh water. Provide a clean and comfortable bed. Provide the cat with outdoor access or be prepared to empty and clean a litter tray on a daily basis.",
-    image: images["product-204.png"],
+   // image: images["product-204.png"],
     originalPrice: 13,
     parent: "Pet Care",
     quantity: 100,
@@ -4772,7 +4773,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.199Z",
     description:
       "Dog Sitters supervise pets and take care of them in their owners' absence. Typical activities seen on a Dog Sitter example resume are grooming, providing food and water, taking dogs out for walk, taking dogs to vet appointments, administering medication, providing companionship, and following owner instructions.",
-    image: images["product-205.png"],
+   // image: images["product-205.png"],
     originalPrice: 11,
     parent: "Pet Care",
     quantity: 100,
@@ -4795,7 +4796,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.199Z",
     description:
       "Dog Sitters supervise pets and take care of them in their owners' absence. Typical activities seen on a Dog Sitter example resume are grooming, providing food and water, taking dogs out for walk, taking dogs to vet appointments, administering medication, providing companionship, and following owner instructions.",
-    image: images["product-206.png"],
+   // image: images["product-206.png"],
     originalPrice: 14,
     parent: "Pet Care",
     quantity: 100,
@@ -4818,7 +4819,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.198Z",
     description:
       "Dog Sitters supervise pets and take care of them in their owners' absence. Typical activities seen on a Dog Sitter example resume are grooming, providing food and water, taking dogs out for walk, taking dogs to vet appointments, administering medication, providing companionship, and following owner instructions.",
-    image: images["product-207.png"],
+   // image: images["product-207.png"],
     originalPrice: 13,
     parent: "Pet Care",
     quantity: 10,
@@ -4841,7 +4842,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.198Z",
     description:
       "Dog Sitters supervise pets and take care of them in their owners' absence. Typical activities seen on a Dog Sitter example resume are grooming, providing food and water, taking dogs out for walk, taking dogs to vet appointments, administering medication, providing companionship, and following owner instructions.",
-    image: images["product-208.png"],
+   // image: images["product-208.png"],
     originalPrice: 12,
     parent: "Pet Care",
     quantity: 100,
@@ -4864,7 +4865,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.198Z",
     description:
       "Dog Sitters supervise pets and take care of them in their owners' absence. Typical activities seen on a Dog Sitter example resume are grooming, providing food and water, taking dogs out for walk, taking dogs to vet appointments, administering medication, providing companionship, and following owner instructions.",
-    image: images["product-209.png"],
+   // image: images["product-209.png"],
     originalPrice: 14,
     parent: "Pet Care",
     quantity: 100,
@@ -4887,7 +4888,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.198Z",
     description:
       "canned food - food preserved by canning. canned foods, canned goods, tinned goods. food product, foodstuff - a substance that can be used or prepared for use as food. canned meat, tinned meat - meat preserved in a can or tin.",
-    image: images["product-210.png"],
+   // image: images["product-210.png"],
     originalPrice: 11,
     parent: "Snacks & Instant",
     quantity: 100,
@@ -4910,7 +4911,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.198Z",
     description:
       "canned food - food preserved by canning. canned foods, canned goods, tinned goods. food product, foodstuff - a substance that can be used or prepared for use as food. canned meat, tinned meat - meat preserved in a can or tin.",
-   image: images["product-211.png"],
+  // image: images["product-211.png"],
     originalPrice: 13,
     parent: "Snacks & Instant",
     quantity: 37,
@@ -4933,7 +4934,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.198Z",
     description:
       "canned food - food preserved by canning. canned foods, canned goods, tinned goods. food product, foodstuff - a substance that can be used or prepared for use as food. canned meat, tinned meat - meat preserved in a can or tin.",
-      image: images["product-212.png"],
+     // image: images["product-212.png"],
     originalPrice: 12,
     parent: "Snacks & Instant",
     quantity: 5,
@@ -4956,7 +4957,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.198Z",
     description:
       "canned food - food preserved by canning. canned foods, canned goods, tinned goods. food product, foodstuff - a substance that can be used or prepared for use as food. canned meat, tinned meat - meat preserved in a can or tin.",
-      image: images["product-213.png"],
+     // image: images["product-213.png"],
     originalPrice: 13,
     parent: "Snacks & Instant",
     quantity: 140,
@@ -4979,7 +4980,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.198Z",
     description:
       "canned food - food preserved by canning. canned foods, canned goods, tinned goods. food product, foodstuff - a substance that can be used or prepared for use as food. canned meat, tinned meat - meat preserved in a can or tin.",
-      image: images["product-214.png"],
+     // image: images["product-214.png"],
     originalPrice: 12,
     parent: "Snacks & Instant",
     quantity: 100,
@@ -5002,7 +5003,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.198Z",
     description:
       "a small usually thin and flat piece (as of wood or stone) cut, struck, or flaked off. b : a small piece of food: such as. (1) : a small, thin, crisp, usually salty piece of food typically prepared by frying, baking, or drying banana chips especially : potato chip — see also corn chip.",
-      image: images["product-215.png"],
+     // image: images["product-215.png"],
     originalPrice: 11,
     parent: "Snacks & Instant",
     quantity: 50,
@@ -5025,7 +5026,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.198Z",
     description:
       "a small usually thin and flat piece (as of wood or stone) cut, struck, or flaked off. b : a small piece of food: such as. (1) : a small, thin, crisp, usually salty piece of food typically prepared by frying, baking, or drying banana chips especially : potato chip — see also corn chip.",
-      image: images["product-216.png"],
+     // image: images["product-216.png"],
     originalPrice: 9,
     parent: "Snacks & Instant",
     quantity: 100,
@@ -5048,7 +5049,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.198Z",
     description:
       "a small usually thin and flat piece (as of wood or stone) cut, struck, or flaked off. b : a small piece of food: such as. (1) : a small, thin, crisp, usually salty piece of food typically prepared by frying, baking, or drying banana chips especially : potato chip — see also corn chip.",
-      image: images["product-217.png"],
+     // image: images["product-217.png"],
     originalPrice: 10,
     parent: "Snacks & Instant",
     quantity: 60,
@@ -5071,7 +5072,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.198Z",
     description:
       "a small usually thin and flat piece (as of wood or stone) cut, struck, or flaked off. b : a small piece of food: such as. (1) : a small, thin, crisp, usually salty piece of food typically prepared by frying, baking, or drying banana chips especially : potato chip — see also corn chip.",
-      image: images["product-218.png"],
+     // image: images["product-218.png"],
     originalPrice: 12,
     parent: "Snacks & Instant",
     quantity: 10,
@@ -5094,7 +5095,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.197Z",
     description:
       "a small usually thin and flat piece (as of wood or stone) cut, struck, or flaked off. b : a small piece of food: such as. (1) : a small, thin, crisp, usually salty piece of food typically prepared by frying, baking, or drying banana chips especially : potato chip — see also corn chip.",
-      image: images["product-219.png"],
+     // image: images["product-219.png"],
     originalPrice: 10,
     parent: "Snacks & Instant",
     quantity: 20,
@@ -5117,7 +5118,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.197Z",
     description:
       "a small usually thin and flat piece (as of wood or stone) cut, struck, or flaked off. b : a small piece of food: such as. (1) : a small, thin, crisp, usually salty piece of food typically prepared by frying, baking, or drying banana chips especially : potato chip — see also corn chip.",
-      image: images["product-220.png"],
+     // image: images["product-220.png"],
     originalPrice: 9,
     parent: "Snacks & Instant",
     quantity: 100,
@@ -5140,7 +5141,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.197Z",
     description:
       "a small usually thin and flat piece (as of wood or stone) cut, struck, or flaked off. b : a small piece of food: such as. (1) : a small, thin, crisp, usually salty piece of food typically prepared by frying, baking, or drying banana chips especially : potato chip — see also corn chip.",
-      image: images["product-221.png"],
+     // image: images["product-221.png"],
     originalPrice: 13,
     parent: "Snacks & Instant",
     quantity: 100,
@@ -5163,7 +5164,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.196Z",
     description:
       "a small usually thin and flat piece (as of wood or stone) cut, struck, or flaked off. b : a small piece of food: such as. (1) : a small, thin, crisp, usually salty piece of food typically prepared by frying, baking, or drying banana chips especially : potato chip — see also corn chip.",
-      image: images["product-222.png"],
+     // image: images["product-222.png"],
     originalPrice: 10,
     parent: "Snacks & Instant",
     quantity: 100,
@@ -5186,7 +5187,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.196Z",
     description:
       "a small usually thin and flat piece (as of wood or stone) cut, struck, or flaked off. b : a small piece of food: such as. (1) : a small, thin, crisp, usually salty piece of food typically prepared by frying, baking, or drying banana chips especially : potato chip — see also corn chip.",
-      image: images["product-223.png"],
+     // image: images["product-223.png"],
     originalPrice: 11,
     parent: "Snacks & Instant",
     quantity: 99,
@@ -5209,7 +5210,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.196Z",
     description:
       "a small usually thin and flat piece (as of wood or stone) cut, struck, or flaked off. b : a small piece of food: such as. (1) : a small, thin, crisp, usually salty piece of food typically prepared by frying, baking, or drying banana chips especially : potato chip — see also corn chip.",
-      image: images["product-224.png"],
+     // image: images["product-224.png"],
     originalPrice: 10,
     parent: "Snacks & Instant",
     quantity: 99,
@@ -5232,7 +5233,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.196Z",
     description:
       "Noodles are a type of food made from unleavened dough which is rolled flat and cut, stretched or extruded, into long strips or strings. ... Noodles are usually cooked in boiling water, sometimes with cooking oil or salt added. They are also often pan-fried or deep-fried.",
-      image: images["product-225.png"],
+     // image: images["product-225.png"],
     originalPrice: 10,
     parent: "Snacks & Instant",
     quantity: 100,
@@ -5255,7 +5256,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.196Z",
     description:
       "Noodles are a type of food made from unleavened dough which is rolled flat and cut, stretched or extruded, into long strips or strings. ... Noodles are usually cooked in boiling water, sometimes with cooking oil or salt added. They are also often pan-fried or deep-fried.",
-      image: images["product-226.png"],
+     // image: images["product-226.png"],
     originalPrice: 15,
     parent: "Snacks & Instant",
     quantity: 100,
@@ -5278,7 +5279,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.196Z",
     description:
       "Noodles are a type of food made from unleavened dough which is rolled flat and cut, stretched or extruded, into long strips or strings. ... Noodles are usually cooked in boiling water, sometimes with cooking oil or salt added. They are also often pan-fried or deep-fried.",
-      image: images["product-227.png"],
+     // image: images["product-227.png"],
     originalPrice: 15,
     parent: "Snacks & Instant",
     quantity: 100,
@@ -5301,7 +5302,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.196Z",
     description:
       "Noodles are a type of food made from unleavened dough which is rolled flat and cut, stretched or extruded, into long strips or strings. ... Noodles are usually cooked in boiling water, sometimes with cooking oil or salt added. They are also often pan-fried or deep-fried.",
-      image: images["product-228.png"],
+     // image: images["product-228.png"],
     originalPrice: 15,
     parent: "Snacks & Instant",
     quantity: 5,
@@ -5324,7 +5325,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.195Z",
     description:
       "Noodles are a type of food made from unleavened dough which is rolled flat and cut, stretched or extruded, into long strips or strings. ... Noodles are usually cooked in boiling water, sometimes with cooking oil or salt added. They are also often pan-fried or deep-fried.",
-      image: images["product-229.png"],
+     // image: images["product-229.png"],
     originalPrice: 15,
     parent: "Snacks & Instant",
     quantity: 100,
@@ -5347,7 +5348,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.195Z",
     description:
       "honey, sweet, viscous liquid food, dark golden in colour, produced in the honey sacs of various bees from the nectar of flowers. Flavour and colour are determined by the flowers from which the nectar is gathered. Some of the most commercially desirable honeys are produced from clover by the domestic honeybee.",
-      image: images["product-230.png"],
+     // image: images["product-230.png"],
     originalPrice: 20,
     parent: "Honey",
     quantity: 99,
@@ -5370,7 +5371,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.195Z",
     description:
       "honey, sweet, viscous liquid food, dark golden in colour, produced in the honey sacs of various bees from the nectar of flowers. Flavour and colour are determined by the flowers from which the nectar is gathered. Some of the most commercially desirable honeys are produced from clover by the domestic honeybee.",
-      image: images["product-231.png"],
+     // image: images["product-231.png"],
     originalPrice: 20,
     parent: "Honey",
     quantity: 4,
@@ -5393,7 +5394,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.195Z",
     description:
       "honey, sweet, viscous liquid food, dark golden in colour, produced in the honey sacs of various bees from the nectar of flowers. Flavour and colour are determined by the flowers from which the nectar is gathered. Some of the most commercially desirable honeys are produced from clover by the domestic honeybee.",
-      image: images["product-232.png"],
+     // image: images["product-232.png"],
     originalPrice: 16,
     parent: "Honey",
     quantity: 99,
@@ -5416,7 +5417,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.194Z",
     description:
       "honey, sweet, viscous liquid food, dark golden in colour, produced in the honey sacs of various bees from the nectar of flowers. Flavour and colour are determined by the flowers from which the nectar is gathered. Some of the most commercially desirable honeys are produced from clover by the domestic honeybee.",
-      image: images["product-233.png"],
+     // image: images["product-233.png"],
     originalPrice: 19,
     parent: "Honey",
     quantity: 99,
@@ -5439,7 +5440,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.194Z",
     description:
       "honey, sweet, viscous liquid food, dark golden in colour, produced in the honey sacs of various bees from the nectar of flowers. Flavour and colour are determined by the flowers from which the nectar is gathered. Some of the most commercially desirable honeys are produced from clover by the domestic honeybee.",
-      image: images["product-234.png"],
+     // image: images["product-234.png"],
     originalPrice: 17,
     parent: "Honey",
     quantity: 141,
@@ -5462,7 +5463,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.194Z",
     description:
       "Jams and jellies are spreads typically made from fruit, sugar, and pectin. Jelly is made with the juice of the fruit; jam uses the meat of the fruit as well. Some vegetable jellies are also produced.",
-      image: images["product-235.png"],
+     // image: images["product-235.png"],
     originalPrice: 11,
     parent: "Jam & Jelly",
     quantity: 100,
@@ -5485,7 +5486,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.194Z",
     description:
       "Jams and jellies are spreads typically made from fruit, sugar, and pectin. Jelly is made with the juice of the fruit; jam uses the meat of the fruit as well. Some vegetable jellies are also produced.",
-      image: images["product-236.png"],
+     // image: images["product-236.png"],
     originalPrice: 13,
     parent: "Jam & Jelly",
     quantity: 3,
@@ -5508,7 +5509,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.194Z",
     description:
       "Jams and jellies are spreads typically made from fruit, sugar, and pectin. Jelly is made with the juice of the fruit; jam uses the meat of the fruit as well. Some vegetable jellies are also produced.",
-      image: images["product-237.png"],
+     // image: images["product-237.png"],
     originalPrice: 14,
     parent: "Jam & Jelly",
     quantity: 94,
@@ -5531,7 +5532,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.194Z",
     description:
       "Jams and jellies are spreads typically made from fruit, sugar, and pectin. Jelly is made with the juice of the fruit; jam uses the meat of the fruit as well. Some vegetable jellies are also produced.",
-      image: images["product-238.png"],
+     // image: images["product-238.png"],
     originalPrice: 12,
     parent: "Jam & Jelly",
     quantity: 99,
@@ -5554,7 +5555,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.194Z",
     description:
       "Jams and jellies are spreads typically made from fruit, sugar, and pectin. Jelly is made with the juice of the fruit; jam uses the meat of the fruit as well. Some vegetable jellies are also produced.",
-      image: images["product-239.png"],
+     // image: images["product-239.png"],
     originalPrice: 13,
     parent: "Jam & Jelly",
     quantity: 100,
@@ -5577,7 +5578,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.194Z",
     description:
       "Skin care is the range of practices that support skin integrity, enhance its appearance and relieve skin conditions. Skin care is a part of the treatment of wound healing, radiation therapy and some medications.",
-      image: images["product-240.png"],
+     // image: images["product-240.png"],
 
     originalPrice: 11,
     parent: "Beauty & Health",
@@ -5601,7 +5602,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.194Z",
     description:
       "Skin care is the range of practices that support skin integrity, enhance its appearance and relieve skin conditions. Skin care is a part of the treatment of wound healing, radiation therapy and some medications.",
-      image: images["product-241.png"],
+     // image: images["product-241.png"],
     originalPrice: 7,
     parent: "Beauty & Health",
     quantity: 99,
@@ -5624,7 +5625,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.194Z",
     description:
       "Skin care is the range of practices that support skin integrity, enhance its appearance and relieve skin conditions. Skin care is a part of the treatment of wound healing, radiation therapy and some medications.",
-      image: images["product-242.png"],
+     // image: images["product-242.png"],
     originalPrice: 8,
     parent: "Beauty & Health",
     quantity: 5,
@@ -5647,7 +5648,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.194Z",
     description:
       "Skin care is the range of practices that support skin integrity, enhance its appearance and relieve skin conditions. Skin care is a part of the treatment of wound healing, radiation therapy and some medications.",
-      image: images["product-243.png"],
+     // image: images["product-243.png"],
     originalPrice: 9,
     parent: "Beauty & Health",
     quantity: 100,
@@ -5670,7 +5671,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.192Z",
     description:
       "Skin care is the range of practices that support skin integrity, enhance its appearance and relieve skin conditions. Skin care is a part of the treatment of wound healing, radiation therapy and some medications.",
-      image: images["product-244.png"],
+     // image: images["product-244.png"],
     originalPrice: 8,
     parent: "Beauty & Health",
     quantity: 100,
@@ -5693,7 +5694,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.191Z",
     description:
       "Health products are defined as those substances which gives energy or makes the person healthy. Health products are vitamins, minerals, herbal medicines, homeopathic preparations, probiotics and even some traditional medicines are also prescribed by doctor or any equivalent physician.",
-      image: images["product-245.png"],
+     // image: images["product-245.png"],
     originalPrice: 7,
     parent: "Beauty & Health",
     quantity: 100,
@@ -5716,7 +5717,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.191Z",
     description:
       "Health products are defined as those substances which gives energy or makes the person healthy. Health products are vitamins, minerals, herbal medicines, homeopathic preparations, probiotics and even some traditional medicines are also prescribed by doctor or any equivalent physician.",
-      image: images["product-246.png"],
+     // image: images["product-246.png"],
     originalPrice: 6,
     parent: "Beauty & Health",
     quantity: 100,
@@ -5739,7 +5740,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.191Z",
     description:
       "Health products are defined as those substances which gives energy or makes the person healthy. Health products are vitamins, minerals, herbal medicines, homeopathic preparations, probiotics and even some traditional medicines are also prescribed by doctor or any equivalent physician.",
-      image: images["product-247.png"],
+     // image: images["product-247.png"],
     originalPrice: 8,
     parent: "Beauty & Health",
     quantity: 100,
@@ -5762,7 +5763,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.191Z",
     description:
       "Health products are defined as those substances which gives energy or makes the person healthy. Health products are vitamins, minerals, herbal medicines, homeopathic preparations, probiotics and even some traditional medicines are also prescribed by doctor or any equivalent physician.",
-      image: images["product-248.png"],
+     // image: images["product-248.png"],
     originalPrice: 9,
     parent: "Beauty & Health",
     quantity: 100,
@@ -5785,7 +5786,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.191Z",
     description:
       "Health products are defined as those substances which gives energy or makes the person healthy. Health products are vitamins, minerals, herbal medicines, homeopathic preparations, probiotics and even some traditional medicines are also prescribed by doctor or any equivalent physician.",
-      image: images["product-249.png"],
+     // image: images["product-249.png"],
     originalPrice: 8,
     parent: "Beauty & Health",
     quantity: 100,
@@ -5808,7 +5809,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.191Z",
     description:
       "Oral Care Products are intended to cleanse the oral cavity, freshen the breath, and maintain good oral hygiene. Some products also include ingredients to protect against the formation of cavities.",
-      image: images["product-250.png"],
+     // image: images["product-250.png"],
     originalPrice: 5,
     parent: "Beauty & Health",
     quantity: 100,
@@ -5831,7 +5832,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.191Z",
     description:
       "Oral Care Products are intended to cleanse the oral cavity, freshen the breath, and maintain good oral hygiene. Some products also include ingredients to protect against the formation of cavities.",
-      image: images["product-251.png"],
+     // image: images["product-251.png"],
     originalPrice: 10,
     parent: "Beauty & Health",
     quantity: 100,
@@ -5854,7 +5855,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.191Z",
     description:
       "Oral Care Products are intended to cleanse the oral cavity, freshen the breath, and maintain good oral hygiene. Some products also include ingredients to protect against the formation of cavities.",
-      image: images["product-252.png"],
+     // image: images["product-252.png"],
     originalPrice: 7,
     parent: "Beauty & Health",
     quantity: 100,
@@ -5877,7 +5878,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.191Z",
     description:
       "Oral Care Products are intended to cleanse the oral cavity, freshen the breath, and maintain good oral hygiene. Some products also include ingredients to protect against the formation of cavities.",
-      image: images["product-253.png"],
+     // image: images["product-253.png"],
     originalPrice: 12,
     parent: "Beauty & Health",
     quantity: 5,
@@ -5900,7 +5901,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.191Z",
     description:
       "Oral Care Products are intended to cleanse the oral cavity, freshen the breath, and maintain good oral hygiene. Some products also include ingredients to protect against the formation of cavities.",
-      image: images["product-254.png"],
+     // image: images["product-254.png"],
     originalPrice: 8,
     parent: "Beauty & Health",
     quantity: 100,
@@ -5923,7 +5924,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.191Z",
     description:
       "Hair Care products are those that help to control the properties and behavior of the hair so that it can be maintained in a controlled and desirable manner. This can include hair conditioners, hair sprays, hair straighteners and relaxers, permanent waves, shampoos, rinses, tonics and dressings.",
-      image: images["product-255.png"],
+     // image: images["product-255.png"],
     originalPrice: 8,
     parent: "Beauty & Health",
     quantity: 100,
@@ -5946,7 +5947,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.191Z",
     description:
       "Hair Care products are those that help to control the properties and behavior of the hair so that it can be maintained in a controlled and desirable manner. This can include hair conditioners, hair sprays, hair straighteners and relaxers, permanent waves, shampoos, rinses, tonics and dressings.",
-      image: images["product-256.png"],
+     // image: images["product-256.png"],
     originalPrice: 9,
     parent: "Beauty & Health",
     quantity: 10,
@@ -5969,7 +5970,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.190Z",
     description:
       "Hair Care products are those that help to control the properties and behavior of the hair so that it can be maintained in a controlled and desirable manner. This can include hair conditioners, hair sprays, hair straighteners and relaxers, permanent waves, shampoos, rinses, tonics and dressings.",
-      image: images["product-257.png"],
+     // image: images["product-257.png"],
     originalPrice: 8,
     parent: "Beauty & Health",
     quantity: 100,
@@ -5992,7 +5993,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.190Z",
     description:
       "Hair Care products are those that help to control the properties and behavior of the hair so that it can be maintained in a controlled and desirable manner. This can include hair conditioners, hair sprays, hair straighteners and relaxers, permanent waves, shampoos, rinses, tonics and dressings.",
-      image: images["product-258.png"],
+     // image: images["product-258.png"],
     originalPrice: 7,
     parent: "Beauty & Health",
     quantity: 100,
@@ -6015,7 +6016,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.190Z",
     description:
       "Hair Care products are those that help to control the properties and behavior of the hair so that it can be maintained in a controlled and desirable manner. This can include hair conditioners, hair sprays, hair straighteners and relaxers, permanent waves, shampoos, rinses, tonics and dressings.",
-      image: images["product-259.png"],
+     // image: images["product-259.png"],
     originalPrice: 8,
     parent: "Beauty & Health",
     quantity: 100,
@@ -6038,7 +6039,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.190Z",
     description:
       "A cosmetic product shall mean any substance or mixture intended to be placed in contact with the various external parts of the human body (epidermis, hair system, nails, lips and external genital organs) or with the teeth and the mucous membranes of the oral cavity with a view exclusively or mainly to cleaning them",
-      image: images["product-260.png"],
+     // image: images["product-260.png"],
     originalPrice: 6,
     parent: "Beauty & Health",
     quantity: 100,
@@ -6061,7 +6062,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.190Z",
     description:
       "A cosmetic product shall mean any substance or mixture intended to be placed in contact with the various external parts of the human body (epidermis, hair system, nails, lips and external genital organs) or with the teeth and the mucous membranes of the oral cavity with a view exclusively or mainly to cleaning them",
-      image: images["product-261.png"],
+     // image: images["product-261.png"],
     originalPrice: 8,
     parent: "Beauty & Health",
     quantity: 10,
@@ -6084,7 +6085,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.190Z",
     description:
       "A cosmetic product shall mean any substance or mixture intended to be placed in contact with the various external parts of the human body (epidermis, hair system, nails, lips and external genital organs) or with the teeth and the mucous membranes of the oral cavity with a view exclusively or mainly to cleaning them",
-      image: images["product-262.png"],
+     // image: images["product-262.png"],
     originalPrice: 5,
     parent: "Beauty & Health",
     quantity: 100,
@@ -6107,7 +6108,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.190Z",
     description:
       "A cosmetic product shall mean any substance or mixture intended to be placed in contact with the various external parts of the human body (epidermis, hair system, nails, lips and external genital organs) or with the teeth and the mucous membranes of the oral cavity with a view exclusively or mainly to cleaning them",
-      image: images["product-263.png"],
+     // image: images["product-263.png"],
     originalPrice: 8,
     parent: "Beauty & Health",
     quantity: 100,
@@ -6130,7 +6131,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.190Z",
     description:
       "A cosmetic product shall mean any substance or mixture intended to be placed in contact with the various external parts of the human body (epidermis, hair system, nails, lips and external genital organs) or with the teeth and the mucous membranes of the oral cavity with a view exclusively or mainly to cleaning them",
-      image: images["product-264.png"],
+     // image: images["product-264.png"],
     originalPrice: 9,
     parent: "Beauty & Health",
     quantity: 100,
@@ -6153,7 +6154,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.190Z",
     description:
       "Body care means how you perform with passive range of motion, applications of dressings and ointments or lotions to the body, and pedicure to trim toenails and apply lotion to feet.",
-      image: images["product-265.png"],
+     // image: images["product-265.png"],
     originalPrice: 7,
     parent: "Beauty & Health",
     quantity: 100,
@@ -6176,7 +6177,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.190Z",
     description:
       "Body care means how you perform with passive range of motion, applications of dressings and ointments or lotions to the body, and pedicure to trim toenails and apply lotion to feet.",
-      image: images["product-266.png"],
+     // image: images["product-266.png"],
     originalPrice: 9,
     parent: "Beauty & Health",
     quantity: 100,
@@ -6199,7 +6200,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.190Z",
     description:
       "Body care means how you perform with passive range of motion, applications of dressings and ointments or lotions to the body, and pedicure to trim toenails and apply lotion to feet.",
-      image: images["product-267.png"],
+     // image: images["product-267.png"],
     originalPrice: 8,
     parent: "Beauty & Health",
     quantity: 100,
@@ -6222,7 +6223,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.190Z",
     description:
       "Body care means how you perform with passive range of motion, applications of dressings and ointments or lotions to the body, and pedicure to trim toenails and apply lotion to feet.",
-      image: images["product-268.png"],
+     // image: images["product-268.png"],
     originalPrice: 9,
     parent: "Beauty & Health",
     quantity: 100,
@@ -6245,7 +6246,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.189Z",
     description:
       "Body care means how you perform with passive range of motion, applications of dressings and ointments or lotions to the body, and pedicure to trim toenails and apply lotion to feet.",
-      image: images["product-269.png"],
+     // image: images["product-269.png"],
     originalPrice: 8,
     parent: "Beauty & Health",
     quantity: 100,
@@ -6268,7 +6269,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.189Z",
     description:
       "bathroom accessories are items specifically designed for use in a bathroom, such as soap dishes, towel racks, etc. bathroom accessories accessories typically have durable, decorative finishes.",
-      image: images["product-270.png"],
+     // image: images["product-270.png"],
     originalPrice: 12,
     parent: "Beauty & Health",
     quantity: 100,
@@ -6291,7 +6292,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.189Z",
     description:
       "bathroom accessories are items specifically designed for use in a bathroom, such as soap dishes, towel racks, etc. bathroom accessories accessories typically have durable, decorative finishes.",
-      image: images["product-271.png"],
+     // image: images["product-271.png"],
     originalPrice: 13,
     parent: "Beauty & Health",
     quantity: 100,
@@ -6314,7 +6315,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.189Z",
     description:
       "bathroom accessories are items specifically designed for use in a bathroom, such as soap dishes, towel racks, etc. bathroom accessories accessories typically have durable, decorative finishes.",
-      image: images["product-272.png"],
+     // image: images["product-272.png"],
     originalPrice: 11,
     parent: "Beauty & Health",
     quantity: 10,
@@ -6337,7 +6338,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.189Z",
     description:
       "bathroom accessories are items specifically designed for use in a bathroom, such as soap dishes, towel racks, etc. bathroom accessories accessories typically have durable, decorative finishes.",
-      image: images["product-273.png"],
+     // image: images["product-273.png"],
     originalPrice: 12,
     parent: "Beauty & Health",
     quantity: 100,
@@ -6360,7 +6361,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.188Z",
     description:
       "bathroom accessories are items specifically designed for use in a bathroom, such as soap dishes, towel racks, etc. bathroom accessories accessories typically have durable, decorative finishes.",
-      image: images["product-274.png"],
+     // image: images["product-274.png"],
     originalPrice: 11,
     parent: "Beauty & Health",
     quantity: 100,
@@ -6383,7 +6384,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.188Z",
     description:
       "Baby foods are either a soft, liquid paste or an easily chewed food since babies lack developed muscles and teeth to effectively chew. Babies typically move to consuming baby food once nursing or formula is not sufficient for the child's appetite. Babies do not need to have teeth to transition to eating solid foods.",
-      image: images["product-275.png"],
+     // image: images["product-275.png"],
     originalPrice: 16,
     parent: "Baby Care",
     quantity: 100,
@@ -6406,7 +6407,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.188Z",
     description:
       "Baby foods are either a soft, liquid paste or an easily chewed food since babies lack developed muscles and teeth to effectively chew. Babies typically move to consuming baby food once nursing or formula is not sufficient for the child's appetite. Babies do not need to have teeth to transition to eating solid foods.",
-      image: images["product-276.png"],
+     // image: images["product-276.png"],
 
     originalPrice: 15,
     parent: "Baby Care",
@@ -6430,7 +6431,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.188Z",
     description:
       "Baby foods are either a soft, liquid paste or an easily chewed food since babies lack developed muscles and teeth to effectively chew. Babies typically move to consuming baby food once nursing or formula is not sufficient for the child's appetite. Babies do not need to have teeth to transition to eating solid foods.",
-      image: images["product-277.png"],
+     // image: images["product-277.png"],
     originalPrice: 17,
     parent: "Baby Care",
     quantity: 100,
@@ -6453,7 +6454,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.188Z",
     description:
       "Baby foods are either a soft, liquid paste or an easily chewed food since babies lack developed muscles and teeth to effectively chew. Babies typically move to consuming baby food once nursing or formula is not sufficient for the child's appetite. Babies do not need to have teeth to transition to eating solid foods.",
-      image: images["product-278.png"],
+     // image: images["product-278.png"],
     originalPrice: 16,
     parent: "Baby Care",
     quantity: 100,
@@ -6476,7 +6477,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.188Z",
     description:
       "Baby Products are products intended to be used on infants and children under the age of three. Baby products are specially formulated to be mild and non-irritating and use ingredients that are selected for these properties. Baby products include baby shampoos and baby lotions, oils, powders and creams.",
-      image: images["product-279.png"],
+     // image: images["product-279.png"],
     originalPrice: 10,
     parent: "Baby Care",
     quantity: 6,
@@ -6499,7 +6500,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.188Z",
     description:
       "Baby Products are products intended to be used on infants and children under the age of three. Baby products are specially formulated to be mild and non-irritating and use ingredients that are selected for these properties. Baby products include baby shampoos and baby lotions, oils, powders and creams.",
-      image: images["product-280.png"],
+     // image: images["product-280.png"],
     originalPrice: 8,
     parent: "Baby Care",
     quantity: 100,
@@ -6522,7 +6523,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.188Z",
     description:
       "Baby Products are products intended to be used on infants and children under the age of three. Baby products are specially formulated to be mild and non-irritating and use ingredients that are selected for these properties. Baby products include baby shampoos and baby lotions, oils, powders and creams.",
-      image: images["product-281.png"],
+     // image: images["product-281.png"],
 
     originalPrice: 9,
     parent: "Baby Care",
@@ -6546,7 +6547,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.187Z",
     description:
       "Baby Products are products intended to be used on infants and children under the age of three. Baby products are specially formulated to be mild and non-irritating and use ingredients that are selected for these properties. Baby products include baby shampoos and baby lotions, oils, powders and creams.",
-      image: images["product-282.png"],
+     // image: images["product-282.png"],
     originalPrice: 12,
     parent: "Baby Care",
     quantity: 100,
@@ -6569,7 +6570,7 @@ export const Products = [
     createdAt: "2021-12-22T16:41:23.186Z",
     description:
       "Baby Products are products intended to be used on infants and children under the age of three. Baby products are specially formulated to be mild and non-irritating and use ingredients that are selected for these properties. Baby products include baby shampoos and baby lotions, oils, powders and creams.",
-      image: images["product-283.png"],
+     // image: images["product-283.png"],
     originalPrice: 8,
     parent: "Baby Care",
     quantity: 100,
@@ -6595,7 +6596,7 @@ export const discountProducts = [
     createdAt: "2021-12-22T16:41:23.214Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-27.png"],
+   // image: images["product-27.png"],
     originalPrice: 12,
     parent: "Fruits & Vegetable",
     quantity: 99,
@@ -6618,7 +6619,7 @@ export const discountProducts = [
     createdAt: "2021-12-22T16:41:23.214Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-30.png"],
+   // image: images["product-30.png"],
     originalPrice: 12,
     parent: "Fruits & Vegetable",
     quantity: 118,
@@ -6641,7 +6642,7 @@ export const discountProducts = [
     createdAt: "2021-12-22T16:41:23.214Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-33.png"],
+   // image: images["product-33.png"],
     originalPrice: 15,
     parent: "Fruits & Vegetable",
     quantity: 84,
@@ -6664,7 +6665,7 @@ export const discountProducts = [
     createdAt: "2021-12-22T16:41:23.214Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-34.png"],
+   // image: images["product-34.png"],
     originalPrice: 12,
     parent: "Fruits & Vegetable",
     quantity: 100,
@@ -6687,7 +6688,7 @@ export const discountProducts = [
     createdAt: "2021-12-22T16:41:23.214Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-36.png"],
+   // image: images["product-36.png"],
     originalPrice: 14,
     parent: "Fruits & Vegetable",
     quantity: 109,
@@ -6710,7 +6711,7 @@ export const discountProducts = [
     createdAt: "2021-12-22T16:41:23.213Z",
     description:
       "In a botanical sense, a fruit is the fleshy or dry ripened ovary of a flowering plant, enclosing the seed or seeds. Apricots, bananas, and grapes, as well as bean pods, corn grains, tomatoes, cucumbers, and (in their shells) acorns and almonds, are all technically fruits.",
-    image: images["product-40.png"],
+   // image: images["product-40.png"],
     originalPrice: 10,
     parent: "Fruits & Vegetable",
     quantity: 170,
@@ -6733,7 +6734,7 @@ export const discountProducts = [
     createdAt: "2021-12-22T16:41:23.213Z",
     description:
       "In a botanical sense, a fruit is the fleshy or dry ripened ovary of a flowering plant, enclosing the seed or seeds. Apricots, bananas, and grapes, as well as bean pods, corn grains, tomatoes, cucumbers, and (in their shells) acorns and almonds, are all technically fruits.",
-    image: images["product-42.png"],
+   // image: images["product-42.png"],
     originalPrice: 15,
     parent: "Fruits & Vegetable",
     quantity: 100,
@@ -6756,7 +6757,7 @@ export const discountProducts = [
     createdAt: "2021-12-22T16:41:23.213Z",
     description:
       "In a botanical sense, a fruit is the fleshy or dry ripened ovary of a flowering plant, enclosing the seed or seeds. Apricots, bananas, and grapes, as well as bean pods, corn grains, tomatoes, cucumbers, and (in their shells) acorns and almonds, are all technically fruits.",
-    image: images["product-43.png"],
+   // image: images["product-43.png"],
     originalPrice: 12,
     parent: "Fruits & Vegetable",
     quantity: 168,
@@ -6779,7 +6780,7 @@ export const discountProducts = [
     createdAt: "2021-12-22T16:41:23.213Z",
     description:
       "Organic food is food produced by methods complying with the standards of organic farming. Standards vary worldwide, but organic farming features practices that cycle resources, promote ecological balance, and conserve biodiversity.",
-    image: images["product-51.png"],
+   // image: images["product-51.png"],
     originalPrice: 10,
     parent: "Organic Food",
     quantity: 64,
@@ -6802,7 +6803,7 @@ export const discountProducts = [
     createdAt: "2021-12-22T16:41:23.213Z",
     description:
       "Organic food is food produced by methods complying with the standards of organic farming. Standards vary worldwide, but organic farming features practices that cycle resources, promote ecological balance, and conserve biodiversity.",
-    image: images["product-52.png"],
+   // image: images["product-52.png"],
     originalPrice: 11,
     parent: "Organic Food",
     quantity: 59,
@@ -6825,7 +6826,7 @@ export const discountProducts = [
     createdAt: "2021-12-22T16:41:23.213Z",
     description:
       "Organic food is food produced by methods complying with the standards of organic farming. Standards vary worldwide, but organic farming features practices that cycle resources, promote ecological balance, and conserve biodiversity.",
-    image: images["product-54.png"],
+   // image: images["product-54.png"],
     originalPrice: 12,
     parent: "Organic Food",
     quantity: 65,
@@ -6848,7 +6849,7 @@ export const discountProducts = [
     createdAt: "2021-12-22T16:41:23.212Z",
     description:
       "Organic food is food produced by methods complying with the standards of organic farming. Standards vary worldwide, but organic farming features practices that cycle resources, promote ecological balance, and conserve biodiversity.",
-    image: images["product-56.png"],
+   // image: images["product-56.png"],
     originalPrice: 11,
     parent: "Organic Food",
     quantity: 69,
@@ -6873,7 +6874,7 @@ export const popularProducts = [
     createdAt: "2021-12-22T16:41:23.216Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-1.png"],
+   // image: images["product-1.png"],
 
     originalPrice: 12,
     parent: "Fruits & Vegetable",
@@ -6897,7 +6898,7 @@ export const popularProducts = [
     createdAt: "2021-12-22T16:41:23.216Z",
     description:
       "In a botanical sense, a fruit is the fleshy or dry ripened ovary of a flowering plant, enclosing the seed or seeds. Apricots, bananas, and grapes, as well as bean pods, corn grains, tomatoes, cucumbers, and (in their shells) acorns and almonds, are all technically fruits.",
-    image: images["product-2.png"],
+   // image: images["product-2.png"],
     originalPrice: 13,
     parent: "Fruits & Vegetable",
     quantity: 0,
@@ -6920,7 +6921,7 @@ export const popularProducts = [
     createdAt: "2021-12-22T16:41:23.216Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-3.png"],
+   // image: images["product-3.png"],
     originalPrice: 15,
     parent: "Fruits & Vegetable",
     quantity: 0,
@@ -6943,7 +6944,7 @@ export const popularProducts = [
     createdAt: "2021-12-22T16:41:23.216Z",
     description:
       "In a botanical sense, a fruit is the fleshy or dry ripened ovary of a flowering plant, enclosing the seed or seeds. Apricots, bananas, and grapes, as well as bean pods, corn grains, tomatoes, cucumbers, and (in their shells) acorns and almonds, are all technically fruits.",
-    image: images["product-4.png"],
+   // image: images["product-4.png"],
     originalPrice: 15,
     parent: "Fruits & Vegetable",
     quantity: 29,
@@ -6966,7 +6967,7 @@ export const popularProducts = [
     createdAt: "2021-12-22T16:41:23.216Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-5.png"],
+   // image: images["product-5.png"],
     originalPrice: 15,
     parent: "Fruits & Vegetable",
     quantity: 42,
@@ -6989,7 +6990,7 @@ export const popularProducts = [
     createdAt: "2021-12-22T16:41:23.216Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-6.png"],
+   // image: images["product-6.png"],
     originalPrice: 14,
     parent: "Fruits & Vegetable",
     quantity: 83,
@@ -7012,7 +7013,7 @@ export const popularProducts = [
     createdAt: "2021-12-22T16:41:23.216Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-7.png"],
+   // image: images["product-7.png"],
     originalPrice: 15,
     parent: "Fruits & Vegetable",
     quantity: 0,
@@ -7035,7 +7036,7 @@ export const popularProducts = [
     createdAt: "2021-12-22T16:41:23.216Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-8.png"],
+   // image: images["product-8.png"],
     originalPrice: 12,
     parent: "Fruits & Vegetable",
     quantity: 54,
@@ -7058,7 +7059,7 @@ export const popularProducts = [
     createdAt: "2021-12-22T16:41:23.215Z",
     description:
       "In a botanical sense, a fruit is the fleshy or dry ripened ovary of a flowering plant, enclosing the seed or seeds. Apricots, bananas, and grapes, as well as bean pods, corn grains, tomatoes, cucumbers, and (in their shells) acorns and almonds, are all technically fruits.",
-    image: images["product-9.png"],
+   // image: images["product-9.png"],
     originalPrice: 13,
     parent: "Fruits & Vegetable",
     quantity: 13,
@@ -7081,7 +7082,7 @@ export const popularProducts = [
     createdAt: "2021-12-22T16:41:23.215Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-10.png"],
+   // image: images["product-10.png"],
     originalPrice: 15,
     parent: "Fruits & Vegetable",
     quantity: 76,
@@ -7104,7 +7105,7 @@ export const popularProducts = [
     createdAt: "2021-12-22T16:41:23.215Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-11.png"],
+   // image: images["product-11.png"],
     originalPrice: 11,
     parent: "Fruits & Vegetable",
     quantity: 110,
@@ -7127,7 +7128,7 @@ export const popularProducts = [
     createdAt: "2021-12-22T16:41:23.215Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-12.png"],
+   // image: images["product-12.png"],
     originalPrice: 15,
     parent: "Fruits & Vegetable",
     quantity: 0,
@@ -7150,7 +7151,7 @@ export const popularProducts = [
     createdAt: "2021-12-22T16:41:23.215Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-13.png"],
+   // image: images["product-13.png"],
     originalPrice: 15,
     parent: "Fruits & Vegetable",
     quantity: 89,
@@ -7173,7 +7174,7 @@ export const popularProducts = [
     createdAt: "2021-12-22T16:41:23.215Z",
     description:
       "In a botanical sense, a fruit is the fleshy or dry ripened ovary of a flowering plant, enclosing the seed or seeds. Apricots, bananas, and grapes, as well as bean pods, corn grains, tomatoes, cucumbers, and (in their shells) acorns and almonds, are all technically fruits.",
-    image: images["product-14.png"],
+   // image: images["product-14.png"],
     originalPrice: 14,
     parent: "Fruits & Vegetable",
     quantity: 80,
@@ -7196,7 +7197,7 @@ export const popularProducts = [
     createdAt: "2021-12-22T16:41:23.215Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-15.png"],
+   // image: images["product-15.png"],
     originalPrice: 15,
     parent: "Fruits & Vegetable",
     quantity: 94,
@@ -7219,7 +7220,7 @@ export const popularProducts = [
     createdAt: "2021-12-22T16:41:23.215Z",
     description:
       "In a botanical sense, a fruit is the fleshy or dry ripened ovary of a flowering plant, enclosing the seed or seeds. Apricots, bananas, and grapes, as well as bean pods, corn grains, tomatoes, cucumbers, and (in their shells) acorns and almonds, are all technically fruits.",
-    image: images["product-16.png"],
+   // image: images["product-16.png"],
     originalPrice: 12,
     parent: "Fruits & Vegetable",
     quantity: 49,
@@ -7242,7 +7243,7 @@ export const popularProducts = [
     createdAt: "2021-12-22T16:41:23.215Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-17.png"],
+   // image: images["product-17.png"],
     originalPrice: 12,
     parent: "Fruits & Vegetable",
     quantity: 145,
@@ -7265,7 +7266,7 @@ export const popularProducts = [
     createdAt: "2021-12-22T16:41:23.215Z",
     description:
       "Most fresh vegetables are low in calories and have a water content in excess of 70 percent, with only about 3.5 percent protein and less than 1 percent fat. ... The root vegetables include beets, carrots, radishes, sweet potatoes, and turnips. Stem vegetables include asparagus and kohlrabi.",
-    image: images["product-18.png"],
+   // image: images["product-18.png"],
     originalPrice: 14,
     parent: "Fruits & Vegetable",
     quantity: 146,
