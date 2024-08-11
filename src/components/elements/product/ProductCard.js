@@ -1,42 +1,30 @@
-"use client"
+"use client";
+import Discount from "@/components/global/common/Discount";
+import Price from "@/components/global/common/Price";
+import Stock from "@/components/global/common/Stock";
 
-
-// import Discount from "@/components/global/common/Discount";
-// import ProductModal from "@/components/global/modal/ProductModal";
-import dynamic from "next/dynamic";
+// import { useDispatch, useSelector } from "react-redux";
+// import {
+//   addToCart,
+//   addToWishlist,
+//   removeFromWishlist,
+// } from "@/store/cartReducer";
+// import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useState } from "react";
 import { IoAdd, IoBagAddSharp, IoRemove } from "react-icons/io5";
+import { MdFavorite } from "react-icons/md";
+// import { useSession } from "next-auth/react";
+// import { useRouter } from "next/router";
 
 const ProductCard = ({ product, attributes }) => {
-  // const { items, addItem, updateItemQuantity, inCart } = useCart();
-  // const { handleIncreaseQuantity } = useAddToCart();
-  // const { lang } = useTranslation("ns1"); // default namespace (optional)
+  // const { data: session, status } = useSession();
+  // const route = useRouter()
+  // const wishlist = useSelector((state) => state["data"].wishList);
+  // const cartItem = useSelector((state) => state["data"].cartItems);
+  // const dispatch = useDispatch();
+
   const [modalOpen, setModalOpen] = useState(false);
-
-  // const { data: globalSetting } = useAsync(SettingServices.getGlobalSetting);
-
-  // const currency = globalSetting?.default_currency || "$";
-
-  // console.log('attributes in product cart',attributes)
-
-  // const handleAddItem = (p) => {
-  //   if (p.stock < 1) return notifyError("Insufficient stock!");
-
-  //   if (p?.variants?.length > 0) {
-  //     setModalOpen(!modalOpen);
-  //     return;
-  //   }
-  //   const newItem = {
-  //     ...p,
-  //     title: showingTranslateValue(p?.title, lang),
-  //     id: p._id,
-  //     variant: p.prices,
-  //     price: p.prices.price,
-  //     originalPrice: product.prices?.originalPrice,
-  //   };
-  //   addItem(newItem);
-  // };
 
   const handleModalOpen = (event, id) => {
     setModalOpen(event);
@@ -60,11 +48,10 @@ const ProductCard = ({ product, attributes }) => {
           className="relative flex justify-center w-full cursor-pointer pt-2"
         >
           <div className="left-3">
-            {/* <Stock product={product} stock={product.stock} card /> */}
+            <Stock stock={product.stock} card />
+
           </div>
-
-          {/* <Discount product={{...product}} /> */}
-
+          <Discount product={{ ...product }} />
           {product?.image?.[0] ? (
             <Image
               src={product?.image?.[0]}
@@ -82,29 +69,41 @@ const ProductCard = ({ product, attributes }) => {
               className="object-cover transition duration-150 ease-linear transform group-hover:scale-105"
             />
           )}
+
+          <div className="right-3">
+
+            <button
+              // onClick={() => handleAddItem(product)}
+              aria-label="cart"
+              className="h-9 w-9 flex items-center absolute right-3 top-3 justify-center border border-gray-200 rounded text-red-500 hover:border-red-500 hover:bg-red-500 hover:text-white transition-all"
+            >
+              {" "}
+              <span className="text-xl">
+                <MdFavorite />
+              </span>{" "}
+            </button>
+          </div>
         </div>
         <div className="w-full px-3 lg:px-4 pb-4 overflow-hidden">
           <div className="relative mb-1">
             <span className="text-gray-400 font-medium text-xs d-block mb-1">
-              {product.unit}
+              {product?.unit}
             </span>
-            <h2 className="text-heading truncate mb-0 block text-sm font-medium text-gray-600">
+            <h2 className="text-heading truncate mb-0 block text-sm font-medium text-gray-600 cursor-pointer">
               <span className="line-clamp-2">
                 {/* {showingTranslateValue(product?.title, lang)} */}
-                {product?.title}
+                {product?.title["data"]}
               </span>
             </h2>
           </div>
-
           <div className="flex justify-between items-center text-heading text-sm sm:text-base space-s-2 md:text-base lg:text-xl">
-            {/* <Price
+            <Price
               card
               product={product}
-              currency={currency}
+              currency={"$"}
               price={product.prices.price}
               originalPrice={product?.prices?.originalPrice}
-            /> */}
-
+            />
             {/* {inCart(product._id) ? (
               <div>
                 {items.map(
@@ -153,6 +152,17 @@ const ProductCard = ({ product, attributes }) => {
                 </span>{" "}
               </button>
             )} */}
+
+            <button
+              // onClick={() => handleAddItem(product)}
+              aria-label="cart"
+              className="h-9 w-9 flex items-center justify-center border border-gray-200 rounded text-emerald-500 hover:border-emerald-500 hover:bg-emerald-500 hover:text-white transition-all"
+            >
+              {" "}
+              <span className="text-xl">
+                <IoBagAddSharp />
+              </span>{" "}
+            </button>
           </div>
         </div>
       </div>
@@ -160,4 +170,4 @@ const ProductCard = ({ product, attributes }) => {
   );
 };
 
-export default ProductCard
+export default ProductCard;

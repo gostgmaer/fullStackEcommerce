@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 import { useSession } from "next-auth/react";
 import {
@@ -48,7 +48,7 @@ const AppProvider = ({ children }) => {
   const [limit, setLimit] = useState(10);
   const [selectedSort, setSelectedSort] = useState("popularity-desc");
   const [searchData, setSearchData] = useState(undefined);
-
+  const [wishlistData, setWishlistData] = useState(undefined);
   const { data: session, status } = useSession();
 
   const handleSearch = () => {
@@ -80,7 +80,16 @@ const AppProvider = ({ children }) => {
   const handleFilterChange = (name, value) => {
     setFilters((prevFilters) => ({ ...prevFilters, [name]: value }));
   };
-
+  const getWishlist = async (second) => {
+    const res = await get('/wishlists/fetch')
+    setWishlistData(res)
+    console.log(res);
+  }
+  useEffect(() => {
+    if (session) {
+      getWishlist()
+    }
+  }, [session]);
   return (
     <AppContext.Provider
       value={{
@@ -94,7 +103,7 @@ const AppProvider = ({ children }) => {
         setLimit,
         selectedSort,
         setSelectedSort,
-        fetchSearchData,searchData
+        fetchSearchData,searchData,wishlistData,getWishlist
       }}
     >
       {children}

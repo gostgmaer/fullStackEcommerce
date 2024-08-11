@@ -1,19 +1,17 @@
-import Discount from "@component/common/Discount";
-import Price from "@component/common/Price";
-import Stock from "@component/common/Stock";
-import Tags from "@component/common/Tags";
-import MainModal from "@component/modal/MainModal";
-import VariantList from "@component/variants/VariantList";
-import { SidebarContext } from "@context/SidebarContext";
-import useAddToCart from "@hooks/useAddToCart";
-import { notifyError } from "@utils/toast";
-import { showingTranslateValue } from "@utils/translate";
+
 import useTranslation from "next-translate/useTranslation";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { FiMinus, FiPlus } from "react-icons/fi";
+import MainModal from "./MainModal";
+import Discount from "../common/Discount";
+import Stock from "../common/Stock";
+import Price from "../common/Price";
+import VariantList from "../common/variants/VariantList";
+import { content } from "@/assets/jsonfile/content";
+import Tags from "../common/Tags";
 
 const ProductModal = ({
   modalOpen,
@@ -23,9 +21,9 @@ const ProductModal = ({
   currency,
 }) => {
   const router = useRouter();
-  const { setIsLoading, isLoading } = useContext(SidebarContext);
-  const { t, lang } = useTranslation("ns1");
-  const { handleAddItem, setItem, item } = useAddToCart();
+  // const { setIsLoading, isLoading } = useContext(SidebarContext);
+  // const { t, lang } = useTranslation("ns1");
+  // const { handleAddItem, setItem, item } = useAddToCart();
 
   // react hook
   const [value, setValue] = useState("");
@@ -39,154 +37,154 @@ const ProductModal = ({
   const [variantTitle, setVariantTitle] = useState([]);
   const [variants, setVariants] = useState([]);
 
-  useEffect(() => {
-    // console.log('value', value, product);
-    if (value) {
-      const result = product?.variants?.filter((variant) =>
-        Object.keys(selectVa).every((k) => selectVa[k] === variant[k])
-      );
+  // useEffect(() => {
+  //   // console.log('value', value, product);
+  //   if (value) {
+  //     const result = product?.variants?.filter((variant) =>
+  //       Object.keys(selectVa).every((k) => selectVa[k] === variant[k])
+  //     );
 
-      const res = result?.map(
-        ({
-          originalPrice,
-          price,
-          discount,
-          quantity,
-          barcode,
-          sku,
-          productId,
-          image,
-          ...rest
-        }) => ({
-          ...rest,
-        })
-      );
+  //     const res = result?.map(
+  //       ({
+  //         originalPrice,
+  //         price,
+  //         discount,
+  //         quantity,
+  //         barcode,
+  //         sku,
+  //         productId,
+  //         image,
+  //         ...rest
+  //       }) => ({
+  //         ...rest,
+  //       })
+  //     );
 
-      const filterKey = Object.keys(Object.assign({}, ...res));
-      const selectVar = filterKey?.reduce(
-        (obj, key) => ({ ...obj, [key]: selectVariant[key] }),
-        {}
-      );
-      const newObj = Object.entries(selectVar).reduce(
-        (a, [k, v]) => (v ? ((a[k] = v), a) : a),
-        {}
-      );
+  //     const filterKey = Object.keys(Object.assign({}, ...res));
+  //     const selectVar = filterKey?.reduce(
+  //       (obj, key) => ({ ...obj, [key]: selectVariant[key] }),
+  //       {}
+  //     );
+  //     const newObj = Object.entries(selectVar).reduce(
+  //       (a, [k, v]) => (v ? ((a[k] = v), a) : a),
+  //       {}
+  //     );
 
-      const result2 = result?.find((v) =>
-        Object.keys(newObj).every((k) => newObj[k] === v[k])
-      );
+  //     const result2 = result?.find((v) =>
+  //       Object.keys(newObj).every((k) => newObj[k] === v[k])
+  //     );
 
-      // console.log("result2", result2);
+  //     // console.log("result2", result2);
 
-      if (result.length <= 0 || result2 === undefined) return setStock(0);
+  //     if (result.length <= 0 || result2 === undefined) return setStock(0);
 
-      setVariants(result);
-      setSelectVariant(result2);
-      setSelectVa(result2);
-      setImg(result2?.image);
-      setPrice(Number(result2?.price));
-      setOriginalPrice(Number(result2?.originalPrice));
+  //     setVariants(result);
+  //     setSelectVariant(result2);
+  //     setSelectVa(result2);
+  //     setImg(result2?.image);
+  //     setPrice(Number(result2?.price));
+  //     setOriginalPrice(Number(result2?.originalPrice));
 
-      setStock(result2?.quantity);
+  //     setStock(result2?.quantity);
 
-      setDiscount(Number(result2?.discount));
-    } else if (product?.variants?.length > 0) {
-      const result = product?.variants?.filter((variant) =>
-        Object.keys(selectVa).every((k) => selectVa[k] === variant[k])
-      );
+  //     setDiscount(Number(result2?.discount));
+  //   } else if (product?.variants?.length > 0) {
+  //     const result = product?.variants?.filter((variant) =>
+  //       Object.keys(selectVa).every((k) => selectVa[k] === variant[k])
+  //     );
 
-      setVariants(result);
+  //     setVariants(result);
 
-      setPrice(Number(product.variants[0]?.price));
-      setOriginalPrice(Number(product.variants[0]?.originalPrice));
-      setStock(product.variants[0]?.quantity);
-      setDiscount(Number(product.variants[0]?.discount));
-      setSelectVariant(product.variants[0]);
-      setSelectVa(product.variants[0]);
-      setImg(product.variants[0]?.image);
-    } else {
-      setPrice(Number(product?.prices?.price));
-      setOriginalPrice(Number(product?.prices?.originalPrice));
-      setStock(product?.stock);
-      setImg(product?.image[0]);
-      setDiscount(Number(product?.prices?.discount));
-    }
-  }, [
-    product?.prices?.discount,
-    product?.prices?.originalPrice,
-    product?.prices?.price,
-    product?.stock,
-    product.variants,
-    selectVa,
-    selectVariant,
-    value,
-  ]);
+  //     setPrice(Number(product.variants[0]?.price));
+  //     setOriginalPrice(Number(product.variants[0]?.originalPrice));
+  //     setStock(product.variants[0]?.quantity);
+  //     setDiscount(Number(product.variants[0]?.discount));
+  //     setSelectVariant(product.variants[0]);
+  //     setSelectVa(product.variants[0]);
+  //     setImg(product.variants[0]?.image);
+  //   } else {
+  //     setPrice(Number(product?.prices?.price));
+  //     setOriginalPrice(Number(product?.prices?.originalPrice));
+  //     setStock(product?.stock);
+  //     setImg(product?.image[0]);
+  //     setDiscount(Number(product?.prices?.discount));
+  //   }
+  // }, [
+  //   product?.prices?.discount,
+  //   product?.prices?.originalPrice,
+  //   product?.prices?.price,
+  //   product?.stock,
+  //   product.variants,
+  //   selectVa,
+  //   selectVariant,
+  //   value,
+  // ]);
   // console.log("product", product);
 
-  useEffect(() => {
-    const res = Object.keys(Object.assign({}, ...product?.variants));
+  // useEffect(() => {
+  //   const res = Object.keys(Object.assign({}, ...product?.variants));
 
-    const varTitle = attributes?.filter((att) => res.includes(att?._id));
+  //   const varTitle = attributes?.filter((att) => res.includes(att?._id));
 
-    setVariantTitle(varTitle?.sort());
-  }, [variants, attributes]);
+  //   setVariantTitle(varTitle?.sort());
+  // }, [variants, attributes]);
 
-  const handleAddToCart = (p) => {
-    if (p.variants.length === 1 && p.variants[0].quantity < 1)
-      return notifyError("Insufficient stock");
+  // const handleAddToCart = (p) => {
+  //   if (p.variants.length === 1 && p.variants[0].quantity < 1)
+  //     return notifyError("Insufficient stock");
 
-    if (stock <= 0) return notifyError("Insufficient stock");
+  //   if (stock <= 0) return notifyError("Insufficient stock");
 
-    if (
-      product?.variants.map(
-        (variant) =>
-          Object.entries(variant).sort().toString() ===
-          Object.entries(selectVariant).sort().toString()
-      )
-    ) {
-      const newItem = {
-        ...p,
-        id: `${
-          p?.variants.length <= 0
-            ? p._id
-            : p._id +
-              "-" +
-              variantTitle?.map((att) => selectVariant[att._id]).join("-")
-        }`,
-        title: `${
-          p?.variants.length <= 0
-            ? showingTranslateValue(p.title, lang)
-            : showingTranslateValue(p.title, lang) +
-              "-" +
-              variantTitle
-                ?.map((att) =>
-                  att.variants?.find((v) => v._id === selectVariant[att._id])
-                )
-                .map((el) => showingTranslateValue(el?.name, lang))
-        }`,
-        image: img,
-        variant: selectVariant || {},
-        price: p.variants.length === 0 ? p.prices.originalPrice : price,
-        originalPrice:
-          p.variants.length === 0 ? p.prices.originalPrice : originalPrice,
-      };
+  //   if (
+  //     product?.variants.map(
+  //       (variant) =>
+  //         Object.entries(variant).sort().toString() ===
+  //         Object.entries(selectVariant).sort().toString()
+  //     )
+  //   ) {
+  //     const newItem = {
+  //       ...p,
+  //       id: `${
+  //         p?.variants.length <= 0
+  //           ? p._id
+  //           : p._id +
+  //             "-" +
+  //             variantTitle?.map((att) => selectVariant[att._id]).join("-")
+  //       }`,
+  //       title: `${
+  //         p?.variants.length <= 0
+  //           ? showingTranslateValue(p.title, lang)
+  //           : showingTranslateValue(p.title, lang) +
+  //             "-" +
+  //             variantTitle
+  //               ?.map((att) =>
+  //                 att.variants?.find((v) => v._id === selectVariant[att._id])
+  //               )
+  //               .map((el) => showingTranslateValue(el?.name, lang))
+  //       }`,
+  //       image: img,
+  //       variant: selectVariant || {},
+  //       price: p.variants.length === 0 ? p.prices.originalPrice : price,
+  //       originalPrice:
+  //         p.variants.length === 0 ? p.prices.originalPrice : originalPrice,
+  //     };
 
-      // console.log("newItem", newItem);
+  //     // console.log("newItem", newItem);
 
-      handleAddItem(newItem);
-    } else {
-      return notifyError("Please select all variant first!");
-    }
-  };
+  //     handleAddItem(newItem);
+  //   } else {
+  //     return notifyError("Please select all variant first!");
+  //   }
+  // };
 
   const handleMoreInfo = (slug) => {
     setModalOpen(false);
 
     router.push(`/product/${slug}`);
-    setIsLoading(!isLoading);
+    // setIsLoading(!isLoading);
   };
 
-  const category_name = showingTranslateValue(product?.category?.name)
+  const category_name = product?.category?.name
     ?.toLowerCase()
     ?.replace(/[^A-Z0-9]+/gi, "-");
 
@@ -202,7 +200,7 @@ const ProductModal = ({
                 onClick={() => setModalOpen(false)}
                 className="flex-shrink-0 flex items-center justify-center h-auto cursor-pointer"
               >
-                <Discount product={product} discount={discount} modal />
+                <Discount product={product} discount={Number(discount)} slug={product?.slug} modal />
                 {product.image[0] ? (
                   <Image
                     src={img || product.image[0]}
@@ -228,25 +226,27 @@ const ProductModal = ({
                     onClick={() => setModalOpen(false)}
                     className="text-heading text-lg md:text-xl lg:text-2xl font-semibold font-serif hover:text-black cursor-pointer"
                   >
-                    {showingTranslateValue(product?.title, lang)}
+                    {/* {showingTranslateValue(product?.title, lang)} */}
+                    {product?.title?.data}
                   </h1>
                 </Link>
                 <div
-                  className={`${
-                    stock <= 0 ? "relative py-1 mb-2" : "relative"
-                  }`}
+                  className={`${stock <= 0 ? "relative py-1 mb-2" : "relative"
+                    }`}
                 >
-                  <Stock stock={stock} />
+                  <Stock stock={stock} card />
                 </div>
               </div>
               <p className="text-sm leading-6 text-gray-500 md:leading-6">
-                {showingTranslateValue(product?.description, lang)}
+                {/* {showingTranslateValue(product?.description, lang)} */}
+                {product?.description?.data}
               </p>
               <div className="flex items-center my-4">
                 <Price
                   product={product}
                   price={price}
-                  currency={currency}
+                  card
+                  currency={"$"}
                   originalPrice={originalPrice}
                 />
               </div>
@@ -255,12 +255,13 @@ const ProductModal = ({
                 {variantTitle?.map((a, i) => (
                   <span key={a._id}>
                     <h4 className="text-sm py-1 font-serif text-gray-700 font-bold">
-                      {showingTranslateValue(a?.name, lang)}:
+                      {/* {showingTranslateValue(a?.name, lang)}: */}
+                      {a?.name}
                     </h4>
                     <div className="flex flex-row mb-3">
                       <VariantList
                         att={a._id}
-                        lang={lang}
+
                         option={a.option}
                         setValue={setValue}
                         varTitle={variantTitle}
@@ -316,10 +317,12 @@ const ProductModal = ({
                     <span className="font-serif font-semibold py-1 text-sm d-block">
                       <span className="text-gray-700">
                         {" "}
-                        {t("common:category")}:
+                        {/* {t("common:category")} */}
+                        {content.category}
+                        :
                       </span>{" "}
                       <Link
-                        href={`/search?category=${category_name}&_id=${product?.category?._id}`}
+                        href={`/search?category=${product?.category?._id}&_id=${product?.category?._id}`}
                       >
                         <button
                           type="button"
@@ -338,7 +341,8 @@ const ProductModal = ({
                       onClick={() => handleMoreInfo(product.slug)}
                       className="font-sans font-medium text-sm text-orange-500"
                     >
-                      {t("common:moreInfo")}
+                      {/* {t("common:moreInfo")} */}
+                      {content.moreInfo}
                     </button>
                   </div>
                 </div>

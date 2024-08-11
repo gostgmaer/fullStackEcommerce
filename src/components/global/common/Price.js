@@ -1,3 +1,4 @@
+"use client"
 const Price = ({ product, price, card, currency, originalPrice }) => {
   // console.log("price", price, "originalPrice", originalPrice, "card", card);
   return (
