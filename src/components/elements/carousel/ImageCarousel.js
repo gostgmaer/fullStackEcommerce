@@ -1,12 +1,13 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { IoChevronBackOutline, IoChevronForward } from "react-icons/io5"; // requires a loader
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { Navigation } from "swiper";
+// import "react-responsive-carousel/lib/styles/carousel.min.css";
+// import { Navigation } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation,Pagination } from 'swiper/modules';
 
 const ImageCarousel = ({ images, handleChangeImage, prevRef, nextRef }) => {
   return (
@@ -35,6 +36,7 @@ const ImageCarousel = ({ images, handleChangeImage, prevRef, nextRef }) => {
         spaceBetween={1}
         navigation={true}
         allowTouchMove={false}
+        
         loop={true}
         slidesPerView={4}
         // breakpoints={{
@@ -80,7 +82,7 @@ const ImageCarousel = ({ images, handleChangeImage, prevRef, nextRef }) => {
         //     slidesPerView: 10,
         //   },
         // }}
-        modules={[Navigation]}
+        modules={[Navigation,Pagination]}
         className="mySwiper image-carousel"
       >
         {images?.map((img, i) => (

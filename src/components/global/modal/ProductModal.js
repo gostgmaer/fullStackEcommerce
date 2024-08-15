@@ -1,8 +1,8 @@
 
-import useTranslation from "next-translate/useTranslation";
+"use client"
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import MainModal from "./MainModal";
@@ -20,7 +20,9 @@ const ProductModal = ({
   attributes,
   currency,
 }) => {
-  const router = useRouter();
+ const route = useRouter()
+ console.log(product);
+ 
   // const { setIsLoading, isLoading } = useContext(SidebarContext);
   // const { t, lang } = useTranslation("ns1");
   // const { handleAddItem, setItem, item } = useAddToCart();
@@ -180,13 +182,17 @@ const ProductModal = ({
   const handleMoreInfo = (slug) => {
     setModalOpen(false);
 
-    router.push(`/product/${slug}`);
+    route.push(`/product/${slug}`);
     // setIsLoading(!isLoading);
   };
 
   const category_name = product?.category?.name
-    ?.toLowerCase()
-    ?.replace(/[^A-Z0-9]+/gi, "-");
+  function handleAddToCart(product) {
+    throw new Error("Function not implemented.");
+  }
+
+    // ?.toLowerCase()
+    // ?.replace(/[^A-Z0-9]+/gi, "-");
 
   // console.log("product", product, "stock", stock);
 
@@ -221,13 +227,14 @@ const ProductModal = ({
 
             <div className="w-full flex flex-col p-5 md:p-8 text-left">
               <div className="mb-2 md:mb-2.5 block -mt-1.5">
-                <Link href={`/product/${product.slug}`} passHref>
+                <Link href={`/product/${product.slug}`} passHref className=" text-gray-700">
                   <h1
                     onClick={() => setModalOpen(false)}
                     className="text-heading text-lg md:text-xl lg:text-2xl font-semibold font-serif hover:text-black cursor-pointer"
                   >
-                    {/* {showingTranslateValue(product?.title, lang)} */}
+                 
                     {product?.title?.data}
+                    
                   </h1>
                 </Link>
                 <div
@@ -238,7 +245,7 @@ const ProductModal = ({
                 </div>
               </div>
               <p className="text-sm leading-6 text-gray-500 md:leading-6">
-                {/* {showingTranslateValue(product?.description, lang)} */}
+             
                 {product?.description?.data}
               </p>
               <div className="flex items-center my-4">
@@ -255,7 +262,7 @@ const ProductModal = ({
                 {variantTitle?.map((a, i) => (
                   <span key={a._id}>
                     <h4 className="text-sm py-1 font-serif text-gray-700 font-bold">
-                      {/* {showingTranslateValue(a?.name, lang)}: */}
+                   
                       {a?.name}
                     </h4>
                     <div className="flex flex-row mb-3">
@@ -275,7 +282,7 @@ const ProductModal = ({
                 ))}
               </div>
 
-              <div className="flex items-center mt-4">
+              {/* <div className="flex items-center mt-4">
                 <div className="flex items-center justify-between space-s-3 sm:space-s-4 w-full">
                   <div className="group flex items-center justify-between rounded-md overflow-hidden flex-shrink-0 border h-11 md:h-12 border-gray-300">
                     <button
@@ -307,17 +314,17 @@ const ProductModal = ({
                     disabled={product.quantity < 1}
                     className="text-sm leading-4 inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-semibold font-serif text-center justify-center border-0 border-transparent rounded-md focus-visible:outline-none focus:outline-none text-white px-4 ml-4 md:px-6 lg:px-8 py-4 md:py-3.5 lg:py-4 hover:text-white bg-emerald-500 hover:bg-emerald-600 w-full h-12"
                   >
-                    {t("common:addToCart")}
+                    {content.addToCart}
                   </button>
                 </div>
-              </div>
-              <div className="flex items-center mt-4">
+              </div> */}
+              {/* <div className="flex items-center mt-4">
                 <div className="flex items-center justify-between space-s-3 sm:space-s-4 w-full">
                   <div>
                     <span className="font-serif font-semibold py-1 text-sm d-block">
                       <span className="text-gray-700">
                         {" "}
-                        {/* {t("common:category")} */}
+                      
                         {content.category}
                         :
                       </span>{" "}
@@ -327,7 +334,7 @@ const ProductModal = ({
                         <button
                           type="button"
                           className="text-gray-600 font-serif font-medium underline ml-2 hover:text-teal-600"
-                          onClick={() => setIsLoading(!isLoading)}
+                         
                         >
                           {category_name}
                         </button>
@@ -341,12 +348,12 @@ const ProductModal = ({
                       onClick={() => handleMoreInfo(product.slug)}
                       className="font-sans font-medium text-sm text-orange-500"
                     >
-                      {/* {t("common:moreInfo")} */}
+                  
                       {content.moreInfo}
                     </button>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

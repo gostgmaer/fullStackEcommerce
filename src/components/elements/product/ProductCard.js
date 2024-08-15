@@ -2,6 +2,7 @@
 import Discount from "@/components/global/common/Discount";
 import Price from "@/components/global/common/Price";
 import Stock from "@/components/global/common/Stock";
+import ProductModal from "@/components/global/modal/ProductModal";
 
 // import { useDispatch, useSelector } from "react-redux";
 // import {
@@ -32,7 +33,7 @@ const ProductCard = ({ product, attributes }) => {
 
   return (
     <>
-      {/* {modalOpen && (
+      {modalOpen && (
         <ProductModal
           modalOpen={modalOpen}
           setModalOpen={setModalOpen}
@@ -40,11 +41,11 @@ const ProductCard = ({ product, attributes }) => {
           currency={"$"}
           attributes={attributes}
         />
-      )} */}
+      )}
 
       <div className="group box-border overflow-hidden flex rounded-md shadow-sm pe-0 flex-col items-center bg-white relative">
         <div
-          onClick={() => handleModalOpen(!modalOpen, product._id)}
+          onClick={() => handleModalOpen(!modalOpen, product)}
           className="relative flex justify-center w-full cursor-pointer pt-2"
         >
           <div className="left-3">
