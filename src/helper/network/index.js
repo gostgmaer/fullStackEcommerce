@@ -1,7 +1,7 @@
 
 import axios from "axios";
 import Cookies from "js-cookie";
-import instance from "./interceptors";
+
 import { baseurl } from "@/config/setting";
 
 export const get = async (endpint, query, header) => {
@@ -19,7 +19,7 @@ export const get = async (endpint, query, header) => {
   let response;
   let error;
   try {
-    response = await instance.request(option);
+    response = await axios.request(option);
   } catch (e) {
     error = e.response?.data;
 

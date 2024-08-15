@@ -77,28 +77,32 @@ export const handler = NextAuth({
   },
 
   callbacks: {
-    // async jwt({ token, user, account }) {
+    async jwt({ token, user, account,profile,session }) {
+      if (user && account) {
+        console.log("user && account",user, account,token,profile,session);
+        
+      } 
 
-    //   if (account && user) {
-    //     const access_token = jwtDecode(user["access_token"]);
-    //     const userInfo = jwtDecode(user["id_token"]);
+      // if (account && user) {
+      //   const access_token = jwtDecode(user["access_token"]);
+      //   const userInfo = jwtDecode(user["id_token"]);
 
-    //     Cookies.set('access_token', user["access_token"]);
-    //     Cookies.set('refresh_token', user["refresh_token"]);
-    //     return {
-    //       ...token,
-    //       accessToken: user["access_token"],
-    //       refreshToken: user["refresh_token"],
-    //       idToken: user["id_token"], id: access_token["user_id"], email: userInfo["email"], image: userInfo["profilePicture"], name: `${userInfo["firstName"]} ${userInfo["lastName"]}`
-    //     }
-    //   }
+      //   Cookies.set('access_token', user["access_token"]);
+      //   Cookies.set('refresh_token', user["refresh_token"]);
+      //   return {
+      //     ...token,
+      //     accessToken: user["access_token"],
+      //     refreshToken: user["refresh_token"],
+      //     idToken: user["id_token"], id: access_token["user_id"], email: userInfo["email"], image: userInfo["profilePicture"], name: `${userInfo["firstName"]} ${userInfo["lastName"]}`
+      //   }
+      // }
 
-    //   return token
-    // },
+      return token
+    },
     async session({ session, token,user }) {
       // Add the access token to the session object
 
-      console.log(token);
+      // console.log(token);
 
       if (token.accessToken) {
         session["accessToken"] = token.accessToken;
