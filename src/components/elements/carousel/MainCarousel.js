@@ -8,6 +8,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { sliderData } from '@/utils/data';
 import { content } from '@/assets/jsonfile/content';
+import { Navigation,Pagination,Autoplay } from 'swiper/modules';
 // import useTranslation from "next-translate/useTranslation";
 
 
@@ -29,7 +30,7 @@ const MainCarousel = () => {
         pagination={{
           clickable: true,
         }}
-        // modules={[Autoplay, Pagination, Navigation]}
+        modules={[Autoplay, Pagination, Navigation]}
      
         className="mySwiper"
       >

@@ -1,62 +1,51 @@
-import React, { Fragment, useRef } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+
+
+import {
+  Button,
+  Description,
+  Dialog,
+  DialogBackdrop,
+  DialogPanel,
+  DialogTitle,
+} from "@headlessui/react";
+import { useState } from "react";
 import { IoClose } from "react-icons/io5";
 
 const MainModal = ({ modalOpen, setModalOpen, children }) => {
-  // const cancelButtonRef = useRef();
+  function open() {
+    setModalOpen(true);
+  }
+
+  function close() {
+    setModalOpen(false);
+  }
 
   return (
-    <>
-      <Transition appear show={modalOpen} as={Fragment}>
-        <Dialog
-          as="div"
-          className="fixed inset-0 z-30 overflow-y-auto text-center"
-          onClose={() => setModalOpen(false)}
-       
-        >
-          <div className="min-h-screen px-4">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 "
-            >
-              <Dialog className="fixed inset-0 bg-black opacity-60" onClose={function (value) {
-                throw new Error("Function not implemented.");
-              } } />
-            </Transition.Child>
+    <div>
+      <Dialog
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        transition
+        className=" z-50 fixed inset-0 flex w-screen items-center justify-center bg-black/30 transition duration-500 ease-out data-[closed]:opacity-0 overflow-y-auto"
+      >
+        <DialogBackdrop className="fixed inset-0 bg-black/30" />
 
-            {/* This element is to trick the browser into centering the modal contents. */}
-            <span className="inline-block h-screen align-middle" aria-hidden="true">
-              &#8203;
-            </span>
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
-            >
-              {children}
-            </Transition.Child>
-            <div className="absolute right-5 top-5">
-              <button
-                onClick={() => setModalOpen(false)}
-                type="button"
-                className="inline-flex justify-center px-2 py-2 text-base font-medium text-red-500 bg-white border border-transparent rounded-full hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-              >
-                <IoClose />
-              </button>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
-    </>
+        <div className="fixed inset-0 flex w-screen items-center justify-center">
+          <DialogPanel className="min-w-lg max-w-5xl space-y-4 rounded-xl bg-white/5 backdrop-blur-full transition duration-300 ease-out data-[closed]:ease-in data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0 ">
+            {children}
+          </DialogPanel>
+        </div>
+        <div className="absolute right-5 top-5">
+          <button
+            onClick={() => setModalOpen(false)}
+            type="button"
+            className="inline-flex cursor-pointer justify-center px-2 py-2 text-base font-medium text-red-500 bg-white border border-transparent rounded-full hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+          >
+            <IoClose />
+          </button>
+        </div>
+      </Dialog>
+    </div>
   );
 };
 
