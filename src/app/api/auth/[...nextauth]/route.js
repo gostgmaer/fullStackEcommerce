@@ -1,6 +1,7 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/github";
+import jwt from "jsonwebtoken";
 import Cookies from "js-cookie";
 import NextAuth from "next-auth";
 import {
@@ -74,38 +75,18 @@ export const handler = NextAuth({
   },
   session: {
     strategy: "jwt",
+
   },
 
   callbacks: {
-    async jwt({ token, user, account,profile,session }) {
-      if (user && account) {
-        console.log("user && account",user, account,token,profile,session);
-        
-      } 
 
-      // if (account && user) {
-      //   const access_token = jwtDecode(user["access_token"]);
-      //   const userInfo = jwtDecode(user["id_token"]);
+    async session({session, token, user} ) {
 
-      //   Cookies.set('access_token', user["access_token"]);
-      //   Cookies.set('refresh_token', user["refresh_token"]);
-      //   return {
-      //     ...token,
-      //     accessToken: user["access_token"],
-      //     refreshToken: user["refresh_token"],
-      //     idToken: user["id_token"], id: access_token["user_id"], email: userInfo["email"], image: userInfo["profilePicture"], name: `${userInfo["firstName"]} ${userInfo["lastName"]}`
-      //   }
-      // }
 
-      return token
-    },
-    async session({ session, token,user }) {
-      // Add the access token to the session object
-
-      // console.log(token);
-
-      if (token.accessToken) {
-        session["accessToken"] = token.accessToken;
+      if (token.access_token) {
+        session["access_token"] = token.access_token;
+        session["refresh_token"] = token.refresh_token;
+        session["id_token"] = token.id_token;
       }
       if (token.id) {
         session.user["id"] = token.id;
@@ -115,47 +96,79 @@ export const handler = NextAuth({
       return session;
     },
 
-    // async signIn({ user, account }) {
-    //   if (account.provider === 'google') {
-    //     try {
-      
-    //       const { name, email } = user;
-    //       const reqBody = {
-    //         name,email
-    //       }
-    //       const res = await fetch(baseurl + `/user/auth/login`, {
-    //         method: "POST",
-    //         body: JSON.stringify(name, email),
-    //         headers: {
-    //           "Content-Type": "application/json",
-    //         },
-    //       });
-  
-    //       try {
-    //         const user = await res.json();
-  
-    //         if (res.ok && user) {
-    //           return user;
-    //         }
-    //       } catch (error) {
-    //         console.log("Error:", error);
-    //         throw new Error(error);
-    //       }
 
-    //       return false; // Failure to create user
+    async signIn({ user, account, profile }) {
 
-    //     } catch (error) {
-    //       console.error('Error during sign in:', error);
-    //       return false; // Indicate failure
-    //     }
-    //   }
 
-    //   // Default return for other providers
-    //   return true;
-    // },
 
-   
-    
+      // const { account, profile } = user
+
+
+      if (account.provider === "github") {
+        try {
+          // Check if user exists via your backend
+          const response = await fetch(`${baseurl}/user/auth/checkUser`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: profile.email,
+              email: profile.email,
+            }),
+          });
+
+          let userData = await response.json();
+
+          if (userData["StatusCodes"] == "404") {
+            // Create a new user via your backend
+            const createUserResponse = await fetch(
+              `${baseurl}/user/auth/social-register`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  socialID: profile["id"],
+                  email: profile.email,
+                  // name: profile.name,
+                  image: profile.image,
+                  username: profile.email,
+                  firstName: profile["login"]
+                }),
+              }
+            );
+
+            userData = await createUserResponse.json();
+          }
+
+          // Attach tokens returned by the backend to the session
+          user = { ...user, ...userData }
+          return true;
+        } catch (error) {
+          console.error("Error during GitHub sign-in:", error);
+          return false;
+        }
+      }
+
+      return true; // Continue with other providers if any
+    },
+    async jwt({ token, user, profile, session }) {
+      if (user) {
+        const userInfo = jwtDecode(user["id_token"]);
+        token = {
+          ...token,...user,
+          picture:
+          userInfo["profilePicture"],
+          sub:
+          userInfo["id"], id: userInfo["id"], email: userInfo["email"], image: userInfo["profilePicture"], name: `${userInfo["firstName"]} ${userInfo["lastName"]}`
+        }
+        return token;
+      }
+
+    },
+
 
 
   },
