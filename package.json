@@ -17,6 +17,7 @@
     "@stripe/stripe-js": "^4.1.0",
     "@windmill/react-ui": "^0.6.0",
     "axios": "^1.7.2",
+    "cookies-next": "^4.2.1",
     "dayjs": "^1.11.12",
     "firebase": "^10.12.4",
     "formik": "^2.4.6",

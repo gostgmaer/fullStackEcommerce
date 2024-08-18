@@ -1,11 +1,9 @@
 "use client"
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 // import { useRouter } from "next/router";
 import { FiPhoneCall, FiUser } from "react-icons/fi";
-import useTranslation from "next-translate/useTranslation";
-//internal import
-// import LoginModal from "@component/modal/LoginModal";
+import { signOut } from "next-auth/react"
 
 import Cookies from "js-cookie";
 import dynamic from "next/dynamic";
@@ -13,39 +11,15 @@ import { UserContext } from "@/context/UserContext";
 import { useRouter } from "next/navigation";
 import { content } from "@/assets/jsonfile/content";
 import LoginModal from "../../modal/LoginModal";
+import { useSession } from "next-auth/react";
 
 const NavBarTop = () => {
 
-  // const {
-  //   dispatch,
-  //   state: { userInfo },
-  // } = useContext(UserContext);
-
-  const [userInfo, setuserInfo] = useState(null);
-
-  const route = useRouter()
-  const [modalOpen, setModalOpen] = useState(false);
-
-  // const handleModal = () => {
-  //   if (userInfo?.email) {
-  //     route.push("/my-account/dashboard");
-  //   } else {
-  //     setModalOpen(!modalOpen);
-  //   }
-  // };
-
-  // const handleLogOut = () => {
-  //   dispatch({ type: "USER_LOGOUT" });
-  //   Cookies.remove("userInfo");
-  //   Cookies.remove("couponInfo");
-  //   route.push("/");
-  // };
-
+  const { data: session } = useSession();
+  
   return (
     <>
-     {modalOpen && (
-        <LoginModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
-      )}
+  
 
       <div className="hidden lg:block bg-gray-100">
         <div className="max-w-screen-2xl mx-auto px-3 sm:px-10">
@@ -75,20 +49,20 @@ const NavBarTop = () => {
 
               </Link>
               <span className="mx-2">|</span>
-              <button
-                // onClick={handleModal}
+              <Link
+              href={"/dashboard/my-account"}
                 className="font-medium hover:text-emerald-600"
               >
                 {content["My account"]}
 
-              </button>
+              </Link>
               <span className="mx-2">|</span>
 
-              {userInfo ? (
+              {session ? (
                 <>
                   {" "}
                   <button
-                    // onClick={handleLogOut}
+                   onClick={() => signOut()}
                     className="flex items-center font-medium hover:text-emerald-600"
                   >
                     <span className="mr-1">

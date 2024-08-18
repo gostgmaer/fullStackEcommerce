@@ -37,7 +37,7 @@ const NavbarPromo = () => {
 
   return (
     <>
-      <div className="hidden lg:block xl:block bg-white border-b">
+      <div className="hidden lg:block xl:block bg-white text-gray-800 border-b">
         <div className="max-w-screen-2xl mx-auto px-3 sm:px-10 h-12 flex justify-between items-center">
           <div className="inline-flex">
             <Popover className="relative">

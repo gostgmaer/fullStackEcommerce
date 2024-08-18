@@ -1,9 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-
 import { useRouter } from "next/navigation";
-
-
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import { useSession } from "next-auth/react";
@@ -23,13 +20,29 @@ export const AuthContextProvider = ({ children }) => {
   const { data: session, status } = useSession();
 
   useEffect(() => {
+
+
+
     if (session) {
-      if (session.user["accessToken"]) {
-        const token = session.user["accessToken"].split(".");
-        setToken("headerPayload", `${token[0]}.${token[1]}`, session.user["exp"]);
+      var currentsession = session;
+      if (session["accessToken"]) {
+        const token = session["accessToken"].split(".");
+        setToken("headerPayload", `${token[0]}.${token[1]}`, session["exp"]);
         setToken("signature", `${token[2]}`, session.user["exp"]);
       }
-      storeCookiesOfObject(session["user"])
+      // delete currentsession["user"];
+      // delete currentsession["accessToken"];
+      storeCookiesOfObject(currentsession)
+    }
+
+    if (!session) {
+      const cookies = Cookies.get();
+      for (const cookie in cookies) {
+        Cookies.remove(cookie);
+      }
+
+
+
     }
   }, [session]);
 
@@ -77,10 +90,10 @@ export const AuthContextProvider = ({ children }) => {
         setUserId(undefined);
 
         setAuthError(undefined);
-      }else{
+      } else {
         setAuthError(res);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   // const unsubscribe = async () => {
@@ -132,7 +145,7 @@ export const AuthContextProvider = ({ children }) => {
     } catch (error) {
       setUser(undefined);
       setUserId(undefined);
-     
+
     }
   };
 
