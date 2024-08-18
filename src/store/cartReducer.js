@@ -1,6 +1,6 @@
 // import { combineReducers } from "redux";
 // import { CartReducer } from "./Cart/Reducer";
-
+"use client"
 // const rootReducer = combineReducers({
 //     cart:CartReducer
 // })
@@ -10,8 +10,8 @@
 // import { baseurl } from "@/config/setting";
 // import { post } from "@/helper/network";
 
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+ import {  createSlice } from "@reduxjs/toolkit";
+// import axios from "axios";
 
 
 
@@ -33,6 +33,8 @@ import axios from "axios";
 const initialState = {
   cartItems: [],
   wishList: [],
+  cartTotalQuantity: 0,
+  cartTotalAmount: 0,
 };
 
 
@@ -94,6 +96,26 @@ export const cartSlice = createSlice({
     resetWishList: (state, action) => {
       state.wishList = [];
     },
+    getTotals(state, action) {
+      let { total, quantity } = state.cartItems.reduce(
+        (cartTotal, cartItem) => {
+          const { price, cartQuantity } = cartItem;
+          const itemTotal = price * cartQuantity;
+
+          cartTotal.total += itemTotal;
+          cartTotal.quantity += cartQuantity;
+
+          return cartTotal;
+        },
+        {
+          total: 0,
+          quantity: 0,
+        }
+      );
+      total = parseFloat(total);
+      state.cartTotalQuantity = quantity;
+      state.cartTotalAmount = total;   
+    },
   },
   extraReducers: (builder) => {
     // builder.addCase(saveCartToDb.fulfilled, (state, action) => {
@@ -110,7 +132,7 @@ export const {
   resetCart,
   updateCart,
   addToWishlist,
-  removeFromWishlist,
+  removeFromWishlist,getTotals,
   resetWishList,
 } = cartSlice.actions;
 

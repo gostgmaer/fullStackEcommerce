@@ -15,6 +15,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { IoAdd, IoBagAddSharp, IoRemove } from "react-icons/io5";
 import { MdFavorite } from "react-icons/md";
+import { AddToCard } from "./Cart";
 // import { useSession } from "next-auth/react";
 // import { useRouter } from "next/router";
 
@@ -30,6 +31,24 @@ const ProductCard = ({ product, attributes }) => {
   const handleModalOpen = (event, id) => {
     setModalOpen(event);
   };
+
+
+  const handleAddItem = (product) => { 
+    const {
+      _id,
+      title,
+      categories,
+      descriptions,
+      images,
+      price,
+      salePrice,
+      sku,
+      ratings,
+      slug,
+    } = product;
+
+    
+   }
 
   return (
     <>
@@ -154,16 +173,9 @@ const ProductCard = ({ product, attributes }) => {
               </button>
             )} */}
 
-            <button
-              // onClick={() => handleAddItem(product)}
-              aria-label="cart"
-              className="h-9 w-9 flex items-center justify-center border border-gray-200 rounded text-emerald-500 hover:border-emerald-500 hover:bg-emerald-500 hover:text-white transition-all"
-            >
-              {" "}
-              <span className="text-xl">
-                <IoBagAddSharp />
-              </span>{" "}
-            </button>
+          <div>
+            <AddToCard product={product}/>
+          </div>
           </div>
         </div>
       </div>

@@ -1,3 +1,4 @@
+"use client"
 import React from 'react';
 
 // import Coupon from '@component/coupon/Coupon';
