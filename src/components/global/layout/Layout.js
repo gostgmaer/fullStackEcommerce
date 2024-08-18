@@ -4,6 +4,8 @@ import NavBarTop from "./navbar/NavBarTop";
 import Navbar from "./navbar/Navbar";
 import MobileFooter from "./footer/MobileFooter";
 import Footer from "./footer/Footer";
+import { Provider } from "react-redux";
+import store from "@/store";
 
 export const metadata = {
   title: "Ecommerce Dashboard",
@@ -18,7 +20,14 @@ const Layout = ({ children }) => {
 
         <NavBarTop />
         <Navbar />
-        <div className="">{children}</div>
+        <div className="">
+
+          <Provider store={store}>
+            {children}
+          </Provider>
+
+
+        </div>
         {/* <MobileFooter /> */}
         <div className="w-full">
           {/* <FooterTop /> */}

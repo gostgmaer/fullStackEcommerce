@@ -3,8 +3,9 @@ import "./globals.css";
 import { ProviderTheme } from '../utils/ProviderTheme'
 import NextAuthProvider from "@/context/sessionContext";
 import { Provider } from 'react-redux'
-import { store } from "@/store";
-import { AuthContext, AuthContextProvider } from "@/context/authContext";
+
+import { AuthContextProvider } from "@/context/authContext";
+import store from "@/store";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -16,18 +17,13 @@ export default function RootLayout({ children }) {
   return (
     <NextAuthProvider>
       <html lang="en" suppressHydrationWarning>
-        {/* <Provider store={store}>
-
-
-
-        </Provider> */}
-
-
+     
         <body className={inter.className}>
 
           <ProviderTheme>
             <AuthContextProvider>
-              {children}
+            {children}
+
             </AuthContextProvider>
 
           </ProviderTheme>

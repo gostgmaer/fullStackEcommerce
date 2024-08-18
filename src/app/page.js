@@ -1,15 +1,13 @@
 
-"use client"
 import { attributes, popularProducts } from "@/assets/fakeData/Products";
 import { content } from "@/assets/jsonfile/content";
 import Banner from "@/components/elements/banner/Banner";
 import MainCarousel from "@/components/elements/carousel/MainCarousel";
-import StickyCart from "@/components/elements/cart/StickyCart";
-// import FeatureCategory from "@/components/elements/category/FeatureCategory";
+
 import OfferCard from "@/components/elements/offer/OfferCard";
 import ProductCard from "@/components/elements/product/ProductCard";
 import Layout from "@/components/global/layout/Layout";
-
+// import { serverMethod } from "@/helper/network/serverCall/datafetch";
 
 // export const metadata = {
 //   title: "This is HomePage",
@@ -17,7 +15,10 @@ import Layout from "@/components/global/layout/Layout";
 // };
 
 
-export default function Home() {
+export default async function Home(props) {
+
+  // const result = await getAllRecord(props.searchParams)
+
   return (
     <Layout  >
       <div className="min-h-screen">
@@ -133,3 +134,21 @@ export default function Home() {
     </Layout>
   );
 }
+
+
+// export const getAllRecord = async (query)=>{
+
+//   const params = {
+//     method: "get",
+//     header: {},
+//     query: {...query },
+//   };
+//   const result = await serverMethod(
+//     `/products`,
+//     params
+//   );
+
+
+// return result
+
+// }
