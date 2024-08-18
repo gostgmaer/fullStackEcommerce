@@ -3,6 +3,7 @@ import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/github";
 import jwt from "jsonwebtoken";
 import Cookies from "js-cookie";
+import { setCookie } from 'cookies-next';
 import NextAuth from "next-auth";
 import {
   baseurl,
@@ -44,6 +45,8 @@ export const handler = NextAuth({
 
           if (res.ok && user) {
             return user;
+          } else {
+            return null;
           }
         } catch (error) {
           console.log("Error:", error);
@@ -75,34 +78,14 @@ export const handler = NextAuth({
   },
   session: {
     strategy: "jwt",
-
   },
 
   callbacks: {
+ 
 
-    async session({session, token, user} ) {
-
-
-      if (token.access_token) {
-        session["access_token"] = token.access_token;
-        session["refresh_token"] = token.refresh_token;
-        session["id_token"] = token.id_token;
-      }
-      if (token.id) {
-        session.user["id"] = token.id;
-        session.user.email = token.email;
-        session.user.name = token.name;
-      }
-      return session;
-    },
-
-
-    async signIn({ user, account, profile }) {
-
-
+    async signIn({ user, account, profile, email, credentials }) {
 
       // const { account, profile } = user
-
 
       if (account.provider === "github") {
         try {
@@ -144,7 +127,10 @@ export const handler = NextAuth({
           }
 
           // Attach tokens returned by the backend to the session
-          user = { ...user, ...userData }
+          user['accessToken'] = userData["accessToken"];
+          user['refreshToken'] = userData["refreshToken"];
+          user['id_token'] = userData["id_token"];
+          user['token_type'] = userData["token_type"];
           return true;
         } catch (error) {
           console.error("Error during GitHub sign-in:", error);
@@ -152,25 +138,47 @@ export const handler = NextAuth({
         }
       }
 
-      return true; // Continue with other providers if any
-    },
-    async jwt({ token, user, profile, session }) {
-      if (user) {
-        const userInfo = jwtDecode(user["id_token"]);
-        token = {
-          ...token,...user,
-          picture:
-          userInfo["profilePicture"],
-          sub:
-          userInfo["id"], id: userInfo["id"], email: userInfo["email"], image: userInfo["profilePicture"], name: `${userInfo["firstName"]} ${userInfo["lastName"]}`
-        }
-        return token;
+      if (user && user?.["accessToken"]) {
+        // Store tokens in cookies
+        setCookie('accessToken', user["accessToken"], {
+          maxAge: 60 * 60 * 24, // 1 day
+        });
+        setCookie('idToken', user["id_token"], {
+          maxAge: 60 * 60 * 24, // 1 day
+        });
+        setCookie('refreshToken', user["refreshToken"], {
+          maxAge: 60 * 60 * 24, // 1 day
+        });
       }
 
+
+      return true; // Continue with other providers if any
     },
 
+    async redirect({ url, baseUrl }) {
+      if (url.startsWith("/")) return `${baseUrl}`;
+      // Allows callback URLs on the same origin
+      else if (new URL(url).origin === baseUrl) return baseUrl;
+      return baseUrl;
+    },
+    async session({ session, token, user }) {
+      session["refreshToken"] = token.refreshToken;
+      session["id_token"] = token.id_token;
+      session["token_type"] = token.token_type;
+      session["accessToken"] = token.accessToken;
+      return session;
+    },
+    async jwt({ token, user, account, profile, isNewUser,session,trigger="signIn" }) {
+    
 
-
+      if (user) {
+        token.accessToken = user["accessToken"];
+        token.refreshToken = user["refreshToken"];
+        token.id_token = user["id_token"];
+        token.token_type = user["token_type"];
+      }
+      return token;
+    },
   },
   theme: {
     colorScheme: "auto", // "auto" | "dark" | "light"

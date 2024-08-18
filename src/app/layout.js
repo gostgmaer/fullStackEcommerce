@@ -4,6 +4,7 @@ import { ProviderTheme } from '../utils/ProviderTheme'
 import NextAuthProvider from "@/context/sessionContext";
 import { Provider } from 'react-redux'
 import { store } from "@/store";
+import { AuthContext, AuthContextProvider } from "@/context/authContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -21,13 +22,16 @@ export default function RootLayout({ children }) {
 
         </Provider> */}
 
-        
-<body className={inter.className}>
 
-<ProviderTheme>
-  {children}
-</ProviderTheme>
-</body>
+        <body className={inter.className}>
+
+          <ProviderTheme>
+            <AuthContextProvider>
+              {children}
+            </AuthContextProvider>
+
+          </ProviderTheme>
+        </body>
       </html></NextAuthProvider>
   );
 }
