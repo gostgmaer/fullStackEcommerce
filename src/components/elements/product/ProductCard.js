@@ -16,6 +16,7 @@ import { useState } from "react";
 import { IoAdd, IoBagAddSharp, IoRemove } from "react-icons/io5";
 import { MdFavorite } from "react-icons/md";
 import AddToCard from "./Cart";
+import WishlistCard from "./wishList";
 
 // import { useSession } from "next-auth/react";
 // import { useRouter } from "next/router";
@@ -24,8 +25,7 @@ const ProductCard = ({ product, attributes }) => {
   // const { data: session, status } = useSession();
   // const route = useRouter()
   // const wishlist = useSelector((state) => state["data"].wishList);
-  // const cartItem = useSelector((state) => state["data"].cartItems);
-  // const dispatch = useDispatch();
+
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -34,22 +34,7 @@ const ProductCard = ({ product, attributes }) => {
   };
 
 
-  const handleAddItem = (product) => { 
-    const {
-      _id,
-      title,
-      categories,
-      descriptions,
-      images,
-      price,
-      salePrice,
-      sku,
-      ratings,
-      slug,
-    } = product;
 
-    
-   }
 
   return (
     <>
@@ -65,7 +50,7 @@ const ProductCard = ({ product, attributes }) => {
 
       <div className="group box-border overflow-hidden flex rounded-md shadow-sm pe-0 flex-col items-center bg-white relative">
         <div
-          onClick={() => handleModalOpen(!modalOpen, product)}
+
           className="relative flex justify-center w-full cursor-pointer pt-2"
         >
           <div className="left-3">
@@ -76,6 +61,7 @@ const ProductCard = ({ product, attributes }) => {
           {product?.image?.[0] ? (
             <Image
               src={product?.image?.[0]}
+              onClick={() => handleModalOpen(!modalOpen, product)}
               width={210}
               height={210}
               alt="product"
@@ -91,18 +77,9 @@ const ProductCard = ({ product, attributes }) => {
             />
           )}
 
-          <div className="right-3">
+          <div className="right-3 z-10">
 
-            <button
-              // onClick={() => handleAddItem(product)}
-              aria-label="cart"
-              className="h-9 w-9 flex items-center absolute right-3 top-3 justify-center border border-gray-200 rounded text-red-500 hover:border-red-500 hover:bg-red-500 hover:text-white transition-all"
-            >
-              {" "}
-              <span className="text-xl">
-                <MdFavorite />
-              </span>{" "}
-            </button>
+            <WishlistCard data={product} />
           </div>
         </div>
         <div className="w-full px-3 lg:px-4 pb-4 overflow-hidden">
@@ -125,58 +102,11 @@ const ProductCard = ({ product, attributes }) => {
               price={product.prices.price}
               originalPrice={product?.prices?.originalPrice}
             />
-            {/* {inCart(product._id) ? (
-              <div>
-                {items.map(
-                  (item) =>
-                    item.id === product._id && (
-                      <div
-                        key={item.id}
-                        className="h-9 w-auto flex flex-wrap items-center justify-evenly py-1 px-2 bg-emerald-500 text-white rounded"
-                      >
-                        <button
-                          onClick={() =>
-                            updateItemQuantity(item.id, item.quantity - 1)
-                          }
-                        >
-                          <span className="text-dark text-base">
-                            <IoRemove />
-                          </span>
-                        </button>
-                        <p className="text-sm text-dark px-1 font-serif font-semibold">
-                          {item.quantity}
-                        </p>
-                        <button
-                          onClick={() =>
-                            item?.variants?.length > 0
-                              ? handleAddItem(item)
-                              : handleIncreaseQuantity(item)
-                          }
-                        >
-                          <span className="text-dark text-base">
-                            <IoAdd />
-                          </span>
-                        </button>
-                      </div>
-                    )
-                )}{" "}
-              </div>
-            ) : (
-              <button
-                onClick={() => handleAddItem(product)}
-                aria-label="cart"
-                className="h-9 w-9 flex items-center justify-center border border-gray-200 rounded text-emerald-500 hover:border-emerald-500 hover:bg-emerald-500 hover:text-white transition-all"
-              >
-                {" "}
-                <span className="text-xl">
-                  <IoBagAddSharp />
-                </span>{" "}
-              </button>
-            )} */}
 
-          <div>
-            <AddToCard data={product}/>
-          </div>
+
+            <div>
+              <AddToCard data={product} />
+            </div>
           </div>
         </div>
       </div>

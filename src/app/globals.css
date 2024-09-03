@@ -1,6 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* @import 'resuit/dist/resuit.css'; */
+@import 'rsuite/dist/rsuite.min.css';
 
 :root {
   --foreground-rgb: 0, 0, 0;

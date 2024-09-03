@@ -1,27 +1,20 @@
 
 
 import {
-  Button,
-  Description,
+
+  Transition,
   Dialog,
   DialogBackdrop,
-  DialogPanel,
-  DialogTitle,
+  DialogPanel
 } from "@headlessui/react";
-import { useState } from "react";
+
 import { IoClose } from "react-icons/io5";
 
 const MainModal = ({ modalOpen, setModalOpen, children }) => {
-  function open() {
-    setModalOpen(true);
-  }
 
-  function close() {
-    setModalOpen(false);
-  }
 
   return (
-    <div>
+    <Transition appear show={modalOpen} >
       <Dialog
         open={modalOpen}
         onClose={() => setModalOpen(false)}
@@ -44,8 +37,12 @@ const MainModal = ({ modalOpen, setModalOpen, children }) => {
             <IoClose />
           </button>
         </div>
+
+
+
       </Dialog>
-    </div>
+    </Transition>
+
   );
 };
 

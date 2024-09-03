@@ -12,6 +12,9 @@ import Price from "../common/Price";
 import VariantList from "../common/variants/VariantList";
 import { content } from "@/assets/jsonfile/content";
 import Tags from "../common/Tags";
+import { useDispatch, useSelector } from "react-redux";
+import { addByIncrement } from "@/store/reducers/cartSlice";
+import { IoAdd, IoAddOutline, IoBagAddSharp, IoRemove, IoRemoveOutline } from "react-icons/io5";
 
 const ProductModal = ({
   modalOpen,
@@ -20,9 +23,12 @@ const ProductModal = ({
   attributes,
   currency,
 }) => {
- const route = useRouter()
- console.log(product);
- 
+  const route = useRouter()
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state["cart"]);
+  const cartData = cart.cartItems.find((cartItem) => cartItem.id === product._id);
+  console.log(cart, cartData);
+
   // const { setIsLoading, isLoading } = useContext(SidebarContext);
   // const { t, lang } = useTranslation("ns1");
   // const { handleAddItem, setItem, item } = useAddToCart();
@@ -38,7 +44,7 @@ const ProductModal = ({
   const [selectVa, setSelectVa] = useState({});
   const [variantTitle, setVariantTitle] = useState([]);
   const [variants, setVariants] = useState([]);
-
+  const [total, setTotal] = useState(cartData?.cartQuantity ? cartData.cartQuantity : 1)
   // useEffect(() => {
   //   // console.log('value', value, product);
   //   if (value) {
@@ -123,13 +129,9 @@ const ProductModal = ({
   // ]);
   // console.log("product", product);
 
-  // useEffect(() => {
-  //   const res = Object.keys(Object.assign({}, ...product?.variants));
+  useEffect(() => {
 
-  //   const varTitle = attributes?.filter((att) => res.includes(att?._id));
-
-  //   setVariantTitle(varTitle?.sort());
-  // }, [variants, attributes]);
+  }, [variants, attributes]);
 
   // const handleAddToCart = (p) => {
   //   if (p.variants.length === 1 && p.variants[0].quantity < 1)
@@ -187,21 +189,21 @@ const ProductModal = ({
   };
 
   const category_name = product?.category?.name
-  function handleAddToCart(product) {
-    throw new Error("Function not implemented.");
-  }
+  // function handleAddToCart(product) {
+  //   throw new Error("Function not implemented.");
+  // }
 
-    // ?.toLowerCase()
-    // ?.replace(/[^A-Z0-9]+/gi, "-");
 
-  // console.log("product", product, "stock", stock);
 
+  const handleAddToCart = (product) => {
+    dispatch(addByIncrement({ product: product, cartQuantity: total }));
+  };
   return (
     <>
       <MainModal modalOpen={modalOpen} setModalOpen={setModalOpen}>
         <div className="inline-block overflow-y-auto h-full align-middle transition-all transform bg-white shadow-xl rounded-2xl">
           <div className="flex flex-col lg:flex-row md:flex-row w-full max-w-4xl overflow-hidden">
-            <Link href={`/product/${product.slug}`} passHref>
+            <Link href={`/product/${product.slug}`} passHref className="flex-shrink-0 flex items-center justify-center h-auto cursor-pointer">
               <div
                 onClick={() => setModalOpen(false)}
                 className="flex-shrink-0 flex items-center justify-center h-auto cursor-pointer"
@@ -212,12 +214,14 @@ const ProductModal = ({
                     src={img || product.image[0]}
                     width={420}
                     height={420}
+                    className=" w-full h-auto md:w-[420px] md:h-[420px] "
                     alt="product"
                   />
                 ) : (
                   <Image
                     src="https://res.cloudinary.com/ahossain/image/upload/v1655097002/placeholder_kvepfp.png"
                     width={420}
+                     className=" w-full h-auto md:w-[420px] md:h-[420px] "
                     height={420}
                     alt="product Image"
                   />
@@ -232,20 +236,20 @@ const ProductModal = ({
                     onClick={() => setModalOpen(false)}
                     className="text-heading text-lg md:text-xl lg:text-2xl font-semibold font-serif hover:text-black cursor-pointer"
                   >
-                 
+
                     {product?.title?.data}
-                    
+
                   </h1>
                 </Link>
                 <div
                   className={`${stock <= 0 ? "relative py-1 mb-2" : "relative"
                     }`}
                 >
-                  <Stock stock={stock} card />
+                  <Stock stock={product.stock} card />
                 </div>
               </div>
               <p className="text-sm leading-6 text-gray-500 md:leading-6">
-             
+
                 {product?.description?.data}
               </p>
               <div className="flex items-center my-4">
@@ -262,7 +266,7 @@ const ProductModal = ({
                 {variantTitle?.map((a, i) => (
                   <span key={a._id}>
                     <h4 className="text-sm py-1 font-serif text-gray-700 font-bold">
-                   
+
                       {a?.name}
                     </h4>
                     <div className="flex flex-row mb-3">
@@ -282,61 +286,60 @@ const ProductModal = ({
                 ))}
               </div>
 
-              {/* <div className="flex items-center mt-4">
-                <div className="flex items-center justify-between space-s-3 sm:space-s-4 w-full">
+
+              <div className="flex items-center justify-center mt-4">
+                <div className="flex items-center justify-center w-full space-s-3 sm:space-s-4 ">
                   <div className="group flex items-center justify-between rounded-md overflow-hidden flex-shrink-0 border h-11 md:h-12 border-gray-300">
                     <button
-                      onClick={() => setItem(item - 1)}
-                      disabled={item === 1}
-                      className="flex items-center justify-center flex-shrink-0 h-full transition ease-in-out duration-300 focus:outline-none w-8 md:w-12 text-heading border-e border-gray-300 hover:text-gray-500"
+                      onClick={() => setTotal(total - 1)}
+                      disabled={total <= 1 ? true : false}
+
+                      className={total <= 1 ? "flex items-center !cursor-default text-black justify-center flex-shrink-0 h-full transition ease-in-out duration-300 focus:outline-none w-8 md:w-12 text-heading border-e border-gray-300 hover:text-gray-500" : "flex items-center !cursor-pointer text-black justify-center flex-shrink-0 h-full transition ease-in-out duration-300 focus:outline-none w-8 md:w-12 text-heading border-e border-gray-300 hover:text-gray-500"}
                     >
-                      <span className="text-dark text-base">
-                        <FiMinus />
+                      <span className=" text-base ">
+                       <IoRemoveOutline/>
                       </span>
                     </button>
-                    <p className="font-semibold flex items-center justify-center h-full  transition-colors duration-250 ease-in-out cursor-default flex-shrink-0 text-base text-heading w-8  md:w-20 xl:w-24">
-                      {item}
+                    <p className="text-black font-semibold flex items-center justify-center h-full transition-colors duration-250 ease-in-out cursor-default flex-shrink-0 text-base text-heading w-8 md:w-20 xl:w-24">
+                      {total}
                     </p>
                     <button
-                      onClick={() => setItem(item + 1)}
-                      disabled={
-                        product.quantity < item || product.quantity === item
-                      }
-                      className="flex items-center justify-center h-full flex-shrink-0 transition ease-in-out duration-300 focus:outline-none w-8 md:w-12 text-heading border-s border-gray-300 hover:text-gray-500"
+                      onClick={() => setTotal(total + 1)}
+                      className={product.quantity === 0 ? "  !cursor-default flex items-center justify-center h-full text-black flex-shrink-0 transition ease-in-out duration-300 focus:outline-none w-8 md:w-12 text-heading border-s border-gray-300 hover:text-gray-500" : "  !cursor-pointer flex items-center justify-center h-full text-black flex-shrink-0 transition ease-in-out duration-300 focus:outline-none w-8 md:w-12 text-heading border-s border-gray-300 hover:text-gray-500"}
+                      tabIndex={0}
+                      disabled={product.quantity === 0 ? true : false}
                     >
-                      <span className="text-dark text-base">
-                        <FiPlus />
+                      <span className=" text-base">
+                     <IoAddOutline/>
                       </span>
                     </button>
                   </div>
-                  <button
-                    onClick={() => handleAddToCart(product)}
-                    disabled={product.quantity < 1}
-                    className="text-sm leading-4 inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-semibold font-serif text-center justify-center border-0 border-transparent rounded-md focus-visible:outline-none focus:outline-none text-white px-4 ml-4 md:px-6 lg:px-8 py-4 md:py-3.5 lg:py-4 hover:text-white bg-emerald-500 hover:bg-emerald-600 w-full h-12"
-                  >
-                    {content.addToCart}
+                  <button onClick={() => handleAddToCart({ ...product, id: product._id })} disabled={product.quantity === 0 ? true : false} className={product.quantity === 0 ? " !cursor-default text-sm leading-4 inline-flex items-center  transition ease-in-out duration-300 font-semibold  text-center justify-center border-0 border-transparent rounded-md focus-visible:outline-none focus:outline-none ml-4 text-white px-4  md:px-6 lg:px-8 py-4 md:py-3.5 lg:py-4 hover:text-white bg-emerald-500 hover:bg-emerald-600 w-full h-12" : " cursor-pointer text-sm leading-4 inline-flex items-center  transition ease-in-out duration-300 font-semibold  text-center justify-center border-0 border-transparent rounded-md focus-visible:outline-none focus:outline-none ml-4 text-white px-4  md:px-6 lg:px-8 py-4 md:py-3.5 lg:py-4 hover:text-white bg-emerald-500 hover:bg-emerald-600 w-full h-12"}>
+                    Add To Cart
                   </button>
                 </div>
-              </div> */}
-              {/* <div className="flex items-center mt-4">
+              </div>
+
+
+              <div className="flex items-center mt-4">
                 <div className="flex items-center justify-between space-s-3 sm:space-s-4 w-full">
                   <div>
                     <span className="font-serif font-semibold py-1 text-sm d-block">
                       <span className="text-gray-700">
-                        {" "}
+                
                       
                         {content.category}
                         :
                       </span>{" "}
                       <Link
-                        href={`/search?category=${product?.category?._id}&_id=${product?.category?._id}`}
+                        href={`/search?category=${product?.category?.name.data}&_id=${product?.category?._id}`}
                       >
                         <button
                           type="button"
                           className="text-gray-600 font-serif font-medium underline ml-2 hover:text-teal-600"
                          
                         >
-                          {category_name}
+                          {product?.category?.name.data}
                         </button>
                       </Link>
                     </span>
@@ -353,7 +356,7 @@ const ProductModal = ({
                     </button>
                   </div>
                 </div>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>

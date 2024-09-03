@@ -18,11 +18,13 @@ import { getTotals } from "@/store/reducers/cartSlice";
 // import NavbarPromo from "@layout/navbar/NavbarPromo";
 // import { UserContext } from "@context/UserContext";
 // import LoginModal from "@component/modal/LoginModal";
-// import CartDrawer from "@component/drawer/CartDrawer";
+import SideDrawer from "../drawer/drawar";
+import CartDrawer from "../drawer/CartDrawer";
 // import { SidebarContext } from "@context/SidebarContext";
 
 const Navbar = () => {
   // const { t } = useTranslation();
+  const [openCart, setOpenCart] = useState(false);
   const dispatch = useDispatch();
   const { data: session } = useSession();
   const [imageUrl, setImageUrl] = useState("");
@@ -34,10 +36,10 @@ const Navbar = () => {
   const router = useRouter();
   const open = useSelector((state) => state["shoppingCard"]?.value);
   const cart = useSelector((state) => state?.["cart"]);
-  const{cartTotalAmount,cartTotalQuantity,cartItems}=useSelector((state) => state?.["cart"])
+  const { cartTotalAmount, cartTotalQuantity, cartItems } = useSelector((state) => state?.["cart"])
 
 
-  
+
   // const {
   //   state: { userInfo },
   // } = useContext(UserContext);
@@ -67,8 +69,10 @@ const Navbar = () => {
 
   return (
     <>
-      {/* <CartDrawer /> */}
-      {/* {modalOpen && <LoginModal modalOpen={modalOpen} setModalOpen={setModalOpen} />} */}
+  
+      <SideDrawer open={openCart} setOpen={setOpenCart} >
+        <CartDrawer setOpen={setOpenCart} />
+      </SideDrawer>
 
       <div className="bg-emerald-500  sticky top-0 z-20">
         <div className="max-w-screen-2xl mx-auto px-3 sm:px-10">
@@ -108,7 +112,7 @@ const Navbar = () => {
               </button>
               <button
                 aria-label="Total"
-                // onClick={toggleCartDrawer}
+                onClick={() => setOpenCart(true)}
                 className="relative px-5  text-2xl font-bold"
               >
                 <span className="absolute z-10 top-0 right-0 inline-flex items-center justify-center p-1 h-5 w-5 text-xs font-medium leading-none text-red-100 transform -translate-x-1/2 -translate-y-1/2 bg-red-500 rounded-full">
