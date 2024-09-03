@@ -15,7 +15,8 @@ import Image from "next/image";
 import { useState } from "react";
 import { IoAdd, IoBagAddSharp, IoRemove } from "react-icons/io5";
 import { MdFavorite } from "react-icons/md";
-import { AddToCard } from "./Cart";
+import AddToCard from "./Cart";
+
 // import { useSession } from "next-auth/react";
 // import { useRouter } from "next/router";
 
@@ -174,7 +175,7 @@ const ProductCard = ({ product, attributes }) => {
             )} */}
 
           <div>
-            <AddToCard product={product}/>
+            <AddToCard data={product}/>
           </div>
           </div>
         </div>

@@ -11,6 +11,8 @@ import { FiShoppingCart, FiUser, FiBell } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import NavbarPromo from "./NavbarPromo";
 import { useSession } from "next-auth/react";
+import { useDispatch, useSelector } from "react-redux";
+import { getTotals } from "@/store/reducers/cartSlice";
 
 //internal import
 // import NavbarPromo from "@layout/navbar/NavbarPromo";
@@ -21,6 +23,7 @@ import { useSession } from "next-auth/react";
 
 const Navbar = () => {
   // const { t } = useTranslation();
+  const dispatch = useDispatch();
   const { data: session } = useSession();
   const [imageUrl, setImageUrl] = useState("");
   const [searchText, setSearchText] = useState("");
@@ -29,7 +32,12 @@ const Navbar = () => {
   // const { toggleCartDrawer } = useContext(SidebarContext);
   // const { totalItems } = useCart();
   const router = useRouter();
+  const open = useSelector((state) => state["shoppingCard"]?.value);
+  const cart = useSelector((state) => state?.["cart"]);
+  const{cartTotalAmount,cartTotalQuantity,cartItems}=useSelector((state) => state?.["cart"])
 
+
+  
   // const {
   //   state: { userInfo },
   // } = useContext(UserContext);
@@ -50,7 +58,12 @@ const Navbar = () => {
       const user = JSON.parse(Cookies.get("userInfo"));
       setImageUrl(user.image);
     }
+
   }, []);
+
+  useEffect(() => {
+    dispatch(getTotals());
+  }, [cart, dispatch]);
 
   return (
     <>
@@ -99,7 +112,7 @@ const Navbar = () => {
                 className="relative px-5  text-2xl font-bold"
               >
                 <span className="absolute z-10 top-0 right-0 inline-flex items-center justify-center p-1 h-5 w-5 text-xs font-medium leading-none text-red-100 transform -translate-x-1/2 -translate-y-1/2 bg-red-500 rounded-full">
-                  {/* {totalItems} */}
+                  {cartTotalQuantity}
                 </span>
                 <FiShoppingCart className="w-6 h-6 drop-shadow-xl" />
               </button>
