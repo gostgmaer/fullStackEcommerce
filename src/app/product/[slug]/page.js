@@ -261,12 +261,12 @@ const ProductScreen = ({ attributes, relatedProduct }) => {
                   <li className="text-sm pr-1 transition duration-200 ease-in cursor-pointer hover:text-emerald-500 font-semibold">
                     <Link
                       className="!no-underline !text-black hover:!text-emerald-500"
-                      href={`/search?category=${product?.children
-                        .toLowerCase()
+                      href={`/search?category=${product?.category.name.data
+                        ?.toLowerCase()
                         .split(" ")
                         .join("-")}`}
                     >
-                      {product?.children}
+                      {product?.category.name.data}
                     </Link>
                   </li>
                   <li className="text-sm mt-[1px]">
@@ -285,7 +285,7 @@ const ProductScreen = ({ attributes, relatedProduct }) => {
                     </svg>
                   </li>
                   <li className="text-sm px-1 transition duration-200 ease-in ">
-                    {product.title}
+                    {product.title.data}
                   </li>
                 </ol>
               </div>
@@ -313,8 +313,8 @@ const ProductScreen = ({ attributes, relatedProduct }) => {
                       }}
                     >
                       <img
-                        alt={product.title}
-                        src={product?.image}
+                        alt={product.title.data}
+                        src={product?.image[0]}
                         sizes="100vw"
                       />
                     </span>
@@ -324,7 +324,7 @@ const ProductScreen = ({ attributes, relatedProduct }) => {
                       <div className="w-full md:w-7/12 md:pr-4 lg:pr-4 xl:pr-12">
                         <div className="mb-6">
                           <h1 className="leading-7 text-lg md:text-xl lg:text-2xl mb-1 font-semibold text-gray-800">
-                            {product.title}
+                            {product.title.data}
                           </h1>
                           <p className="uppercase font-medium text-gray-500">
                             SKU :{" "}
@@ -357,7 +357,7 @@ const ProductScreen = ({ attributes, relatedProduct }) => {
                         </div>
                         <div>
                           <p className="text-sm leading-6 text-gray-500 md:leading-7">
-                            {product.description}
+                            {product.description.data}
                           </p>
                           <div className="flex items-center mt-4">
                             <div className="flex items-center justify-between space-s-3 sm:space-s-4 w-full">
