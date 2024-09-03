@@ -37,6 +37,10 @@
 
 import { configureStore } from '@reduxjs/toolkit';
 import { cartReducer } from './reducers/cartSlice';
+import { wishlistReducer } from './reducers/wishListSlice';
+import { shoppingCardReducer } from './reducers/shoppingCardSlice';
+import { sidebarReducer } from './reducers/sidebarSlice';
+import { isOpenReducer } from './reducers/isOpenSlice';
 // import { isOpenReducer } from './reducers/isOpenSlice';
 // import { searchReducer } from './reducers/searchSlice';
 // import { shoppingCardReducer } from './reducers/shoppingCardSlice';
@@ -45,11 +49,12 @@ import { cartReducer } from './reducers/cartSlice';
 
 export const store = configureStore({
 	reducer: {
-		// shoppingCard: shoppingCardReducer,
-		// sidebar: sidebarReducer,
+		shoppingCard: shoppingCardReducer,
+		sidebar: sidebarReducer,
 		cart: cartReducer,
+		wishlist: wishlistReducer,
 		// search: searchReducer,
-		// isOpen: isOpenReducer,
+		isOpen: isOpenReducer,
 		// user: authReducer, // Add the authReducer
 	},
 	devTools: true,
