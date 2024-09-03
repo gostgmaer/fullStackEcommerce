@@ -231,9 +231,9 @@ const ProductModal = ({
 
             <div className="w-full flex flex-col p-5 md:p-8 text-left">
               <div className="mb-2 md:mb-2.5 block -mt-1.5">
-                <Link href={`/product/${product.slug}`} passHref className=" text-gray-700">
+                <Link href={`/product/${product.slug}`}  className=" text-gray-700">
                   <h1
-                    onClick={() => setModalOpen(false)}
+                    // onClick={() => setModalOpen(false)}
                     className="text-heading text-lg md:text-xl lg:text-2xl font-semibold font-serif hover:text-black cursor-pointer"
                   >
 

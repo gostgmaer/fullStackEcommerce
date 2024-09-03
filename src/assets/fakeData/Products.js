@@ -8989,13 +8989,13 @@ export function getProductById(title) {
 
 export function getProductByChildrenCategory(category) {
   return Products.filter(
-    (product) => product.children.toLowerCase() === category.toLowerCase()
+    (product) => product?.children.toLowerCase() === category?.toLowerCase()
   );
 }
 
 export function getProductByParentCategory(category) {
   return Products.filter(
-    (product) => product.parent.toLowerCase() === category.toLowerCase()
+    (product) => product?.parent?.toLowerCase() === category?.toLowerCase()
   );
 }
 
