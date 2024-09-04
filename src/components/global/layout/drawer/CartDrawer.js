@@ -90,7 +90,7 @@ const CartDrawer = ({setOpen}) => {
                 <div className="flex flex-col w-full overflow-hidden">
                   <Link
                     className="truncate text-sm font-medium !no-underline !text-gray-700 text-heading line-clamp-1"
-                    href="/product/strawberrie"
+                    href={`/product/${data.slug}`}
                   >
                     {data.title.data}
                   </Link>

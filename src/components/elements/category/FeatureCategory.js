@@ -1,5 +1,6 @@
+"use client"
 import Image from "next/image";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { IoChevronForwardSharp } from "react-icons/io5";
 //internal import
 // import { SidebarContext } from "@context/SidebarContext";
@@ -7,17 +8,23 @@ import { IoChevronForwardSharp } from "react-icons/io5";
 // import CategoryServices from "@services/CategoryServices";
 import useTranslation from "next-translate/useTranslation";
 import { useContext } from "react";
+import { CategoriesData } from "@/assets/fakeData/CategoriesData";
 // import { showingTranslateValue } from "@utils/translate";
 
 const FeatureCategory = () => {
   const router = useRouter();
-  const { lang } = useTranslation("ns1"); // default namespace (optional)
-  const { isLoading, setIsLoading } = useContext(SidebarContext);
+  // const { lang } = useTranslation("ns1"); // default namespace (optional)
+  // const { isLoading, setIsLoading } = useContext(SidebarContext);
 
-  const { data, loading, error } = useAsync(
-    CategoryServices.getShowingCategory
-  );
+  // const { data, loading, error } = useAsync(
+  //   CategoryServices.getShowingCategory
+  // );
 
+  const data = CategoriesData
+
+  console.log(data[0]);
+  
+  
   // console.log('category',data)
 
   const handleCategoryClick = (id, categoryName) => {
@@ -26,20 +33,15 @@ const FeatureCategory = () => {
       .replace(/[^A-Z0-9]+/gi, "-");
     const url = `/search?category=${category_name}&_id=${id}`;
     router.push(url);
-    setIsLoading(!isLoading);
+ 
   };
 
   return (
     <>
-      {error ? (
-        <p className="flex justify-center align-middle items-center m-auto text-xl text-red-500">
-          <span> {error}</span>
-        </p>
-      ) : (
-        <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6">
-          {data[0]?.children?.map((category, i) => (
+      <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6">
+          {data.map((category, i) => (
             <li className="group" key={i + 1}>
-              <div className="flex w-full h-full border border-gray-100 shadow-sm bg-white p-4 cursor-pointer transition duration-200 ease-linear transform group-hover:shadow-lg">
+              <div className="flex w-full h-full border border-gray-100 dark:border-gray-500 shadow-sm bg-white dark:bg-gray-600 p-4 cursor-pointer transition duration-200 ease-linear transform group-hover:shadow-lg">
                 <div className="flex items-center">
                   <div>
                     {category.icon ? (
@@ -64,29 +66,29 @@ const FeatureCategory = () => {
                       onClick={() =>
                         handleCategoryClick(
                           category._id,
-                          showingTranslateValue(category?.name, lang)
+                          category?.name
                         )
                       }
-                      className="text-sm text-gray-600 font-serif font-medium leading-tight line-clamp-1  group-hover"
+                      className="text-sm text-gray-600 dark:text-gray-200 font-serif font-medium leading-tight line-clamp-1  group-hover"
                     >
-                      {showingTranslateValue(category?.name, lang)}
+                      {category?.name}
                     </h3>
                     <ul className="pt-1 mt-1">
-                      {category?.children?.slice(0, 3).map((child) => (
-                        <li key={child._id} className="pt-1">
+                      {category?.subCategories?.slice(0, 3).map((child) => (
+                        <li key={child.path} className="pt-1">
                           <a
                             onClick={() =>
                               handleCategoryClick(
-                                child._id,
-                                showingTranslateValue(child?.name, lang)
+                                child.path,
+                                child.name
                               )
                             }
-                            className="flex items-center font-serif text-xs text-gray-400 cursor-pointer"
+                            className="flex items-center font-serif text-xs text-gray-400 dark:text-gray-800 cursor-pointer"
                           >
-                            <span className="text-xs text-gray-400 ">
+                            <span className="text-xs text-gray-400 dark:text-gray-800">
                               <IoChevronForwardSharp />
                             </span>
-                            {showingTranslateValue(child?.name, lang)}
+                            {child?.name}
                           </a>
 
                           {/* <ul className="pt-1 pl-2">
@@ -118,7 +120,6 @@ const FeatureCategory = () => {
             </li>
           ))}
         </ul>
-      )}
     </>
   );
 };

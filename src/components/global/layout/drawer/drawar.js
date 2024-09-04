@@ -11,7 +11,7 @@ const SideDrawer = ({ open, setOpen, children }) => {
 
   return (
     <div>
-      <Drawer open={open} size={400} >
+      <Drawer open={open} size={400} onClose={()=>setOpen(false)} >
         <Drawer.Body className="p-0">{children}</Drawer.Body>
       </Drawer>
     </div>

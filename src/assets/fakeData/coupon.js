@@ -1,10 +1,10 @@
-export const Coupon=
+export const CouponData=
     [
         {
             "_id": "6239c6c95d7428146b7a6d60",
             "title": "Summer Gift Voucher",
             "couponCode": "SUMMER22",
-            "endTime": "2023-12-30T12:54:00.000Z",
+            "endTime": "2024-12-30T12:54:00.000Z",
             "discountPercentage": 20,
             "minimumAmount": 500,
             "productType": "Cloths",
@@ -17,7 +17,7 @@ export const Coupon=
             "_id": "6239c6c95d7428146b7a6d5f",
             "title": "Winter Gift Voucher",
             "couponCode": "WINTER21",
-            "endTime": "2023-11-31T20:19:00.000Z",
+            "endTime": "2024-11-31T20:19:00.000Z",
             "discountPercentage": 15,
             "minimumAmount": 500,
             "productType": "Grocery",

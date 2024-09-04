@@ -91,7 +91,7 @@ const NavbarPromo = () => {
                       {content["Contact Us"]}
                     </Link>
                     <Link
-                      href="/faq"
+                      href="/faqs"
                       className="font-serif mx-4 py-2 text-sm font-medium hover:text-emerald-600"
                     >
                       {content.FAQ}

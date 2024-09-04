@@ -1,8 +1,10 @@
 
-import { attributes, popularProducts } from "@/assets/fakeData/Products";
+import { attributes, discountProducts, popularProducts } from "@/assets/fakeData/Products";
 import { content } from "@/assets/jsonfile/content";
 import Banner from "@/components/elements/banner/Banner";
+import FastDeliveryCard from "@/components/elements/banner/FastDeliveryCard";
 import MainCarousel from "@/components/elements/carousel/MainCarousel";
+import FeatureCategory from "@/components/elements/category/FeatureCategory";
 
 import OfferCard from "@/components/elements/offer/OfferCard";
 import ProductCard from "@/components/elements/product/ProductCard";
@@ -22,114 +24,116 @@ export default async function Home(props) {
   return (
     <Layout  >
       <div className="min-h-screen">
-            {/* <StickyCart /> */}
-            <div className="bg-white">
-              <div className="mx-auto py-5 max-w-screen-2xl px-3 sm:px-10">
-                <div className="flex w-full">
-                  <div className="flex-shrink-0 xl:pr-6 lg:block w-full lg:w-3/5">
-                    <MainCarousel />
-                  </div>
-                  <div className="w-full hidden lg:flex">
-                    <OfferCard />
-                  </div>
-                </div>
-                <div className="bg-orange-100 px-10 py-6 rounded-lg mt-6 hidden lg:block">
-                  <Banner />
-                </div>
+        {/* <StickyCart /> */}
+        <div className="bg-white dark:bg-gray-700">
+          <div className="mx-auto py-5 max-w-screen-2xl px-3 sm:px-10">
+            <div className="flex w-full">
+              <div className="flex-shrink-0 xl:pr-6 lg:block w-full lg:w-3/5">
+                <MainCarousel />
+              </div>
+              <div className="w-full hidden lg:flex">
+                <OfferCard />
               </div>
             </div>
-
-            {/* feature category's */}
-            <div className="bg-gray-100 lg:py-16 py-10">
-              <div className="mx-auto max-w-screen-2xl px-3 sm:px-10">
-                <div className="mb-10 flex justify-center">
-                  <div className="text-center w-full lg:w-2/5">
-                    <h2 className="text-xl lg:text-2xl mb-2 font-serif font-semibold">
-                      {/* {t("common:Featured-title")} */}
-                      {content["Featured-title"]}
-                    </h2>
-                    <p className="text-base font-sans text-gray-600 leading-6">
-                      {/* {t("common:Featured-sub-title")} */}
-
-
-                      {content["Featured-sub-title"]}
-                    </p>
-                  </div>
-                </div>
-                {/* <FeatureCategory /> */}
-              </div>
+            <div className="bg-orange-100 dark:bg-gray-500 px-10 py-6 rounded-lg mt-6 hidden lg:block">
+              <Banner />
             </div>
-
-            {/* popular products */}
-            <div className="bg-gray-50 lg:py-16 py-10 mx-auto max-w-screen-2xl px-3 sm:px-10">
-              <div className="mb-10 flex justify-center">
-                <div className="text-center w-full lg:w-2/5">
-                  <h2 className="text-xl lg:text-2xl mb-2 font-serif font-semibold">
-
-                    {content["popular-products-title"]}
-                 
-                  </h2>
-                  <p className="text-base font-sans text-gray-600 leading-6">
-                 
-
-                    {content["popular-products-sub-title"]}
-                  </p>
-                </div>
-              </div>
-              <div className="flex">
-                <div className="w-full">
-                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-3 lg:gap-3">
-                    {popularProducts?.slice(0, 18).map((product) => (
-                      <ProductCard
-                        key={product._id}
-                        product={product}
-                        attributes={attributes}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* promotional banner card */}
-            {/* <div className="block mx-auto max-w-screen-2xl">
-              <div className="mx-auto max-w-screen-2xl px-4 sm:px-10">
-                <div className="lg:p-16 p-6 bg-emerald-500 shadow-sm border rounded-lg">
-                  <CardTwo />
-                </div>
-              </div>
-            </div> */}
-
-            {/* discounted products */}
-            {/* <div
-              id="discount"
-              className="bg-gray-50 lg:py-16 py-10 mx-auto max-w-screen-2xl px-3 sm:px-10"
-            >
-              <div className="mb-10 flex justify-center">
-                <div className="text-center w-full lg:w-2/5">
-                  <h2 className="text-xl lg:text-2xl mb-2 font-serif font-semibold">
-                    {t("common:discounted-products-title")}
-                  </h2>
-                  <p className="text-base font-sans text-gray-600 leading-6">
-                    {t("common:discounted-products-paragraph-text")}
-                  </p>
-                </div>
-              </div>
-              <div className="flex">
-                <div className="w-full">
-                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-3 lg:gap-3">
-                    {discountProducts?.slice(0, 18).map((product) => (
-                      <ProductCard
-                        key={product._id}
-                        product={product}
-                        attributes={attributes}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div> */}
           </div>
+        </div>
+
+        {/* feature category's */}
+        <div className="bg-gray-100 dark:bg-gray-800 lg:py-16 py-10">
+          <div className="mx-auto max-w-screen-2xl px-3 sm:px-10">
+            <div className="mb-10 flex justify-center">
+              <div className="text-center w-full lg:w-2/5">
+                <h2 className="text-xl lg:text-2xl mb-2 font-serif font-semibold">
+                  {/* {t("common:Featured-title")} */}
+                  {content["Featured-title"]}
+                </h2>
+                <p className="text-base font-sans text-gray-600 leading-6">
+                  {/* {t("common:Featured-sub-title")} */}
+
+
+                  {content["Featured-sub-title"]}
+                </p>
+              </div>
+            </div>
+            <FeatureCategory />
+          </div>
+        </div>
+
+        {/* popular products */}
+        <div className="bg-gray-50 dark:bg-gray-700 lg:py-16 py-10 mx-auto max-w-screen-2xl px-3 sm:px-10">
+          <div className="mb-10 flex justify-center">
+            <div className="text-center w-full lg:w-2/5">
+              <h2 className="text-xl lg:text-2xl mb-2 font-serif font-semibold">
+
+                {content["popular-products-title"]}
+
+              </h2>
+              <p className="text-base font-sans text-gray-600 dark:text-gray-200 leading-6">
+
+
+                {content["popular-products-sub-title"]}
+              </p>
+            </div>
+          </div>
+          <div className="flex">
+            <div className="w-full">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-3 lg:gap-3">
+                {popularProducts?.slice(0, 18).map((product) => (
+                  <ProductCard
+                    key={product._id}
+                    product={product}
+                    attributes={attributes}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* promotional banner card */}
+        <div className="block mx-auto max-w-screen-2xl bg-gray-50 dark:bg-gray-700">
+          <div className="mx-auto max-w-screen-2xl px-4 sm:px-10">
+            <div className="lg:p-16 p-6 bg-emerald-500 shadow-sm border rounded-lg">
+              <FastDeliveryCard />
+            </div>
+          </div>
+        </div>
+
+        {/* discounted products */}
+        <div
+          id="discount"
+          className="bg-gray-50  dark:bg-gray-700 lg:py-16 py-10 mx-auto max-w-screen-2xl px-3 sm:px-10"
+        >
+          <div className="mb-10 flex justify-center">
+            <div className="text-center w-full lg:w-2/5">
+              <h2 className="text-xl lg:text-2xl mb-2 font-serif font-semibold">
+
+                {content["discounted-products-title"]}
+              </h2>
+              <p className="text-base font-sans text-gray-600 dark:text-gray-200 leading-6">
+
+                {content["discounted-products-paragraph-text"]}
+              </p>
+            </div>
+          </div>
+          <div className="flex">
+            <div className="w-full">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-3 lg:gap-3">
+                {discountProducts?.slice(0, 12).map((product) => (
+                  <ProductCard
+                    key={product._id}
+                    product={product}
+                    attributes={attributes}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </Layout>
   );
