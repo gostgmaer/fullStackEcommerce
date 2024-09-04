@@ -1,6 +1,6 @@
 "use client"
 import React from 'react'
-import { attributes, getProductByChildrenCategory, getProductById } from "@/assets/fakeData/Products";
+import { attributes, getProductByChildrenCategory, getProductById, getProductByParentCategory } from "@/assets/fakeData/Products";
 import ProductCard from "@/components/elements/product/ProductCard";
 import Informations from "@/components/global/common/informations/Informations";
 import SocialNetwork from "@/components/global/common/SocialNetwork";
@@ -52,7 +52,9 @@ const SingleProduct = ({product}) => {
 
     console.log(product);
   
-    const RelatedProduct = getProductByChildrenCategory(product?.children);
+    const RelatedProduct = getProductByParentCategory(product?.category);
+    console.log(RelatedProduct);
+    
     useEffect(() => {
       window.scrollTo(0, 0);
     }, []);
@@ -277,7 +279,7 @@ const SingleProduct = ({product}) => {
           <div className="flex">
             <div className="w-full">
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-3 lg:gap-3 ">
-                {RelatedProduct.map((data, index) => (
+                {RelatedProduct.slice(18).map((data, index) => (
                   <ProductCard key={index} product={data} attributes={attributes} />
                 ))}
               </div>

@@ -10,6 +10,8 @@ import { v4 as uuidv4 } from 'uuid';
 import Input from '../../fields/input';
 import { Select } from '../../fields/SelectField';
 import OrderSummary from '@/components/elements/product/orderSummary/OrderSummary';
+
+import { Country, State, City }  from 'country-state-city';
 import Link from 'next/link';
 
 const CheckoutBlock = () => {
@@ -33,6 +35,7 @@ const CheckoutBlock = () => {
         payment_method: "",
         couponcode: "",
     };
+
 
     const formik = useFormik({
         initialValues: initialValues,
@@ -64,7 +67,9 @@ const CheckoutBlock = () => {
 
 
     const onchangeSubmit = (value) => {
-        if (cartTotalAmount > 50) {
+        console.log(cartTotalAmount);
+        
+        if (cartTotalAmount < 100) {
             return notifyerror('Order Items must worth more than $100');
         }
 
@@ -84,6 +89,9 @@ const CheckoutBlock = () => {
             cartTotalAmount,
             totalPrice: Number(cartTotalAmount + shippingPrice),
         };
+
+        console.log(data);
+        
         // if (data.paymentMethod === 'COD') {
         //     axios
         //         .post(`${process.env.REACT_APP_BASE_API_URL}/order/create`, data)
@@ -126,7 +134,7 @@ const CheckoutBlock = () => {
                 <div className="py-10 lg:py-12 px-0 2xl:max-w-screen-2xl w-full xl:max-w-screen-xl flex flex-col md:flex-row lg:flex-row">
                     <div className="md:w-full lg:w-3/5 flex h-full flex-col order-2 sm:order-1 lg:order-1">
                         <div className="mt-5 md:mt-0 md:col-span-2">
-                            <form>
+                            <form onSubmit={formik.handleSubmit}>
                                 <div>
                                     <h2 className="font-semibold  text-base text-gray-700 dark:text-gray-50 pb-3">
                                         01. Personal Details
@@ -213,16 +221,16 @@ const CheckoutBlock = () => {
                                                 )}
                                         </div>
                                         <div className="col-span-6 sm:col-span-6 lg:col-span-2">
-                                            {/* <Select label={"Country"} additionalAttrs={{
+                                            <Select label={"Country"} additionalAttrs={{
                                                 ...formik.getFieldProps("country"),
 
-                                            }} id={"country"} options={undefined} placeholder={"Country"}></Select>
+                                            }} id={"country"} options={Country.getAllCountries()}  optionkeys={{ key: "name", value: "name" }} placeholder={"Country"}></Select>
                                             {formik.errors.country &&
                                                 formik.touched.country && (
                                                     <div className="text-red-500 text-sm">
                                                         {formik.errors.country}
                                                     </div>
-                                                )} */}
+                                                )}
                                         </div>
                                         <div className="col-span-6 sm:col-span-6 lg:col-span-2">
                                             <Input label={"zipCode"} type={"text"} additionalAttrs={{
