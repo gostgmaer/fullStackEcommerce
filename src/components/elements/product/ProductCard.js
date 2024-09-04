@@ -48,7 +48,7 @@ const ProductCard = ({ product, attributes }) => {
         />
       )}
 
-      <div className="group box-border overflow-hidden flex rounded-md shadow-sm pe-0 flex-col items-center  bg-gray-50 dark:bg-gray-800 relative">
+      <div className="group box-border overflow-hidden flex rounded-md shadow-sm pe-0 flex-col items-center  bg-white dark:bg-gray-800 relative">
         <div
 
           className="relative flex justify-center w-full cursor-pointer pt-2"
@@ -59,22 +59,66 @@ const ProductCard = ({ product, attributes }) => {
           </div>
           <Discount product={{ ...product }} />
           {product?.image?.[0] ? (
-            <Image
-              src={product?.image?.[0]}
-              onClick={() => handleModalOpen(!modalOpen, product)}
-              width={210}
-              height={210}
-              alt="product"
-              className="object-contain  transition duration-150 ease-linear transform group-hover:scale-105"
-            />
+
+            <div className="relative flex justify-center cursor-pointer pt-2 w-full h-44">
+              <div className="relative w-full h-full p-2">
+                <Image
+                  src={product?.image?.[0]}
+                  onClick={() => handleModalOpen(!modalOpen, product)}
+                  alt="product"
+                  loading="lazy"
+                  width={210}
+                  height={210}
+                  decoding="async"
+                  data-nimg="fill"
+                  className="object-contain transition duration-150 ease-linear transform group-hover:scale-105 p-2 absolute h-full w-full inset-0  text-white"
+                  sizes="100%"
+
+                />
+              </div>
+            </div>
+            // <Image
+            //   src={product?.image?.[0]}
+            //   onClick={() => handleModalOpen(!modalOpen, product)}
+            //   width={210}
+            //   height={210}
+            //   alt="product"
+            //   loading="lazy"
+            //   decoding="async"
+            //   data-nimg="fill"
+            //   className="object-contain transition duration-150 ease-linear transform group-hover:scale-105 p-2 absolute h-full w-full inset-0  text-transparent"
+            //   sizes="100%"
+            // />
           ) : (
-            <Image
-              src="https://res.cloudinary.com/ahossain/image/upload/v1655097002/placeholder_kvepfp.png"
-              width={210}
-              height={210}
-              alt="product"
-              className="object-cover transition duration-150 ease-linear transform group-hover:scale-105"
-            />
+            // <Image
+            //   src="https://res.cloudinary.com/ahossain/image/upload/v1655097002/placeholder_kvepfp.png"
+            //   alt="product"
+            //   loading="lazy"
+            //   width={210}
+            //   height={210}
+            //   decoding="async"
+            //   data-nimg="fill"
+            //   className="object-contain transition duration-150 ease-linear transform group-hover:scale-105 p-2 absolute h-full w-full inset-0  text-transparent"
+            //   sizes="100%"
+
+            // />
+
+            <div className="relative flex justify-center cursor-pointer pt-2 w-full h-44">
+              <div className="relative w-full h-full p-2">
+                <Image
+                  src="https://res.cloudinary.com/ahossain/image/upload/v1655097002/placeholder_kvepfp.png"
+                  alt="product"
+                  loading="lazy"
+                  width={210}
+                  height={210}
+                  decoding="async"
+                  data-nimg="fill"
+                  className="object-contain transition duration-150 ease-linear transform group-hover:scale-105 p-2 absolute h-full w-full inset-0  text-white"
+                  sizes="100%"
+
+                />
+              </div>
+            </div>
           )}
 
           <div className="right-3 z-10">
@@ -115,3 +159,56 @@ const ProductCard = ({ product, attributes }) => {
 };
 
 export default ProductCard;
+
+
+
+// export const PCard = (product) => {
+//   return <div
+//     className="group box-border overflow-hidden flex rounded-md shadow-sm pe-0 flex-col items-center bg-white relative"
+//   >
+//     <div className="w-full flex justify-between">
+//       <span
+//         className="bg-gray-100 absolute z-10 text-green-500 rounded-full text-xs px-2 py-0 font-medium"
+//       >Stock :<span className="text-orange-700 pl-1 font-bold"
+//       >1350
+//         </span></span
+//       >
+//     </div>
+//     <div className="relative flex justify-center cursor-pointer pt-2 w-full h-44">
+//       <div className="relative w-full h-full p-2">
+//         <Image
+//           alt="product"
+//           loading="lazy"
+//           decoding="async"
+//           data-nimg="fill"
+//           className="object-contain transition duration-150 ease-linear transform group-hover:scale-105 p-2 absolute h-full w-full inset-0  text-transparent"
+//           sizes="100%"
+
+//           src={product?.image?.[0]}
+
+//         />
+//       </div>
+//     </div>
+//     <div className="w-full px-3 lg:px-4 pb-4 overflow-hidden">
+//       <div className="relative mb-1">
+//         <span className="text-gray-400 font-medium text-xs d-block mb-1"></span>
+//         <h2
+//           className="text-heading truncate mb-0 block text-sm font-medium text-gray-600"
+//         >
+//           <span className="line-clamp-2">Premium T-Shirt</span>
+//         </h2>
+//       </div>
+//       <div
+//         className="flex justify-between items-center text-heading text-sm sm:text-base space-s-2 md:text-base lg:text-xl"
+//       >
+//         <div className="font-serif product-price font-bold">
+//           <span className="inline-block text-lg font-semibold text-gray-800"
+//           >₹450.00</span
+//           >
+//         </div>
+//         <AddToCard data={product} />
+//       </div>
+//     </div>
+//   </div>
+
+// }

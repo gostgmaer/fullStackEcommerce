@@ -107,9 +107,9 @@ export const checkoutValidation = Yup.object().shape({
   city: Yup.string().required('City is required!'),
   country: Yup.string().required('Country is required!'),
   zipCode: Yup.string().required('ZIP / Postal is required'),
-  shippingOption: Yup.string().required('Shipping Option is required!'),
-  paymentMethod: Yup.string().required('Payment Method is required'),
-  couponcode: Yup.string(),
-  accountCreate: Yup.boolean(),
-  additionalNotes: Yup.string()
+  // shippingOption: Yup.string().required('Shipping Option is required!'),
+  // paymentMethod: Yup.string().required('Payment Method is required'),
+  // couponcode: Yup.string(),
+  // accountCreate: Yup.boolean(),
+  // additionalNotes: Yup.string()
 });
