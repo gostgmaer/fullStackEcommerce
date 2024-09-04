@@ -15,7 +15,7 @@ function AddToCard({ data }) {
   return (
     <>
 
-      <div className="group box-border overflow-hidden flex rounded-md shadow-sm pe-0 flex-col items-center bg-white relative">
+      <div className="group box-border overflow-hidden flex rounded-md shadow-sm pe-0 flex-col items-center  relative">
       
         <div className="w-full px-3 lg:px-4 pb-4 overflow-hidden">
       

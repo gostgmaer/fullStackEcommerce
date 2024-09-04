@@ -25,7 +25,7 @@ export default async function Home(props) {
     <Layout  >
       <div className="min-h-screen">
         {/* <StickyCart /> */}
-        <div className="bg-white">
+        <div className="bg-white dark:bg-gray-700">
           <div className="mx-auto py-5 max-w-screen-2xl px-3 sm:px-10">
             <div className="flex w-full">
               <div className="flex-shrink-0 xl:pr-6 lg:block w-full lg:w-3/5">
@@ -35,14 +35,14 @@ export default async function Home(props) {
                 <OfferCard />
               </div>
             </div>
-            <div className="bg-orange-100 px-10 py-6 rounded-lg mt-6 hidden lg:block">
+            <div className="bg-orange-100 dark:bg-gray-500 px-10 py-6 rounded-lg mt-6 hidden lg:block">
               <Banner />
             </div>
           </div>
         </div>
 
         {/* feature category's */}
-        <div className="bg-gray-100 lg:py-16 py-10">
+        <div className="bg-gray-100 dark:bg-gray-800 lg:py-16 py-10">
           <div className="mx-auto max-w-screen-2xl px-3 sm:px-10">
             <div className="mb-10 flex justify-center">
               <div className="text-center w-full lg:w-2/5">
@@ -63,7 +63,7 @@ export default async function Home(props) {
         </div>
 
         {/* popular products */}
-        <div className="bg-gray-50 lg:py-16 py-10 mx-auto max-w-screen-2xl px-3 sm:px-10">
+        <div className="bg-gray-50 dark:bg-gray-700 lg:py-16 py-10 mx-auto max-w-screen-2xl px-3 sm:px-10">
           <div className="mb-10 flex justify-center">
             <div className="text-center w-full lg:w-2/5">
               <h2 className="text-xl lg:text-2xl mb-2 font-serif font-semibold">
@@ -71,7 +71,7 @@ export default async function Home(props) {
                 {content["popular-products-title"]}
 
               </h2>
-              <p className="text-base font-sans text-gray-600 leading-6">
+              <p className="text-base font-sans text-gray-600 dark:text-gray-200 leading-6">
 
 
                 {content["popular-products-sub-title"]}
@@ -94,7 +94,7 @@ export default async function Home(props) {
         </div>
 
         {/* promotional banner card */}
-        <div className="block mx-auto max-w-screen-2xl bg-gray-50">
+        <div className="block mx-auto max-w-screen-2xl bg-gray-50 dark:bg-gray-700">
           <div className="mx-auto max-w-screen-2xl px-4 sm:px-10">
             <div className="lg:p-16 p-6 bg-emerald-500 shadow-sm border rounded-lg">
               <FastDeliveryCard />
@@ -105,7 +105,7 @@ export default async function Home(props) {
         {/* discounted products */}
         <div
           id="discount"
-          className="bg-gray-50 lg:py-16 py-10 mx-auto max-w-screen-2xl px-3 sm:px-10"
+          className="bg-gray-50  dark:bg-gray-700 lg:py-16 py-10 mx-auto max-w-screen-2xl px-3 sm:px-10"
         >
           <div className="mb-10 flex justify-center">
             <div className="text-center w-full lg:w-2/5">
@@ -113,7 +113,7 @@ export default async function Home(props) {
 
                 {content["discounted-products-title"]}
               </h2>
-              <p className="text-base font-sans text-gray-600 leading-6">
+              <p className="text-base font-sans text-gray-600 dark:text-gray-200 leading-6">
 
                 {content["discounted-products-paragraph-text"]}
               </p>

@@ -48,7 +48,7 @@ const ProductCard = ({ product, attributes }) => {
         />
       )}
 
-      <div className="group box-border overflow-hidden flex rounded-md shadow-sm pe-0 flex-col items-center bg-white relative">
+      <div className="group box-border overflow-hidden flex rounded-md shadow-sm pe-0 flex-col items-center  bg-gray-50 dark:bg-gray-800 relative">
         <div
 
           className="relative flex justify-center w-full cursor-pointer pt-2"
@@ -84,10 +84,10 @@ const ProductCard = ({ product, attributes }) => {
         </div>
         <div className="w-full px-3 lg:px-4 pb-4 overflow-hidden">
           <div className="relative mb-1">
-            <span className="text-gray-400 font-medium text-xs d-block mb-1">
+            <span className="text-gray-400 dark:text-gray-50 font-medium text-xs d-block mb-1">
               {product?.unit}
             </span>
-            <h2 className="text-heading truncate mb-0 block text-sm font-medium text-gray-600 cursor-pointer">
+            <h2 className="text-heading truncate mb-0 block text-sm font-medium text-gray-600 dark:text-gray-200 cursor-pointer">
               <span className="line-clamp-2">
                 {/* {showingTranslateValue(product?.title, lang)} */}
                 {product?.title["data"]}

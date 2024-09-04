@@ -24,11 +24,11 @@ export const UserSlice = createSlice({
 		update(state, action) {
 			state.user = null;
 			// Update user data in local storage
-			localStorage.setItem('user', JSON.stringify(user));
+			localStorage.setItem('user', JSON.stringify(state.user));
 		},
 	},
 });
-export const { user, login, logout, update } = UserSlice.actions;
+export const {  login, logout, update } = UserSlice.actions;
 
 export const authReducer = UserSlice.reducer;
 

@@ -41,7 +41,7 @@ const FeatureCategory = () => {
       <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6">
           {data.map((category, i) => (
             <li className="group" key={i + 1}>
-              <div className="flex w-full h-full border border-gray-100 shadow-sm bg-white p-4 cursor-pointer transition duration-200 ease-linear transform group-hover:shadow-lg">
+              <div className="flex w-full h-full border border-gray-100 dark:border-gray-500 shadow-sm bg-white dark:bg-gray-600 p-4 cursor-pointer transition duration-200 ease-linear transform group-hover:shadow-lg">
                 <div className="flex items-center">
                   <div>
                     {category.icon ? (
@@ -69,7 +69,7 @@ const FeatureCategory = () => {
                           category?.name
                         )
                       }
-                      className="text-sm text-gray-600 font-serif font-medium leading-tight line-clamp-1  group-hover"
+                      className="text-sm text-gray-600 dark:text-gray-200 font-serif font-medium leading-tight line-clamp-1  group-hover"
                     >
                       {category?.name}
                     </h3>
@@ -83,9 +83,9 @@ const FeatureCategory = () => {
                                 child.name
                               )
                             }
-                            className="flex items-center font-serif text-xs text-gray-400 cursor-pointer"
+                            className="flex items-center font-serif text-xs text-gray-400 dark:text-gray-800 cursor-pointer"
                           >
-                            <span className="text-xs text-gray-400 ">
+                            <span className="text-xs text-gray-400 dark:text-gray-800">
                               <IoChevronForwardSharp />
                             </span>
                             {child?.name}

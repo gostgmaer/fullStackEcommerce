@@ -3,7 +3,7 @@ import * as Yup from "yup";
 const emailValidationRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 export const loginValidationSchema = Yup.object().shape({
- 
+
   email: Yup.string()
     .email("Invalid email address")
     .matches(emailValidationRegex, "Invalid email address")
@@ -11,7 +11,7 @@ export const loginValidationSchema = Yup.object().shape({
   password: Yup.string().min(8).max(12).required("Password is required"),
 });
 export const registerValidationSchema = Yup.object().shape({
- 
+
   email: Yup.string()
     .email("Invalid email address")
     .matches(emailValidationRegex, "Invalid email address")
@@ -36,9 +36,9 @@ export const contactUsValidation = Yup.object().shape({
 
 export const forgetPasswordValidation = Yup.object().shape({
   email: Yup.string()
-  .email("Invalid email address")
-  .matches(emailValidationRegex, "Invalid email address")
-  .required("Email is required"),
+    .email("Invalid email address")
+    .matches(emailValidationRegex, "Invalid email address")
+    .required("Email is required"),
 });
 
 export const resetPasswordValidation = Yup.object().shape({
@@ -93,4 +93,23 @@ export const validateCategory = Yup.object().shape({
   parent_category: Yup.string(),
   display_type: Yup.string(),
   descriptions: Yup.string(),
+});
+
+
+export const checkoutValidation = Yup.object().shape({
+  firstName: Yup.string().required('First Name is required!'),
+  lastName: Yup.string().required('Last name is required!'),
+  email: Yup.string()
+    .email('Invalid email')
+    .required('Email address is required!'),
+  phone: Yup.string().required('Phone number is required!'),
+  address: Yup.string().required('Street address is required!'),
+  city: Yup.string().required('City is required!'),
+  country: Yup.string().required('Country is required!'),
+  zipCode: Yup.string().required('ZIP / Postal is required'),
+  shippingOption: Yup.string().required('Shipping Option is required!'),
+  paymentMethod: Yup.string().required('Payment Method is required'),
+  couponcode: Yup.string(),
+  accountCreate: Yup.boolean(),
+  additionalNotes: Yup.string()
 });
