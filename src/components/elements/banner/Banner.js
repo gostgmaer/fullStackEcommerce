@@ -24,9 +24,7 @@ const Banner = () => {
             <Link href="#discount" >
 
             {content['Banner-link-text']}
-              {/* <a className="text-emerald-600 ml-1"> 
-                
-                {t("common:Banner-link-text")}</a> */}
+          
             </Link>
           </p>
         </div>

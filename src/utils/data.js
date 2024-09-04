@@ -40,7 +40,7 @@ const pages = [
   // },
   {
     title: 'faq-page',
-    href: '/faq',
+    href: '/faqs',
     icon: FiHelpCircle,
   },
   // {

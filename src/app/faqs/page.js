@@ -4,16 +4,17 @@ import { Disclosure } from '@headlessui/react';
 
 import useTranslation from "next-translate/useTranslation";
 import Layout from '@/components/global/layout/Layout';
-import PageHeader from '@/components/global/layout/header/PageHeader';
+
 import { MdArrowUpward } from 'react-icons/md';
+import PageHeading from '@/components/global/layout/heading/pageHeading';
 //internal import
 
 
 const Faq = () => {
   const {t}=useTranslation()
   return (
-    <Layout title="FAQ" description="This is faq page">
-      <PageHeader title="faq-title" />
+    <Layout >
+      <PageHeading title="faq-title" />
       <div className="bg-white">
         <div className="max-w-screen-2xl mx-auto px-3 sm:px-10 py-10 lg:py-12">
           <div className="grid gap-4 lg:mb-8 items-center md:grid-cols-2 xl:grid-cols-2">

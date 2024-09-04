@@ -2,15 +2,13 @@
 import { ToastContainer } from "react-toastify";
 import NavBarTop from "./navbar/NavBarTop";
 import Navbar from "./navbar/Navbar";
-
 import { Provider } from "react-redux";
-import storage from "redux-persist/lib/storage";
+
 import { store } from "@/store";
-// import store from "@/store";
 
 
 export const metadata = {
-  title: "Ecommerce Dashboard",
+  title: "Ecommerce",
   description: "Created by kishor sarkar",
 };
 
