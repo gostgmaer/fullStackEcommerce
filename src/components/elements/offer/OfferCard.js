@@ -1,4 +1,4 @@
-"use client"
+
 import React from 'react';
 import { content } from '@/assets/jsonfile/content';
 import Coupon from '../coupon/Coupon';

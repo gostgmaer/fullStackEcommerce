@@ -2,35 +2,35 @@ import requests from "./httpServices";
 
 const CustomerServices = {
   customerLogin: async (body) => {
-    return requests.post("/customer/login", body);
+    return requests.post("/customer/auth/login", body);
   },
 
   verifyEmailAddress: async (body) => {
-    return requests.post("/customer/verify-email", body);
+    return requests.post("/customer/auth/verify-email", body);
   },
 
   registerCustomer: async (token, body) => {
-    return requests.post(`/customer/register/${token}`, body);
+    return requests.post(`/customer/auth/register/${token}`, body);
   },
 
   signUpWithProvider(token, body) {
-    return requests.post(`/customer/signup/${token}`, body);
+    return requests.post(`/customer/auth/signup/${token}`, body);
   },
 
   forgetPassword: async (body) => {
-    return requests.put("/customer/forget-password", body);
+    return requests.put("/customer/auth/forget-password", body);
   },
 
-  resetPassword: async (body) => {
-    return requests.put("/customer/reset-password", body);
+  resetPassword: async (body, headers) => {
+    return requests.put("/customer/auth/reset-password", body, headers);
   },
 
-  changePassword: async (body) => {
-    return requests.post("/customer/change-password", body);
+  changePassword: async (body, headers) => {
+    return requests.post("/custome/authr/change-password", body, headers);
   },
 
-  updateCustomer: async (id, body) => {
-    return requests.put(`/customer/${id}`, body);
+  updateCustomer: async (params, headers, body) => {
+    return requests.patch(`/customer/auth/:id`, body,params, headers);
   },
 };
 

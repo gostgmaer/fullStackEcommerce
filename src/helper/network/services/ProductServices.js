@@ -2,17 +2,16 @@ import requests from "./httpServices";
 
 const ProductServices = {
   getShowingProducts: async () => {
-    return requests.get("/products/show");
+    return await requests.get("/products");
   },
-  getShowingStoreProducts: async ({ category = "", title = "" }) => {
-    return requests.get(`/products/store?category=${category}&title=${title}`);
+  getShowingStoreProducts: async (query) => {
+    return requests.get(`/products`, query);
   },
-  getDiscountedProducts: async () => {
-    return requests.get("/products/discount");
+  getDiscountedProducts: async (query) => {
+    return requests.get("/products/discount", query);
   },
-
-  getProductBySlug: async (slug) => {
-    return requests.get(`/products/${slug}`);
+  getProductBySlug: async (params) => {
+    return requests.get(`/products/:slug`, params);
   },
 };
 

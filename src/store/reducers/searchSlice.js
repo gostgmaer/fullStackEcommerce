@@ -1,5 +1,6 @@
+import { getProductByChildrenCategory, getProductByName, getProductByParentCategory } from "@/assets/fakeData/Products";
 import { createSlice } from "@reduxjs/toolkit";
-import {  getProductByChildrenCategory, getProductByName, getProductByParentCategory } from "../../fakeData/Products";
+
 
 const initialState = {
   value: null,

@@ -5,15 +5,15 @@ const OrderServices = {
     return requests.post("/order/add", body, headers);
   },
 
-  createPaymentIntent: async (body) => {
-    return requests.post("/order/create-payment-intent", body);
+  createPaymentIntent: async (body, headers) => {
+    return requests.post("/order/create-payment-intent", body, headers);
   },
 
-  getOrderCustomer: async ({ page = 1, limit = 8 }) => {
-    return requests.get(`/order?limit=${limit}&page=${page}`);
+  getOrderCustomer: async (query, headers) => {
+    return requests.get(`/order`, query, headers);
   },
-  getOrderById: async (id, body) => {
-    return requests.get(`/order/${id}`, body);
+  getOrderById: async (params, headers) => {
+    return requests.get(`/order/:id`, params, headers);
   },
 };
 
