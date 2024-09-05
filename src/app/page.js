@@ -9,12 +9,13 @@ import FeatureCategory from "@/components/elements/category/FeatureCategory";
 import OfferCard from "@/components/elements/offer/OfferCard";
 import ProductCard from "@/components/elements/product/ProductCard";
 import Layout from "@/components/global/layout/Layout";
+import { Placeholder } from 'rsuite';
 // import { serverMethod } from "@/helper/network/serverCall/datafetch";
 
-// export const metadata = {
-//   title: "This is HomePage",
-//   description: "Ths is Description",
-// };
+export const metadata = {
+  title: "This is HomePage",
+  description: "Ths is Description",
+};
 
 
 export default async function Home(props) {

@@ -1,16 +1,11 @@
+"use client"
 import React, { useState } from "react";
 import Image from "next/image";
 import dayjs from "dayjs";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import useTranslation from "next-translate/useTranslation";
-import CouponServices from "@/helper/network/services/CouponServices";
+
 import { CouponData } from "@/assets/fakeData/coupon";
 import OfferTimer from "./OfferTimer";
-//internal import
-// import useAsync from "@hooks/useAsync";
-
-// import OfferTimer from "@component/coupon/OfferTimer";
-// import { showingTranslateValue } from "@utils/translate";
 
 
 const Coupon = ({ couponInHome }) => {

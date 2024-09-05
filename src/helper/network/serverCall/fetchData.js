@@ -1,19 +1,16 @@
 // utils/fetchData.js
 
 import { baseurl } from "@/config/setting";
-import { cookies } from 'next/headers';
-export async function fetchData(endpoint, options = {}) {
+
+export async function fetchData(endpoint, token, options = {}) {
   try {
     const {
       method = "GET",
       body,
       params = {},
-      query = {}, headers = {},
+      query = {},
       cacheTime = 60,
     } = options;
-
-    const cookieStore = cookies();
-    const token = cookieStore.get('accessToken')?.value;
 
     // Validate token and endpoint
     if (!endpoint || typeof endpoint !== "string" || endpoint.trim() === "") {
@@ -54,16 +51,14 @@ export async function fetchData(endpoint, options = {}) {
         url += `?${queryString}`;
       }
     }
-    const defaultHeaders = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    };
-    const mergedHeaders = { ...defaultHeaders, ...headers };
 
     // Make the fetch request
     const res = await fetch(url, {
       method,
-      headers: mergedHeaders,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       body:
         method === "POST" || method === "PATCH" || method === "PUT"
           ? JSON.stringify(body)
@@ -86,27 +81,27 @@ export async function fetchData(endpoint, options = {}) {
 
 
 const requests = {
-  get: async (endpoint, query, params, headers) =>
-    await fetchData(endpoint, {
+  get: async (endpoint, query,params) =>
+    await fetchData(endpoint, null, {
       cacheTime: 300,
-      query, params, headers // Cache for 5 minutes
+      query: query,params:params // Cache for 5 minutes
     }),
-  post: async (endpoint, body, headers) =>
-    await fetchData(endpoint, {
+  post: async (endpoint, body, token) =>
+    await fetchData(endpoint, token, {
       cacheTime: 300,
-      body, headers // Cache for 5 minutes
+      body: body, // Cache for 5 minutes
     }),
-  put: async (endpoint, body, params, headers) =>
-    await fetchData(endpoint, {
-      cacheTime: 300, body, params, headers // Cache for 5 minutes
+  put: async (endpoint, body, token, params) =>
+    await fetchData(endpoint, token, {
+      cacheTime: 300, body: body, params: params // Cache for 5 minutes
     }),
-  patch: async (endpoint, body, params, headers) =>
-    await fetchData(endpoint, {
-      cacheTime: 300, body, params, headers // Cache for 5 minutes
+  patch: async (endpoint, body, token, params) =>
+    await fetchData(endpoint, token, {
+      cacheTime: 300, body: body, params: params // Cache for 5 minutes
     }),
-  delete: async (endpoint, params, headers) =>
-    await fetchData(endpoint, {
-      cacheTime: 300, params, headers // Cache for 5 minutes
+  delete: async (endpoint, params, token) =>
+    await fetchData(endpoint, token, {
+      cacheTime: 300, params: params // Cache for 5 minutes
     }),
 
 

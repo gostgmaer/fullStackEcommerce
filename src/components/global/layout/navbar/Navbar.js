@@ -45,16 +45,10 @@ const Navbar = () => {
   //   state: { userInfo },
   // } = useContext(UserContext);
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   if (searchText) {
-  //     router.push(`/search?query=${searchText}`, null, { scroll: false });
-  //     setSearchText("");
-  //   } else {
-  //     router.push(`/ `, null, { scroll: false });
-  //     setSearchText("");
-  //   }
-  // };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    router.push(`/product/search?query=${searchText}`, { scroll: false });
+  };
 
   useEffect(() => {
     if (Cookies.get("userInfo")) {
@@ -70,7 +64,7 @@ const Navbar = () => {
 
   return (
     <>
-  
+
       <SideDrawer open={openCart} setOpen={setOpenCart} >
         <CartDrawer setOpen={setOpenCart} />
       </SideDrawer>
@@ -85,7 +79,7 @@ const Navbar = () => {
               <div className="w-full flex flex-col justify-center flex-shrink-0 relative z-30">
                 <div className="flex flex-col mx-auto w-full placeholder:text-gray-500 text-gray-700">
                   <form
-                    // onSubmit={handleSubmit}
+                    onSubmit={handleSubmit}
                     className="relative pr-12 md:pr-14 bg-white overflow-hidden shadow-sm rounded-md w-full"
                   >
                     <label className="flex items-center py-0.5">
@@ -93,7 +87,7 @@ const Navbar = () => {
                         onChange={(e) => setSearchText(e.target.value)}
                         value={searchText}
                         className="form-input w-full pl-5 appearance-none transition ease-in-out border text-input text-sm font-sans rounded-md min-h-10 h-10 duration-200 bg-white focus:ring-0 outline-none border-none focus:outline-none placeholder-gray-500 placeholder-opacity-75"
-                      placeholder={content["search-placeholder"]}
+                        placeholder={content["search-placeholder"]}
                       />
                     </label>
                     <button
