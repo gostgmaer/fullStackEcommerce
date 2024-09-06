@@ -1,11 +1,9 @@
 import axios from "axios";
-import useSWR from "swr";
+
 import Cookies from "js-cookie";
 import moment from "moment";
 
-import { useCallback } from "react";
-// import { faker } from "@faker-js/faker";
-import { post } from "../network";
+
 import { baseurl } from "@/config/setting";
 // Export the calculateTimeGap function with maxGap parameter
 
@@ -238,33 +236,7 @@ const AUTH_TOKEN =
 // };
 
 // @ts-ignore
-export const fetcher = (...args) => axios(...args).then((res) => res.data);
 
-export function useFetcher(endpoint) {
-  const { data, error, isLoading } = useSWR(
-    `${baseurl}${endpoint}?populate=*`,
-    fetcher
-  );
-
-  return {
-    data: data,
-    isLoading,
-    isError: error,
-  };
-}
-
-export function useGetFetcher(endpoint, fetcherData) {
-  const { data, error, isLoading } = useSWR(
-    `${baseurl}${endpoint}?populate=*`,
-    fetcherData
-  );
-
-  return {
-    data: data,
-    isLoading,
-    isError: error,
-  };
-}
 
 export function storeCookiesOfObject(data) {
   if (data) {
@@ -477,8 +449,8 @@ export const setClientCookie = (name, value, timestamp) => {
 //   const postRecord = async (data) => {
 //     try {
 //       const response = await post("/realestate/record", data);
-//       console.log("POST request successful!");
-//       // console.log("Response:", response.data);
+//       ///console.log("POST request successful!");
+//       // ///console.log("Response:", response.data);
 //     } catch (error) {
 //       console.error("POST request failed:", error.message);
 //     }
@@ -496,7 +468,7 @@ export const setClientCookie = (name, value, timestamp) => {
 export const getCookiesData = (second) => {
   const cookiesData = Cookies.get();
   const Authorization =
-    "Bearer " + cookiesData["headerPayload"] + "." + cookiesData["signature"];
+    "Bearer " + cookiesData?.["headerPayload"] + "." + cookiesData?.["signature"];
   return {
     Authorization,
   };

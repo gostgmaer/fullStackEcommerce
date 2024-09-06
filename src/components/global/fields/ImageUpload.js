@@ -31,7 +31,7 @@ const ImageUpload = ({ imagePreview, setImagePreview,label }) => {
         setProgrss(progress);
       },
       (err) => {
-        //console.log(err);
+        /////console.log(err);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((url) => {

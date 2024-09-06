@@ -97,7 +97,7 @@ export const metadata = {
 
 const Search = async (props) => {
   
-  console.log(props);
+  ///console.log(props);
   const data = await  ProductServices.getShowingProducts(props.searchParams)
   
   const currentData = await getAllRecord(props);

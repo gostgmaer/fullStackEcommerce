@@ -43,7 +43,7 @@ const CheckoutBlock = () => {
         onSubmit: async (values, { setSubmitting }) => {
             // Handle form submission logic here
 
-            //  console.log(values);
+            //  ///console.log(values);
             setSubmitting(false);
             onchangeSubmit(values);
         }
@@ -67,7 +67,7 @@ const CheckoutBlock = () => {
 
 
     const onchangeSubmit = (value) => {
-        console.log(cartTotalAmount);
+        ///console.log(cartTotalAmount);
         
         if (cartTotalAmount < 100) {
             return notifyerror('Order Items must worth more than $100');
@@ -90,7 +90,7 @@ const CheckoutBlock = () => {
             totalPrice: Number(cartTotalAmount + shippingPrice),
         };
 
-        console.log(data);
+        ///console.log(data);
         
         // if (data.paymentMethod === 'COD') {
         //     axios

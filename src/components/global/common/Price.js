@@ -1,6 +1,6 @@
 "use client"
 const Price = ({ product, price, card, currency, originalPrice }) => {
-  // console.log("price", price, "originalPrice", originalPrice, "card", card);
+  // ///console.log("price", price, "originalPrice", originalPrice, "card", card);
   return (
     <div className="font-serif product-price font-bold">
       {product?.variants?.length > 0 ? (
