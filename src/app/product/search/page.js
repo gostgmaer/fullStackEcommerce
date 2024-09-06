@@ -4,13 +4,10 @@ import ProductList from "@/components/elements/product/productList/ProductList";
 import Layout from "@/components/global/layout/Layout";
 
 import ProductServices from "@/helper/network/services/ProductServices";
+import { cookies } from "next/headers";
 
 
 import React from "react";
-// var Url = require('url-parse');
-
-// import { serverMethod } from "@/lib/network/http";
-// import { convertNumericKeysToObject, convertObject, transformKeysToObject } from "@/lib/helper";
 
 export const metadata = {
   generator: "Next.js",
@@ -96,6 +93,8 @@ export const metadata = {
 };
 
 const Search = async (props) => {
+  const cookieStore = cookies()
+  const token = cookieStore.get('accessToken')
   
   ///console.log(props);
   const data = await  ProductServices.getShowingProducts(props.searchParams)

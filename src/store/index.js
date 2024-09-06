@@ -44,6 +44,8 @@ import { isOpenReducer } from './reducers/isOpenSlice';
 import { thunk } from 'redux-thunk';
 import { persistReducer, persistStore } from 'redux-persist';
 import storageSession from 'redux-persist/lib/storage/session';
+import  { productReducer } from './reducers/productSlice';
+import { paginationReducer } from './reducers/paginationSlice';
 // import { isOpenReducer } from './reducers/isOpenSlice';
 // import { searchReducer } from './reducers/searchSlice';
 // import { shoppingCardReducer } from './reducers/shoppingCardSlice';
@@ -89,6 +91,8 @@ const rootReducer = combineReducers({
 	shoppingCard: shoppingCardReducer,
 	sidebar: sidebarReducer,
 	isOpen: isOpenReducer,
+	products: productReducer,
+	pagination:paginationReducer
 	// user: authReducer,
 	// search: searchReducer,
   });
@@ -97,7 +101,7 @@ const rootReducer = combineReducers({
   const persistConfig = {
 	key: 'root',
 	storage: storageSession, // Session-based storage
-	whitelist: ['cart', 'wishlist','sidebar','user','isOpen','shoppingCard'], // Only persist these reducers
+	whitelist: ['cart', 'wishlist','sidebar','user','isOpen','shoppingCard','products','pagination'], // Only persist these reducers
   };
   
   // Persist reducer with the session storage
