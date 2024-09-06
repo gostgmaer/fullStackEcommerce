@@ -6,6 +6,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 
 import { CouponData } from "@/assets/fakeData/coupon";
 import OfferTimer from "./OfferTimer";
+import dynamic from "next/dynamic";
 
 
 const Coupon = ({ couponInHome }) => {
@@ -258,4 +259,6 @@ const Coupon = ({ couponInHome }) => {
   );
 };
 
-export default Coupon;
+// export default Coupon;
+
+export default dynamic(() => Promise.resolve(Coupon), { ssr: false });

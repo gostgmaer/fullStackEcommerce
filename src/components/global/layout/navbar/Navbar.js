@@ -47,7 +47,7 @@ const Navbar = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    router.push(`/product/search?query=${searchText}`, { scroll: false });
+    router.push(`/product/search?query=${searchText}&page=${1}&limit=${24}`, { scroll: false });
   };
 
   useEffect(() => {

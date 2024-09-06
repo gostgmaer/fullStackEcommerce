@@ -2,10 +2,9 @@ import { allProduct, attributes } from "@/assets/fakeData/Products";
 import CategoryCard from "@/components/elements/category/categoryCard/CategoryCard";
 import ProductList from "@/components/elements/product/productList/ProductList";
 import Layout from "@/components/global/layout/Layout";
-import { fetchData } from "@/helper/network/serverCall/fetchData";
+
 import ProductServices from "@/helper/network/services/ProductServices";
 
-import { cookies } from "next/headers";
 
 import React from "react";
 // var Url = require('url-parse');
@@ -97,10 +96,9 @@ export const metadata = {
 };
 
 const Search = async (props) => {
-  const cookieStore = cookies()
-  const theme = cookieStore.get('theme')
+  
   console.log(props);
-  const data = await  ProductServices.getShowingProducts()
+  const data = await  ProductServices.getShowingProducts(props.searchParams)
   
   const currentData = await getAllRecord(props);
 

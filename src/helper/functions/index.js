@@ -492,3 +492,12 @@ export const setClientCookie = (name, value, timestamp) => {
 
 //   postAllRecords();
 // };
+
+export const getCookiesData = (second) => {
+  const cookiesData = Cookies.get();
+  const Authorization =
+    "Bearer " + cookiesData["headerPayload"] + "." + cookiesData["signature"];
+  return {
+    Authorization,
+  };
+};

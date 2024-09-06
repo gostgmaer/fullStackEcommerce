@@ -2,6 +2,7 @@
 import React from "react";
 
 import { DOTS, usePagination } from "@/context/hooks/usePagination";
+import { IoArrowBack, IoArrowForward } from "react-icons/io5";
 
 
 const Pagination = (props) => {
@@ -10,7 +11,7 @@ const Pagination = (props) => {
     totalCount,
     siblingCount = 1,
     currentPage,
-    pageSize,
+    pageSize,updateQuery,
     className,
   } = props;
 
@@ -27,10 +28,12 @@ const Pagination = (props) => {
 
   const onNext = () => {
     onPageChange(currentPage + 1);
+    updateQuery(currentPage + 1)
   };
 
   const onPrevious = () => {
     onPageChange(currentPage - 1);
+    updateQuery(currentPage + 1)
   };
 
   let lastPage = paginationRange[paginationRange.length - 1];
@@ -42,20 +45,7 @@ const Pagination = (props) => {
         disabled={currentPage === 1 ? true : false}
         onClick={onPrevious}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M15 19l-7-7 7-7"
-          />
-        </svg>
+          <IoArrowBack/>
       </button>
       {paginationRange.map((pageNumber,index) => {
         if (pageNumber === DOTS) {
@@ -84,20 +74,7 @@ const Pagination = (props) => {
         disabled={currentPage === lastPage ? true : false}
         onClick={onNext}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M9 5l7 7-7 7"
-          />
-        </svg>
+      <IoArrowForward/>
       </button>
     </ul>
   );
