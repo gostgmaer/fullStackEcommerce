@@ -3,8 +3,9 @@ import "./globals.css";
 // import 'resuit/dist/resuit.css';
 import { ProviderTheme } from '../utils/ProviderTheme'
 import NextAuthProvider from "@/context/sessionContext";
+// import { AuthContextProvider } from "@/context/authContext";
 
-import { AuthContextProvider } from "@/context/authContext";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,15 +18,12 @@ export default function RootLayout({ children }) {
   return (
     <NextAuthProvider>
       <html lang="en" suppressHydrationWarning={true}>
-     
+
         <body className={inter.className}>
 
           <ProviderTheme>
-            <AuthContextProvider>
+
             {children}
-
-            </AuthContextProvider>
-
           </ProviderTheme>
         </body>
       </html></NextAuthProvider>
