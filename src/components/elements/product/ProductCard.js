@@ -57,7 +57,7 @@ const ProductCard = ({ product, attributes }) => {
             <Stock stock={product.stock} card />
 
           </div>
-          <Discount product={{ ...product }} />
+          <Discount product={{ ...product }} slug={product.slug} modal={undefined} />
           {product?.image?.[0] ? (
 
             <div className="relative flex justify-center cursor-pointer pt-2 w-full h-44">
@@ -77,31 +77,9 @@ const ProductCard = ({ product, attributes }) => {
                 />
               </div>
             </div>
-            // <Image
-            //   src={product?.image?.[0]}
-            //   onClick={() => handleModalOpen(!modalOpen, product)}
-            //   width={210}
-            //   height={210}
-            //   alt="product"
-            //   loading="lazy"
-            //   decoding="async"
-            //   data-nimg="fill"
-            //   className="object-contain transition duration-150 ease-linear transform group-hover:scale-105 p-2 absolute h-full w-full inset-0  text-transparent"
-            //   sizes="100%"
-            // />
+        
           ) : (
-            // <Image
-            //   src="https://res.cloudinary.com/ahossain/image/upload/v1655097002/placeholder_kvepfp.png"
-            //   alt="product"
-            //   loading="lazy"
-            //   width={210}
-            //   height={210}
-            //   decoding="async"
-            //   data-nimg="fill"
-            //   className="object-contain transition duration-150 ease-linear transform group-hover:scale-105 p-2 absolute h-full w-full inset-0  text-transparent"
-            //   sizes="100%"
-
-            // />
+         
 
             <div className="relative flex justify-center cursor-pointer pt-2 w-full h-44">
               <div className="relative w-full h-full p-2">
@@ -134,7 +112,7 @@ const ProductCard = ({ product, attributes }) => {
             <h2 className="text-heading truncate mb-0 block text-sm font-medium text-gray-600 dark:text-gray-200 cursor-pointer">
               <span className="line-clamp-2">
                 {/* {showingTranslateValue(product?.title, lang)} */}
-                {product?.title["data"]}
+                {product?.title?.["data"]}
               </span>
             </h2>
           </div>

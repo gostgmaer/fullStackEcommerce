@@ -1,5 +1,8 @@
 "use client"
 const Discount = ({ discount=1, product, slug, modal }) => {
+
+  console.log(product);
+  
   return (
     <>
       {discount > 1 && (
@@ -15,7 +18,7 @@ const Discount = ({ discount=1, product, slug, modal }) => {
           {discount.toFixed(0)}% Off
         </span>
       )}
-      {discount === undefined && Number(product.prices.discount) > 1 && (
+      {discount === undefined && Number(product.prices?.discount) > 1 && (
         <span
           className={
             modal
@@ -25,7 +28,7 @@ const Discount = ({ discount=1, product, slug, modal }) => {
                 : " absolute text-dark text-xs bg-orange-500 text-white py-1 px-2 rounded font-medium z-10 right-4 top-4"
           }
         >
-          {Number(product.prices.discount).toFixed(0)}% Off
+          {Number(product.prices?.discount).toFixed(0)}% Off
         </span>
       )}
     </>
