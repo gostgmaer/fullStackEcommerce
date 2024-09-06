@@ -140,7 +140,7 @@ export const CartSlice = createSlice({
           // console.log(cartItem);
           
           const { prices, cartQuantity } = cartItem;
-          console.log(prices, cartQuantity);
+         
           
           const itemTotal = prices.price * cartQuantity;
 

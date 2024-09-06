@@ -1,8 +1,11 @@
 import requests from "./httpServices";
 
 const ProductServices = {
-  getShowingProducts: async () => {
+  getAllProducts: async () => {
     return await requests.get("/products");
+  },
+  getShowingProducts: async (query) => {
+    return await requests.get("/products/show",query);
   },
   getShowingStoreProducts: async (query) => {
     return requests.get(`/products`, query);
