@@ -1,7 +1,7 @@
 "use client";
 
 import { addToCart, getTotals } from "@/store/cartReducer";
-import { decreaseCart, incrementCart } from "@/store/reducers/cartSlice";
+import { decreaseCart, incrementCart, saveCartToBackend } from "@/store/reducers/cartSlice";
 import { IoAdd, IoAddOutline, IoBagAddSharp, IoRemove, IoRemoveOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -10,6 +10,7 @@ function AddToCard({ data }) {
   const cart = useSelector((state) => state["cart"]);
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));
+    // dispatch(saveCartToBackend({ productId: product._id, quantity: 1 }));
   };
   const cartData = cart.cartItems.find((cartItem) => cartItem.id === data._id);
   return (

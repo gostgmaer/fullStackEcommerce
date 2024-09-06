@@ -1,36 +1,70 @@
 "use client"
-import { createSlice } from "@reduxjs/toolkit";
+import CartServices from "@/helper/network/services/cartService";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   cartItems: [],
+  status: 'idle',
+  error:null,
   cartTotalQuantity: 0,
   cartTotalAmount: 0,
 };
 
+
+// export const saveCartToBackend = createAsyncThunk(
+//   'cart/saveCartToBackend',
+//   async (cartData, { rejectWithValue }) => {
+//     try {
+//       const response = await CartServices.addtoCart(cartData)
+//       return response.data; // Returning response to be handled in extraReducers
+//     } catch (error) {
+//       return rejectWithValue(error.response.data);
+//     }
+//   }
+// );
+
+export const saveCartToBackend = createAsyncThunk(
+  'cart/saveCartToBackend',
+  async (cartData, thunkAPI) => {
+    try {
+      const response = await CartServices.addtoCart(cartData)
+      return response.data; // Returning the response
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response ? error.response.data : error.message);
+    }
+  }
+);
+
+
 export const CartSlice = createSlice({
   name: "cart",
   initialState,
+
   reducers: {
     addToCart(state, action) {
-      console.log("state.cartItems",state["cart"]);
-      console.log("action",action);
-      
+  
       const product = state.cartItems.findIndex(
         (item) => item.id === action.payload.id
       );
 
-      console.log(product);
+ 
       
       if (product >= 0) {
         state.cartItems[product].cartQuantity += 1;
+        const cartData = {
+          productId: action.payload.id,
+          quantity: state.cartItems[product >= 0 ? product : state.cartItems.length - 1].cartQuantity,
+        };
+   
       } else {
         const tempProduct = { ...action.payload, cartQuantity: 1 };
-        console.log(tempProduct);
+  
         state.cartItems.push(tempProduct);
       }
-      console.log(state.cartItems);
-      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
-      console.log(JSON.parse(localStorage.getItem("cartItems")));
+
+   
+      return state;
+      
     },
 
     removeFromCart(state, action) {
@@ -63,7 +97,7 @@ export const CartSlice = createSlice({
   
             state.cartItems = nextCartItems;
           }
-          localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+        //  localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
           return state;
         });
       }
@@ -81,13 +115,11 @@ export const CartSlice = createSlice({
         state.cartItems.push(tempProduct);
       }
 
-      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+     // localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
     addByIncrement(state, action) {
 
-      console.log(state.cartItems);
-      
-      console.log(action);
+     
       
       const product = state.cartItems.findIndex(
         (item) => item.id === action.payload.product.id
@@ -100,7 +132,7 @@ export const CartSlice = createSlice({
         state.cartItems.push(tempProduct);
       }
 
-      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+    //  localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
     getTotals(state, action) {
       let { total, quantity } = state.cartItems.reduce(
@@ -126,6 +158,22 @@ export const CartSlice = createSlice({
       state.cartTotalQuantity = quantity;
       state.cartTotalAmount = total;
     }
+  },
+
+  extraReducers: (builder) => {
+    builder
+      .addCase(saveCartToBackend.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(saveCartToBackend.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        console.log('Cart saved successfully:', action.payload);
+      })
+      .addCase(saveCartToBackend.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload;
+        console.error('Error saving cart:', action.payload);
+      });
   },
 });
 
