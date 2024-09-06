@@ -22,10 +22,10 @@ const FeatureCategory = () => {
 
   const data = CategoriesData
 
-  console.log(data[0]);
+  ///console.log(data[0]);
   
   
-  // console.log('category',data)
+  // ///console.log('category',data)
 
   const handleCategoryClick = (id, categoryName) => {
     const category_name = categoryName

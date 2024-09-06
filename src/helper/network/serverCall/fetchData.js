@@ -2,7 +2,6 @@
 
 import { baseurl } from "@/config/setting";
 import { getCookiesData } from "@/helper/functions";
-import Cookies from "js-cookie";
 
 export async function fetchData(endpoint, options = {}) {
   try {
@@ -16,7 +15,7 @@ export async function fetchData(endpoint, options = {}) {
 
     const tokens = getCookiesData();
 
-    console.log(tokens);
+    ///console.log(tokens);
     
 
     // Validate token and endpoint
@@ -115,7 +114,5 @@ const requests = {
 
 
 };
-
-
 
 export default requests;

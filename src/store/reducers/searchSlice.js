@@ -15,7 +15,7 @@ export const searchSlice = createSlice({
     searchAction: (state, action) => {
       state.path = action.payload.path;
       state.value = action.payload.value;
-      console.log("state"+state.value)
+      ///console.log("state"+state.value)
       if (state.path === "query") {
         state.product = getProductByName(state.value);
       } else {

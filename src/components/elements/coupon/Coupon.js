@@ -19,7 +19,7 @@ const Coupon = ({ couponInHome }) => {
   // const { data: globalSetting } = useAsync(SettingServices.getGlobalSetting);
 
   // const currency = globalSetting?.default_currency || "$";
-  // console.log("coupon  data", data);
+  // ///console.log("coupon  data", data);
 
   const handleCopied = (code) => {
     setCopiedCode(code);

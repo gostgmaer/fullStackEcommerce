@@ -174,7 +174,7 @@ export const del = async (endpoint, id, header) => {
 export const getCookiesData = (second) => {
   const cookiesData = Cookies.get();
   const Authorization =
-    "Bearer " + cookiesData["headerPayload"] + "." + cookiesData["signature"];
+    "Bearer " + cookiesData?.["headerPayload"] + "." + cookiesData?.["signature"];
   return {
     Authorization,
   };

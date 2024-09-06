@@ -9,7 +9,7 @@ const useFilter = (data) => {
   const [sortedField, setSortedField] = useState("");
   const router = useRouter();
 
-  // console.log("sortedfield", sortedField, data);
+  // ///console.log("sortedfield", sortedField, data);
 
   const productData = useMemo(() => {
     let services = data;

@@ -1,5 +1,5 @@
 
-import ResetForm from "@/components/global/common/forms/resetForm";
+// import ResetForm from "@/components/global/common/forms/resetForm";
 import Layout from "@/components/global/layout/Layout";
 import Link from "next/link";
 
@@ -18,7 +18,7 @@ const Index = () => {
 
 
 
-          <ResetForm />
+          {/* <ResetForm /> */}
           <p className="mt-6 text-center text-[15px] leading-loose text-gray-500 md:mt-7 lg:mt-9 lg:text-base">
             Don&lsquo;t wont to reset? 
             <Link

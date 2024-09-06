@@ -17,7 +17,7 @@ const LoginForm = () => {
   // const { handleLoginAuth, user, userId, authError } = useAuthContext();
   // const [authError, setAuthError] = useState(undefined);
   const route = useRouter();
-  console.log(session, status);
+  ///console.log(session, status);
   const formik = useFormik({
     initialValues: {
       email: "",

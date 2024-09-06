@@ -11,7 +11,7 @@ import useTranslation from "next-translate/useTranslation";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useContext, useEffect, useRef, useState } from "react";
-import { FiChevronRight, FiMinus, FiPlus } from "react-icons/fi";
+
 
 const SingleProduct = ({product}) => {
 
@@ -38,7 +38,7 @@ const SingleProduct = ({product}) => {
   
     // const currency = globalSetting?.default_currency || "$";
   
-    // console.log('product', product)
+    // ///console.log('product', product)
   
     // const { isLoading, setIsLoading } = useContext(SidebarContext);
     // const { handleAddItem, item, setItem } = useAddToCart();
@@ -47,13 +47,13 @@ const SingleProduct = ({product}) => {
     // react hook
     const { slug } = useParams();
   
-    console.log(slug);
+    ///console.log(slug);
   
 
-    console.log(product);
+    ///console.log(product);
   
     const RelatedProduct = getProductByParentCategory(product?.category);
-    console.log(RelatedProduct);
+    ///console.log(RelatedProduct);
     
     useEffect(() => {
       window.scrollTo(0, 0);
