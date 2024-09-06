@@ -177,11 +177,16 @@
 
 
 import React from 'react'
+import Layout from '../layout'
 
-const Page = () => {
+const Index = () => {
   return (
-    <div>page</div>
+    <Layout  >
+
+      <div></div>
+
+    </Layout>
   )
 }
 
-export default Page
+export default Index

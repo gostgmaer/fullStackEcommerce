@@ -111,12 +111,18 @@
 // };
 
 
+import Layout from '@/components/global/layout/Layout'
 import React from 'react'
 
-const Page = () => {
+
+const Index = () => {
   return (
-    <div>page</div>
+    <Layout  >
+
+      <div></div>
+
+    </Layout>
   )
 }
 
-export default Page
+export default Index

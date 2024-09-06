@@ -1,9 +1,14 @@
 import React from 'react'
+import Layout from '../layout'
 
-const Categories = () => {
+const Index = () => {
   return (
-    <div>Categories</div>
+    <Layout  >
+
+      <div></div>
+
+    </Layout>
   )
 }
 
-export default Categories
+export default Index

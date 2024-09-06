@@ -17,7 +17,7 @@ export function middleware(request) {
   const { pathname } = request.nextUrl;
 
   // If the request is for /dashboard or any child page under /dashboard
-  if (pathname.startsWith('/dashboard') || pathname === '/checkout') {
+  if (pathname.startsWith('/user') || pathname === '/checkout') {
     // If the user is not authenticated, redirect to the login page
     if (!authorised) {
       return NextResponse.redirect(new URL('/auth/login', request.url));

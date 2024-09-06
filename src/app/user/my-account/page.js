@@ -1,13 +1,18 @@
+import Layout from '@/components/global/layout/Layout'
+import React from 'react'
 
-import { getSession } from "next-auth/react";
 
 const Index = () => {
   return (
-    <div></div>
-  );
-};
+    <Layout  >
 
-export default Index;
+      <div></div>
+
+    </Layout>
+  )
+}
+
+export default Index
 
 // export async function getServerSideProps(context) {
 //   const session = await getSession(context);
