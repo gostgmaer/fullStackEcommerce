@@ -2,7 +2,7 @@
 // utils/fetchData.js
 
 import { baseurl } from "@/config/setting";
-import { getCookiesData } from "@/helper/functions";
+// import { getCookiesData } from "@/helper/functions";
 export async function fetchData(endpoint, options = {}) {
   try {
     const {
@@ -12,7 +12,8 @@ export async function fetchData(endpoint, options = {}) {
       query = {}, headers = {},
       cacheTime = 60,
     } = options;
-    const tokens = getCookiesData();
+
+    // const tokens = getCookiesData();
  
 
 
@@ -56,7 +57,7 @@ export async function fetchData(endpoint, options = {}) {
       }
     }
     const defaultHeaders = {
-      'Content-Type': 'application/json',...tokens
+      'Content-Type': 'application/json'
     
     };
     const mergedHeaders = { ...defaultHeaders, ...headers };
