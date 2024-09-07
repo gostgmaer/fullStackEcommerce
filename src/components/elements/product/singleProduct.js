@@ -4,23 +4,19 @@ import { attributes, getProductByParentCategory } from "@/assets/fakeData/Produc
 import ProductCard from "@/components/elements/product/ProductCard";
 import Informations from "@/components/global/common/informations/Informations";
 import SocialNetwork from "@/components/global/common/SocialNetwork";
-
-// import { addByIncrement } from "@/store/reducers/cartSlice";
-
 import Link from "next/link";
-import { useContext, useEffect, useRef, useState } from "react";
+import {  useEffect, useState } from "react";
 import { addByIncrement } from '@/store/reducers/cartSlice';
 import { useDispatch } from 'react-redux';
+import { IoAddOutline, IoChevronForward, IoRemoveOutline } from 'react-icons/io5';
 
 
 const SingleProduct = ({ product }) => {
   const dispatch = useDispatch();
 
+console.log(product);
 
   const [total, setTotal] = useState(1)
-
-  console.log(product);
-
 
   const handleAddToCart = (product) => {
     dispatch(addByIncrement({ product: {...product,id:product._id}, cartQuantity: total }));
@@ -31,26 +27,13 @@ const SingleProduct = ({ product }) => {
 
   // const currency = globalSetting?.default_currency || "$";
 
-  // ///console.log('product', product)
-
-  // const { isLoading, setIsLoading } = useContext(SidebarContext);
-  // const { handleAddItem, item, setItem } = useAddToCart();
-  // const { lang } = useTranslation("ns1"); // default namespace (optional)
-
-  // react hook
-  // const { slug } = useParams();
-
-  ///console.log(slug);
-
-
-  ///console.log(product);
-
   const RelatedProduct = getProductByParentCategory(product?.category);
-  ///console.log(RelatedProduct);
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
   return (
     <div className="bg-gray-50">
       <div className="px-0 py-10 lg:py-10">
@@ -66,19 +49,7 @@ const SingleProduct = ({ product }) => {
                 </Link>
               </li>
               <li className="text-sm mt-[1px]">
-                <svg
-                  stroke="currentColor"
-                  fill="none"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  height="1em"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
+              <IoChevronForward/>
               </li>
               <li className="text-sm pr-1 transition duration-200 ease-in cursor-pointer hover:text-emerald-500 font-semibold">
                 <Link
@@ -92,22 +63,10 @@ const SingleProduct = ({ product }) => {
                 </Link>
               </li>
               <li className="text-sm mt-[1px]">
-                <svg
-                  stroke="currentColor"
-                  fill="none"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  height="1em"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
+              <IoChevronForward/>
               </li>
               <li className="text-sm px-1 transition duration-200 ease-in ">
-                {product?.title?.data}
+                {product?.title}
               </li>
             </ol>
           </div>
@@ -144,12 +103,12 @@ const SingleProduct = ({ product }) => {
               <div className="w-full">
                 <div className="flex flex-col md:flex-row lg:flex-row xl:flex-row">
                   <div className="w-full md:w-7/12 md:pr-4 lg:pr-4 xl:pr-12">
-                    <div className="mb-6">
+                    <div className="mb-2">
                       <h1 className="leading-7 text-lg md:text-xl lg:text-2xl mb-1 font-semibold text-gray-800">
-                        {product.title?.data}
+                        {product.title}
                       </h1>
                       <p className="uppercase font-medium text-gray-500">
-                        SKU :{" "}
+                        SKU : 
                         <span className="font-bold text-gray-600">
                           {product.sku}
                         </span>
@@ -159,9 +118,9 @@ const SingleProduct = ({ product }) => {
                       <span className="inline-block text-2xl">
                         ${product.price}
                       </span>
-                      {product.originalPrice === product.price ? "" : (
+                      {product.retailPrice === product.price ? "" : (
                         <del className="text-lg font-normal text-gray-400 ml-1">
-                          ${product.originalPrice}
+                          ${product.retailPrice}
                         </del>
                       )}
                     </div>
@@ -179,7 +138,7 @@ const SingleProduct = ({ product }) => {
                     </div>
                     <div>
                       <p className="text-sm leading-6 text-gray-500 md:leading-7">
-                        {product.description.data}
+                        {product.descriptions}
                       </p>
                       <div className="flex items-center mt-4">
                         <div className="flex items-center justify-between space-s-3 sm:space-s-4 w-full">
@@ -190,19 +149,7 @@ const SingleProduct = ({ product }) => {
                               className="flex items-center justify-center flex-shrink-0 h-full transition ease-in-out duration-300 focus:outline-none w-8 md:w-12 text-heading border-e border-gray-300 hover:text-gray-500"
                             >
                               <span className="text-dark text-base">
-                                <svg
-                                  stroke="currentColor"
-                                  fill="none"
-                                  strokeWidth="2"
-                                  viewBox="0 0 24 24"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  height="1em"
-                                  width="1em"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <line x1="5" y1="12" x2="19" y2="12"></line>
-                                </svg>
+                              <IoRemoveOutline />
                               </span>
                             </button>
                             <p className="font-semibold flex items-center justify-center h-full transition-colors duration-250 ease-in-out cursor-default flex-shrink-0 text-base text-heading w-8 md:w-20 xl:w-24">
@@ -215,20 +162,7 @@ const SingleProduct = ({ product }) => {
                                 setTotal(total + 1)
                               }} className="flex items-center justify-center h-full flex-shrink-0 transition ease-in-out duration-300 focus:outline-none w-8 md:w-12 text-heading border-s border-gray-300 hover:text-gray-500">
                               <span className="text-dark text-base">
-                                <svg
-                                  stroke="currentColor"
-                                  fill="none"
-                                  strokeWidth="2"
-                                  viewBox="0 0 24 24"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  height="1em"
-                                  width="1em"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <line x1="12" y1="5" x2="12" y2="19"></line>
-                                  <line x1="5" y1="12" x2="19" y2="12"></line>
-                                </svg>
+                              <IoAddOutline />
                               </span>
                             </button>
                           </div>
@@ -241,11 +175,11 @@ const SingleProduct = ({ product }) => {
                         <span className=" font-semibold py-1 text-sm d-block">
                           <span className="text-gray-700">Category: </span>
                           <span className="text-gray-500">
-                            {product.children}
+                            {product?.category?.name?.data}
                           </span>
                         </span>
                         <div className="flex flex-row">
-                          {product.tag.map((e, index) => {
+                          {product.tags.map((e, index) => {
                             return (
                               <span
                                 key={index}
@@ -264,6 +198,9 @@ const SingleProduct = ({ product }) => {
                 </div>
               </div>
             </div>
+          </div>
+          <div className='pt-10 llg:pt-20 lg:pb-10' >
+
           </div>
           <div className="pt-10 llg:pt-20 lg:pb-10">
             <h3 className="leading-7 text-lg lg:text-xl mb-3 font-semibold  hover:text-gray-600">

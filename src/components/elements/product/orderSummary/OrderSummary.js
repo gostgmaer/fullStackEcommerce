@@ -46,7 +46,7 @@ function OrderSummary() {
 											className="truncate text-sm font-medium !no-underline !text-gray-700 text-heading line-clamp-1 "
 											href={`/product/${cartItem.slug}`}
 										>
-											{cartItem.title.data}
+											{cartItem.title}
 										</Link>
 										<span className="text-xs text-gray-400 mb-1">
 											Item Price $ {cartItem.price}

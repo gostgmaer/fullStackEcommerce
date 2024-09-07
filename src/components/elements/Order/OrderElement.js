@@ -1,21 +1,23 @@
+"use client"
 import moment from 'moment';
 import React, { useEffect, useRef } from 'react';
 
 
 import ReactToPdf from 'react-to-pdf';
 import ReactToPrint from 'react-to-print';
-import { useParams } from 'next/navigation';
+
 import Link from 'next/link';
 
-function OrderElement() {
+function OrderElement({order}) {
 	const printRef = useRef();
+
 	useEffect(() => {
 		window.scrollTo(0, 0);
 	}, []);
 
-	const { id } = useParams();
-	const data = JSON.parse(localStorage.getItem(id));
-	// console.log(data);
+
+	const data = order.results
+	 console.log(data);
 
 	var formatter = new Intl.NumberFormat('en-US', {
 		style: 'currency',
@@ -136,7 +138,7 @@ function OrderElement() {
 										Invoice No.
 									</span>
 									<span className="text-sm text-gray-500 block">
-										#{data.invoce}
+										#{data.invoice}
 									</span>
 								</div>
 								<div className="flex flex-col lg:text-right text-left">
@@ -192,22 +194,22 @@ function OrderElement() {
 											</tr>
 										</thead>
 										<tbody className="bg-white divide-y divide-gray-100 text-serif text-sm">
-											{data.cart.cartItems.map((items, index) => (
+											{data.items.map((item, index) => (
 												<tr key={index}>
 													<th className="px-6 py-1 whitespace-nowrap font-normal text-gray-500 text-left">
 														{index + 1}
 													</th>
 													<td className="px-6 py-1 whitespace-nowrap font-normal text-gray-500">
-														{items.title}
+														{item.product.title}
 													</td>
 													<td className="px-6 py-1 whitespace-nowrap font-bold text-center">
-														{items.cartQuantity}
+														{item.quantity}
 													</td>
 													<td className="px-6 py-1 whitespace-nowrap font-bold text-center font-DejaVu">
-														{formatter.format(items.price)}
+														{formatter.format(item.product.price)}
 													</td>
 													<td className="px-6 py-1 whitespace-nowrap text-right font-bold font-DejaVu k-grid text-red-500">
-														{formatter.format(items.price * items.cartQuantity)}
+														{formatter.format(item.product.price * item.quantity)}
 													</td>
 												</tr>
 											))}
@@ -223,18 +225,18 @@ function OrderElement() {
 										Payment Method
 									</span>
 									<span className="text-sm text-gray-500 font-semibold  block">
-										{data.paymentMethod}
+										{data.payment_method}
 									</span>
 								</div>
 								<div className="mb-3 md:mb-0 lg:mb-0 flex flex-col sm:flex-wrap">
 									<span className="mb-1 font-bold  text-sm uppercase text-gray-600 block">
 										Shipping Cost
 									</span>
-									<span className="text-sm text-gray-500 font-semibold block">
+									{/* <span className="text-sm text-gray-500 font-semibold block">
 										{data.shippingOption === 'FedEx'
 											? formatter.format(60)
 											: formatter.format(20)}
-									</span>
+									</span> */}
 								</div>
 								<div className="mb-3 md:mb-0 lg:mb-0 flex flex-col sm:flex-wrap">
 									<span className="mb-1 font-bold  text-sm uppercase text-gray-600 block">
@@ -249,7 +251,7 @@ function OrderElement() {
 										Total Amount
 									</span>
 									<span className="text-2xl  font-bold text-red-500 block">
-										{formatter.format(data.cart.cartTotalAmount)}
+										{formatter.format(data.total)}
 									</span>
 								</div>
 							</div>
