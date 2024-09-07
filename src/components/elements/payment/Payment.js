@@ -1,8 +1,8 @@
 import React, { Fragment, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { useNavigate } from 'react-router-dom';
 
-import { toast } from 'react-hot-toast';
+
+
 // paypla
 
 import axios from 'axios';
@@ -11,9 +11,11 @@ import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import { Elements } from '@stripe/react-stripe-js';
 import { StripeCheckout } from './StripeCheckout';
 import { loadStripe } from '@stripe/stripe-js';
+import { useRouter } from 'next/navigation';
+import { notifyerror, notifySuccess } from '@/utils/notify/notice';
 
 const Payment = ({ isOpen, order, setIsPayment }) => {
-	let navigate = useNavigate();
+	let navigate = useRouter();
 	// paypal
 	const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 	useEffect(() => {
@@ -73,19 +75,17 @@ const Payment = ({ isOpen, order, setIsPayment }) => {
 					.post(`${process.env.REACT_APP_BASE_API_URL}/order/pay`, data)
 					.then((res) => res.data)
 					.then((data) => {
-						toast.success(data.message);
+						notifySuccess(data.message)
 						localStorage.setItem('order', JSON.stringify(data));
-						navigate(`/order/`);
+						navigate.push(`/order/`);
 					})
 					.catch((error) => {
-						toast.error(
-							error
-								? error?.response?.data?.error ||
-										error?.response?.data?.message ||
-										error?.response?.data?.error.message ||
-										error?.message
-								: error?.message
-						);
+						notifyerror(error
+							? error?.response?.data?.error ||
+									error?.response?.data?.message ||
+									error?.response?.data?.error.message ||
+									error?.message
+							: error?.message)
 					});
 			} catch (error) {
 				///console.log(error);

@@ -473,3 +473,15 @@ export const getCookiesData = (second) => {
     Authorization,
   };
 };
+
+
+export const authToken = (second) => {
+  const cookiesData = Cookies.get();
+  console.log(cookiesData);
+  
+  const Authorization =
+    "Bearer " + cookiesData?.["accessToken"];
+  return {
+    Authorization
+  };
+};

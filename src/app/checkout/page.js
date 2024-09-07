@@ -1,13 +1,14 @@
 
-import CheckoutBlock from "@/components/global/common/forms/checkout";
+import CheckoutBlock from "@/components/elements/payment/checkout";
 import Layout from "@/components/global/layout/Layout";
-
+import { cookies } from 'next/headers';
 
 import { Fragment } from "react";
 
 
 export default function Checkout() {
-
+  const cookiesList = cookies();
+  const token = cookiesList.get('accessToken'); 
 
   return (
     <Fragment>
@@ -15,7 +16,7 @@ export default function Checkout() {
 
 
       <Layout>
-        <CheckoutBlock />
+        <CheckoutBlock params={token} />
 
       </Layout>
     </Fragment>

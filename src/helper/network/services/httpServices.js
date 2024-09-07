@@ -14,7 +14,7 @@ export async function fetchData(endpoint, options = {}) {
     } = options;
 
     // const tokens = getCookiesData();
- 
+
 
 
     // Validate token and endpoint
@@ -57,8 +57,8 @@ export async function fetchData(endpoint, options = {}) {
       }
     }
     const defaultHeaders = {
-      'Content-Type': 'application/json'
-    
+      'Content-Type': 'application/json',
+
     };
     const mergedHeaders = { ...defaultHeaders, ...headers };
 
@@ -91,24 +91,29 @@ export async function fetchData(endpoint, options = {}) {
 const requests = {
   get: async (endpoint, query, params, headers) =>
     await fetchData(endpoint, {
+      method: 'GET',
       cacheTime: 300,
       query, params, headers // Cache for 5 minutes
     }),
   post: async (endpoint, body, headers) =>
     await fetchData(endpoint, {
+      method: 'POST',
       cacheTime: 300,
       body, headers // Cache for 5 minutes
     }),
   put: async (endpoint, body, params, headers) =>
     await fetchData(endpoint, {
+      method: 'PUT',
       cacheTime: 300, body, params, headers // Cache for 5 minutes
     }),
   patch: async (endpoint, body, params, headers) =>
     await fetchData(endpoint, {
+      method: 'PATCH',
       cacheTime: 300, body, params, headers // Cache for 5 minutes
     }),
   delete: async (endpoint, params, headers) =>
     await fetchData(endpoint, {
+      method: 'DELETE',
       cacheTime: 300, params, headers // Cache for 5 minutes
     }),
 

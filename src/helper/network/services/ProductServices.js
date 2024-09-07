@@ -14,8 +14,15 @@ const ProductServices = {
     return requests.get("/products/discount", query);
   },
   getProductBySlug: async (params) => {
-    return requests.get(`/products/:slug`, params);
+   
+    
+    return requests.get(`/products/view/:slug`,null,params);
   },
+
+  getRelatedProducts: async (query) => {
+    return requests.get(`/products/related`, query);
+  }
+
 };
 
 export default ProductServices;

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import axios from 'axios';
-import { toast } from 'react-hot-toast';
+import { notifySuccess } from '@/utils/notify/notice';
+
 // import { useSelector } from 'react-redux';
 
 export const StripeCheckout = ({ order }) => {
@@ -35,7 +36,7 @@ export const StripeCheckout = ({ order }) => {
 				{ amount: order.totalPrice }
 			);
 
-			if (!response.status === 200) {
+			if (!response.status) {
 				throw new Error('Failed to create payment');
 			}
 
@@ -56,7 +57,8 @@ export const StripeCheckout = ({ order }) => {
 					}
 				);
 				///console.log(res);
-				toast.success(`Payment ${paymentIntent.status}`);
+				notifySuccess(`Payment ${paymentIntent.status}`)
+				// toast.success();
 			}
 		} catch (error) {
 			///console.log(error);
