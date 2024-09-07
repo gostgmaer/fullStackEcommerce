@@ -120,7 +120,7 @@
 //                 <TableCell align="left">
 //                   {" "}
 //                   <div className="flex gap-1 items-center">
-                   
+
 //                     <Image
 //                       width={100}
 //                       height={100}
@@ -152,11 +152,16 @@
 // };
 
 
+import Layout from '@/components/global/layout/Layout'
 import React from 'react'
 
 const Page = () => {
   return (
-    <div>page</div>
+    <Layout  >
+
+      <div></div>
+
+    </Layout>
   )
 }
 

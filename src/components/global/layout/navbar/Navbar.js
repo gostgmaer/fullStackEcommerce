@@ -119,7 +119,7 @@ const Navbar = () => {
 
               <button className="pl-5  text-2xl font-bold" aria-label="Login">
                 {session ? (
-                  <Link href="/dashboard" className=" top-1 relative 2-6 h-6">
+                  <Link href="/user/my-account/dashboard" className=" top-1 relative 2-6 h-6">
                     <Image
                       width={29}
                       height={29}

@@ -1,30 +1,36 @@
-// import ChangePassword from "@/components/forms/auth/changePassword";
+// import Orderlist from "@/components/Usermodule/Orderlist";
 // import Userlayout from "@/layout/user";
 
 // import { Person, ShoppingBag } from "@mui/icons-material";
-// import { Box, Typography } from "@mui/material";
+// import { Box, Pagination, Typography } from "@mui/material";
 // import { getSession } from "next-auth/react";
+// import Head from "next/head";
 
 // const Orders = (props) => {
 //   return (
-//     <Userlayout user={props.session}>
+//     <Userlayout  user={props.session}>
+//        <Head>
+//         <title>
+//          Ecommerce {props.session.user.name} Order List
+//         </title>
+//       </Head>
 //       <Box
 //         display={"flex"}
 //         flexDirection={"column"}
 //         alignItems={"flex-start"}
-//         width={'100%'}
 //         gap={3}
 //       >
 //         <Typography
 //           fontWeight={600}
 //           width={"100%"}
-//           fontSize={24}
+//           fontSize={20}
 //           sx={{ display: "flex", gap: 0.5, alignItems: "center" }}
 //         >
-
-//           Changed Password
+//           <ShoppingBag color="error" />
+//           <span>My Orders</span>
 //         </Typography>
-//         <ChangePassword />
+//         <Orderlist user={props.session} />
+       
 //       </Box>
 //     </Userlayout>
 //   );
@@ -51,6 +57,8 @@
 // //     },
 // //   };
 // // };
+
+
 
 // export const getServerSideProps = async (ctx) => {
 
@@ -82,12 +90,18 @@
 // };
 
 
+import Layout from '@/components/global/layout/Layout'
 import React from 'react'
 
-const Page = () => {
+
+const Index = () => {
   return (
-    <div>page</div>
+    <Layout  >
+
+      <div></div>
+
+    </Layout>
   )
 }
 
-export default Page
+export default Index

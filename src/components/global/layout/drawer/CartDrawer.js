@@ -84,7 +84,7 @@ const CartDrawer = ({setOpen}) => {
                     src={data.image[0]}
                     width={40}
                     height={40}
-                    alt={data.title.data}
+                    alt={data.title}
                   />
                 </div>
                 <div className="flex flex-col w-full overflow-hidden">
@@ -92,7 +92,7 @@ const CartDrawer = ({setOpen}) => {
                     className="truncate text-sm font-medium !no-underline !text-gray-700 text-heading line-clamp-1"
                     href={`/product/${data.slug}`}
                   >
-                    {data.title.data}
+                    {data.title}
                   </Link>
                   <span className="text-xs text-gray-400 mb-1">
                     Item Price ${data.price}

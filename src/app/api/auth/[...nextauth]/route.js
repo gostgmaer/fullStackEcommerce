@@ -1,8 +1,6 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/github";
-import jwt from "jsonwebtoken";
-import Cookies from "js-cookie";
 import { setCookie } from 'cookies-next';
 import NextAuth from "next-auth";
 import {
@@ -14,6 +12,7 @@ import {
   secret,
 } from "@/config/setting";
 import { jwtDecode } from "jwt-decode";
+import { cookies } from "next/headers";
 export const handler = NextAuth({
   providers: [
     CredentialsProvider({
@@ -166,6 +165,15 @@ export const handler = NextAuth({
       session["id_token"] = token.id_token;
       session["token_type"] = token.token_type;
       session["accessToken"] = token.accessToken;
+      const cookieStore = cookies();
+      cookieStore.set('name', token.name, { httpOnly: true });
+      cookieStore.set('email', token.email, { httpOnly: true });
+      cookieStore.set('image', token.picture, { httpOnly: true });
+      cookieStore.set('expires', session.expires, { httpOnly: true });
+      cookieStore.set('accessToken', token.accessToken, { httpOnly: true });
+      cookieStore.set('refreshToken', token.refreshToken, { httpOnly: true });
+      cookieStore.set('id_token', token.id_token, { httpOnly: true });
+
       return session;
     },
     async jwt({ token, user, account, profile, isNewUser,session,trigger="signIn" }) {

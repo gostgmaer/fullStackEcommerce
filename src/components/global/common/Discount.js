@@ -1,7 +1,7 @@
 "use client"
 const Discount = ({ discount=1, product, slug, modal }) => {
 
-  console.log(product);
+
   
   return (
     <>

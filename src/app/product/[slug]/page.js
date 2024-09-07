@@ -1,17 +1,18 @@
 import { getProductByChildrenCategory, getProductById } from "@/assets/fakeData/Products";
 import SingleProduct from "@/components/elements/product/singleProduct";
-
 import Layout from "@/components/global/layout/Layout";
-import useTranslation from "next-translate/useTranslation";
+import ProductServices from "@/helper/network/services/ProductServices";
 
 
 const ProductScreen = async (props) => {
 
-  const result = await getRecord(props.params.slug)
+  // const result = await getRecord(props.params.slug)
   // ///console.log(result);
   
 
-  const product = getProductById(props.params.slug);
+  const product = await ProductServices.getProductBySlug(props.params)
+  console.log(product);
+  
 
 
  
@@ -172,7 +173,8 @@ const ProductScreen = async (props) => {
   return (
     <>
       <Layout>
-        <SingleProduct product={product} />
+        <SingleProduct product={product.results} />
+        <div></div>
 
       </Layout>
     </>
