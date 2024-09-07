@@ -11,8 +11,7 @@ import {
   googleSecret,
   secret,
 } from "@/config/setting";
-import { jwtDecode } from "jwt-decode";
-import { cookies } from "next/headers";
+
 export const handler = NextAuth({
   providers: [
     CredentialsProvider({
@@ -71,7 +70,7 @@ export const handler = NextAuth({
     // ...add more providers here
   ],
 
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: secret,
   pages: {
     signIn: "/auth/login",
   },
@@ -155,24 +154,47 @@ export const handler = NextAuth({
     },
 
     async redirect({ url, baseUrl }) {
-      if (url.startsWith("/")) return `${baseUrl}`;
-      // Allows callback URLs on the same origin
-      else if (new URL(url).origin === baseUrl) return baseUrl;
+      // if (url.startsWith("/")) return new URL(url, baseUrl).toString();
+      // // Allows callback URLs on the same origin
+      // else if (new URL(url).origin === baseUrl) return baseUrl;
+      // return baseUrl;
+
+      if (url.startsWith("/")) return new URL(url, baseUrl).toString();
+
+      try {
+        const parsedUrl = new URL(url);
+        
+        // Allow URLs on the same origin
+        if (parsedUrl.origin === baseUrl) {
+          // Decode query parameters if needed
+          const callbacks = parsedUrl.searchParams.get('callbacks');
+          if (callbacks) {
+            return new URL(callbacks, baseUrl).toString();
+          }
+          return url; // If no specific callback, return the original URL
+        }
+      } catch (error) {
+        // Handle URL parsing errors if necessary
+        console.error("Invalid URL:", error);
+      }
+    
+      // Default redirect to the base URL
       return baseUrl;
+
     },
     async session({ session, token, user }) {
       session["refreshToken"] = token.refreshToken;
       session["id_token"] = token.id_token;
       session["token_type"] = token.token_type;
       session["accessToken"] = token.accessToken;
-      const cookieStore = cookies();
-      cookieStore.set('name', token.name, { httpOnly: true });
-      cookieStore.set('email', token.email, { httpOnly: true });
-      cookieStore.set('image', token.picture, { httpOnly: true });
-      cookieStore.set('expires', session.expires, { httpOnly: true });
-      cookieStore.set('accessToken', token.accessToken, { httpOnly: true });
-      cookieStore.set('refreshToken', token.refreshToken, { httpOnly: true });
-      cookieStore.set('id_token', token.id_token, { httpOnly: true });
+      // const cookieStore = cookies();
+      // cookieStore.set('name', token.name, { httpOnly: true });
+      // cookieStore.set('email', token.email, { httpOnly: true });
+      // cookieStore.set('image', token.picture, { httpOnly: true });
+      // cookieStore.set('expires', session.expires, { httpOnly: true });
+      // cookieStore.set('accessToken', token.accessToken, { httpOnly: true });
+      // cookieStore.set('refreshToken', token.refreshToken, { httpOnly: true });
+      // cookieStore.set('id_token', token.id_token, { httpOnly: true });
 
       return session;
     },
