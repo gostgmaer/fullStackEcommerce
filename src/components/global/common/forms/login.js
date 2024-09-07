@@ -6,7 +6,7 @@ import { loginValidationSchema } from "@/utils/validation/validation";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import Input from "@/components/global/fields/input";
 import { notifyerror } from "@/utils/notify/notice";
 import { MdEmail, MdLock } from "react-icons/md";
