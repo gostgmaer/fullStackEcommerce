@@ -16,9 +16,10 @@ import { MdCreditCard, MdWallet } from 'react-icons/md';
 import { IoArrowForward, IoLogoPaypal, IoReturnUpBack } from 'react-icons/io5';
 import Payment from './Payment';
 import OrderServices from '@/helper/network/services/OrderServices';
-import { authToken } from '@/helper/functions';
 
-const CheckoutBlock = ({params}) => {
+const CheckoutBlock =  ({params}) => {
+
+
     const paymentMethod = [
         { key: "creditCard", value: "Credit Card/Debit Card/NetBanking" },
         { key: "paypal", value: "PayPal" },
@@ -102,7 +103,7 @@ const CheckoutBlock = ({params}) => {
 
 
                 
-                const requests = await OrderServices.addOrder(data, {"Authorization":`Bearer ${params?.value}`})
+                const requests = await OrderServices.addOrder(data, {"Authorization":`Bearer ${params}`})
                 notifySuccess(requests.message)
                 if (requests.statusCode===201) {
                     navigate.push(`/order/${requests.result._id}`)

@@ -4,18 +4,27 @@ import Layout from "@/components/global/layout/Layout";
 import ProductServices from "@/helper/network/services/ProductServices";
 
 
+
+export async function generateMetadata({ params, searchParams }, parent) {
+
+  const { results } = await ProductServices.getProductBySlug(params)
+
+  return {
+    title: 'Ecommerce' + ' | ' + results.title,
+    description: results.descriptions,
+    openGraph: {
+      title: results.title,
+      description: results.descriptions,
+      images: results.image,
+    },
+  }
+}
+
 const ProductScreen = async (props) => {
 
-  // const result = await getRecord(props.params.slug)
-  // ///console.log(result);
-  
+
 
   const product = await ProductServices.getProductBySlug(props.params)
-  console.log(product);
-  
-
-
- 
 
 
   // useEffect(() => {

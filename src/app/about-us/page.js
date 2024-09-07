@@ -9,7 +9,7 @@ import { content } from "@/assets/jsonfile/content";
 //internal import
 
 export const metadata = {
-  title: "About us",
+  title: "Ecommerce | About us",
   description: "Created by kishor sarkar",
 };
 

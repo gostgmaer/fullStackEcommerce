@@ -13,10 +13,87 @@ import { Placeholder } from 'rsuite';
 // import { serverMethod } from "@/helper/network/serverCall/datafetch";
 
 export const metadata = {
-  title: "This is HomePage",
-  description: "Ths is Description",
-};
+  generator: "Next.js",
+  applicationName: "Ecommerce App",
+  referrer: "origin-when-cross-origin",
+  keywords: ["Next.js", "React", "JavaScript"],
+  authors: [{ name: "Kishor Sarkar" }, { name: "Kishor Sarkar", url: "https://nextjs.org" }],
+  creator: "Kishor Sarkar",
+  publisher: "Github",
+  title: "Ecommerce Web &amp; Store e-commerce Template",
+  description:
+    "Ecommerce Web &amp; Store e-commerce Template Made for Fun.",
 
+  twitter: {
+    card: "app",
+    title: "Next.js",
+    description: "The React Framework for the Web",
+    siteId: "1467726470533754880",
+    creator: "@nextjs",
+    creatorId: "1467726470533754880",
+    images: {
+      url: "https://nextjs.org/og.png",
+      alt: "Next.js Logo",
+    },
+    app: {
+      name: "twitter_app",
+      id: {
+        iphone: "twitter_app://iphone",
+        ipad: "twitter_app://ipad",
+        googleplay: "twitter_app://googleplay",
+      },
+      url: {
+        iphone: "https://iphone_url",
+        ipad: "https://ipad_url",
+      },
+    },
+  },
+  openGraph: {
+    title: "Ecommerce Web &amp; Store e-commerce Template",
+    description:  "Ecommerce Web &amp; Store e-commerce Template Made for Fun.",
+    url: "https://full-stack-ecommerce-iota.vercel.app/",
+    siteName: "Ecommerce",
+    images: [
+      {
+        url: "https://nextjs.org/og.png", // Must be an absolute URL
+        width: 800,
+        height: 600,
+      },
+      {
+        url: "https://nextjs.org/og-alt.png", // Must be an absolute URL
+        width: 1800,
+        height: 1600,
+        alt: "My custom alt",
+      },
+    ],
+    videos: [
+      {
+        url: "https://nextjs.org/video.mp4", // Must be an absolute URL
+        width: 800,
+        height: 600,
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  alternates: {
+    canonical: 'https://nextjs.org',
+    languages: {
+      'en-US': 'https://nextjs.org/en-US',
+      'de-DE': 'https://nextjs.org/de-DE',
+    },
+    media: {
+      'only screen and (max-width: 600px)': 'https://nextjs.org/mobile',
+    },
+    types: {
+      'application/rss+xml': 'https://nextjs.org/rss',
+    },
+  },
+  canonical: "https://example.com",
+  facebook: {
+    appId: '12345678',
+  },
+};
 
 export default async function Home(props) {
 

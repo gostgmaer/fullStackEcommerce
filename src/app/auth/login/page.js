@@ -1,11 +1,12 @@
-"use client"
 
 import Link from "next/link";
-
-import { FaFacebook, FaGoogle } from "react-icons/fa";
-import { useSession, signIn, signOut } from "next-auth/react"
 import Layout from "@/components/global/layout/Layout";
 import LoginForm from "@/components/global/common/forms/login";
+
+export const metadata = {
+  title: "Ecommerce | Login",
+  description: "Created by kishor sarkar",
+};
 
 const Index = () => {
   return (

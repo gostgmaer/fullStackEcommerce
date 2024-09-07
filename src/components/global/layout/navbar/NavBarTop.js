@@ -1,20 +1,12 @@
 "use client"
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
-// import { useRouter } from "next/router";
 import { FiPhoneCall, FiUser } from "react-icons/fi";
-import { signOut } from "next-auth/react"
-
-import Cookies from "js-cookie";
 import dynamic from "next/dynamic";
-import { UserContext } from "@/context/UserContext";
-import { useRouter } from "next/navigation";
 import { content } from "@/assets/jsonfile/content";
-import LoginModal from "../../modal/LoginModal";
 import { useSession } from "next-auth/react";
-
+import { handleSignOut } from "../../common/signout";
 const NavBarTop = () => {
-
   const { data: session } = useSession();
   
   return (
@@ -62,7 +54,7 @@ const NavBarTop = () => {
                 <>
                   {" "}
                   <button
-                   onClick={() => signOut()}
+                   onClick={() => handleSignOut()}
                     className="flex items-center font-medium hover:text-emerald-600"
                   >
                     <span className="mr-1">
