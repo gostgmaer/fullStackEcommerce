@@ -1,14 +1,15 @@
 
 import CheckoutBlock from "@/components/elements/payment/checkout";
 import Layout from "@/components/global/layout/Layout";
-import { cookies } from 'next/headers';
+import { getServerSession } from "next-auth";
 
 import { Fragment } from "react";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 
+export default async function  Checkout() {
 
-export default function Checkout() {
-  const cookiesList = cookies();
-  const token = cookiesList.get('accessToken'); 
+// @ts-ignore
+const session = await getServerSession(authOptions);
 
   return (
     <Fragment>
@@ -16,7 +17,7 @@ export default function Checkout() {
 
 
       <Layout>
-        <CheckoutBlock params={token} />
+        <CheckoutBlock params={session["accessToken"]}  />
 
       </Layout>
     </Fragment>

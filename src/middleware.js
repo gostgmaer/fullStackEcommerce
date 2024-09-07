@@ -15,7 +15,7 @@ export async function middleware(req, res) {
 
   const authorised = cookieStore.get('next-auth.session-token')
   // const authorised = true;
-  console.log(authorised);
+  // console.log(authorised);
   
 
 

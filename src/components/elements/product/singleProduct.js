@@ -9,6 +9,7 @@ import {  useEffect, useState } from "react";
 import { addByIncrement } from '@/store/reducers/cartSlice';
 import { useDispatch } from 'react-redux';
 import { IoAddOutline, IoChevronForward, IoRemoveOutline } from 'react-icons/io5';
+import { notifySuccess } from '@/utils/notify/notice';
 
 
 const SingleProduct = ({ product }) => {
@@ -20,6 +21,7 @@ console.log(product);
 
   const handleAddToCart = (product) => {
     dispatch(addByIncrement({ product: {...product,id:product._id}, cartQuantity: total }));
+    notifySuccess(`${product.title} is Successfully Add!`)
   }
 
 
