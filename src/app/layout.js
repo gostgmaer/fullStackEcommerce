@@ -18,6 +18,9 @@ export default function RootLayout({ children }) {
   return (
     <NextAuthProvider>
       <html lang="en" suppressHydrationWarning={true}>
+        <head>
+        <link rel="icon" href="./fivecon.ico" sizes="any" />
+        </head>
 
         <body className={inter.className}>
 
