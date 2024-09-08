@@ -6,22 +6,13 @@ import { notifyerror, notifySuccess } from "@/utils/notify/notice";
 import { resetPasswordValidation } from "@/utils/validation/validation";
 import { useFormik } from "formik";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { MdArrowRight, MdKeyboardArrowRight } from "react-icons/md";
+import React, { useEffect } from "react";
 import Input from "../../fields/input";
 
 const ResetForm = () => {
 
   const { handleLoginAuth, user, userId } = useAuthContext();
-  // const router = useRouter();
-
-
-  // const [error, setError] = useState(undefined);
   const param = useSearchParams();
-
-
- 
-
   useEffect(() => {
     if (userId) {
       router.push("/");
@@ -45,7 +36,6 @@ const ResetForm = () => {
       notifyerror("Error")
     }
   };
-
 
   const formik = useFormik({
     initialValues: {
@@ -80,8 +70,6 @@ const ResetForm = () => {
       }
     },
   });
-
-
 
 
   return (

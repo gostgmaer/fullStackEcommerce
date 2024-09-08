@@ -1,6 +1,5 @@
 "use client"
 import React, { useMemo, useState } from "react";
-
 import { Select } from "@/components/global/fields/SelectField";
 import Pagination from "@/components/global/common/pagination/Pagination";
 import ProductCard from "../ProductCard";

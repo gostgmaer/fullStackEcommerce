@@ -5,7 +5,6 @@ import { loginValidationSchema } from "@/utils/validation/validation";
 import { useFormik } from "formik";
 import Link from "next/link";
 import React from "react";
-import { FiMail } from "react-icons/fi";
 
 //internal import
 

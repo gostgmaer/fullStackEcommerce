@@ -1,4 +1,5 @@
 import { decreaseCart, getTotals, incrementCart, removeFromCart } from '@/store/reducers/cartSlice';
+import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect } from 'react';
 import { IoAddOutline, IoBag, IoRemoveOutline } from 'react-icons/io5';
@@ -20,7 +21,7 @@ function OrderSummary() {
 					{cart.cartItems.length === 0 ? (
 						<div className="text-center py-10">
 							<span className="flex justify-center my-auto text-gray-500 dark:text-gray-50 font-semibold text-4xl">
-								<IoBag/>
+								<IoBag />
 							</span>
 							<h2 className="font-medium text-sm pt-2 text-gray-600 dark:text-gray-100">
 								No Item Added Yet!
@@ -34,10 +35,11 @@ function OrderSummary() {
 									className="group w-full h-auto flex justify-start items-center bg-white py-3 px-4 border-b hover:bg-gray-50 transition-all border-gray-100 relative last:border-b-0 "
 								>
 									<div className="relative flex rounded-full border border-gray-100 shadow-sm overflow-hidden flex-shrink-0 cursor-pointer mr-4">
-										<img
+										<Image
 											src={cartItem.image[0]}
-											width="40"
-											height="40"
+											width={40}
+											height={40}
+											className=' w-10 h-10'
 											alt="Blueberry"
 										/>
 									</div>
@@ -62,7 +64,7 @@ function OrderSummary() {
 													onClick={() => dispatch(decreaseCart(cartItem))}
 												>
 													<span className="text-dark text-base">
-													<IoRemoveOutline/>
+														<IoRemoveOutline />
 													</span>
 												</button>
 												<p className="text-sm font-semibold text-dark px-1">
@@ -72,7 +74,7 @@ function OrderSummary() {
 													onClick={() => dispatch(incrementCart(cartItem))}
 												>
 													<span className="text-dark text-base">
-													<IoAddOutline/>
+														<IoAddOutline />
 													</span>
 												</button>
 											</div>
@@ -80,7 +82,7 @@ function OrderSummary() {
 												onClick={() => dispatch(removeFromCart(cartItem))}
 												className="hover:text-red-600 text-red-400 text-lg cursor-pointer"
 											>
-												<MdDelete/>
+												<MdDelete />
 											</button>
 										</div>
 									</div>

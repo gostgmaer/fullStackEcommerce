@@ -5,22 +5,23 @@ import ProductCard from "@/components/elements/product/ProductCard";
 import Informations from "@/components/global/common/informations/Informations";
 import SocialNetwork from "@/components/global/common/SocialNetwork";
 import Link from "next/link";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { addByIncrement } from '@/store/reducers/cartSlice';
 import { useDispatch } from 'react-redux';
 import { IoAddOutline, IoChevronForward, IoRemoveOutline } from 'react-icons/io5';
 import { notifySuccess } from '@/utils/notify/notice';
+import Image from 'next/image';
 
 
 const SingleProduct = ({ product }) => {
   const dispatch = useDispatch();
 
-console.log(product);
+  console.log(product);
 
   const [total, setTotal] = useState(1)
 
   const handleAddToCart = (product) => {
-    dispatch(addByIncrement({ product: {...product,id:product._id}, cartQuantity: total }));
+    dispatch(addByIncrement({ product: { ...product, id: product._id }, cartQuantity: total }));
     notifySuccess(`${product.title} is Successfully Add!`)
   }
 
@@ -51,7 +52,7 @@ console.log(product);
                 </Link>
               </li>
               <li className="text-sm mt-[1px]">
-              <IoChevronForward/>
+                <IoChevronForward />
               </li>
               <li className="text-sm pr-1 transition duration-200 ease-in cursor-pointer hover:text-emerald-500 font-semibold">
                 <Link
@@ -65,7 +66,7 @@ console.log(product);
                 </Link>
               </li>
               <li className="text-sm mt-[1px]">
-              <IoChevronForward/>
+                <IoChevronForward />
               </li>
               <li className="text-sm px-1 transition duration-200 ease-in ">
                 {product?.title}
@@ -81,21 +82,18 @@ console.log(product);
                   </span>
                 )}
                 <span
+                className=' block overflow-hidden bg-none opacity-100 border-0 m-0 p-0 relative '
                   style={{
                     boxSizing: "border-box",
-                    display: "block",
-                    overflow: " hidden",
+              
                     width: " initial",
                     height: "initial",
-                    background: "none",
-                    opacity: "1",
-                    border: "0px",
-                    margin: "0px",
-                    padding: "0px",
-                    position: "relative",
+                
                   }}
                 >
-                  <img
+                  <Image
+                    width={100}
+                    height={100}
                     alt={product.title?.data}
                     src={product?.image[0]}
                     sizes="100vw"
@@ -110,7 +108,7 @@ console.log(product);
                         {product.title}
                       </h1>
                       <p className="uppercase font-medium text-gray-500">
-                        SKU : 
+                        SKU :
                         <span className="font-bold text-gray-600">
                           {product.sku}
                         </span>
@@ -151,7 +149,7 @@ console.log(product);
                               className="flex items-center justify-center flex-shrink-0 h-full transition ease-in-out duration-300 focus:outline-none w-8 md:w-12 text-heading border-e border-gray-300 hover:text-gray-500"
                             >
                               <span className="text-dark text-base">
-                              <IoRemoveOutline />
+                                <IoRemoveOutline />
                               </span>
                             </button>
                             <p className="font-semibold flex items-center justify-center h-full transition-colors duration-250 ease-in-out cursor-default flex-shrink-0 text-base text-heading w-8 md:w-20 xl:w-24">
@@ -164,7 +162,7 @@ console.log(product);
                                 setTotal(total + 1)
                               }} className="flex items-center justify-center h-full flex-shrink-0 transition ease-in-out duration-300 focus:outline-none w-8 md:w-12 text-heading border-s border-gray-300 hover:text-gray-500">
                               <span className="text-dark text-base">
-                              <IoAddOutline />
+                                <IoAddOutline />
                               </span>
                             </button>
                           </div>
