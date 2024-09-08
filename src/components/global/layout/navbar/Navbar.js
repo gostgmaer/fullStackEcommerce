@@ -129,7 +129,7 @@ const Navbar = () => {
                     />
                   </Link>
                 ) : session ? (
-                  <Link className="leading-none font-bold font-serif block" href="/dashboard/my-account">
+                  <Link className="leading-none font-bold font-serif block" href="/user/my-account/dashboard">
                     {session?.user?.name}
                   </Link>
 
