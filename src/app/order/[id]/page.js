@@ -1,7 +1,6 @@
 import Layout from '@/components/global/layout/Layout'
 import OrderServices from '@/helper/network/services/OrderServices'
 import React from 'react'
-import { cookies } from 'next/headers';
 import OrderElement from '@/components/elements/Order/OrderElement';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
