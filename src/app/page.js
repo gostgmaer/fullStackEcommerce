@@ -9,6 +9,7 @@ import FeatureCategory from "@/components/elements/category/FeatureCategory";
 import OfferCard from "@/components/elements/offer/OfferCard";
 import ProductCard from "@/components/elements/product/ProductCard";
 import Layout from "@/components/global/layout/Layout";
+import ProductServices from "@/helper/network/services/ProductServices";
 import { Placeholder } from 'rsuite';
 // import { serverMethod } from "@/helper/network/serverCall/datafetch";
 
@@ -50,7 +51,7 @@ export const metadata = {
   },
   openGraph: {
     title: "Ecommerce Web &amp; Store e-commerce Template",
-    description:  "Ecommerce Web &amp; Store e-commerce Template Made for Fun.",
+    description: "Ecommerce Web &amp; Store e-commerce Template Made for Fun.",
     url: "https://full-stack-ecommerce-iota.vercel.app/",
     siteName: "Ecommerce",
     images: [
@@ -97,7 +98,7 @@ export const metadata = {
 
 export default async function Home(props) {
 
-  // const result = await getAllRecord(props.searchParams)
+  const result = await getAllRecord(props.searchParams)
 
   return (
     <Layout  >
@@ -159,7 +160,7 @@ export default async function Home(props) {
           <div className="flex">
             <div className="w-full">
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-3 lg:gap-3">
-                {popularProducts?.slice(0, 18).map((product) => (
+                {result.popular.results?.slice(0, 18).map((product) => (
                   <ProductCard
                     key={product._id}
                     product={product}
@@ -200,7 +201,7 @@ export default async function Home(props) {
           <div className="flex">
             <div className="w-full">
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-3 lg:gap-3">
-                {discountProducts?.slice(0, 12).map((product) => (
+                {result.discount.results?.slice(0, 12).map((product) => (
                   <ProductCard
                     key={product._id}
                     product={product}
@@ -218,19 +219,14 @@ export default async function Home(props) {
 }
 
 
-// export const getAllRecord = async (query)=>{
-
-//   const params = {
-//     method: "get",
-//     header: {},
-//     query: {...query },
-//   };
-//   const result = await serverMethod(
-//     `/products`,
-//     params
-//   );
+export const getAllRecord = async (query) => {
 
 
-// return result
+  const popular = await ProductServices.getPopularProducts()
+  const discount = await ProductServices.getDiscountedProducts()
 
-// }
+  return {
+    popular, discount
+  }
+
+}

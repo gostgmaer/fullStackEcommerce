@@ -37,7 +37,7 @@ const ProductModal = ({
   const [value, setValue] = useState("");
   const [price, setPrice] = useState(0);
   const [img, setImg] = useState("");
-  const [originalPrice, setOriginalPrice] = useState(0);
+  const [originalPrice, setOriginalPrice] = useState(product?.prices?.originalPrice);
   const [stock, setStock] = useState(0);
   const [discount, setDiscount] = useState("");
   const [selectVariant, setSelectVariant] = useState({});
@@ -188,7 +188,7 @@ const ProductModal = ({
     // setIsLoading(!isLoading);
   };
 
-  const category_name = product?.category?.name
+  // const category_name = product?.category?.title
   // function handleAddToCart(product) {
   //   throw new Error("Function not implemented.");
   // }
@@ -215,7 +215,7 @@ const ProductModal = ({
                     width={420}
                     height={420}
                     className=" w-full h-auto md:w-[420px] md:h-[420px] "
-                    alt="product"
+                    alt={product?.title}
                   />
                 ) : (
                   <Image
@@ -236,8 +236,7 @@ const ProductModal = ({
                     // onClick={() => setModalOpen(false)}
                     className="text-heading text-lg md:text-xl lg:text-2xl font-semibold font-serif hover:text-black cursor-pointer"
                   >
-
-                    {product?.title?.data}
+                    {product?.title}
 
                   </h1>
                 </Link>
@@ -250,7 +249,7 @@ const ProductModal = ({
               </div>
               <p className="text-sm leading-6 text-gray-500 md:leading-6">
 
-                {product?.description?.data}
+                {product?.descriptions}
               </p>
               <div className="flex items-center my-4">
                 <Price
@@ -332,14 +331,14 @@ const ProductModal = ({
                         :
                       </span>{" "}
                       <Link
-                        href={`/search?category=${product?.category?.name.data}&_id=${product?.category?._id}`}
+                        href={`/search?category=${product?.category?.title}&_id=${product?.category?._id}`}
                       >
                         <button
                           type="button"
                           className="text-gray-600 font-serif font-medium underline ml-2 hover:text-teal-600"
                          
                         >
-                          {product?.category?.name.data}
+                          {product?.category?.title}
                         </button>
                       </Link>
                     </span>

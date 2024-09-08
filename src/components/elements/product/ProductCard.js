@@ -35,7 +35,6 @@ const ProductCard = ({ product, attributes }) => {
 
 
 
-
   return (
     <>
       {modalOpen && (
@@ -65,8 +64,9 @@ const ProductCard = ({ product, attributes }) => {
                 <Image
                   src={product?.image?.[0]}
                   onClick={() => handleModalOpen(!modalOpen, product)}
-                  alt="product"
+                  alt={product?.title}
                   loading="lazy"
+                  
                   width={210}
                   height={210}
                   decoding="async"
@@ -112,7 +112,7 @@ const ProductCard = ({ product, attributes }) => {
             <h2 className="text-heading truncate mb-0 block text-sm font-medium text-gray-600 dark:text-gray-200 cursor-pointer">
               <span className="line-clamp-2">
                 {/* {showingTranslateValue(product?.title, lang)} */}
-                {product?.title?.["data"]}
+                {product?.title}
               </span>
             </h2>
           </div>
