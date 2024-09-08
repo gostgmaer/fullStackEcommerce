@@ -367,35 +367,11 @@ export const authOptions = {
 
       return true; // Continue with other providers if any
     },
-
     async redirect({ url, baseUrl }) {
-      // if (url.startsWith("/")) return new URL(url, baseUrl).toString();
-      // // Allows callback URLs on the same origin
-      // else if (new URL(url).origin === baseUrl) return baseUrl;
-      // return baseUrl;
-
-      if (url.startsWith("/")) return new URL(url, baseUrl).toString();
-
-      try {
-        const parsedUrl = new URL(url);
-
-        // Allow URLs on the same origin
-        if (parsedUrl.origin === baseUrl) {
-          // Decode query parameters if needed
-          const callbacks = parsedUrl.searchParams.get('callbacks');
-          if (callbacks) {
-            return new URL(callbacks, baseUrl).toString();
-          }
-          return url; // If no specific callback, return the original URL
-        }
-      } catch (error) {
-        // Handle URL parsing errors if necessary
-        console.error("Invalid URL:", error);
-      }
-
-      // Default redirect to the base URL
+      if (url.startsWith("/")) return `${baseUrl}`;
+      // Allows callback URLs on the same origin
+      else if (new URL(url).origin === baseUrl) return baseUrl;
       return baseUrl;
-
     },
     async session({ session, token, user }) {
       session["refreshToken"] = token.refreshToken;

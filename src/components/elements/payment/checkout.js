@@ -5,7 +5,7 @@ import { checkoutValidation } from '@/utils/validation/validation';
 import { Field, Formik, FormikProvider, useFormik } from 'formik';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import Input from '../../global/fields/input';
 import { Select } from '../../global/fields/SelectField';
@@ -16,6 +16,7 @@ import { MdCreditCard, MdWallet } from 'react-icons/md';
 import { IoArrowForward, IoLogoPaypal, IoReturnUpBack } from 'react-icons/io5';
 import Payment from './Payment';
 import OrderServices from '@/helper/network/services/OrderServices';
+import { emptyCart } from '@/store/reducers/cartSlice';
 
 const CheckoutBlock =  ({params}) => {
 
@@ -65,6 +66,7 @@ const CheckoutBlock =  ({params}) => {
     }, []);
     let navigate = useRouter();
     var Id = uuidv4()
+    const dispatch= useDispatch()
     const { cartTotalAmount } = useSelector((state) => state['cart']);
     const { ...item } = useSelector((state) => state["cart"]);
     // const { user } = useSelector((state) => state['user']);
@@ -105,7 +107,9 @@ const CheckoutBlock =  ({params}) => {
                 
                 const requests = await OrderServices.addOrder(data, {"Authorization":`Bearer ${params}`})
                 notifySuccess(requests.message)
+                dispatch(emptyCart());
                 if (requests.statusCode===201) {
+                   
                     navigate.push(`/order/${requests.result._id}`)
                 }
 

@@ -27,7 +27,7 @@ export async function middleware(req, res) {
   if (pathname.startsWith('/user') || pathname === '/checkout' || pathname.startsWith('/order')) {
     // If the user is not authenticated, redirect to the login page
     if (!authorised) {
-      return NextResponse.redirect(new URL(`/auth/login?callbacks=${pathname}`, req.url));
+      return NextResponse.redirect(new URL(`/auth/login`, req.url));
     }
   }
 

@@ -25149,6 +25149,7 @@ export const categories = [
 ]
 
 
+
 export function getProductById(title) {
   ///console.log(title);
 
@@ -25163,7 +25164,7 @@ export function getProductByChildrenCategory(category) {
 
 export function getProductByParentCategory(category) {
   return allProduct.filter(
-    (product) => product?.category._id === category?._id
+    (product) => product?.category.name === category?.title
   );
 }
 

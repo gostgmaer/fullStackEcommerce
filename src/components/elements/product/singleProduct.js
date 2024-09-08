@@ -56,12 +56,12 @@ console.log(product);
               <li className="text-sm pr-1 transition duration-200 ease-in cursor-pointer hover:text-emerald-500 font-semibold">
                 <Link
                   className="!no-underline !text-black hover:!text-emerald-500"
-                  href={`/search?category=${product?.category.name.data
+                  href={`/search?category=${product?.category.title
                     ?.toLowerCase()
                     .split(" ")
                     .join("-")}`}
                 >
-                  {product?.category.name.data}
+                  {product?.category.title}
                 </Link>
               </li>
               <li className="text-sm mt-[1px]">
@@ -177,7 +177,7 @@ console.log(product);
                         <span className=" font-semibold py-1 text-sm d-block">
                           <span className="text-gray-700">Category: </span>
                           <span className="text-gray-500">
-                            {product?.category?.name?.data}
+                            {product?.category.title}
                           </span>
                         </span>
                         <div className="flex flex-row">

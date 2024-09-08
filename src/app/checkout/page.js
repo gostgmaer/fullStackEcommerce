@@ -24,22 +24,3 @@ const session = await getServerSession(authOptions);
   );
 }
 
-// export const getServerSideProps = async (ctx) => {
-//   const session = await getSession(ctx);
-
-//   if (!session) {
-//     return {
-//       redirect: {
-//         destination: `/auth/signin?callbackUrl=${appBaseUrl}${ctx.resolvedUrl}`,
-//         parmanent: false,
-//       },
-//     };
-//   }
-
-//   return {
-//     props: {
-//       session,
-//       data: session,
-//     },
-//   };
-// };
