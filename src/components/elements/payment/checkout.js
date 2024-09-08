@@ -107,9 +107,9 @@ const CheckoutBlock =  ({params}) => {
                 
                 const requests = await OrderServices.addOrder(data, {"Authorization":`Bearer ${params}`})
                 notifySuccess(requests.message)
-                dispatch(emptyCart());
+            
                 if (requests.statusCode===201) {
-                   
+                    dispatch(emptyCart());
                     navigate.push(`/order/${requests.result._id}`)
                 }
 

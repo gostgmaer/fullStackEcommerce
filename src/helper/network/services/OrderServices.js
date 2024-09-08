@@ -10,7 +10,7 @@ const OrderServices = {
   },
 
   getOrderCustomer: async (query, headers) => {
-    return requests.get(`/orders`, query, headers);
+    return requests.get(`/orders/customer`, query,null, headers);
   },
   getOrderById: async (params, headers) => {
     return requests.get(`/orders/:id`,null,params, headers);

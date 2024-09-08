@@ -111,6 +111,7 @@
 // };
 
 
+import Userlayout from '@/components/elements/user'
 import Layout from '@/components/global/layout/Layout'
 import React from 'react'
 
@@ -119,7 +120,7 @@ const Index = () => {
   return (
     <Layout  >
 
-      <div></div>
+      <Userlayout></Userlayout>
 
     </Layout>
   )
