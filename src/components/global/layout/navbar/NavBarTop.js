@@ -42,7 +42,7 @@ const NavBarTop = () => {
               </Link>
               <span className="mx-2">|</span>
               <Link
-              href={"/dashboard/my-account"}
+              href={"/user/my-account/dashboard"}
                 className="font-medium hover:text-emerald-600"
               >
                 {content["My account"]}
