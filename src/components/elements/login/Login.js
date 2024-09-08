@@ -1,5 +1,3 @@
-import { FiLock, FiMail } from "react-icons/fi";
-
 import Input from "@/components/global/fields/input";
 import { post } from "@/helper/network";
 import { notifyerror, notifySuccess } from "@/utils/notify/notice";

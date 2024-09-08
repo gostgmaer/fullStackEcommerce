@@ -1,13 +1,10 @@
 "use client";
-
 import { post } from "@/helper/network";
 import { notifyerror, notifySuccess } from "@/utils/notify/notice";
-
 import { registerValidationSchema } from "@/utils/validation/validation";
-
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React from "react";
 import Input from "../../fields/input";
 import { signIn } from "next-auth/react";
 import { FaGithub, FaGoogle } from "react-icons/fa";
@@ -121,7 +118,6 @@ const RegisterForm = () => {
           disabled={!formik.isValid || formik.isSubmitting}
         >
           <span>{formik.isSubmitting ? "Submitting..." : 'Register'}</span>{" "}
-
         </button>
 
         <div className=" col-span-full before:content-[' '] relative  mt-0.5 flex items-center  before:absolute before:left-0 before:top-1/2 before:h-px before:w-full before:bg-gray-100   justify-center">
