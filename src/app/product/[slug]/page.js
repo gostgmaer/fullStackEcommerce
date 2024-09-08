@@ -25,7 +25,7 @@ const ProductScreen = async (props) => {
 
 
   const product = await ProductServices.getProductBySlug(props.params)
-  // const related = await ProductServices.getRelatedProducts({category:product.results.category
+  // const related = await ProductServices.getRelatedProducts({category:product.results.category._id
   // })
 
 
