@@ -92,8 +92,9 @@ const SingleProduct = ({ product }) => {
                   }}
                 >
                   <Image
-                    width={100}
-                    height={100}
+                    width={500}
+                    height={500}
+                    // className=' w-80 h-80'
                     alt={product.title?.data}
                     src={product?.image[0]}
                     sizes="100vw"
