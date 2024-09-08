@@ -1,12 +1,7 @@
-"use client"
-import { getSession } from 'next-auth/react';
+const { getToken } = require("next-auth/jwt");
 
-export async function getClientSession() {
-  try {
-    const session = await getSession();
-    return session;
-  } catch (error) {
-    console.error('Error fetching session:', error);
-    return null;
-  }
-}
+const getSession = async (req) => { 
+
+  const {authorised} = await getToken({ req, secret:secret });
+
+ }
