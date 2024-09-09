@@ -40,7 +40,7 @@ const UpdatePassword = () => {
 			.catch((error) => {
 				notifyerror(error?.message)
 				setIsLoading(false);
-				console.log(error);
+				//console.log(error);
 			});
 	};
 

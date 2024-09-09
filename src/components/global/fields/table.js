@@ -5,7 +5,7 @@ import { useState } from 'react';
 const { Column, HeaderCell, Cell } = Table;
 
 const ReusableTable = ({ data, columns, height = 420, defaultLimit = 10,actionRenderer }) => {
-  console.log(data);
+ // console.log(data);
   
   const [limit, setLimit] = useState(defaultLimit);
   const [page, setPage] = useState(1);

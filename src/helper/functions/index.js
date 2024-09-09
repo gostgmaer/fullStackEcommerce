@@ -477,7 +477,7 @@ export const getCookiesData = (second) => {
 
 export const authToken = (second) => {
   const cookiesData = Cookies.get();
-  console.log(cookiesData);
+ // console.log(cookiesData);
   
   const Authorization =
     "Bearer " + cookiesData?.["accessToken"];
