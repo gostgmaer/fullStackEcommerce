@@ -83,6 +83,7 @@
 
 
 import Userlayout from '@/components/elements/user'
+import ChangePassword from '@/components/global/common/forms/chnagePassword'
 import Layout from '@/components/global/layout/Layout'
 import React from 'react'
 
@@ -91,7 +92,9 @@ const Index = () => {
   return (
     <Layout  >
 
-      <Userlayout></Userlayout>
+      <Userlayout>
+        <ChangePassword/>
+      </Userlayout>
 
     </Layout>
   )

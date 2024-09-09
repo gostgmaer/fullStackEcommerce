@@ -25,8 +25,12 @@ const CustomerServices = {
     return requests.put("/customer/auth/reset-password", body, headers);
   },
 
+  
+  getProfile: async (query, headers) => {
+    return requests.get("/users/customer/profile",query,null, headers,1);
+  },
   changePassword: async (body, headers) => {
-    return requests.post("/custome/authr/change-password", body, headers);
+    return requests.post("/user/auth/change-password", body, headers);
   },
 
   updateCustomer: async (params, headers, body) => {

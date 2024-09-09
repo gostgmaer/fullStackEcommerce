@@ -74,11 +74,10 @@ export async function fetchData(endpoint, options = {}) {
       next: { revalidate: cacheTime },
     });
 
-    if (!res.ok) {
-      throw new Error(
-        `Failed to fetch data: ${res.status} - ${res.statusText}`
-      );
-    }
+    // if (!res.ok) {
+    //   const errorData = await res.json();
+    //   throw new Error(JSON.stringify(errorData));
+    // }
 
     return await res.json();
   } catch (error) {
