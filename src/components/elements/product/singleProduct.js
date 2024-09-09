@@ -16,7 +16,7 @@ import Image from 'next/image';
 const SingleProduct = ({ product }) => {
   const dispatch = useDispatch();
 
-  console.log(product);
+ // console.log(product);
 
   const [total, setTotal] = useState(1)
 
