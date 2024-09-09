@@ -5,27 +5,15 @@ import Link from 'next/link';
 // import React, { useEffect } from 'react';
 import { FaTruck } from 'react-icons/fa';
 import { IoCartOutline, IoCheckmark, IoExpandSharp } from 'react-icons/io5';
+import OrderTable from './order/OrderTable';
 
 // import { useSelector } from 'react-redux';
 const DashboardBlock = ({order}) => {
 
-	const columns = [
-		{ header: 'Id', dataKey: 'order_id' },
-		{ header: 'Order Time', dataKey:'createdAt' },
-		{ header: 'Payment Method', dataKey: 'payment_method' },
-		
-		{ header: 'Total', dataKey: 'total'},
-		{ header: 'Status', dataKey: 'status', }
-	  ];
 
-	  const actionRenderer = (rowData) => (
-		
-		  <Link href={`/user/my-account/dashboard/${rowData._id}`} className='px-3 py-1 bg-emerald-100 text-xs text-emerald-600 hover:bg-emerald-500 hover:text-white transition-all font-semibold rounded-full'>Details</Link>
-		
-	  );
 	 
 
-	  console.log(order);
+	
 	  
 	
 	return (
@@ -94,20 +82,7 @@ const DashboardBlock = ({order}) => {
 				</div>
 			</div>
 
-			<div className="max-w-screen-2xl mx-auto ">
-			<div className="rounded-md ">
-				<div className="flex flex-col">
-					{<h3 className="text-lg font-medium mb-5">Recent Order</h3>}
-					<div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-						<div className="align-middle inline-block   rounded-md min-w-full pb-2 sm:px-6 lg:px-8">
-							<div className="overflow-hidden border-b last:border-b-0 border-gray-100 rounded-md">
-							<ReusableTable data={order.order.data} columns={columns} actionRenderer={actionRenderer}/>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+			<OrderTable order={order.order} title="Recent order"/>
 			
 		
 		</div>

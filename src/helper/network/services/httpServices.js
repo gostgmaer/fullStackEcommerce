@@ -89,10 +89,10 @@ export async function fetchData(endpoint, options = {}) {
 
 
 const requests = {
-  get: async (endpoint, query, params, headers) =>
+  get: async (endpoint, query, params, headers, cacheTime = 3600) =>
     await fetchData(endpoint, {
       method: 'GET',
-      cacheTime: 3600,
+      cacheTime: cacheTime,
       query, params, headers // Cache for 5 minutes
     }),
   post: async (endpoint, body, headers) =>

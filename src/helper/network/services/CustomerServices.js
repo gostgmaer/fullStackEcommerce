@@ -33,7 +33,7 @@ const CustomerServices = {
     return requests.patch(`/customer/auth/:id`, body, params, headers);
   },
   customerDashboard: async (query, headers) => {
-    return requests.get(`/orders/customer/dashboard`, query, null, headers);
+    return requests.get(`/orders/customer/dashboard`, query, null, headers,1);
   },
 };
 

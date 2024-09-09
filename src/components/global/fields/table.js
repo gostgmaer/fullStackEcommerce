@@ -15,7 +15,7 @@ const ReusableTable = ({ data, columns, height = 420, defaultLimit = 10,actionRe
     setLimit(dataKey);
   };
 
-  const paginatedData = data?.filter((v, i) => {
+  const paginatedData = data?.results?.filter((v, i) => {
     const start = limit * (page - 1);
     const end = start + limit;
     return i >= start && i < end;
@@ -54,7 +54,7 @@ const ReusableTable = ({ data, columns, height = 420, defaultLimit = 10,actionRe
           maxButtons={5}
           size="xs"
           layout={['total', '-', 'limit', '|', 'pager', 'skip']}
-          total={data?.length}
+          total={data?.total}
           limitOptions={[10, 30, 50]}
           limit={limit}
           activePage={page}
