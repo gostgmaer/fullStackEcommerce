@@ -3,7 +3,6 @@ import * as Yup from "yup";
 const emailValidationRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 export const loginValidationSchema = Yup.object().shape({
-
   email: Yup.string()
     .email("Invalid email address")
     .matches(emailValidationRegex, "Invalid email address")
