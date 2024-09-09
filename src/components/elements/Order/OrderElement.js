@@ -1,8 +1,6 @@
 "use client"
 import moment from 'moment';
 import React, { useEffect, useRef } from 'react';
-
-
 import ReactToPdf from 'react-to-pdf';
 import ReactToPrint from 'react-to-print';
 
