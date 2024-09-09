@@ -70,7 +70,7 @@ const Footer = () => {
             </h3>
             <ul className="text-sm lg:text-15px flex flex-col space-y-3">
               <li className="flex items-baseline">
-                <Link href="/search?Category=fish--meat" className="text-gray-600 inline-block w-full hover:text-emerald-500">
+                <Link href="/product/search?Category=fish--meat" className="text-gray-600 inline-block w-full hover:text-emerald-500">
                   {/* <a className="text-gray-600 inline-block w-full hover:text-emerald-500">
                     {t("common:footer-top-category-fish-meat")}
                   </a> */}
@@ -80,7 +80,7 @@ const Footer = () => {
               </li>
 
               <li className="flex items-baseline">
-                <Link href="/search?Category=drinks" className="text-gray-600 inline-block w-full hover:text-emerald-500">
+                <Link href="/product/search?Category=drinks" className="text-gray-600 inline-block w-full hover:text-emerald-500">
                   {/* <a className="text-gray-600 inline-block w-full hover:text-emerald-500">
                     {t("common:footer-top-category-soft-drinks")}
                   </a> */}

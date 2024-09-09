@@ -57,7 +57,7 @@ const SingleProduct = ({ product }) => {
               <li className="text-sm pr-1 transition duration-200 ease-in cursor-pointer hover:text-emerald-500 font-semibold">
                 <Link
                   className="!no-underline !text-black hover:!text-emerald-500"
-                  href={`/search?category=${product?.category.title
+                  href={`/product/search?category=${product?.category.title
                     ?.toLowerCase()
                     .split(" ")
                     .join("-")}`}

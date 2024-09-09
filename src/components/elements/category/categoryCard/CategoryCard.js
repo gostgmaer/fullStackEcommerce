@@ -34,7 +34,7 @@ const CategoryCard = () => {
   const dispatch = useDispatch();
   let route = useRouter();
   const handleClick = (value) => {
-    route.push("/search?Category=" + value)
+    route.push("/product/search?Category=" + value)
     const category =
       value.includes("--") === true 
         ? value.split("--").join(" ")

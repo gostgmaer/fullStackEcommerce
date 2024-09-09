@@ -119,7 +119,7 @@ const UpdateProfile = () => {
 										<div className="mt-1 flex items-center">
 											<div className="w-full text-center">
 												<label
-													tabIndex="0"
+													tabIndex={0}
 													className="flex flex-col w-full h-fit px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md cursor-pointer "
 												>
 													{' '}

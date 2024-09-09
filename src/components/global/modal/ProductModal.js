@@ -331,7 +331,7 @@ const ProductModal = ({
                         :
                       </span>{" "}
                       <Link
-                        href={`/search?category=${product?.category?.title}&_id=${product?.category?._id}`}
+                        href={`/product/search?category=${product?.category?.title}&_id=${product?.category?._id}`}
                       >
                         <button
                           type="button"
