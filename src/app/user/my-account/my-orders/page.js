@@ -91,9 +91,8 @@
 
 
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
-import { mockUsers } from '@/assets/fakeData/mock'
 import Userlayout from '@/components/elements/user'
-import TableBlock from '@/components/global/fields/table'
+import OrderTable from '@/components/elements/user/components/order/OrderTable'
 import Layout from '@/components/global/layout/Layout'
 import OrderServices from '@/helper/network/services/OrderServices'
 import { getServerSession } from 'next-auth'
@@ -103,15 +102,6 @@ import React from 'react'
 const Index = async (props) => {
 
 
-  const defaultData = mockUsers(100);
-
-  const columns = [
-    { header: 'Id', dataKey: 'id', width: 50, align: 'center', fixed: true },
-    { header: 'First Name', dataKey: 'firstName', width: 100, fixed: true },
-    { header: 'Last Name', dataKey: 'lastName', width: 100 },
-    { header: 'City', dataKey: 'city', width: 200 },
-    { header: 'Email', dataKey: 'email', width: 200, flexGrow: 1 },
-  ];
 
 const session = await getServerSession(authOptions);
 
@@ -124,7 +114,7 @@ const order = await OrderServices.getOrderCustomer(props.params,{"Authorization"
 
       <Userlayout>
 
-        <TableBlock data={defaultData} columns={columns}/>
+       <OrderTable order={order} title="My order"/>
       </Userlayout>
 
     </Layout>
