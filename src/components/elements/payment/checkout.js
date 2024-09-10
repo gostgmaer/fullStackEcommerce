@@ -14,11 +14,15 @@ import { Country, State, City } from 'country-state-city';
 import Link from 'next/link';
 import { MdCreditCard, MdWallet } from 'react-icons/md';
 import { IoArrowForward, IoLogoPaypal, IoReturnUpBack } from 'react-icons/io5';
-import Payment from './Payment';
+// import Payment from './Payment';
 import OrderServices from '@/helper/network/services/OrderServices';
 import { emptyCart } from '@/store/reducers/cartSlice';
+import RazorpayPayment from './service';
+import { useSession } from 'next-auth/react';
 
 const CheckoutBlock =  ({params}) => {
+    const { data: session, status } = useSession();
+
 
 
     const paymentMethod = [
@@ -99,8 +103,6 @@ const CheckoutBlock =  ({params}) => {
         };
 
         if (data.payment_method === 'COD') {
-
-
             try {
 
 
@@ -128,8 +130,8 @@ const CheckoutBlock =  ({params}) => {
 
 
         } else {
-            setIsPayment(true);
-            setOrder(data);
+            // setIsPayment(true);
+            RazorpayPayment(data,session);
         }
     }
 
@@ -375,7 +377,7 @@ const CheckoutBlock =  ({params}) => {
                     <OrderSummary />
                 </div>
             </div>
-            <Payment isOpen={isPayment} setIsPayment={setIsPayment} order={order} />
+            {/* <Payment isOpen={isPayment} setIsPayment={setIsPayment} order={order} /> */}
         </div>
     )
 }

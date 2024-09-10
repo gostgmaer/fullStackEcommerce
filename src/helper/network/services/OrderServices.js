@@ -4,7 +4,9 @@ const OrderServices = {
   addOrder: async (body, headers) => {
     return requests.post("/orders/create", body, headers);
   },
-
+  createOrder: async (body, headers) => {
+    return requests.post("/orders/customer/rozorpay", body, headers);
+  },
   createPaymentIntent: async (body, headers) => {
     return requests.post("/orders/create-payment-intent", body, headers);
   },
