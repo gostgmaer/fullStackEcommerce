@@ -15,6 +15,7 @@ const RazorpayPayment = async ( data, session ) => {
         
 
         // Step 2: Initialize Razorpay checkout
+        console.log(window["Razorpay"]);
         const options = {
             key: razorPayPublic, // Replace with your Razorpay key_id
             amount: amount,
@@ -22,7 +23,7 @@ const RazorpayPayment = async ( data, session ) => {
             name: 'Your Company Name',
             description: 'Payment for Order #123',
             order_id: order_id, // Pass Razorpay order_id from backend
-            handler: function (response) {
+            handler: async function (response) {
                 // Razorpay returns these three values after successful payment
                 const razorpay_order_id = response.razorpay_order_id;
                 const razorpay_payment_id = response.razorpay_payment_id;
@@ -32,21 +33,26 @@ const RazorpayPayment = async ( data, session ) => {
                 console.log(razorpay_order_id, razorpay_payment_id, razorpay_signature);
 
                 // Call backend to verify payment
-                axios.post('/orders/verify-payment', {
-                    razorpay_order_id,
-                    razorpay_payment_id,
-                    razorpay_signature,
-                })
-                    .then(response => {
-                        if (response.data.status === 'success') {
-                           notifySuccess(response.data.message)
-                        } else {
-                            notifyerror("Payment verification failed!")
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Verification error', error);
-                    });
+                const requests = await OrderServices.verifyOrder({razorpay_order_id, razorpay_payment_id, razorpay_signature}, { "Authorization": `Bearer ${session["accessToken"]}` })
+
+console.log(requests);
+
+
+                // axios.post('/orders/verify-payment', {
+                //     razorpay_order_id,
+                //     razorpay_payment_id,
+                //     razorpay_signature,
+                // })
+                //     .then(response => {
+                //         if (response.data.status === 'success') {
+                //            notifySuccess(response.data.message)
+                //         } else {
+                //             notifyerror("Payment verification failed!")
+                //         }
+                //     })
+                //     .catch(error => {
+                //         console.error('Verification error', error);
+                //     });
             },
             prefill: {
                 name: 'John Doe',
