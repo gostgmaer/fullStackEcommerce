@@ -25,15 +25,15 @@ const RazorpayPayment = async ( data, session ) => {
             order_id: order_id, // Pass Razorpay order_id from backend
             handler: async function (response) {
                 // Razorpay returns these three values after successful payment
-                const razorpay_order_id = response.razorpay_order_id;
-                const razorpay_payment_id = response.razorpay_payment_id;
-                const razorpay_signature = response.razorpay_signature;
+                const order_id = response.razorpay_order_id;
+                const paymentId = response.razorpay_payment_id;
+                const signature = response.razorpay_signature;
 
                 // Log or send these to the backend for verification
-                console.log(razorpay_order_id, razorpay_payment_id, razorpay_signature);
+                console.log(order_id, paymentId, signature);
 
                 // Call backend to verify payment
-                const requests = await OrderServices.verifyOrder({razorpay_order_id, razorpay_payment_id, razorpay_signature}, { "Authorization": `Bearer ${session["accessToken"]}` })
+                const requests = await OrderServices.verifyOrder({payment_method:data.payment_method,order_id, paymentId, signature}, { "Authorization": `Bearer ${session["accessToken"]}` })
 
 console.log(requests);
 
