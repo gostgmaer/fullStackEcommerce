@@ -10,3 +10,5 @@ export const githubClient=process.env.NEXT_PUBLIC_GITHUB_ID
 export const githubSecret=process.env.NEXT_PUBLIC_GITHUB_SECRET
 export const facebookClient=process.env.NEXT_PUBLIC_FACEBOOK_CLIENT_ID
 export const facebookSecret=process.env.NEXT_PUBLIC_FACEBOOK_CLIENT_SECRET
+export const razorPayPublic = process.env.NEXT_PUBLIC_ROZORPAY_PUBLIC_KEY;
+

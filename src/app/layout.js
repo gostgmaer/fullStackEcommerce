@@ -3,6 +3,7 @@ import "./globals.css";
 // import 'resuit/dist/resuit.css';
 import { ProviderTheme } from '../utils/ProviderTheme'
 import NextAuthProvider from "@/context/sessionContext";
+import Script from "next/script";
 // import { AuthContextProvider } from "@/context/authContext";
 
 
@@ -19,6 +20,9 @@ export default function RootLayout({ children }) {
     <NextAuthProvider>
       <html lang="en" suppressHydrationWarning={true}>
       
+      <head>
+     
+      </head>
 
         <body className={inter.className}>
 
@@ -26,6 +30,10 @@ export default function RootLayout({ children }) {
 
             {children}
           </ProviderTheme>
+          <Script
+        src="https://checkout.razorpay.com/v1/checkout.js"
+        strategy="beforeInteractive" // Ensures the script loads before your component renders
+      />
         </body>
       </html></NextAuthProvider>
   );

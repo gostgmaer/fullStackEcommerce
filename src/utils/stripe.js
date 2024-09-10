@@ -1,13 +1,13 @@
-import { loadStripe } from '@stripe/stripe-js';
+// import { loadStripe } from '@stripe/stripe-js';
 
-let stripePromise;
+// let stripePromise;
 
-const getStripe = () => {
-  if (!stripePromise) {
-    stripePromise = loadStripe(`${process.env.NEXT_PUBLIC_STRIPE_KEY}` || null);
-  }
+// const getStripe = () => {
+//   if (!stripePromise) {
+//     stripePromise = loadStripe(`${process.env.NEXT_PUBLIC_STRIPE_KEY}` || null);
+//   }
 
-  return stripePromise;
-};
+//   return stripePromise;
+// };
 
-export default getStripe;
+// export default getStripe;
