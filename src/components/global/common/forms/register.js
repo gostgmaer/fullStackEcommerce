@@ -8,6 +8,7 @@ import React from "react";
 import Input from "../../fields/input";
 import { signIn } from "next-auth/react";
 import { FaGithub, FaGoogle } from "react-icons/fa";
+import { getUsername } from "@/helper/functions";
 
 
 const RegisterForm = () => {
@@ -39,7 +40,7 @@ const RegisterForm = () => {
     validationSchema: registerValidationSchema,
     onSubmit: async (values, { setSubmitting, resetForm, setValues }) => {
       setSubmitting(true)
-      const res = await handleSubmit(values)
+      const res = await handleSubmit({...values,username:getUsername(values.email)})
 
       const messages = {
         start: "Starting API call...",
@@ -47,9 +48,7 @@ const RegisterForm = () => {
         success: "API call successful!",
         failure: "API call failed",
       };
-
-
-      if (res["statusCode"] === 200) {
+      if (res["statusCode"] === 201) {
 
         notifySuccess('Register Successfully! Please check your email for confirmation')
         resetForm()

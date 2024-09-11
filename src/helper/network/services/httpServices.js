@@ -68,9 +68,9 @@ export async function fetchData(endpoint, options = {}) {
       method,
       headers: mergedHeaders,
       body:
-        method === "POST" || method === "PATCH" || method === "PUT"
-          ? JSON.stringify(body)
-          : undefined,
+        method === "GET"
+          ?undefined: JSON.stringify(body)
+           ,
       next: { revalidate: cacheTime },
     });
 
@@ -97,23 +97,19 @@ const requests = {
   post: async (endpoint, body, headers) =>
     await fetchData(endpoint, {
       method: 'POST',
-      cacheTime: 300,
       body, headers // Cache for 5 minutes
     }),
   put: async (endpoint, body, params, headers) =>
     await fetchData(endpoint, {
-      method: 'PUT',
-      cacheTime: 300, body, params, headers // Cache for 5 minutes
+      method: 'PUT', body, params, headers // Cache for 5 minutes
     }),
   patch: async (endpoint, body, params, headers) =>
     await fetchData(endpoint, {
-      method: 'PATCH',
-      cacheTime: 300, body, params, headers // Cache for 5 minutes
+      method: 'PATCH', body, params, headers 
     }),
   delete: async (endpoint, params, headers) =>
     await fetchData(endpoint, {
-      method: 'DELETE',
-      cacheTime: 300, params, headers // Cache for 5 minutes
+      method: 'DELETE', params, headers // Cache for 5 minutes
     }),
 
 

@@ -2,7 +2,6 @@
 import RegisterForm from "@/components/global/common/forms/register";
 import Layout from "@/components/global/layout/Layout";
 import Link from "next/link";
-import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
 
 const Register = () => {
   return (

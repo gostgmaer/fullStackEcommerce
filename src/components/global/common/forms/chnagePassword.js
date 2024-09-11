@@ -14,15 +14,16 @@ const ChangePassword = () => {
 
     const router = useRouter();
     const { data: session, status } = useSession();
-// console.log(session);
-
     const handleSubmit = async (values) => {
+
+const {password,current_password}= values
+
         try {
             const reset = await CustomerServices.changePassword(
-                { password: values.password }, { "Authorization": `Bearer ${session["accessToken"]}` }
+                { password,current_password }, { "Authorization": `Bearer ${session["accessToken"]}` }
             );
             if (reset.status == "OK") {
-                notifySuccess(reset.message, 2000)
+                notifySuccess(reset.message)
             }else{
                 notifyerror(reset.message)
             }
@@ -46,7 +47,7 @@ const ChangePassword = () => {
         validationSchema: resetPasswordValidation,
         validateOnBlur: true,
         validateOnChange: true,
-        onSubmit: (values) => {
+        onSubmit: (values,setSubmitting) => {
             handleSubmit(values);
         },
     });
@@ -89,16 +90,12 @@ const ChangePassword = () => {
                         <div className="text-red-500 text-sm">{formik.errors.confirmPassword}</div>
                     )}
                 </div>
-
-
-
-
             </div>
             <div className="col-span-full text-right mt-5">
                 <button
                     className="md:text-sm leading-5 inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-medium text-center justify-center border-0 border-transparent rounded-md placeholder-white focus-visible:outline-none focus:outline-none bg-emerald-500 text-white px-5 md:px-6 lg:px-8 py-2 md:py-3 lg:py-3 hover:text-white hover:bg-emerald-600 h-12 mt-1 text-sm lg:text-sm w-full sm:w-auto disabled:bg-gray-500"
                     type="submit"
-                    disabled={!formik.isValid}
+                    disabled={!formik.isValid || formik.isSubmitting}
                 >
                     <span>Change Password</span> <IoArrowForward />
                 </button>
