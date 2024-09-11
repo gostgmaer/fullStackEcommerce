@@ -17,10 +17,11 @@ import { IoArrowForward, IoLogoPaypal, IoReturnUpBack } from 'react-icons/io5';
 // import Payment from './Payment';
 import OrderServices from '@/helper/network/services/OrderServices';
 import { emptyCart } from '@/store/reducers/cartSlice';
-import RazorpayPayment from './service';
-import { useSession } from 'next-auth/react';
 
-const CheckoutBlock =  ({params}) => {
+import { useSession } from 'next-auth/react';
+import { PaypalPayment, RazorpayPayment } from './service';
+
+const CheckoutBlock = () => {
     const { data: session, status } = useSession();
 
 
@@ -70,7 +71,7 @@ const CheckoutBlock =  ({params}) => {
     }, []);
     let navigate = useRouter();
     var Id = uuidv4()
-    const dispatch= useDispatch()
+    const dispatch = useDispatch()
     const { cartTotalAmount } = useSelector((state) => state['cart']);
     const { ...item } = useSelector((state) => state["cart"]);
     // const { user } = useSelector((state) => state['user']);
@@ -102,37 +103,84 @@ const CheckoutBlock =  ({params}) => {
             totalPrice: Number(cartTotalAmount + shippingPrice),
         };
 
-        if (data.payment_method === 'COD') {
-            try {
+        const { payment_method } = data
 
+        try {
+            const requests = await OrderServices.addOrder(data, { "Authorization": `Bearer ${session["accessToken"]}` })
 
-                
-                const requests = await OrderServices.addOrder(data, {"Authorization":`Bearer ${params}`})
-                notifySuccess(requests.message)
-            
-                if (requests.statusCode===201) {
-                    dispatch(emptyCart());
+            let paymentResponse;
+            let savedOrder;
+
+            switch (payment_method) {
+                case 'paypal':
+
+                    PaypalPayment(requests, session)
+                    break;
+
+                case 'RazorPay':
+                  const response = await  RazorpayPayment(requests, session)
+          
+                  notifySuccess(response["message"])
+                  navigate.push(`/order/${response["result"]._id}`)
+                  dispatch(emptyCart());
+                  
+                    break;
+
+                case 'COD':
+                    notifySuccess(requests.message)
                     navigate.push(`/order/${requests.result._id}`)
-                }
+                    dispatch(emptyCart());
+                    break;
 
+                default:
+                    notifyerror("Invalid payment method")
 
-            } catch (error) {
-                notifyerror(error)
-                setIsError(
-                    error
-                        ? error?.response?.data?.error ||
-                        error?.response?.data?.message ||
-                        error?.response?.data?.error.message ||
-                        error?.message
-                        : error?.message
-                );
             }
 
-
-        } else {
-            // setIsPayment(true);
-            RazorpayPayment(data,session);
+        } catch (error) {
+            notifyerror(error)
+            setIsError(
+                error
+                    ? error?.response?.data?.error ||
+                    error?.response?.data?.message ||
+                    error?.response?.data?.error.message ||
+                    error?.message
+                    : error?.message
+            );
         }
+
+        // if (data.payment_method === 'COD') {
+        //     try {
+
+
+
+        //         const requests = await OrderServices.addOrder(data, {"Authorization":`Bearer ${session["accessToken"]}`})
+
+
+        //         if (requests.statusCode===201) {
+        //             notifySuccess(requests.message)
+        //             navigate.push(`/order/${requests.result._id}`)
+        //             dispatch(emptyCart());
+        //         }
+
+
+        //     } catch (error) {
+        //         notifyerror(error)
+        //         setIsError(
+        //             error
+        //                 ? error?.response?.data?.error ||
+        //                 error?.response?.data?.message ||
+        //                 error?.response?.data?.error.message ||
+        //                 error?.message
+        //                 : error?.message
+        //         );
+        //     }
+
+
+        // } else {
+        //     // setIsPayment(true);
+        //     RazorpayPayment(data,session);
+        // }
     }
 
     return (
@@ -343,7 +391,7 @@ const CheckoutBlock =  ({params}) => {
                                     </div>
 
 
-                               
+
                                     <div className="grid grid-cols-6 gap-4 lg:gap-6 mt-10">
                                         <div className="col-span-6 sm:col-span-3">
                                             <Link
