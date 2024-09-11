@@ -7,13 +7,13 @@ export const loginValidationSchema = Yup.object().shape({
     .email("Invalid email address")
     .matches(emailValidationRegex, "Invalid email address")
     .required("Email is required"),
-  password:  Yup.string()
-  .required('Password is required')
-  .min(8, 'Password must be at least 8 characters long')
-  .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
-  .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
-  .matches(/\d/, 'Password must contain at least one digit')
-  .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least one special character'),
+  password: Yup.string()
+    .required('Password is required')
+    .min(8, 'Password must be at least 8 characters long')
+    .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
+    .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+    .matches(/\d/, 'Password must contain at least one digit')
+    .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least one special character'),
 });
 export const registerValidationSchema = Yup.object().shape({
 
@@ -21,13 +21,13 @@ export const registerValidationSchema = Yup.object().shape({
     .email("Invalid email address")
     .matches(emailValidationRegex, "Invalid email address")
     .required("Email is required"),
-  password:  Yup.string()
-  .required('Password is required')
-  .min(8, 'Password must be at least 8 characters long')
-  .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
-  .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
-  .matches(/\d/, 'Password must contain at least one digit')
-  .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least one special character'),
+  password: Yup.string()
+    .required('Password is required')
+    .min(8, 'Password must be at least 8 characters long')
+    .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
+    .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+    .matches(/\d/, 'Password must contain at least one digit')
+    .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least one special character'),
   firstName: Yup.string().required("First Name is required"),
   lastName: Yup.string().required("Last Name is required"),
 });
@@ -53,13 +53,15 @@ export const forgetPasswordValidation = Yup.object().shape({
 });
 
 export const resetPasswordValidation = Yup.object().shape({
+  current_password: Yup.string()
+    .required('Password is required'),
   password: Yup.string()
-  .required('Password is required')
-  .min(8, 'Password must be at least 8 characters long')
-  .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
-  .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
-  .matches(/\d/, 'Password must contain at least one digit')
-  .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least one special character'),
+    .required('Password is required')
+    .min(8, 'Password must be at least 8 characters long')
+    .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
+    .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+    .matches(/\d/, 'Password must contain at least one digit')
+    .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least one special character'),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref("password"), null], "Passwords must match")
     .required("Confirm Password is required"),
