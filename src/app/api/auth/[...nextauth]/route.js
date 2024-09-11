@@ -101,7 +101,7 @@ export const authOptions = {
 
           let userData = await response.json();
 
-          if (userData["StatusCodes"] == "404") {
+          if (userData["statusCode"] == "404") {
             // Create a new user via your backend
             const createUserResponse = await fetch(
               `${baseurl}/user/auth/social-register`,
@@ -111,10 +111,10 @@ export const authOptions = {
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                  socialID: profile["id"],
+                  socialID: user["id"],
                   email: profile.email,
                   // name: profile.name,
-                  profilePicture: profile.image,
+                  profilePicture: user.image,
                   username: profile.email,
                   firstName: profile["login"]
                 }),
@@ -122,14 +122,20 @@ export const authOptions = {
             );
 
             userData = await createUserResponse.json();
+            user['accessToken'] = userData["accessToken"];
+            user['refreshToken'] = userData["refreshToken"];
+            user['id_token'] = userData["id_token"];
+            user['token_type'] = userData["token_type"];
+          }else{
+            user['accessToken'] = userData["accessToken"];
+            user['refreshToken'] = userData["refreshToken"];
+            user['id_token'] = userData["id_token"];
+            user['token_type'] = userData["token_type"];
+          
           }
-
-          // Attach tokens returned by the backend to the session
-          user['accessToken'] = userData["accessToken"];
-          user['refreshToken'] = userData["refreshToken"];
-          user['id_token'] = userData["id_token"];
-          user['token_type'] = userData["token_type"];
           return true;
+          // Attach tokens returned by the backend to the session
+         
         } catch (error) {
           console.error("Error during GitHub sign-in:", error);
           return false;
