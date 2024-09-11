@@ -1,8 +1,5 @@
 "use client"
-import ReusableTable from '@/components/global/fields/table';
-import moment from 'moment';
-import Link from 'next/link';
-// import React, { useEffect } from 'react';
+
 import { FaTruck } from 'react-icons/fa';
 import { IoCartOutline, IoCheckmark, IoExpandSharp } from 'react-icons/io5';
 import OrderTable from './order/OrderTable';
@@ -13,7 +10,7 @@ const DashboardBlock = ({order}) => {
 
 	 
 
-	
+
 	  
 	
 	return (
@@ -60,7 +57,7 @@ const DashboardBlock = ({order}) => {
 								Processing Order
 							</h5>
 							<p className="text-xl font-bold leading-none text-gray-800">
-								{order?.shipped}
+								{order?.processing}
 							</p>
 						</div>
 					</div>
@@ -75,7 +72,7 @@ const DashboardBlock = ({order}) => {
 								Complete Order
 							</h5>
 							<p className="text-xl font-bold leading-none text-gray-800">
-								{order?.confirmed}
+								{order?.completed}
 							</p>
 						</div>
 					</div>
