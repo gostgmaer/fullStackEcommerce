@@ -9,9 +9,6 @@ import Link from 'next/link';
 function OrderElement({order}) {
 	const printRef = useRef();
 
-	useEffect(() => {
-		window.scrollTo(0, 0);
-	}, []);
 
 
 	const data = order.results
@@ -21,6 +18,9 @@ function OrderElement({order}) {
 		style: 'currency',
 		currency: 'USD',
 	});
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
 
 	return (
 		<div className="bg-gray-50">
