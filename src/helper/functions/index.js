@@ -485,3 +485,10 @@ export const authToken = (second) => {
     Authorization
   };
 };
+
+
+export function getUsername(email) {
+  // Split the email at the '@' symbol
+  let username = email.split('@')[0];
+  return username;
+}

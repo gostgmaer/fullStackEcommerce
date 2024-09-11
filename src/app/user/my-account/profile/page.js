@@ -24,8 +24,8 @@ const Index = async (props) => {
       <Userlayout>
 
        <div>
-        <ProfileBlock/>
-        {JSON.stringify(profile)}
+        <ProfileBlock user={profile["result"]}/>
+       
        </div>
       </Userlayout>
 

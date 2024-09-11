@@ -132,3 +132,14 @@ export const checkoutValidation = Yup.object().shape({
   // accountCreate: Yup.boolean(),
   // additionalNotes: Yup.string()
 });
+
+
+
+export const profileUpdateSchema = Yup.object().shape({
+	phoneNumber: Yup.number().required('Phone number is required!'),
+  firstName: Yup.string().required("First Name is required"),
+  lastName: Yup.string().required("Last Name is required"),
+  username: Yup.string().required("User Name is required"),
+  // dateOfBirth: Yup.string().required('Date of Birth is Required!'),
+  // gender: Yup.string()
+});

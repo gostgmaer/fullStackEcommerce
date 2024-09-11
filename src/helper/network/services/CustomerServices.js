@@ -27,18 +27,19 @@ const CustomerServices = {
 
   
   getProfile: async (query, headers) => {
-    return requests.get("/users/customer/profile",query,null, headers,1);
+    return requests.get("/users/customer/profile",query,null, headers,0);
   },
   changePassword: async (body, headers) => {
     return requests.post("/user/auth/change-password", body, headers);
   },
 
-  updateCustomer: async (params, headers, body) => {
-    return requests.patch(`/customer/auth/:id`, body, params, headers);
+  updateCustomer: async (headers, body) => {
+    return requests.patch(`/user/auth/profile/update`,body, null, headers);
   },
   customerDashboard: async (query, headers) => {
     return requests.get(`/orders/customer/dashboard`, query, null, headers,1);
   },
+  
 };
 
 export default CustomerServices;

@@ -3,9 +3,9 @@ import Link from "next/link";
 import React from "react";
 import AddressCard from "./address/Card";
 
-const ProfileBlock = () => {
+const ProfileBlock = ({user}) => {
     return (
-        <div className=" overflow-hidden">
+        <div className=" overflow-auto">
             <div className="grid gap-4 mb-8 sm:grid-cols-2 grid-cols-1">
                 <div className=" h-full relative col-span-2">
                     <h2>Profile Info</h2>
@@ -18,7 +18,7 @@ const ProfileBlock = () => {
                         </Link>
                         <div className="flex items-center justify-center rounded-full text-xl text-center mr-4 bg-gray-200">
                             <Image
-                                src="https://res.cloudinary.com/ahossain/image/upload/v1716986555/j3ag3qgw1qrixeayq1it.webp"
+                                src={user.profilePicture}
                                 width={64}
                                 height={64}
                                 className="h-16 w-16 rounded-full bg-gray-50"
@@ -27,10 +27,10 @@ const ProfileBlock = () => {
                         </div>
                         <div>
                             <h5 className="leading-none mb-2 text-base font-medium text-gray-700">
-                                Justin J. Ruiz
+                                {user.firstName}  {user.lastName}
                             </h5>
-                            <p className="text-sm text-gray-500">justin@gmail.com</p>
-                            <p className="text-sm text-gray-500">01957930023</p>
+                            <p className="text-sm text-gray-500">  {user.email}</p>
+                         {user.phoneNumber &&   <p className="text-sm text-gray-500">  {user.phoneNumber}</p>}
                         </div>
                     </div>
                 </div>
