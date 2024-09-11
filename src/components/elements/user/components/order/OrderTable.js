@@ -1,12 +1,14 @@
 "use client"
+import { statusColors } from '@/assets/data/static';
 import CurrentTable from '@/components/global/fields/component/Table';
+import moment from 'moment';
 import Link from 'next/link';
 import React, { useState } from 'react'
 import { FaEye, FaPen } from 'react-icons/fa';
 
 const OrderTable = ({ order, title }) => {
 
-    console.log(order);
+ 
 
     // const columns = [
     // 	{ header: 'Id', dataKey: 'order_id' },
@@ -34,6 +36,12 @@ const OrderTable = ({ order, title }) => {
             dataIndex: "createdAt",
             key: "createdAt",
             sorter: (a, b) => a.createdAt - b.createdAt, // Enable sorting for this column
+            render: (index, item) => (
+                <span className={`capitalize `}>
+                    { moment(item.createdAt).format('LL') }
+                </span>
+
+            ),
         },
         {
             title: "Payment Method",
@@ -52,7 +60,13 @@ const OrderTable = ({ order, title }) => {
             title: "Payment Status",
             dataIndex: "payment_status",
             key: "payment_status",
-            sorter: (a, b) => a.status - b.status
+            sorter: (a, b) => a.status - b.status,
+            render: (index, item) => (
+                <span className={`${statusColors[item.payment_status]} capitalize `}>
+                    {item.status}
+                </span>
+
+            ),
         },
         {
             title: "Status",
@@ -60,10 +74,10 @@ const OrderTable = ({ order, title }) => {
             key: "status",
             sorter: (a, b) => a.status - b.status,
             render: (index, item) => (
-                <span className={`status-${item.status} px-3 py-1 `}>
+                <span className={`${statusColors[item.status]}  capitalize `}>
                     {item.status}
                 </span>
-               
+
             ),
         },
 
@@ -78,7 +92,7 @@ const OrderTable = ({ order, title }) => {
                 <div className="flex items-center justify-end gap-3 pe-4">
 
                     <Link href={`/user/my-account/my-orders/${item._id}`} className='px-3 py-1 bg-emerald-100 text-xs text-emerald-600 hover:bg-emerald-500 hover:text-white transition-all font-semibold rounded-full'>
-                    <FaEye />
+                        <FaEye />
                     </Link>
 
 
