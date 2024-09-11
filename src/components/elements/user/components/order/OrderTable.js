@@ -59,7 +59,7 @@ const OrderTable = ({ order, title }) => {
             dataIndex: "status",
             key: "status",
             sorter: (a, b) => a.status - b.status,
-            render: (item, index) => (
+            render: (index, item) => (
                 <span className={`status-${item.status} px-3 py-1 `}>
                     {item.status}
                 </span>
