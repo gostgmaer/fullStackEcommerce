@@ -21,8 +21,8 @@ const CustomerServices = {
     return requests.patch("/user/auth/forget-password",body);
   },
 
-  resetPassword: async (body, headers) => {
-    return requests.put("/customer/auth/reset-password", body, headers);
+  resetPassword: async (body,params) => {
+    return requests.patch("/user/auth/reset-password/:token", body, params);
   },
 
   

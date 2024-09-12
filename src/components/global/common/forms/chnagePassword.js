@@ -2,17 +2,15 @@
 
 import CustomerServices from "@/helper/network/services/CustomerServices";
 import { notifyerror, notifySuccess } from "@/utils/notify/notice";
-import { resetPasswordValidation } from "@/utils/validation/validation";
+import { chnagePasswordValidation } from "@/utils/validation/validation";
 import { useFormik } from "formik";
 import { useSession } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 import { IoArrowForward } from "react-icons/io5";
 import Input from "../../fields/input";
 
 const ChangePassword = () => {
 
-    const router = useRouter();
     const { data: session, status } = useSession();
     const handleSubmit = async (values) => {
 
@@ -44,7 +42,7 @@ const {password,current_password}= values
             password: "",
             confirmPassword: "",
         },
-        validationSchema: resetPasswordValidation,
+        validationSchema: chnagePasswordValidation,
         validateOnBlur: true,
         validateOnChange: true,
         onSubmit: (values,setSubmitting) => {
