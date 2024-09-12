@@ -1,16 +1,13 @@
-// @ts-nocheck
 "use client";
-import { useAuthContext } from "@/context/authContext";
-// import { post } from "@/lib/http";
-// import { useAxios } from "@/lib/interceptors";
+
 import { forgetPasswordValidation } from "@/utils/validation/validation";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import Input from "../../fields/input";
 import { post } from "@/helper/network";
-import { notifyerror } from "@/utils/notify/notice";
+import { notifyerror, notifySuccess } from "@/utils/notify/notice";
+import CustomerServices from "@/helper/network/services/CustomerServices";
 const ForgetForm = () => {
   // const { handleLoginAuth, user, userId } = useAuthContext();
   // const [axios, spinner] = useAxios();
@@ -20,13 +17,15 @@ const ForgetForm = () => {
 
   const handleSubmit = async (values) => {
     try {
-      const res = await post("/user/auth/forget-password", values);
+      const res = await CustomerServices.forgetPassword( values);
+     
       if (res) {
+        notifySuccess(res.message)
         return res
       }
     } catch (error) {
       ///console.log(error);
-      notifyerror("Error", 300)
+      notifyerror(error.message, 300)
     }
   };
 
@@ -52,8 +51,7 @@ const ForgetForm = () => {
 
       if (res.statusCode === 200) {
 
-        notifySuccess('Login Success...')
-        // resetForm()
+      
         setSubmitting(false)
 
 

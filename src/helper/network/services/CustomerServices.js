@@ -18,7 +18,7 @@ const CustomerServices = {
   },
 
   forgetPassword: async (body) => {
-    return requests.put("/customer/auth/forget-password", body);
+    return requests.patch("/user/auth/forget-password",body);
   },
 
   resetPassword: async (body, headers) => {
