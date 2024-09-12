@@ -1,13 +1,8 @@
-import { allProduct, attributes } from "@/assets/fakeData/Products";
+
 import CategoryCard from "@/components/elements/category/categoryCard/CategoryCard";
 import ProductList from "@/components/elements/product/productList/ProductList";
 import Layout from "@/components/global/layout/Layout";
-
-import ProductServices from "@/helper/network/services/ProductServices";
-import { cookies } from "next/headers";
-
-
-import React from "react";
+import { Suspense } from "react";
 
 export const metadata = {
   generator: "Next.js",
@@ -93,16 +88,12 @@ export const metadata = {
 };
 
 const Search = async (props) => {
-  const cookieStore = cookies()
-  const token = cookieStore.get('accessToken')
-  
-  ///console.log(props);
-  const data = await  ProductServices.getShowingProducts(props.searchParams)
-  
-  const currentData = await getAllRecord(props);
+
 
   return (
     <Layout>
+
+      <Suspense>
       <div className="bg-gray-50">
         <div className="mx-auto max-w-screen-2xl px-3 sm:px-10">
           <div className="flex py-10 lg:py-12">
@@ -110,53 +101,17 @@ const Search = async (props) => {
               <div className="w-full">
                 <CategoryCard />
 
-                <ProductList data={currentData} />
+                <ProductList/>
               </div>
             </div>
           </div>
         </div>
       </div>
+      </Suspense>
+     
     </Layout>
   );
 };
 
 export default Search;
 
-// export const getServerSideProps = async (ctx) => {
-// const currParam ={
-//   method: "get"
-// }
-// const categories = await serverMethod("/public/categories", currParam);
-// const brands = await serverMethod("/public/brands", currParam);
-// const tags = await serverMethod("/public/tags", currParam);
-//   var url = new Url(ctx.resolvedUrl);
-//   const parsedObject = parseUrlWithQueryParams(`${url.query}`);
-
-//   const nwObject = convertObject(parsedObject)
-
-//   const params = {
-//     method: "get", query: {...parsedObject,filter:JSON.stringify(parsedObject.filter)}
-//   }
-//   const data = await serverMethod("/public/product/search", params);
-//   return {
-//     props: {
-//       categories,
-//       brands,data,tags
-//     },
-//   };
-// };
-
-export const getAllRecord = async (query) => {
-  // const params = {
-  //   method: "get",
-  //   header: {},
-  //   query: {...query },
-  // };
-  const result = allProduct.filter((product) =>
-    product.title?.data
-      ?.toLowerCase()
-      .includes(query.searchParams.query.toLowerCase())
-  );
-
-  return result;
-};

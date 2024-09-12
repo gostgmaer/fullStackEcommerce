@@ -28,7 +28,7 @@ const Banner = () => {
             </Link>
           </p>
         </div>
-        <Link href="/product/search?Category=organic-food" >
+        <Link href="/product/search?category=organic-food" >
      
 
           {content['Banner-btn-text']}

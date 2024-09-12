@@ -34,7 +34,7 @@ const CategoryCard = () => {
   const dispatch = useDispatch();
   let route = useRouter();
   const handleClick = (value) => {
-    route.push("/product/search?Category=" + value)
+    route.push("/product/search?category=" + value)
     const category =
       value.includes("--") === true 
         ? value.split("--").join(" ")
@@ -56,7 +56,7 @@ const CategoryCard = () => {
                 handleClick(categoryCard.path);
               }}
               className="block cursor-pointer"
-              href={"/product/search?Category="+categoryCard.path}
+              href={"/product/search?category="+categoryCard.path}
             >
               <span
                 style={{

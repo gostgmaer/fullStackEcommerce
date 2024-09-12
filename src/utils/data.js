@@ -98,14 +98,14 @@ const sliderData = [
     id: 1,
     title: 'Slider1Title',
     info: 'Slider1description',
-    url: '/product/search?Category=biscuits--cakes',
+    url: '/product/search?category=biscuits--cakes',
     image: '/slider/slider-1.jpg',
   },
   {
     id: 2,
     title: 'Slider2Title',
     info: 'Slider2description',
-    url: '/product/search?Category=fish--meat',
+    url: '/product/search?category=fish--meat',
     image: '/slider/slider-2.jpg',
   },
   {
@@ -130,14 +130,14 @@ const ctaCardData = [
     title: 'Taste of',
     subTitle: 'Fish & Meat',
     image: '/cta/cta-bg-2.jpg',
-    url: '/product/search?Category=fish--meat',
+    url: '/product/search?category=fish--meat',
   },
   {
     id: 3,
     title: 'Taste of',
     subTitle: 'Bread & Bakery',
     image: '/cta/cta-bg-3.jpg',
-    url: '/product/search?Category=biscuits--cakes',
+    url: '/product/search?category=biscuits--cakes',
   },
 ];
 
