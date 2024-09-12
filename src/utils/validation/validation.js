@@ -52,7 +52,7 @@ export const forgetPasswordValidation = Yup.object().shape({
     .required("Email is required"),
 });
 
-export const resetPasswordValidation = Yup.object().shape({
+export const chnagePasswordValidation = Yup.object().shape({
   current_password: Yup.string()
     .required('Password is required'),
   password: Yup.string()
@@ -66,7 +66,19 @@ export const resetPasswordValidation = Yup.object().shape({
     .oneOf([Yup.ref("password"), null], "Passwords must match")
     .required("Confirm Password is required"),
 });
+export const resetPasswordValidation = Yup.object().shape({
 
+  password: Yup.string()
+    .required('Password is required')
+    .min(8, 'Password must be at least 8 characters long')
+    .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
+    .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+    .matches(/\d/, 'Password must contain at least one digit')
+    .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least one special character'),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("password"), null], "Passwords must match")
+    .required("Confirm Password is required"),
+});
 const requiredMsg = "This field is required";
 export const productSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),

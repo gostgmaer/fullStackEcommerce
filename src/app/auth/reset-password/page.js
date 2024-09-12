@@ -5,7 +5,7 @@ import Layout from "@/components/global/layout/Layout";
 import Link from "next/link";
 
 
-const Index = () => {
+const Index = (props) => {
   return (
     <Layout>
       <div className="flex w-full flex-col justify-center  sm:p-5 lg:p-8">
@@ -19,7 +19,7 @@ const Index = () => {
 
 
 
-          <ResetForm />
+          <ResetForm props={props} />
           <p className="mt-6 text-center text-[15px] leading-loose text-gray-500 md:mt-7 lg:mt-9 lg:text-base">
             Don&lsquo;t wont to reset? 
             <Link

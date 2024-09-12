@@ -1,27 +1,28 @@
 "use client";
-
-
 import { patch } from "@/helper/network";
 import { notifyerror, notifySuccess } from "@/utils/notify/notice";
 import { resetPasswordValidation } from "@/utils/validation/validation";
 import { useFormik } from "formik";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import Input from "../../fields/input";
+import CustomerServices from "@/helper/network/services/CustomerServices";
 
-const ResetForm = () => {
+const ResetForm = ({props}) => {
 
+  console.log(props);
   
-  const param = useSearchParams();
+  const token = props.searchParams.token;
+console.log(token);
 
 
   const router = useRouter();
   const handleSubmit = async (values) => {
     try {
-      const res = await patch(
-        `/user/auth/reset-password/${param.getAll("token")[0]}`,
-        { password: values.password }
-      );
+
+      
+
+      const res = await CustomerServices.resetPassword({ password: values.password },{token:token})
       if (res) {
         if (res) {
           return res
@@ -81,12 +82,12 @@ const ResetForm = () => {
           )}
         </div>
         <div className="col-span-full">
-          <Input label={"Password"} type={"password"} additionalAttrs={{
-            ...formik.getFieldProps("password"),
+          <Input label={"Confirm Pssword"} type={"password"} additionalAttrs={{
+            ...formik.getFieldProps("confirmPassword"),
             placeholder: "********", required: true
-          }} classes={undefined} icon={undefined} id={"password"} />
-          {formik.errors.password && formik.touched.password && (
-            <div className="text-red-500 text-sm">{formik.errors.password}</div>
+          }} classes={undefined} icon={undefined} id={"confirmPassword"} />
+          {formik.errors.confirmPassword && formik.touched.confirmPassword && (
+            <div className="text-red-500 text-sm">{formik.errors.confirmPassword}</div>
           )}
         </div>
 
