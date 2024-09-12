@@ -45,16 +45,6 @@ const ProductList = () => {
     PageChnage(currentPage)
     fetchData()
   }, [currentPage,query]);
-
-  // const currentTableData = useMemo(() => {
-  //   const firstPageIndex = (currentPage - 1) * limit;
-  //   const lastPageIndex = firstPageIndex + limit;
-  //   return data?.results?.slice(firstPageIndex, lastPageIndex);
-  // }, [currentPage]);
-
-  // console.log(currentTableData);
-  
-
   const updateQuery = (page) => {
     const params = new URLSearchParams(window.location.search);
     

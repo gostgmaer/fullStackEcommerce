@@ -2,6 +2,7 @@
 import CategoryCard from "@/components/elements/category/categoryCard/CategoryCard";
 import ProductList from "@/components/elements/product/productList/ProductList";
 import Layout from "@/components/global/layout/Layout";
+import { Suspense } from "react";
 
 export const metadata = {
   generator: "Next.js",
@@ -91,6 +92,8 @@ const Search = async (props) => {
 
   return (
     <Layout>
+
+      <Suspense>
       <div className="bg-gray-50">
         <div className="mx-auto max-w-screen-2xl px-3 sm:px-10">
           <div className="flex py-10 lg:py-12">
@@ -104,6 +107,8 @@ const Search = async (props) => {
           </div>
         </div>
       </div>
+      </Suspense>
+     
     </Layout>
   );
 };
