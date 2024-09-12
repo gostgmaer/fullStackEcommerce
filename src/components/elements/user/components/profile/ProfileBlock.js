@@ -5,7 +5,6 @@ import AddressCard from "./address/Card";
 
 const ProfileBlock = ({ user }) => {
 
-    console.log(user);
 
     return (
         <div className=" overflow-auto">
@@ -46,11 +45,11 @@ const ProfileBlock = ({ user }) => {
                     </div>
                     <div className=" col-span-full grid grid-cols-2">
 
-                        {user.address.map(item => (
+                        {user.address.length? user.address.map(item => (
                             <div className=" col-span-1" key={item._id}>
                                 <AddressCard data={item} />
                             </div>
-                        ))}
+                        )):<p>No Address is Found</p>}
 
 
                     </div>
