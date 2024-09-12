@@ -1,6 +1,6 @@
 
+import Layout from '@/components/global/layout/Layout'
 import React from 'react'
-import Layout from '../layout'
 
 const Index = () => {
   return (

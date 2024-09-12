@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuthContext } from "@/context/authContext";
+
 import { patch } from "@/helper/network";
 import { notifyerror, notifySuccess } from "@/utils/notify/notice";
 import { resetPasswordValidation } from "@/utils/validation/validation";
@@ -11,13 +11,9 @@ import Input from "../../fields/input";
 
 const ResetForm = () => {
 
-  const { handleLoginAuth, user, userId } = useAuthContext();
+  
   const param = useSearchParams();
-  useEffect(() => {
-    if (userId) {
-      router.push("/");
-    }
-  }, []);
+
 
   const router = useRouter();
   const handleSubmit = async (values) => {
@@ -58,7 +54,7 @@ const ResetForm = () => {
 
       if (res["statusCode"] === 200) {
 
-        notifySuccess('Register Successfully! Please Login with New Password')
+        notifySuccess('Reset Successfully! Please Login with New Password')
         resetForm()
         setSubmitting(false)
         router.push("/auth/login");

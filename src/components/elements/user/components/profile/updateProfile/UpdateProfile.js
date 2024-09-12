@@ -151,7 +151,7 @@ const UpdateProfile = ({ user }) => {
 								type="submit"
 								disabled={!formik.isValid}
 							>
-								<span>Change Password</span> <IoArrowForward />
+								<span>Update Profile</span> <IoArrowForward />
 							</button>
 						</div>
 
