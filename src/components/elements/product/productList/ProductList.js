@@ -6,7 +6,7 @@ import ProductCard from "../ProductCard";
 import { attributes } from "@/assets/fakeData/Products";
 import { useRouter, useSearchParams } from "next/navigation";
 import ProductServices from "@/helper/network/services/ProductServices";
-
+import { Suspense } from 'react'
 const sortByOptions = [
   { value: 'relevance', label: 'Relevance' },
   { value: 'priceLowToHigh', label: 'Price: Low to High' },
@@ -85,7 +85,9 @@ const fetchData = async (second) => {
 
 
   return (
-    <div>
+ 
+    <Suspense>
+   <div>
       <div className=" justify-between my-3 bg-orange-100 border border-gray-100 rounded p-3 flex items-center">
         <h6 className="text-sm grid-cols-5 ">
           Total <span className="font-bold">{data?.total}</span> items Found
@@ -107,6 +109,7 @@ const fetchData = async (second) => {
         onPageChange={page => PageChnage(page)}
       />
     </div>
+    </Suspense>
   );
 };
 
