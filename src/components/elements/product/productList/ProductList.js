@@ -26,10 +26,7 @@ const sortByOptions = [
 const ProductList = () => {
 
   const qdata = useSearchParams()
-  const router = useRouter();
   const dispatch = useDispatch();
-  const [currentLimit, setcurrentLimit] = useState(24);
-  const [currentPage, setcurrentPage] = useState(1);
 
   const getAllSearchParamsAsObject = () => {
     // const query = useSearchParams();
