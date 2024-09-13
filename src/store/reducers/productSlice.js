@@ -1,13 +1,12 @@
 import ProductServices from '@/helper/network/services/ProductServices';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 
 // Async action to fetch products with a search query
 export const fetchProducts = createAsyncThunk(
   'products/fetchProducts',
   async (query, { rejectWithValue }) => {
     try {
-      const response = await ProductServices.getAllProducts(query);
+      const response = await ProductServices.getShowingProducts(query);
       return response;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -21,9 +20,12 @@ const productSlice = createSlice({
     products: [],
     isLoading: false,
     error: null,
+    query: '',  // Local query state
   },
   reducers: {
-    // Optional: Add more reducer functions if needed for local query handling
+    setQuery: (state, action) => {
+      state.query = action.payload;  // Set the query locally
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -41,4 +43,6 @@ const productSlice = createSlice({
   },
 });
 
+// Export actions and reducer
+export const { setQuery } = productSlice.actions;
 export const productReducer = productSlice.reducer;
