@@ -1,4 +1,5 @@
 // lib/auth.js
+import { secret } from '@/config/setting';
 import { getToken } from 'next-auth/jwt';
 import { NextRequest } from 'next/server';
 

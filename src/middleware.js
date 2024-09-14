@@ -8,25 +8,8 @@ import { secret } from './config/setting';
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(req, res) {
-  // const session = await getSession({ req });
-  // const token = await getToken({ req, secret })
+
   const authorised = await getToken({ req, secret:secret });
-
-  //  //console.log(token);
- 
-// @ts-ignore
-// const session = await getServerSession(authOptions);
-
-
-  //  const cookieStore = req.cookies;
-
-  // const authorised = cookieStore.get('next-auth.session-token')
-  // const authorised = true;
-  // //console.log(authorised);
-  
-
-
-  // const { id, role, email, name, username } = jwtDecode(authorised?.value)
 
   const { pathname } = req.nextUrl;
 
