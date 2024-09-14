@@ -5,7 +5,7 @@ export const handleSignOut = async () => {
   // Remove any custom cookies if needed
   const allCookies = Cookies.get();
 
-  //console.log(allCookies);
+  ////console.log(allCookies);
   Cookies.remove('accessToken')
   
   // Remove all cookies

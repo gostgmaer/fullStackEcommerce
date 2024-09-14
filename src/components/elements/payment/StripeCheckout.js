@@ -56,12 +56,12 @@ export const StripeCheckout = ({ order }) => {
 						paymentMethod: 'stripe',
 					}
 				);
-				///console.log(res);
+				/////console.log(res);
 				notifySuccess(`Payment ${paymentIntent.status}`)
 				// toast.success();
 			}
 		} catch (error) {
-			///console.log(error);
+			/////console.log(error);
 			setErrorMessage(error.message);
 		}
 	};

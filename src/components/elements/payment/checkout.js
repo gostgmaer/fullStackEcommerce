@@ -54,7 +54,7 @@ const CheckoutBlock = () => {
         onSubmit: async (values, { setSubmitting }) => {
             // Handle form submission logic here
 
-            //  ///console.log(values);
+            //  /////console.log(values);
             setSubmitting(false);
             onchangeSubmit(values);
         }
@@ -79,7 +79,7 @@ const CheckoutBlock = () => {
 
 
     const onchangeSubmit = async (value, e) => {
-        ///console.log(cartTotalAmount);
+        /////console.log(cartTotalAmount);
         // e.preventDefault()
 
         if (cartTotalAmount < 100) {
@@ -335,32 +335,7 @@ const CheckoutBlock = () => {
                                                     </span>
                                                 )}
                                             </div>
-                                            <div className="col-span-6 sm:col-span-2">
-                                                <div className="px-3 py-4 border border-gray-200 bg-white rounded-md">
-                                                    <label className="cursor-pointer flex items-center justify-between">
-                                                        <div className="flex items-center">
-                                                            <span className="text-xl mr-3 text-gray-400">
-                                                                <IoLogoPaypal />
-                                                            </span>
-                                                            <h6 className=" font-medium text-sm text-gray-600">
-                                                                Paypal
-                                                            </h6>
-                                                        </div>
-                                                        <Field
-                                                            type="radio"
-                                                            name="payment_method"
-                                                            value="paypal"
-                                                            className="form-radio outline-none focus:ring-0 text-emerald-500"
-                                                        />
-
-                                                    </label>
-                                                </div>
-                                                {formik.errors.payment_method && formik.touched.payment_method && (
-                                                    <span className="text-red-400 text-sm mt-2">
-                                                        {formik.errors.payment_method}
-                                                    </span>
-                                                )}
-                                            </div>
+                                          
                                             <div className="col-span-6 sm:col-span-2">
                                                 <div className="px-3 py-4 border border-gray-200 bg-white rounded-md">
                                                     <label className="cursor-pointer flex items-center justify-between">

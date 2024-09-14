@@ -9,6 +9,7 @@ import FeatureCategory from "@/components/elements/category/FeatureCategory";
 import OfferCard from "@/components/elements/offer/OfferCard";
 import ProductCard from "@/components/elements/product/ProductCard";
 import Layout from "@/components/global/layout/Layout";
+import CategoryServices from "@/helper/network/services/CategoryServices";
 import ProductServices from "@/helper/network/services/ProductServices";
 import { Placeholder } from 'rsuite';
 // import { serverMethod } from "@/helper/network/serverCall/datafetch";
@@ -96,9 +97,9 @@ export const metadata = {
   },
 };
 
-export default async function Home(props) {
+export default async function Home() {
 
-  const result = await getAllRecord(props.searchParams)
+  const result = await getAllRecord()
 
   return (
     <Layout  >
@@ -137,7 +138,7 @@ export default async function Home(props) {
                 </p>
               </div>
             </div>
-            <FeatureCategory />
+            <FeatureCategory category={result.category} />
           </div>
         </div>
 
@@ -219,14 +220,15 @@ export default async function Home(props) {
 }
 
 
-export const getAllRecord = async (query) => {
+export const getAllRecord = async () => {
 
 
   const popular = await ProductServices.getPopularProducts()
   const discount = await ProductServices.getDiscountedProducts()
+  const category = await CategoryServices.getShowingCategory()
 
   return {
-    popular, discount
+    popular, discount,category
   }
 
 }

@@ -27,7 +27,7 @@ const AddressForm = () => {
                 notifyerror(addAddress.message)
             }
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             
             notifyerror(error?.["message"])
            
@@ -50,7 +50,7 @@ const AddressForm = () => {
         // validationSchema: contactUsValidation,
         onSubmit: async (values, { setSubmitting, resetForm, setValues }) => {
             setSubmitting(true)
-            console.log(values);
+            //console.log(values);
             
             const res = await handleSubmit(values)
 

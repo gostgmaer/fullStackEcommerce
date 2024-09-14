@@ -35,7 +35,7 @@ const ProductScreen = async (props) => {
   //     const result = product?.variants?.filter((variant) =>
   //       Object.keys(selectVa).every((k) => selectVa[k] === variant[k])
   //     );
-  //     // ///console.log('result',result)
+  //     // /////console.log('result',result)
   //     const res = result?.map(
   //       ({
   //         originalPrice,
@@ -50,7 +50,7 @@ const ProductScreen = async (props) => {
   //         ...rest
   //       }) => ({ ...rest })
   //     );
-  //     // ///console.log("res", res);
+  //     // /////console.log("res", res);
 
   //     const filterKey = Object.keys(Object.assign({}, ...res));
   //     const selectVar = filterKey?.reduce(
@@ -66,7 +66,7 @@ const ProductScreen = async (props) => {
   //       Object.keys(newObj).every((k) => newObj[k] === v[k])
   //     );
 
-  //     // ///console.log("result2", result2);
+  //     // /////console.log("result2", result2);
   //     if (result.length <= 0 || result2 === undefined) return setStock(0);
 
   //     setVariants(result);
@@ -124,7 +124,7 @@ const ProductScreen = async (props) => {
   //     return notifyError("Insufficient stock");
   //   // if (notAvailable) return notifyError('This Variation Not Available Now!');
   //   if (stock <= 0) return notifyError("Insufficient stock");
-  //   // ///console.log('selectVariant', selectVariant);
+  //   // /////console.log('selectVariant', selectVariant);
 
   //   if (
   //     product?.variants.map(

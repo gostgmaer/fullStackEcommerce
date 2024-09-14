@@ -449,8 +449,8 @@ export const setClientCookie = (name, value, timestamp) => {
 //   const postRecord = async (data) => {
 //     try {
 //       const response = await post("/realestate/record", data);
-//       ///console.log("POST request successful!");
-//       // ///console.log("Response:", response.data);
+//       /////console.log("POST request successful!");
+//       // /////console.log("Response:", response.data);
 //     } catch (error) {
 //       console.error("POST request failed:", error.message);
 //     }
@@ -477,7 +477,7 @@ export const getCookiesData = (second) => {
 
 export const authToken = (second) => {
   const cookiesData = Cookies.get();
- // console.log(cookiesData);
+ // //console.log(cookiesData);
   
   const Authorization =
     "Bearer " + cookiesData?.["accessToken"];

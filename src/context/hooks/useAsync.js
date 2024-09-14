@@ -16,21 +16,21 @@ const useAsync = (asyncFunction) => {
         const res = await asyncFunction({ cancelToken: source.token });
         if (!unmounted) {
           setData(res);
-          // ///console.log("res", res);
+          // /////console.log("res", res);
           setError("");
           setLoading(false);
         }
       } catch (err) {
         setErrCode(err?.response?.status);
         if (!unmounted) {
-          ///console.log(err.message);
+          /////console.log(err.message);
           setError(err.message);
           if (axios.isCancel(err)) {
             setError(err.message);
             setLoading(false);
             setData({});
           } else {
-            // ///console.log('another error happened:' + err.message);
+            // /////console.log('another error happened:' + err.message);
             setError(err.message);
             setLoading(false);
             setData({});
@@ -51,7 +51,7 @@ const useAsync = (asyncFunction) => {
     if (errCode === 401) {
       Cookies.remove("userInfo");
 
-      ///console.log("status 401", errCode);
+      /////console.log("status 401", errCode);
       window.location.replace(`${process.env.NEXT_PUBLIC_STORE_DOMAIN}`);
     }
   }, [errCode]);

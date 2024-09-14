@@ -51,7 +51,7 @@ import { useDispatch } from 'react-redux';
 //         };
 
 //         const rzp1 = new window['Razorpay'](options);
-//         console.log(rzp1);
+//         //console.log(rzp1);
 
 //         rzp1.open(); // Open Razorpay payment window
 //     } catch (error) {
@@ -139,7 +139,7 @@ const PaypalPayment = async (data, session) => {
 
 
         // Step 2: Initialize Razorpay checkout
-        console.log(window["Razorpay"]);
+        //console.log(window["Razorpay"]);
         const options = {
             key: razorPayPublic, // Replace with your Razorpay key_id
             amount: amount,
@@ -172,7 +172,7 @@ const PaypalPayment = async (data, session) => {
         };
 
         const rzp1 = new window['Razorpay'](options);
-        console.log(rzp1);
+        //console.log(rzp1);
 
         rzp1.open(); // Open Razorpay payment window
     } catch (error) {

@@ -15,7 +15,7 @@ export async function fetchData(endpoint, options = {}) {
 
     const tokens = getCookiesData();
 
-    ///console.log(tokens);
+    /////console.log(tokens);
     
 
     // Validate token and endpoint

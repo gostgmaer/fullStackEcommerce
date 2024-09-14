@@ -10,10 +10,10 @@ import CustomerServices from "@/helper/network/services/CustomerServices";
 
 const ResetForm = ({props}) => {
 
-  console.log(props);
+  //console.log(props);
   
   const token = props.searchParams.token;
-console.log(token);
+//console.log(token);
 
 
   const router = useRouter();

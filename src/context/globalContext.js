@@ -52,7 +52,7 @@ const AppProvider = ({ children }) => {
   const { data: session, status } = useSession();
 
   const handleSearch = () => {
-    // ///console.log(filters);
+    // /////console.log(filters);
     var sortItem = selectedSort.split("-");
     let mysort = `${sortItem[0]}:${sortItem[1]}`;
     const paramsQuery = { filter: filters, page: pages, limit, sort: mysort };
@@ -83,7 +83,7 @@ const AppProvider = ({ children }) => {
   const getWishlist = async (second) => {
     const res = await get('/wishlists/fetch')
     setWishlistData(res)
-    ///console.log(res);
+    /////console.log(res);
   }
   useEffect(() => {
     if (session) {

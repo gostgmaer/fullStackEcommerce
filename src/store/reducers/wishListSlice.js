@@ -12,25 +12,25 @@ export const wishlistSlice = createSlice({
   initialState,
   reducers: {
     addTowishlist(state, action) {
-      ///console.log("state.wishlistItems",state["wishlist"]);
-      ///console.log("action",action);
+      /////console.log("state.wishlistItems",state["wishlist"]);
+      /////console.log("action",action);
       
       const product = state.wishlistItems.findIndex(
         (item) => item.id === action.payload.id
       );
 
-      ///console.log(product);
+      /////console.log(product);
       
       if (product >= 0) {
         state.wishlistItems[product].wishlistQuantity += 1;
       } else {
         const tempProduct = { ...action.payload, wishlistQuantity: 1 };
-        ///console.log(tempProduct);
+        /////console.log(tempProduct);
         state.wishlistItems.push(tempProduct);
       }
-      ///console.log(state.wishlistItems);
+      /////console.log(state.wishlistItems);
       localStorage.setItem("wishlistItems", JSON.stringify(state.wishlistItems));
-      ///console.log(JSON.parse(localStorage.getItem("wishlistItems")));
+      /////console.log(JSON.parse(localStorage.getItem("wishlistItems")));
     },
 
     removeFromwishlist(state, action) {

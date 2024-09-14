@@ -142,7 +142,7 @@ export const CartSlice = createSlice({
     getTotals(state, action) {
       let { total, quantity } = state.cartItems.reduce(
         (cartTotal, cartItem) => {
-          // ///console.log(cartItem);
+          // /////console.log(cartItem);
           
           const { prices, cartQuantity } = cartItem;
          
@@ -172,7 +172,7 @@ export const CartSlice = createSlice({
       })
       .addCase(saveCartToBackend.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        ///console.log('Cart saved successfully:', action.payload);
+        /////console.log('Cart saved successfully:', action.payload);
       })
       .addCase(saveCartToBackend.rejected, (state, action) => {
         state.status = 'failed';
