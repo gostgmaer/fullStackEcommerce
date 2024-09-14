@@ -54,7 +54,7 @@ const CheckoutBlock = () => {
         onSubmit: async (values, { setSubmitting }) => {
             // Handle form submission logic here
 
-            //  ///console.log(values);
+            //  /////console.log(values);
             setSubmitting(false);
             onchangeSubmit(values);
         }
@@ -79,7 +79,7 @@ const CheckoutBlock = () => {
 
 
     const onchangeSubmit = async (value, e) => {
-        ///console.log(cartTotalAmount);
+        /////console.log(cartTotalAmount);
         // e.preventDefault()
 
         if (cartTotalAmount < 100) {

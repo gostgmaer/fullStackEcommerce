@@ -12,7 +12,7 @@ function OrderElement({order}) {
 
 
 	const data = order.results
-	 console.log(data);
+	 //console.log(data);
 
 	var formatter = new Intl.NumberFormat('en-US', {
 		style: 'currency',

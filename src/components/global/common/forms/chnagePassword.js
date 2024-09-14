@@ -26,7 +26,7 @@ const {password,current_password}= values
                 notifyerror(reset.message)
             }
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             
             notifyerror(error?.["message"])
            

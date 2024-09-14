@@ -30,7 +30,7 @@ const NavbarPromo = () => {
   //       setCurrentLang(result);
   //     } catch (err) {
   //       notifyError(err);
-  //       // ///console.log("error on getting lang", err);
+  //       // /////console.log("error on getting lang", err);
   //     }
   //   })();
   // }, []);

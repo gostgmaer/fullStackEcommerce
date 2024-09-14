@@ -24,7 +24,7 @@ const ForgetForm = () => {
         return res
       }
     } catch (error) {
-      ///console.log(error);
+      /////console.log(error);
       notifyerror(error.message, 300)
     }
   };

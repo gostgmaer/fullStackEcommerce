@@ -124,7 +124,7 @@ export const cartSlice = createSlice({
   extraReducers: (builder) => {
     // builder.addCase(saveCartToDb.fulfilled, (state, action) => {
     //   // Handle successful save to the database, if needed
-    //   // ///console.log('Cart data saved to the database:', action.payload);
+    //   // /////console.log('Cart data saved to the database:', action.payload);
     // });
   },
 });

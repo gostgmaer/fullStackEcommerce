@@ -29,7 +29,7 @@ const Payment = ({ isOpen, order, setIsPayment }) => {
 	}, [paypalDispatch]);
 
 	function createOrder(data, actions) {
-		///console.log(data);
+		/////console.log(data);
 		return actions.order
 			.create({
 				application_context: {
@@ -88,12 +88,12 @@ const Payment = ({ isOpen, order, setIsPayment }) => {
 							: error?.message)
 					});
 			} catch (error) {
-				///console.log(error);
+				/////console.log(error);
 			}
 		});
 	}
 	function onError(error) {
-		return ///console.log('an error occur', error);
+		return /////console.log('an error occur', error);
 	}
 	// const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISH_KEY);
 	const stripePromise = loadStripe(

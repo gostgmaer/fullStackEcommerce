@@ -25,7 +25,7 @@ const UpdateProfile = ({ user }) => {
 
 	const handleSubmit = async (values) => {
 		try {
-			console.log(selectedImage);
+			//console.log(selectedImage);
 
 			const reset = await CustomerServices.updateCustomer(
 				{ "Authorization": `Bearer ${session["accessToken"]}` }, { profilePicture: selectedImage, ...values }
@@ -36,7 +36,7 @@ const UpdateProfile = ({ user }) => {
 				notifyerror(reset.message)
 			}
 		} catch (error) {
-			console.log(error);
+			//console.log(error);
 
 			notifyerror(error?.["message"])
 

@@ -50,7 +50,7 @@ export const AuthContextProvider = ({ children }) => {
 
   const handleLoginAuth = async (body) => {
     // const res = await post("/user/auth/login", body);
-    // /////console.log(res);
+    // ///////console.log(res);
     try {
       const res = await post("/user/auth/login", body);
       if (res.statusCode != 200) {
@@ -71,7 +71,7 @@ export const AuthContextProvider = ({ children }) => {
         router.push("/dashboard");
       }
     } catch (err) {
-      /////console.log(err);
+      ///////console.log(err);
     }
   };
 

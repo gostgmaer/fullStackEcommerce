@@ -59,7 +59,7 @@ const onNext = (newPage) => {
     return null;
   }
 
-console.log(paginationRange?.length);
+//console.log(paginationRange?.length);
 
 
   let lastPage = paginationRange[paginationRange?.length - 1];

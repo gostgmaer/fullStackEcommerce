@@ -63,7 +63,7 @@ const ProductList = () => {
   // const fetchData = async (second) => {
 
   //   const res= await ProductServices.getShowingProducts(getAllSearchParamsAsObject())
-  //   console.log(res);
+  //   //console.log(res);
   //   setData(res)
 
   //  }
@@ -84,7 +84,7 @@ const ProductList = () => {
     if (q) {
       dispatch(fetchProducts(q)); // Dispatch the fetchProducts action with the query from the URL
     }
-    console.log(products, page, limit, query, category);
+    //console.log(products, page, limit, query, category);
   }, [dispatch, page, limit, query, category]);
 
   return (
