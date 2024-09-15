@@ -2,12 +2,15 @@ import React from 'react'
 
 const Loading = () => {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-75 z-50">
-    <div className="flex items-center">
-      <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent border-solid rounded-full animate-spin"></div>
-      <span className="ml-4 text-blue-500 text-lg">Loading...</span>
+    <div className="fixed inset-0 flex items-center justify-center bg-black opacity-95 z-50">
+      <div className="flex space-x-4">
+        {/* Animated Dots */}
+        <div className="w-4 h-4 bg-white rounded-full animate-bounce glow    delay-75"></div>
+        <div className="w-4 h-4 bg-white rounded-full animate-bounce glow delay-100"></div>
+        <div className="w-4 h-4 bg-white rounded-full animate-bounce glow delay-150"></div>
+        <div className="w-4 h-4 bg-white rounded-full animate-bounce glow delay-200"></div>
+      </div>
     </div>
-  </div>
   )
 }
 
