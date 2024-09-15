@@ -21,6 +21,7 @@ import { getTotals } from "@/store/reducers/cartSlice";
 import SideDrawer from "../drawer/drawar";
 import CartDrawer from "../drawer/CartDrawer";
 import { content } from "@/assets/jsonfile/content";
+import { fetchWishlist } from "@/store/reducers/wishslice";
 // import { SidebarContext } from "@context/SidebarContext";
 
 const Navbar = () => {
@@ -31,19 +32,26 @@ const Navbar = () => {
   const [imageUrl, setImageUrl] = useState("");
   const [searchText, setSearchText] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
-  const [userInfo, userInfoset] = useState(null);
+  // const [userInfo, userInfoset] = useState(null);
   // const { toggleCartDrawer } = useContext(SidebarContext);
   // const { totalItems } = useCart();
   const router = useRouter();
-  const open = useSelector((state) => state["shoppingCard"]?.value);
   const cart = useSelector((state) => state?.["cart"]);
-  const { cartTotalAmount, cartTotalQuantity, cartItems } = useSelector((state) => state?.["cart"])
+  const { cartTotalQuantity } = useSelector((state) => state?.["cart"])
 
 
 
   // const {
   //   state: { userInfo },
   // } = useContext(UserContext);
+
+
+
+  const token = { "Authorization": `Bearer ${session?.["accessToken"]}` }
+
+  useEffect(() => {
+      dispatch(fetchWishlist(token)); // Fetch wishlist when component mounts
+  }, [dispatch]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

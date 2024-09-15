@@ -1,75 +1,69 @@
 "use client"
-import React from 'react'
 import { useFormik } from 'formik';
-import { contactUsValidation } from '@/utils/validation/validation';
 import { MdArrowForward } from 'react-icons/md';
-import Label from '@/components/global/fields/Label';
 import Input from '@/components/global/fields/input';
-import Textarea from '@/components/global/fields/textArea';
-import { post } from '@/helper/network';
 import { notifyerror, notifySuccess } from '@/utils/notify/notice';
 import { Select } from '../../../global/fields/SelectField';
-import { Country,State,City } from 'country-state-city';
+import { Country, State, City } from 'country-state-city';
 import { useSession } from 'next-auth/react';
 import CustomerServices from '@/helper/network/services/CustomerServices';
-const AddressForm = () => {
+import { useParams, useRouter } from 'next/navigation';
+const AddressForm = ({ currAddress }) => {
+
 
     const { data: session, status } = useSession();
+    const params = useParams()
+    const route = useRouter()
+
+    const addressType = [{
+        key: "Shipping",
+        value: "Shipping"
+    }, {
+        key: "Billing",
+        value: "Billing"
+    }]
 
     const handleSubmit = async (values) => {
+        var response
         try {
-            const addAddress = await CustomerServices.addCustomerAddress(
-                { "Authorization": `Bearer ${session["accessToken"]}`  },values
-            );
-            if (addAddress.status == "OK") {
-                notifySuccess(addAddress.message)
-            }else{
-                notifyerror(addAddress.message)
+            if (params.id) {
+                response = await CustomerServices.updateCustomerAddress(
+                    { "Authorization": `Bearer ${session["accessToken"]}` }, values, params
+                );
+            } else {
+                response = await CustomerServices.addCustomerAddress(
+                    { "Authorization": `Bearer ${session["accessToken"]}` }, values
+                );
             }
-        } catch (error) {
-            //console.log(error);
-            
-            notifyerror(error?.["message"])
-           
 
+        } catch (error) {
+            notifyerror(error?.["message"])
         }
+        return response
     };
 
     const formik = useFormik({
         initialValues: {
-            firstName: "",
-            lastName: "",
-            phone: "",
-            state: "",
-            email: "",
-            country: "",
-            city: "",
-            postalCode: "false",
-            type: "Shipping",
+            firstName: currAddress ? currAddress.firstName : "",
+            lastName: currAddress ? currAddress.lastName : "",
+            phone: currAddress ? currAddress.phone : "",
+
+            email: currAddress ? currAddress.email : "",
+            state: currAddress ? currAddress.state : "",
+            address: currAddress ? currAddress.address : "",
+            country: currAddress ? currAddress.country : "",
+            city: currAddress ? currAddress.city : "",
+            postalCode: currAddress ? currAddress.postalCode : "123456",
+            type: currAddress ? currAddress.type : "Shipping",
         },
         // validationSchema: contactUsValidation,
         onSubmit: async (values, { setSubmitting, resetForm, setValues }) => {
             setSubmitting(true)
-            //console.log(values);
-            
             const res = await handleSubmit(values)
-
-            const messages = {
-                start: "Starting API call...",
-                inProgress: "API call in progress...",
-                success: "API call successful!",
-                failure: "API call failed",
-            };
-
-            // const    res = await useApiWithToaster(handleSubmit,values,messages)
-
-            if (res["statusCode"] === 201) {
-
-                notifySuccess('Your message sent successfully. We will contact you shortly.')
-                // resetForm()
+            if (res["statusCode"] === 201 || res["statusCode"] === 200) {
+                notifySuccess(res["message"])
                 setSubmitting(false)
-
-
+                route.push('/user/my-account/profile')
             } else {
                 setSubmitting(false)
                 notifyerror(res["message"])
@@ -89,9 +83,7 @@ const AddressForm = () => {
                         }} classes={undefined} icon={undefined} id={"firstName"} />
 
 
-                        {formik.touched.firstName && formik.errors.firstName && (
-                            <div className="text-red-500 text-sm">{formik.errors.firstName}</div>
-                        )}
+
                     </div>
                     <div className=" ">
                         <Input label={"Last name"} type={"text"} additionalAttrs={{
@@ -100,9 +92,7 @@ const AddressForm = () => {
                         }} classes={undefined} icon={undefined} id={"lastName"} />
 
 
-                        {formik.touched.lastName && formik.errors.lastName && (
-                            <div className="text-red-500 text-sm">{formik.errors.lastName}</div>
-                        )}
+
                     </div>
                     <div className=" ">
                         <Input label={"Phone Number"} type={"text"} additionalAttrs={{
@@ -121,36 +111,30 @@ const AddressForm = () => {
                         }} classes={undefined} icon={undefined} id={"email"} />
 
 
-                        {formik.touched.email && formik.errors.email && (
-                            <div className="text-red-500 text-sm">{formik.errors.email}</div>
-                        )}
                     </div>
 
+
+                    <div className=" ">
+                        <Input label={"Address"} type={"address"} additionalAttrs={{
+                            ...formik.getFieldProps("address"),
+                            placeholder: "34 suit ", required: true
+                        }} classes={undefined} icon={undefined} id={"address"} />
+
+
+                    </div>
                     <div className="">
                         <Select label={"Country"} additionalAttrs={{
                             ...formik.getFieldProps("country"),
 
                         }} id={"country"} options={Country.getAllCountries()} optionkeys={{ key: "isoCode", value: "name" }} placeholder={"Country"}></Select>
-                        {formik.errors.country &&
-                            formik.touched.country && (
-                                <div className="text-red-500 text-sm">
-                                    {formik.errors.country}
-                                </div>
-                            )}
+
                     </div>
-
-
                     <div className=" ">
                         <Select label={"State"} additionalAttrs={{
                             ...formik.getFieldProps("state"),
 
                         }} id={"state"} options={State.getStatesOfCountry(formik.values.country)} optionkeys={{ key: "isoCode", value: "name" }} placeholder={"State"}></Select>
-                        {formik.errors.state &&
-                            formik.touched.state && (
-                                <div className="text-red-500 text-sm">
-                                    {formik.errors.state}
-                                </div>
-                            )}
+
 
 
                     </div>
@@ -158,15 +142,9 @@ const AddressForm = () => {
                         <Select label={"City"} additionalAttrs={{
                             ...formik.getFieldProps("city"),
 
-                        }} id={"city"} options={City.getCitiesOfState(formik.values.country,formik.values.state)} optionkeys={{ key: "name", value: "name" }} placeholder={"city"}></Select>
-                        {formik.errors.city &&
-                            formik.touched.city && (
-                                <div className="text-red-500 text-sm">
-                                    {formik.errors.city}
-                                </div>
-                            )}
-                    </div>
+                        }} id={"city"} options={City.getCitiesOfState(formik.values.country, formik.values.state)} optionkeys={{ key: "name", value: "name" }} placeholder={"city"}></Select>
 
+                    </div>
                     <div className=''>
                         <Input label={"Pin Code"} type={"text"} additionalAttrs={{
                             ...formik.getFieldProps("postalCode"),
@@ -174,22 +152,26 @@ const AddressForm = () => {
                         }} classes={undefined} icon={undefined} id={"postalCode"} />
 
 
-                        {formik.touched.postalCode && formik.errors.postalCode && (
-                            <div className="text-red-500 text-sm">{formik.errors.postalCode}</div>
-                        )}
+
+                    </div>
+                    <div className="  ">
+                        <Select label={"Address type"} additionalAttrs={{
+                            ...formik.getFieldProps("type"),
+
+                        }} id={"type"} options={addressType} optionkeys={{ key: "key", value: "value" }} placeholder={"Select"}></Select>
+
                     </div>
 
-
-                   <div className=' col-span-full flex justify-end'>
-                   <button
-                        className=" disabled:text-gray-400 disabled:bg-gray-300 col-span-2 inline-flex font-medium items-center bg-gray-700 hover:enabled::bg-gray-800 active:enabled:bg-gray-1000 focus-visible:ring-gray-900/30 text-gray-0  text-white justify-center active:enabled:translate-y-px focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-50 transition-colors duration-200 px-5 py-2 text-base h-12 rounded-md border border-transparent focus-visible:ring-offset-2 bg-blue hover:enabled:bg-gray-900 focus-visible:ring-blue/30 "
-                        type="submit"
-                        disabled={!formik.isValid || formik.isSubmitting}
-                    >
-                        <span>{formik.isSubmitting ? "Saving..." : 'Save'}</span>{" "}
-                        <MdArrowForward className="ms-2 mt-0.5 h-5 w-5" />
-                    </button>
-                   </div>
+                    <div className=' col-span-full flex justify-end'>
+                        <button
+                            className=" disabled:text-gray-400 disabled:bg-gray-300 col-span-2 inline-flex font-medium items-center bg-gray-700 hover:enabled::bg-gray-800 active:enabled:bg-gray-1000 focus-visible:ring-gray-900/30 text-gray-0  text-white justify-center active:enabled:translate-y-px focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-50 transition-colors duration-200 px-5 py-2 text-base h-12 rounded-md border border-transparent focus-visible:ring-offset-2 bg-blue hover:enabled:bg-gray-900 focus-visible:ring-blue/30 "
+                            type="submit"
+                            disabled={!formik.isValid || formik.isSubmitting}
+                        >
+                            <span>{formik.isSubmitting ? "Saving..." : 'Save'}</span>{" "}
+                            <MdArrowForward className="ms-2 mt-0.5 h-5 w-5" />
+                        </button>
+                    </div>
                 </div>
             </form>
         </>

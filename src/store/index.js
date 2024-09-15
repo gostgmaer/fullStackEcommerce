@@ -37,7 +37,7 @@
 
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { cartReducer } from './reducers/cartSlice';
-import { wishlistReducer } from './reducers/wishListSlice';
+// import { wishlistReducer } from './reducers/wishListSlice';
 import { shoppingCardReducer } from './reducers/shoppingCardSlice';
 import { sidebarReducer } from './reducers/sidebarSlice';
 import { isOpenReducer } from './reducers/isOpenSlice';
@@ -47,6 +47,7 @@ import storageSession from 'redux-persist/lib/storage/session';
 import  { productReducer } from './reducers/productSlice';
 import { paginationReducer } from './reducers/paginationSlice';
 import { queryReducer } from './reducers/querySlice';
+import { wishlistReducer } from './reducers/wishslice';
 // import { isOpenReducer } from './reducers/isOpenSlice';
 // import { searchReducer } from './reducers/searchSlice';
 // import { shoppingCardReducer } from './reducers/shoppingCardSlice';
