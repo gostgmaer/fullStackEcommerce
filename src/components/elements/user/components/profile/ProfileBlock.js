@@ -43,10 +43,10 @@ const ProfileBlock = ({ user }) => {
                     <div className="grid grid-cols-2 col-span-full">
                         <h2>Address</h2>        <Link href={'/user/my-account/profile/add-address'} className="absolute top-2 right-2 bg-cyan-600 text-white px-3 py-1 rounded rs-btn-link border-cyan-100 hover:bg-cyan-100" >Add</Link>
                     </div>
-                    <div className=" col-span-full grid grid-cols-2">
+                    <div className=" col-span-full gap-5 grid grid-cols-2">
 
                         {user.address.length? user.address.map(item => (
-                            <div className=" col-span-1" key={item._id}>
+                            <div className=" col-span-1 " key={item._id}>
                                 <AddressCard data={item} />
                             </div>
                         )):<p>No Address is Found</p>}

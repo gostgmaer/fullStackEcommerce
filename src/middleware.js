@@ -21,10 +21,15 @@ export async function middleware(req, res) {
     }
   }
 
+  // if (pathname.includes('/update-address') && authorised) {
+  //   return NextResponse.redirect(new URL(`/user/my-account/profile/update-address/${req.params.id}`, req.url));
+  // }
+
   // If the user is authenticated and trying to access the login page, redirect them to the dashboard
   if (pathname.startsWith('/auth') && authorised) {
     return NextResponse.redirect(new URL('/', req.url));
   }
+
 
 }
 
