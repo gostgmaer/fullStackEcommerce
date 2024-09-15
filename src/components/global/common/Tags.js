@@ -3,7 +3,7 @@ import React from 'react';
 const Tags = ({ product }) => {
   return (
     <>
-      {product.tag.length !== 0 && (
+      {product?.tag?.length !== 0 && (
         <div className="flex flex-row">
           {JSON.parse(product?.tag).map((t, i) => (
             <span

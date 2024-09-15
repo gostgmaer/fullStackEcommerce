@@ -1,5 +1,5 @@
 
-import { attributes, discountProducts, popularProducts } from "@/assets/fakeData/Products";
+import { attributes, } from "@/assets/fakeData/Products";
 import { content } from "@/assets/jsonfile/content";
 import Banner from "@/components/elements/banner/Banner";
 import FastDeliveryCard from "@/components/elements/banner/FastDeliveryCard";
@@ -11,7 +11,7 @@ import ProductCard from "@/components/elements/product/ProductCard";
 import Layout from "@/components/global/layout/Layout";
 import CategoryServices from "@/helper/network/services/CategoryServices";
 import ProductServices from "@/helper/network/services/ProductServices";
-import { Placeholder } from 'rsuite';
+
 // import { serverMethod } from "@/helper/network/serverCall/datafetch";
 
 export const metadata = {

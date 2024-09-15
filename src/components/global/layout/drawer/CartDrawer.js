@@ -4,7 +4,7 @@ import { Drawer, ButtonToolbar, Button, Placeholder } from 'rsuite';
 import React, { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import SideDrawer from "../drawer/drawar";
-import { IoAddOutline, IoCartSharp, IoClose, IoRemoveOutline } from 'react-icons/io5';
+import { IoAddOutline, IoCart, IoCartSharp, IoClose, IoRemoveOutline } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { decreaseCart, getTotals, incrementCart, removeFromCart } from '@/store/reducers/cartSlice';
@@ -25,7 +25,7 @@ const CartDrawer = ({setOpen}) => {
   return (
     <>
       <div className="drawer-mask"></div>
-      <div className="flex flex-col w-full h-full justify-between items-middle bg-white rounded cursor-pointer">
+      <div className="flex flex-col w-full h-full justify-between items-middle bg-white rounded ">
         <div className="w-full flex justify-between items-center relative px-5 py-4 border-b bg-indigo-50 border-gray-100">
           <h2 className="font-semibold  text-gray-800 text-lg m-0 text-heading flex items-center">
             <span className="text-xl mr-2 ">
@@ -51,17 +51,7 @@ const CartDrawer = ({setOpen}) => {
               <div className="flex flex-col items-center">
                 <div className="flex justify-center items-center w-20 h-20 rounded-full bg-emerald-100">
                   <span className="text-emerald-600 text-4xl block">
-                    <svg
-                      stroke="currentColor"
-                      fill="currentColor"
-                      strokeWidth="0"
-                      viewBox="0 0 512 512"
-                      height="1em"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M454.65 169.4A31.82 31.82 0 00432 160h-64v-16a112 112 0 00-224 0v16H80a32 32 0 00-32 32v216c0 39 33 72 72 72h272a72.22 72.22 0 0050.48-20.55 69.48 69.48 0 0021.52-50.2V192a31.75 31.75 0 00-9.35-22.6zM176 144a80 80 0 01160 0v16H176zm192 96a112 112 0 01-224 0v-16a16 16 0 0132 0v16a80 80 0 00160 0v-16a16 16 0 0132 0z"></path>
-                    </svg>
+                   <IoCart/>
                   </span>
                 </div>
                 <h3 className="font-semibold text-gray-700 text-lg pt-5">
@@ -95,11 +85,11 @@ const CartDrawer = ({setOpen}) => {
                     {data.title}
                   </Link>
                   <span className="text-xs text-gray-400 mb-1">
-                    Item Price ${data.price}
+                    Item Price ${data.price.toFixed(2)}
                   </span>
                   <div className="flex items-center justify-between">
                     <div className="font-bold text-sm md:text-base text-heading leading-5">
-                      <span>${data.price * data.cartQuantity}</span>
+                      <span>${(data.price * data.cartQuantity).toFixed(2)}</span>
                     </div>
                     <div className="h-8 w-22 md:w-24 lg:w-24 flex flex-wrap items-center justify-evenly p-1 border border-gray-100 bg-white text-gray-600 rounded-md">
                       <button onClick={() => dispatch(decreaseCart(data))} >
@@ -126,7 +116,7 @@ const CartDrawer = ({setOpen}) => {
           )}
         </div>
 
-        <div className="mx-5 my-3">
+       { cart.cartItems.length&& <div className="mx-5 my-3">
           <span>
             <Link
               href={cart.cartItems.length === 0 ? "/" : "/checkout"}
@@ -141,7 +131,7 @@ const CartDrawer = ({setOpen}) => {
               </span>
             </Link>
           </span>
-        </div>
+        </div>}
       </div>
 
     </>

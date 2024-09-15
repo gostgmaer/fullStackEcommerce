@@ -1,5 +1,6 @@
 "use client"
 import CartServices from "@/helper/network/services/cartService";
+import { notifyerror, notifyinfo, notifySuccess, notifywarning } from "@/utils/notify/notice";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -62,7 +63,7 @@ export const CartSlice = createSlice({
         state.cartItems.push(tempProduct);
       }
 
-   
+      notifySuccess("Product Add Success!")
       return state;
       
     },
@@ -76,7 +77,8 @@ export const CartSlice = createSlice({
 
           state.cartItems = nextCartItems;
         }
-        localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+       
+        notifyerror("Product Remove Success!")
         return state;
       });
     },
@@ -98,10 +100,11 @@ export const CartSlice = createSlice({
             state.cartItems = nextCartItems;
           }
         //  localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+     
           return state;
         });
       }
-
+      notifywarning("Cart Quantity reduce!")
      
     },
     incrementCart(state, action) {
@@ -113,14 +116,12 @@ export const CartSlice = createSlice({
       } else {
         const tempProduct = { ...action.payload, cartQuantity: 1 };
         state.cartItems.push(tempProduct);
+       
       }
-
+      notifyinfo("Cart Quantity Increase!")
      // localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
     addByIncrement(state, action) {
-
-     
-      
       const product = state.cartItems.findIndex(
         (item) => item.id === action.payload.product.id
       );
@@ -129,9 +130,11 @@ export const CartSlice = createSlice({
       } else {
         const cartQuantity = action.payload.cartQuantity===1?1:action.payload.cartQuantity 
         const tempProduct = { ...action.payload.product,cartQuantity};
-        state.cartItems.push(tempProduct);
-      }
 
+        state.cartItems.push(tempProduct);
+       
+      }
+      notifySuccess("Product add success!")
     //  localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
     emptyCart: (state) => {

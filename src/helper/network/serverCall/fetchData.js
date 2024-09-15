@@ -13,7 +13,7 @@ export async function fetchData(endpoint, options = {}) {
       cacheTime = 60,
     } = options;
 
-    const tokens = getCookiesData();
+    // const tokens = getCookiesData();
 
     /////console.log(tokens);
     
@@ -58,7 +58,7 @@ export async function fetchData(endpoint, options = {}) {
       }
     }
     const defaultHeaders = {
-      'Content-Type': 'application/json',...tokens
+      'Content-Type': 'application/json'
     
     };
     const mergedHeaders = { ...defaultHeaders, ...headers };

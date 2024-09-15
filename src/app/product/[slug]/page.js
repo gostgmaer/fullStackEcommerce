@@ -21,13 +21,11 @@ export async function generateMetadata({ params, searchParams }, parent) {
   }
 }
 
-const ProductScreen = async (props) => {
+const ProductScreen = async ({params, searchParams}) => {
 
 
 
-  const product = await ProductServices.getProductBySlug(props.params)
-  // const related = await ProductServices.getRelatedProducts({category:product.results.category._id
-  // })
+ const data = await getRecord(params)
 
 
   // useEffect(() => {
@@ -185,7 +183,7 @@ const ProductScreen = async (props) => {
   return (
     <>
       <Layout>
-        <SingleProduct product={product.results} />
+        <SingleProduct props={data} />
         <div></div>
 
       </Layout>
@@ -228,15 +226,15 @@ const ProductScreen = async (props) => {
 export default ProductScreen;
 
 
-export const getRecord = async (slug) => {
+export const getRecord = async (params) => {
 
-  const params = {
-    method: "get",
-    header: {},
-    query: {}
-  };
-  const product = getProductById(slug);
-  const RelatedProduct = getProductByChildrenCategory(product?.children);
-  return { product, RelatedProduct }
+var related
+  const product = await ProductServices.getProductBySlug(params)
+  
+if (product) {
+  related = await ProductServices.getRelatedProducts({category:product.results.category._id})
+}
+  return { product:product.results
+    , related }
 
 }

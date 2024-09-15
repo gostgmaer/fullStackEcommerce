@@ -13,10 +13,12 @@ import { notifySuccess } from '@/utils/notify/notice';
 import Image from 'next/image';
 
 
-const SingleProduct = ({ product }) => {
+const SingleProduct = ({props}) => {
   const dispatch = useDispatch();
-
+ const { product, related } = props
  // //console.log(product);
+ //console.log(product, related);
+ 
 
   const [total, setTotal] = useState(1)
 
@@ -26,11 +28,12 @@ const SingleProduct = ({ product }) => {
   }
 
 
-  // const { data: globalSetting } = useAsync(SettingServices.getGlobalSetting);
+
+
 
   // const currency = globalSetting?.default_currency || "$";
 
-  const RelatedProduct = getProductByParentCategory(product?.category);
+  // const RelatedProduct = getProductByParentCategory(product?.category);
 
 
   useEffect(() => {
@@ -210,7 +213,7 @@ const SingleProduct = ({ product }) => {
             <div className="flex">
               <div className="w-full">
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-3 lg:gap-3 ">
-                  {RelatedProduct.map((data, index) => (
+                  {related?.results.map((data, index) => (
                     <ProductCard key={index} product={data} attributes={attributes} />
                   ))}
                 </div>

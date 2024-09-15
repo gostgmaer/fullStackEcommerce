@@ -14,11 +14,6 @@ const Index = async (props) => {
 
 
 
-  // @ts-ignore
-  // const session = await getServerSession(authOptions);
-  // const profile = await CustomerServices.getProfile(null, { "Authorization": `Bearer ${session["accessToken"]}` })
-
-
   return (
     <Layout  >
 
@@ -30,7 +25,7 @@ const Index = async (props) => {
                 </div>
       
       <div className='col-span-full'>
-      <AddressForm/>
+      <AddressForm currAddress={undefined}/>
       </div>
        
        </div>

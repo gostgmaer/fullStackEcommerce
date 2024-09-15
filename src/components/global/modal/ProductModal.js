@@ -11,7 +11,7 @@ import Stock from "../common/Stock";
 import Price from "../common/Price";
 import VariantList from "../common/variants/VariantList";
 import { content } from "@/assets/jsonfile/content";
-import Tags from "../common/Tags";
+// import Tags from "../common/Tags";
 import { useDispatch, useSelector } from "react-redux";
 import { addByIncrement } from "@/store/reducers/cartSlice";
 import { IoAdd, IoAddOutline, IoBagAddSharp, IoRemove, IoRemoveOutline } from "react-icons/io5";
@@ -342,7 +342,7 @@ const ProductModal = ({
                         </button>
                       </Link>
                     </span>
-                    <Tags product={product} />
+                    {/* <Tags product={product} /> */}
                   </div>
 
                   <div>
