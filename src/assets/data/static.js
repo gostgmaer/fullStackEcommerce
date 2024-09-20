@@ -1,5 +1,5 @@
 export const statusColors = {
-    "pending": "text-yellow-500", // Yellow text
+    "pending": "text-yellow-400", // Yellow text
     "completed": "text-green-500", // Green text
     "shipped": "text-blue-500", // Blue text
     "canceled": "text-red-500", // Red text

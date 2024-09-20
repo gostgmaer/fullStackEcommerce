@@ -81,7 +81,7 @@ const LoginForm = () => {
             additionalAttrs={{
               ...formik.getFieldProps("password"),
               placeholder: "Password",
-              required: true,
+              required: true,autoComplete:'off'
             }}
             classes={undefined}
             icon={<MdLock />}

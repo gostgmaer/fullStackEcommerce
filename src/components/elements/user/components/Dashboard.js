@@ -3,12 +3,11 @@
 import { FaTruck } from 'react-icons/fa';
 import { IoCartOutline, IoCheckmark, IoExpandSharp } from 'react-icons/io5';
 import OrderTable from './order/OrderTable';
+import { useSession } from 'next-auth/react';
 
 // import { useSelector } from 'react-redux';
 const DashboardBlock = ({order}) => {
 
-
-	 
 
 
 	  
@@ -79,7 +78,7 @@ const DashboardBlock = ({order}) => {
 				</div>
 			</div>
 
-			<OrderTable order={order.order} title="Recent order"/>
+			<OrderTable  title="Recent order"/>
 			
 		
 		</div>
