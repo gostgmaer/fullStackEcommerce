@@ -49,8 +49,13 @@ const Navbar = () => {
 
   const token = { "Authorization": `Bearer ${session?.["accessToken"]}` }
 
+
   useEffect(() => {
+    if (session) {
       dispatch(fetchWishlist(token)); // Fetch wishlist when component mounts
+    }
+
+      
   }, [dispatch]);
 
   const handleSubmit = (e) => {
