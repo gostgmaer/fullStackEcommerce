@@ -17,7 +17,7 @@ const ProductServices = {
     return requests.get("/products/popular", query);
   },
   getProductBySlug: async (params) => {
-    return requests.get(`/products/view/:slug`, null, params);
+    return requests.get(`/products/view/:slug`, null, params,null,1);
   },
 
   getRelatedProducts: async (query) => {
