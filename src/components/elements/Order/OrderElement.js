@@ -5,14 +5,23 @@ import ReactToPdf from 'react-to-pdf';
 import ReactToPrint from 'react-to-print';
 
 import Link from 'next/link';
+import { MdDelete } from 'react-icons/md';
+import OrderServices from '@/helper/network/services/OrderServices';
+import { useSession } from 'next-auth/react';
+import { notifySuccess } from '@/utils/notify/notice';
+import { useRouter } from 'next/navigation';
 
-function OrderElement({order}) {
+function OrderElement({ order }) {
 	const printRef = useRef();
-
+	const { data: session, status } = useSession();
+	const route = useRouter()
 
 
 	const data = order.results
-	 //console.log(data);
+
+	// console.log(order);
+
+	//console.log(data);
 
 	var formatter = new Intl.NumberFormat('en-US', {
 		style: 'currency',
@@ -21,6 +30,22 @@ function OrderElement({order}) {
 	useEffect(() => {
 		window.scrollTo(0, 0);
 	}, []);
+
+
+	const cancelOrders = async (id) => {
+		const response = await OrderServices.cancelOrder({ id: id }, {
+			Authorization: `Bearer ${session["accessToken"]}`,
+		})
+		if (response.statusCode == "200") {
+			notifySuccess(response?.message)
+			setTimeout(() => {
+				route.push('/user/my-account/my-orders')
+			}, 3000);
+		}
+	}
+
+
+
 
 	return (
 		<div className="bg-gray-50">
@@ -44,7 +69,7 @@ function OrderElement({order}) {
 										<Link href="/">
 											<span
 												style={{
-												
+
 													display: 'inline-block',
 													overflow: 'hidden',
 													width: 'initial',
@@ -257,32 +282,6 @@ function OrderElement({order}) {
 					</div>
 					<div className="bg-white p-8 rounded-b-xl">
 						<div className="flex lg:flex-row md:flex-row sm:flex-row flex-col justify-between">
-							<ReactToPdf targetRef={printRef} filename="Kazastar_invoice.pdf">
-								{({ toPdf }) => (
-									<button className="mb-3 sm:mb-0 md:mb-0 lg:mb-0 flex items-center justify-center bg-emerald-500 hover:bg-emerald-600 text-white transition-all font-serif text-sm font-semibold h-10 py-2 px-5 rounded-md">
-										Download Invoice{' '}
-										<span className="ml-2 text-base">
-											<svg
-												stroke="currentColor"
-												fill="currentColor"
-												strokeWidth="0"
-												viewBox="0 0 512 512"
-												height="1em"
-												width="1em"
-												xmlns="http://www.w3.org/2000/svg"
-											>
-												<path
-													fill="none"
-													strokeLinecap="round"
-													strokeLinejoin="round"
-													strokeWidth="32"
-													d="M320 336h76c55 0 100-21.21 100-75.6s-53-73.47-96-75.6C391.11 99.74 329 48 256 48c-69 0-113.44 45.79-128 91.2-60 5.7-112 35.88-112 98.4S70 336 136 336h56m0 64.1l64 63.9 64-63.9M256 224v224.03"
-												></path>
-											</svg>
-										</span>
-									</button>
-								)}
-							</ReactToPdf>
 							<ReactToPrint
 								trigger={() => (
 									<button className="mb-3 sm:mb-0 md:mb-0 lg:mb-0 flex items-center justify-center bg-emerald-500 hover:bg-emerald-600 text-white transition-all font-serif text-sm font-semibold h-10 py-2 px-5 rounded-md">
@@ -325,8 +324,15 @@ function OrderElement({order}) {
 										</span>
 									</button>
 								)}
-								content={() => printRef.current}
-							/>
+								content={() => printRef.current} />
+							<div className='flex lg:flex-row md:flex-row sm:flex-row flex-col justify-between'>
+
+								<button onClick={() => cancelOrders(data?._id)} className='mb-3 sm:mb-0 md:mb-0 lg:mb-0 flex items-center justify-center bg-emerald-500 hover:bg-emerald-600 text-white transition-all font-serif text-sm font-semibold h-10 py-2 px-5 rounded-md'>
+									<MdDelete /> Cancel order
+								</button>
+
+
+							</div>
 						</div>
 					</div>
 				</div>
