@@ -8,7 +8,7 @@ const wishlistServices = {
     },
 
     fetchWishlist: async (headers) => {
-        return requests.get("/wishlist/fetch",null,null, headers,0);
+        return requests.get("/wishlist/fetch",null,null, headers,1);
     },
     updatewishlistItem: async (body, headers) => {
         return requests.post("/wishlist/update/:id", body, headers);
