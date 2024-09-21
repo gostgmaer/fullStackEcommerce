@@ -4,6 +4,9 @@ const OrderServices = {
   addOrder: async (body, headers) => {
     return requests.post("/orders/create", body, headers);
   },
+  cancelOrder: async (params, headers) => {
+    return requests.patch("/orders/cancel/:id",{}, params, headers);
+  },
   verifyOrder: async (body, headers) => {
     return requests.post("/orders/verify-payment", body, headers);
   },
