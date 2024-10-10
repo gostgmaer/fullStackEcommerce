@@ -19,8 +19,8 @@ const SettingServices = {
     return requests.get('/setting/pos/all');
   },
 
-  getGlobalSetting: async () => {
-    return requests.get('/setting/global/all');
+  getGlobalSetting: async (website) => {
+    return requests.get(`/global/${website}/fetch`,{},{},{});
   },
 
   getAllShipping: async () => {
