@@ -44,7 +44,7 @@ const Price = ({ product, price, card, currency, originalPrice }) => {
             }
           >
             {currency}
-            {product?.prices?.price}
+            {parseFloat(product?.prices?.price).toFixed(2)}
           </span>
           {originalPrice > price && card ? (
             <>
