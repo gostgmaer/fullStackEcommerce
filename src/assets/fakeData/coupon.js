@@ -1,4 +1,4 @@
-export const CouponData=
+export const CouponData =
     [
         {
             "_id": "6239c6c95d7428146b7a6d60",

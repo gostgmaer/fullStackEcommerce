@@ -47,7 +47,7 @@ const NavbarPromo = () => {
                     as="nav"
                     className="md:flex space-x-10 items-center"
                   >
-                    <Popover className="relative font-serif">
+                    {/* <Popover className="relative font-serif">
                       <Popover.Button className="group inline-flex items-center py-2 hover:text-emerald-600 focus:outline-none">
                         <span className="font-serif text-sm font-medium">
                           {content.Categories}
@@ -72,11 +72,11 @@ const NavbarPromo = () => {
                             className="rounded-md shadow-lg ring-1 ring-black ring-opacity-5 overflow-y-scroll flex-grow scrollbar-hide w-full h-full"
                             style={{ height: "50" }}
                           >
-                            {/* <Category /> */}
+                            <Category />
                           </div>
                         </Popover.Panel>
                       </Transition>
-                    </Popover>
+                    </Popover> */}
 
                     <Link
                       href="/about-us"

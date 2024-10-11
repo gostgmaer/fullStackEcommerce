@@ -21,7 +21,8 @@ import { getTotals } from "@/store/reducers/cartSlice";
 import SideDrawer from "../drawer/drawar";
 import CartDrawer from "../drawer/CartDrawer";
 import { content } from "@/assets/jsonfile/content";
-import { fetchWishlist } from "@/store/reducers/wishslice";
+import { fetchSetting } from "@/store/reducers/settingsSlice";
+// import { fetchWishlist } from "@/store/reducers/wishslice";
 // import { SidebarContext } from "@context/SidebarContext";
 
 const Navbar = () => {
@@ -38,6 +39,8 @@ const Navbar = () => {
   const router = useRouter();
   const cart = useSelector((state) => state?.["cart"]);
   const { cartTotalQuantity } = useSelector((state) => state?.["cart"])
+  const { setting } = useSelector((state) => state?.["setting"])
+console.log(setting);
 
 
 
@@ -47,15 +50,11 @@ const Navbar = () => {
 
 
 
-  const token = { "Authorization": `Bearer ${session?.["accessToken"]}` }
+  // const token = { "Authorization": `Bearer ${session?.["accessToken"]}` }
 
 
   useEffect(() => {
-    if (session) {
-      dispatch(fetchWishlist(token)); // Fetch wishlist when component mounts
-    }
-
-      
+    dispatch(fetchSetting());
   }, [dispatch]);
 
   const handleSubmit = (e) => {
