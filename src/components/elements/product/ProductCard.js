@@ -56,7 +56,7 @@ const ProductCard = ({ product, attributes }) => {
             <Stock stock={product.stock} card />
 
           </div>
-          <Discount product={product} slug={product.slug} modal={undefined} />
+          <Discount discount={Number(product.prices.discount)} product={product} slug={product.slug} modal={true} />
           {product?.image?.[0] ? (
 
             <div className="relative flex justify-center cursor-pointer pt-2 w-full h-44">
@@ -121,8 +121,8 @@ const ProductCard = ({ product, attributes }) => {
               card
               product={product}
               currency={"$"}
-              price={product?.prices?.price}
-              originalPrice={product?.prices?.originalPrice}
+              price={Number(product?.prices?.price)}
+              originalPrice={Number(product?.prices?.originalPrice)}
             />
 
 
