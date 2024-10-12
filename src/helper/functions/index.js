@@ -3,7 +3,6 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import moment from "moment";
 
-
 import { baseurl } from "@/config/setting";
 // Export the calculateTimeGap function with maxGap parameter
 
@@ -237,7 +236,6 @@ const AUTH_TOKEN =
 
 // @ts-ignore
 
-
 export function storeCookiesOfObject(data) {
   if (data) {
     const userKeys = Object.keys(data);
@@ -375,27 +373,35 @@ export const setClientCookie = (name, value, timestamp) => {
 export const getCookiesData = (second) => {
   const cookiesData = Cookies.get();
   const Authorization =
-    "Bearer " + cookiesData?.["headerPayload"] + "." + cookiesData?.["signature"];
+    "Bearer " +
+    cookiesData?.["headerPayload"] +
+    "." +
+    cookiesData?.["signature"];
   return {
     Authorization,
   };
 };
 
-
 export const authToken = (second) => {
   const cookiesData = Cookies.get();
- // //console.log(cookiesData);
-  
-  const Authorization =
-    "Bearer " + cookiesData?.["accessToken"];
+  // //console.log(cookiesData);
+
+  const Authorization = "Bearer " + cookiesData?.["accessToken"];
   return {
-    Authorization
+    Authorization,
   };
 };
 
-
 export function getUsername(email) {
   // Split the email at the '@' symbol
-  let username = email.split('@')[0];
+  let username = email.split("@")[0];
   return username;
+}
+
+export function applyDiscount(originalPrice, discountAmount) {
+  const price = parseFloat(originalPrice);
+  const discount = parseFloat(discountAmount);
+  const discountPercentage = (discount / price) * 100;
+
+  return discountPercentage.toFixed(2);
 }

@@ -27,7 +27,7 @@ const handleRemoveFromWishlist = (id) => {
     return (
         <>
 
-            <div className="group box-border  flex rounded-md shadow-sm pe-0 flex-col items-center  absolute right-3 top-3">
+            <div className="group box-border  flex rounded-md shadow-sm pe-0 flex-col items-center  absolute right-1 top-1">
                 {wishlistData ? (
                     <button 
                     // onClick={() => dispatch(removeFromWishlist({product:data._id}))}
