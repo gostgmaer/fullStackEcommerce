@@ -1,18 +1,53 @@
+
+import CouponServices from '@/helper/network/services/CouponServices';
 import { decreaseCart, getTotals, incrementCart, removeFromCart } from '@/store/reducers/cartSlice';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoAddOutline, IoBag, IoRemoveOutline } from 'react-icons/io5';
 import { MdDelete } from 'react-icons/md';
 import { useSelector, useDispatch } from 'react-redux';
 
-function OrderSummary() {
+function OrderSummary({ code, setCode }) {
 	const cart = useSelector((state) => state['cart']);
 	const { cartTotalAmount } = useSelector((state) => state["cart"]);
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(getTotals());
 	}, [cart, dispatch]);
+
+
+	// const [couponCode, setCouponCode] = useState("");
+	const [message, setMessage] = useState("");
+	const [loading, setLoading] = useState(false);
+	// const [total, setTotal] = useState(cartTotalAmount);
+	const [isCoupon, setIsCoupon] = useState(false);
+	const [discount, setDiscount] = useState(null);
+
+	// Handle form submission
+	const handleApplyCoupon = async (e) => {
+		e.preventDefault();
+		const products = cart.cartItems.map(item => item._id);
+		const cartItems = cart.cartItems.map(item => ({
+			productId: item._id,
+			quantity: item.cartQuantity
+		}));
+
+		setLoading(true);
+		try {
+			const response = await CouponServices.applyCouponToProduct({ code, products, cart: { ...cart, cartItems: cartItems } });
+			// Handle success response (e.g., show discount, update UI, etc.)
+			// setTotal(response.totals.totalPrice)
+			setDiscount(response.totals.totalDiscountedPrice)
+			setIsCoupon(true)
+			// setMessage(`Coupon applied successfully! Discount: ${response.data.discount}`);
+		} catch (error) {
+			// Handle error (e.g., invalid coupon, expired, etc.)
+			setMessage(error.response?.data?.message || "Failed to apply coupon.");
+		}
+		setLoading(false);
+	};
+
 	return (
 		<div className="md:w-full lg:w-2/5 lg:ml-10 xl:ml-14 md:ml-6 flex flex-col h-full md:sticky lg:sticky top-28 md:order-2 lg:order-2">
 			<div className="border p-5 lg:px-8 lg:py-8 rounded-lg bg-white dark:bg-gray-700 order-1 sm:order-2">
@@ -92,14 +127,17 @@ function OrderSummary() {
 					)}
 				</div>
 				<div className="flex items-center mt-4 py-4 lg:py-4 text-sm w-full font-semibold text-heading last:border-b-0 last:text-base last:pb-0 ">
-					<form className="w-full">
-						<div className="flex flex-col sm:flex-row items-start justify-end">
+					<form className="w-full" onSubmit={handleApplyCoupon}>
+						<div className="flex flex-col sm:flex-row items-start justify-end" >
 							<input
 								type="text"
 								placeholder="Input your coupon code"
+								value={code}
+								disabled={discount}
+								onChange={(e) => setCode(e.target.value)}
 								className="form-input py-2 px-3 md:px-4 w-full appearance-none transition ease-in-out border text-input text-sm rounded-md h-12 duration-200 bg-white border-gray-200 focus:ring-0 focus:outline-none focus:border-emerald-500 placeholder-gray-500 placeholder-opacity-75"
 							></input>
-							<button className="md:text-sm text-black dark:text-gray-50 leading-4 inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-semibold text-center justify-center border border-gray-200 rounded-md placeholder-white focus-visible:outline-none focus:outline-none px-5 md:px-6 lg:px-8 py-3 md:py-3.5 lg:py-3 mt-3 sm:mt-0 sm:ml-3 md:mt-0 md:ml-3 lg:mt-0 lg:ml-3 hover:text-white hover:bg-emerald-500 h-12 text-sm lg:text-base w-full sm:w-auto">
+							<button disabled={loading || discount} className="md:text-sm text-black dark:text-gray-50 leading-4 inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-semibold text-center justify-center border border-gray-200 rounded-md placeholder-white focus-visible:outline-none focus:outline-none px-5 md:px-6 lg:px-8 py-3 md:py-3.5 lg:py-3 mt-3 sm:mt-0 sm:ml-3 md:mt-0 md:ml-3 lg:mt-0 lg:ml-3 hover:text-white hover:bg-emerald-500 h-12 text-sm lg:text-base w-full sm:w-auto">
 								Apply
 							</button>
 						</div>
@@ -126,7 +164,7 @@ function OrderSummary() {
 				<div className="border-t mt-4 text-black">
 					<div className="flex items-center font-bold justify-between pt-5 text-sm uppercase">
 						Total Cost
-						<span className="font-extrabold text-lg">$ {cartTotalAmount}</span>
+						<span className="font-extrabold text-lg">$ {discount ? discount : cartTotalAmount}</span>
 					</div>
 				</div>
 			</div>

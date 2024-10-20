@@ -23,6 +23,7 @@ import { PaypalPayment, RazorpayPayment } from './service';
 
 const CheckoutBlock = () => {
     const { data: session, status } = useSession();
+    const [code, setCode] = useState("");
 
 
 
@@ -44,7 +45,7 @@ const CheckoutBlock = () => {
         accountCreate: false,
         additionalNotes: "",
         payment_method: "",
-        couponcode: "",
+        couponcode: code,
     };
 
 
@@ -56,7 +57,7 @@ const CheckoutBlock = () => {
 
             //  /////console.log(values);
             setSubmitting(false);
-            onchangeSubmit(values);
+            onchangeSubmit({...values,couponcode:code});
         }
     },
     );
@@ -397,7 +398,7 @@ const CheckoutBlock = () => {
                             </FormikProvider>
                         </div>
                     </div>
-                    <OrderSummary />
+                    <OrderSummary code={code} setCode={setCode} />
                 </div>
             </div>
             {/* <Payment isOpen={isPayment} setIsPayment={setIsPayment} order={order} /> */}
