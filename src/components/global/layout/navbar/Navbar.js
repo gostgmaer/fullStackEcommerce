@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import Link from "next/link";
@@ -38,28 +38,27 @@ const Navbar = () => {
   // const { totalItems } = useCart();
   const router = useRouter();
   const cart = useSelector((state) => state?.["cart"]);
-  const { cartTotalQuantity } = useSelector((state) => state?.["cart"])
-  const { setting } = useSelector((state) => state?.["setting"])
-console.log(setting);
-
-
+  const { cartTotalQuantity } = useSelector((state) => state?.["cart"]);
+  const { setting } = useSelector((state) => state?.["setting"]);
+  // console.log(setting);
 
   // const {
   //   state: { userInfo },
   // } = useContext(UserContext);
 
-
-
   // const token = { "Authorization": `Bearer ${session?.["accessToken"]}` }
 
-
   useEffect(() => {
-    dispatch(fetchSetting());
-  }, [dispatch]);
+    if (!setting) {
+      dispatch(fetchSetting());
+    }
+  }, [dispatch, setting]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    router.push(`/product/search?query=${searchText}&page=${1}&limit=${24}`, { scroll: false });
+    router.push(`/product/search?query=${searchText}&page=${1}&limit=${24}`, {
+      scroll: false,
+    });
   };
 
   useEffect(() => {
@@ -67,7 +66,6 @@ console.log(setting);
       const user = JSON.parse(Cookies.get("userInfo"));
       setImageUrl(user.image);
     }
-
   }, []);
 
   useEffect(() => {
@@ -76,16 +74,23 @@ console.log(setting);
 
   return (
     <>
-
-      <SideDrawer open={openCart} setOpen={setOpenCart} >
+      <SideDrawer open={openCart} setOpen={setOpenCart}>
         <CartDrawer setOpen={setOpenCart} />
       </SideDrawer>
 
       <div className="bg-emerald-500 text-white sticky top-0 z-20">
         <div className="max-w-screen-2xl mx-auto px-3 sm:px-10">
           <div className="top-bar h-16 lg:h-auto flex items-center justify-between py-4 mx-auto">
-            <Link href="/" className="mr-3 lg:mr-12 xl:mr-12 hidden md:hidden lg:block">
-              <Image width={110} height={40} src="./logo/logo-light.svg" alt="logo" />
+            <Link
+              href="/"
+              className="mr-3 lg:mr-12 xl:mr-12 hidden md:hidden lg:block"
+            >
+              <Image
+                width={110}
+                height={40}
+                src="./logo/logo-light.svg"
+                alt="logo"
+              />
             </Link>
             <div className="w-full transition-all duration-200 ease-in-out lg:flex lg:max-w-[520px] xl:max-w-[750px] 2xl:max-w-[900px] md:mx-12 lg:mx-4 xl:mx-0">
               <div className="w-full flex flex-col justify-center flex-shrink-0 relative z-30">
@@ -131,23 +136,26 @@ console.log(setting);
 
               <button className="pl-5  text-2xl font-bold" aria-label="Login">
                 {session ? (
-                  <Link href="/user/my-account/dashboard" className=" top-1 relative 2-6 h-6">
-                    {/* <Image
+                  <Link
+                    href="/user/my-account/dashboard"
+                    className=" top-1 relative 2-6 h-6"
+                  >
+                    <Image
                       width={29}
                       height={29}
-                      src={session?.user?.image?session?.user?.image:"./assets/img/about-us.png"}
+                      src={session?.user?.image}
                       
                       alt="user"
                       className="bg-white rounded-full"
-                    /> */}
+                    />
                   </Link>
                 ) : session ? (
-                  <Link className="leading-none font-bold font-serif block" href="/user/my-account/dashboard">
+                  <Link
+                    className="leading-none font-bold font-serif block"
+                    href="/user/my-account/dashboard"
+                  >
                     {session?.user?.name}
                   </Link>
-
-
-
                 ) : (
                   <span onClick={() => setModalOpen(!modalOpen)}>
                     <FiUser className="w-6 h-6 drop-shadow-xl" />
