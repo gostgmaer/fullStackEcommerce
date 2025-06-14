@@ -23,7 +23,7 @@ const ProfileBlock = ({ user }) => {
                         </Link>
                         <div className="flex items-center justify-center rounded-full text-xl text-center mr-4 bg-gray-200">
                             <Image
-                                src={user.profilePicture}
+                                src={user.image}
                                 width={64}
                                 height={64}
                                 className="h-16 w-16 rounded-full bg-gray-50"
