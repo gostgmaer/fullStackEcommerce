@@ -1,32 +1,28 @@
-import { getProductByChildrenCategory, getProductById } from "@/assets/fakeData/Products";
+import {
+  getProductByChildrenCategory,
+  getProductById,
+} from "@/assets/fakeData/Products";
 import SingleProduct from "@/components/elements/product/singleProduct";
 import Layout from "@/components/global/layout/Layout";
 
 import ProductServices from "@/helper/network/services/ProductServices";
 
-
-
 export async function generateMetadata({ params, searchParams }, parent) {
-
-  const { results } = await ProductServices.getProductBySlug(params)
+  const { results } = await ProductServices.getProductBySlug(params);
 
   return {
-    title: 'Ecommerce' + ' | ' + results.title,
+    title: "Ecommerce" + " | " + results.title,
     description: results.descriptions,
     openGraph: {
       title: results.title,
       description: results.descriptions,
       images: results.image,
     },
-  }
+  };
 }
 
-const ProductScreen = async ({params, searchParams}) => {
-
-
-
- const data = await getRecord(params)
-
+const ProductScreen = async ({ params, searchParams }) => {
+  const data = await getRecord(params);
 
   // useEffect(() => {
   //   if (value) {
@@ -172,7 +168,6 @@ const ProductScreen = async ({params, searchParams}) => {
   //   }
   // };
 
-
   // const { t } = useTranslation();
 
   // // category name slug
@@ -185,7 +180,6 @@ const ProductScreen = async ({params, searchParams}) => {
       <Layout>
         <SingleProduct props={data} />
         <div></div>
-
       </Layout>
     </>
   );
@@ -219,22 +213,16 @@ const ProductScreen = async ({params, searchParams}) => {
 //   };
 // };
 
-
-
-
-
 export default ProductScreen;
 
-
 export const getRecord = async (params) => {
+  var related;
+  const product = await ProductServices.getProductBySlug(params);
 
-var related
-  const product = await ProductServices.getProductBySlug(params)
-  
-if (product) {
-  related = await ProductServices.getRelatedProducts({category:product.results.category._id})
-}
-  return { product:product.results
-    , related }
-
-}
+  if (product) {
+    related = await ProductServices.getRelatedProducts({
+      category: product.results.category._id,
+    });
+  }
+  return { product: product.results, related };
+};
