@@ -162,8 +162,8 @@ export const authOptions = {
           ...token,
           accessToken: user.accessToken,
           refreshToken: user.refreshToken,
-          expires: Date.now() + 1*24 * 60 * 1000, // 5 minutes
-          accessTokenExpires: Date.now() + 7*24 * 60 * 1000, // 5 minutes
+          expires: Date.now() + 1 * 24 * 60 * 1000, // 5 minutes
+          accessTokenExpires: Date.now() + 7 * 24 * 60 * 1000, // 5 minutes
           id_token: user.id_token,
           token_type: user.token_type,
         };
@@ -179,7 +179,6 @@ export const authOptions = {
       }
 
       // Access token has expired, try to refresh it
-     
     },
 
     async session({ session, token }) {
@@ -189,16 +188,10 @@ export const authOptions = {
       session.token_type = token.token_type;
       return session;
     },
-
     async redirect({ url, baseUrl }) {
-
-      console.log(url, baseUrl);
-      
-      return url.startsWith("/")
-        ? baseUrl
-        : new URL(url).origin === baseUrl
-        ? baseUrl
-        : baseUrl;
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      else if (new URL(url).origin === baseUrl) return url;
+      return baseUrl;
     },
   },
 

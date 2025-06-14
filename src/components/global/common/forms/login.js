@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { loginValidationSchema } from "@/utils/validation/validation";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 import { useSession, signIn } from "next-auth/react";
@@ -16,7 +16,10 @@ const LoginForm = () => {
   const { data: session, status } = useSession();
   // const { handleLoginAuth, user, userId, authError } = useAuthContext();
   // const [authError, setAuthError] = useState(undefined);
-  const route = useRouter();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
   /////console.log(session, status);
   const formik = useFormik({
     initialValues: {
@@ -28,24 +31,13 @@ const LoginForm = () => {
       const res = await signIn("credentials", {
         redirect: false,
         ...values,
+        callbackUrl,
       });
 
       if (res.ok) {
         if (res.url) {
-          const parsedUrl = new URL(res.url);
-          const callbackUrlParam = parsedUrl.searchParams.get("callbackUrl");
-
-          if (callbackUrlParam) {
-            const decodedCallbackUrl = callbackUrlParam
-              ? decodeURIComponent(callbackUrlParam)
-              : "/";
-
-            route.push(decodedCallbackUrl);
-          } else {
-            route.push("/");
-          }
-        } else {
-          route.push("/");
+          const pathname = new URL(res.url).pathname;
+          router.push(pathname || "/");
         }
       } else {
         notifyerror(res.error, 5000);
@@ -81,7 +73,8 @@ const LoginForm = () => {
             additionalAttrs={{
               ...formik.getFieldProps("password"),
               placeholder: "Password",
-              required: true,autoComplete:'off'
+              required: true,
+              autoComplete: "off",
             }}
             classes={undefined}
             icon={<MdLock />}

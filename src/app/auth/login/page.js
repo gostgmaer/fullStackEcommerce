@@ -2,13 +2,28 @@
 import Link from "next/link";
 import Layout from "@/components/global/layout/Layout";
 import LoginForm from "@/components/global/common/forms/login";
+import { cookies, headers } from "next/headers";
+// import { useSearchParams } from "next/navigation";
 
 export const metadata = {
   title: "Ecommerce | Login",
   description: "Created by kishor sarkar",
 };
 
-const Index = () => {
+const Index = async (params) => {
+//  const headersList = await headers()
+//   // console.log(params);
+//   console.log(headersList.forEach(element => {
+//     // console.log(element);
+    
+//   }));
+  
+
+  // cookies
+  
+
+
+
   return (
     <>
       <Layout>

@@ -1,35 +1,84 @@
+// import { getToken } from "next-auth/jwt";
+// import { NextResponse } from "next/server";
+// import { secret } from "./config/setting";
+// export async function middleware(req, res) {
+//   const authorised = await getToken({ req, secret: secret });
 
-// import { getServerSession } from 'next-auth';
-// import { cookies } from 'next/headers'
-import { getToken } from 'next-auth/jwt';
-import { NextResponse } from 'next/server'
-import { secret } from './config/setting';
-// import { authOptions } from './app/api/auth/[...nextauth]/route';
+//   const { pathname ,origin} = req.nextUrl;
 
-// This function can be marked `async` if using `await` inside
-export async function middleware(req, res) {
+//   if (
+//     pathname.startsWith("/user") ||
+//     pathname === "/checkout" ||
+//     pathname.startsWith("/order")
+//   ) {
+//     if (!authorised) {
+//       console.log("req.url", req.nextUrl);
+//       // return NextResponse.redirect(new URL(`/auth/login`, req.url));
 
-  const authorised = await getToken({ req, secret:secret });
+//       const callbackUrl = encodeURIComponent(req.nextUrl.pathname);
+//       console.log(callbackUrl);
 
-  const { pathname } = req.nextUrl;
+//       // return NextResponse.redirect(
+//       //   `${origin}/auth/login?callbackUrl=${callbackUrl}`
+//       // );
 
-  // If the request is for /dashboard or any child page under /dashboard
-  if (pathname.startsWith('/user') || pathname === '/checkout' || pathname.startsWith('/order')) {
-    // If the user is not authenticated, redirect to the login page
+//       return NextResponse.redirect(new URL(`/auth/login`, req.url));
+//     }
+//   }
+//   if (pathname.startsWith("/auth") && authorised) {
+//     return NextResponse.redirect(new URL("/", req.url));
+//   }
+// }
+
+// export const config = {
+//   matcher: [
+//     '/user/:path*',
+//     '/checkout/:path*',
+//      '/order/:path*',
+//     '/auth/:path*',
+//     '/', // homepage
+//   ],
+// };
+import { getToken } from "next-auth/jwt";
+import { NextResponse } from "next/server";
+import { secret } from "./config/setting";
+
+export async function middleware(request) {
+  const authorised = await getToken({ req: request, secret });
+
+  const { pathname } = request.nextUrl;
+  // console.log("authorised", authorised);
+
+  if (
+    pathname.startsWith("/user") ||
+    pathname === "/checkout" ||
+    pathname.startsWith("/order")
+  ) {
     if (!authorised) {
-      return NextResponse.redirect(new URL(`/auth/login`, req.url));
+      const requestedUrl = request.nextUrl.clone();
+      const callbackUrl = requestedUrl.pathname + requestedUrl.search;
+
+      const loginUrl = new URL("/auth/login", request.url);
+      loginUrl.searchParams.set("callbackUrl", callbackUrl);
+
+      return NextResponse.redirect(loginUrl);
     }
   }
+  if (pathname.startsWith("/auth") && authorised) {
+    var rawCallbackUrl = request.nextUrl.searchParams.get("callbackUrl");
 
-  // if (pathname.includes('/update-address') && authorised) {
-  //   return NextResponse.redirect(new URL(`/user/my-account/profile/update-address/${req.params.id}`, req.url));
-  // }
-
-  // If the user is authenticated and trying to access the login page, redirect them to the dashboard
-  if (pathname.startsWith('/auth') && authorised) {
-    return NextResponse.redirect(new URL('/', req.url));
+    return NextResponse.redirect(
+      new URL(rawCallbackUrl || "/", request.nextUrl.origin)
+    );
   }
-
-
 }
 
+export const config = {
+  matcher: [
+    "/user/:path*",
+    "/checkout/:path*",
+    "/order/:path*",
+    "/auth/:path*",
+    "/", // homepage
+  ],
+};
