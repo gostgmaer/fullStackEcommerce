@@ -1,6 +1,6 @@
 
 
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { authOptions } from '@/app/api/auth/authOptions'
 import Userlayout from '@/components/elements/user'
 import OrderTable from '@/components/elements/user/components/order/OrderTable'
 import UpdateProfile from '@/components/elements/user/components/profile/updateProfile/UpdateProfile'

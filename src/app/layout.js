@@ -1,23 +1,19 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 // import 'resuit/dist/resuit.css';
-import { ProviderTheme } from '../utils/ProviderTheme'
+import { ProviderTheme } from "../utils/ProviderTheme";
 import NextAuthProvider from "@/context/sessionContext";
 import Script from "next/script";
 // import { AuthContextProvider } from "@/context/authContext";
 
-
-
 const inter = Inter({ subsets: ["latin"] });
-
-
 
 export const metadata = {
   generator: "Next.js",
   applicationName: "Ecommerce App",
   referrer: "origin-when-cross-origin",
-  keywords: ["Next.js", "React", "JavaScript",'node','Kishor Sarkar'],
-  authors: [ { name: "Kishor Sarkar", url: "https://nextjs.org" }],
+  keywords: ["Next.js", "React", "JavaScript", "node", "Kishor Sarkar"],
+  authors: [{ name: "Kishor Sarkar", url: "https://nextjs.org" }],
   creator: "Kishor Sarkar",
   publisher: "vercil",
   title: "Ecommerce App",
@@ -28,7 +24,7 @@ export const metadata = {
     card: "Ecommerce App",
     title: "Next.js",
     description:
-    "This website is used for demostarate my knoledge on Next and reatjs with Nodejs Backend and mongodb.",
+      "This website is used for demostarate my knoledge on Next and reatjs with Nodejs Backend and mongodb.",
     siteId: "1467726470533754880",
     creator: "@nextjs",
     creatorId: "1467726470533754880",
@@ -51,8 +47,8 @@ export const metadata = {
   },
   openGraph: {
     title: "Ecommerce App",
-  description:
-    "This website is used for demostarate my knoledge on Next and reatjs with Nodejs Backend and mongodb.",
+    description:
+      "This website is used for demostarate my knoledge on Next and reatjs with Nodejs Backend and mongodb.",
 
     url: "https://full-stack-ecommerce-iota.vercel.app/",
     siteName: "Ecommerce",
@@ -80,44 +76,37 @@ export const metadata = {
     type: "website",
   },
   alternates: {
-    canonical: 'https://full-stack-ecommerce-iota.vercel.app/',
+    canonical: "https://full-stack-ecommerce-iota.vercel.app/",
     languages: {
-      'en-US': 'https://nextjs.org/en-US'
+      "en-US": "https://nextjs.org/en-US",
     },
     media: {
-      'only screen and (max-width: 600px)': 'https://nextjs.org/mobile',
+      "only screen and (max-width: 600px)": "https://nextjs.org/mobile",
     },
     types: {
-      'application/rss+xml': 'https://nextjs.org/rss',
+      "application/rss+xml": "https://nextjs.org/rss",
     },
   },
   canonical: "https://full-stack-ecommerce-iota.vercel.app/",
   facebook: {
-    appId: '12345678',
+    appId: "12345678",
   },
 };
-
 
 export default function RootLayout({ children }) {
   return (
     <NextAuthProvider>
       <html lang="en" suppressHydrationWarning={true}>
-      
-      <head>
-     
-      </head>
+        <head></head>
 
         <body className={inter.className}>
-
-          <ProviderTheme>
-
-            {children}
-          </ProviderTheme>
+          <ProviderTheme>{children}</ProviderTheme>
           <Script
-        src="https://checkout.razorpay.com/v1/checkout.js"
-        strategy="beforeInteractive" // Ensures the script loads before your component renders
-      />
+            src="https://checkout.razorpay.com/v1/checkout.js"
+            strategy="beforeInteractive" // Ensures the script loads before your component renders
+          />
         </body>
-      </html></NextAuthProvider>
+      </html>
+    </NextAuthProvider>
   );
 }

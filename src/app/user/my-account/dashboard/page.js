@@ -1,4 +1,5 @@
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+// import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/app/api/auth/authOptions';
 import Userlayout from '@/components/elements/user'
 import DashboardBlock from '@/components/elements/user/components/Dashboard';
 import Layout from '@/components/global/layout/Layout'

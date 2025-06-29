@@ -42,24 +42,25 @@
 import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 import { secret } from "./config/setting";
+export { default } from "next-auth/middleware"
+// import { getServerSession } from "next-auth";
+// import { authOptions } from "./app/api/auth/authOptions";
+
 
 export async function middleware(request) {
   const authorised = await getToken({ req: request, secret });
-
   const { pathname } = request.nextUrl;
-  // console.log("authorised", authorised);
-
   if (
     pathname.startsWith("/user") ||
     pathname === "/checkout" ||
     pathname.startsWith("/order")
   ) {
     if (!authorised) {
-      const requestedUrl = request.nextUrl.clone();
-      const callbackUrl = requestedUrl.pathname + requestedUrl.search;
+      // const requestedUrl = request.nextUrl.clone();
+      // const callbackUrl = requestedUrl.pathname + requestedUrl.search;
 
       const loginUrl = new URL("/auth/login", request.url);
-      loginUrl.searchParams.set("callbackUrl", callbackUrl);
+      loginUrl.searchParams.set("callbackUrl", pathname);
 
       return NextResponse.redirect(loginUrl);
     }

@@ -143,7 +143,7 @@ const Navbar = () => {
                     <Image
                       width={29}
                       height={29}
-                      src={session?.user?.image}
+                      src={session?.user?.image || '/assets/img/person.png'}
                       
                       alt="user"
                       className="bg-white rounded-full"

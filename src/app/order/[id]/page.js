@@ -3,8 +3,10 @@ import OrderServices from '@/helper/network/services/OrderServices'
 import React from 'react'
 import OrderElement from '@/components/elements/Order/OrderElement';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/app/api/auth/authOptions';
+// import { authOptions } from '@/app/api/auth';
 
+// authOptions
 
 const Index = async (props) => {
 

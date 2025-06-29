@@ -28,16 +28,27 @@ const LoginForm = () => {
     },
     validationSchema: loginValidationSchema,
     onSubmit: async (values) => {
+
+
+      console.log("LoginForm values", values);
+      // if (authError) {
+      //   notifyerror(authError, 5000);  
+      console.log("LoginForm callbackUrl", callbackUrl);
+      
+    
+      
+    
       const res = await signIn("credentials", {
-        redirect: false,
         ...values,
         callbackUrl,
       });
 
       if (res.ok) {
         if (res.url) {
-          const pathname = new URL(res.url).pathname;
-          router.push(pathname || "/");
+         const fullUrl = new URL(res.url, window.location.origin);
+         console.log(fullUrl);
+         
+          router.push(fullUrl.pathname || "/");
         }
       } else {
         notifyerror(res.error, 5000);
