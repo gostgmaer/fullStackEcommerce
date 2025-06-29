@@ -1,5 +1,5 @@
 
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { authOptions } from '@/app/api/auth/authOptions'
 import Userlayout from '@/components/elements/user'
 
 import AddressForm from '@/components/global/common/forms/address'
