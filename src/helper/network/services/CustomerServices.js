@@ -18,11 +18,11 @@ const CustomerServices = {
   },
 
   forgetPassword: async (body) => {
-    return requests.patch("/user/auth/forget-password",body);
+    return requests.post("/user/auth/forget-password",body);
   },
 
-  resetPassword: async (body,params) => {
-    return requests.patch("/user/auth/reset-password/:token", body, params);
+  resetPassword: async (body,token) => {
+    return requests.post(`/user/auth/reset-password/${token}`, body, undefined);
   },
 
   
