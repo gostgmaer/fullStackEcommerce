@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { attributes, getProductByParentCategory } from '@/assets/fakeData/Products';
+import { attributes } from '@/assets/fakeData/Products';
 import ProductCard from '@/components/elements/product/ProductCard';
 import Informations from '@/components/global/common/informations/Informations';
 import SocialNetwork from '@/components/global/common/SocialNetwork';
@@ -15,153 +15,212 @@ import Image from 'next/image';
 const SingleProduct = ({ props }) => {
   const dispatch = useDispatch();
   const { product, related } = props;
-  // //console.log(product);
-  //console.log(product, related);
-
   const [total, setTotal] = useState(1);
 
   const handleAddToCart = (product) => {
     dispatch(addByIncrement({ product: { ...product, id: product._id }, cartQuantity: total }));
-    notifySuccess(`${product.title} is Successfully Add!`);
+    notifySuccess(`${product.title} is Successfully Added!`);
   };
-
-  // const currency = globalSetting?.default_currency || "$";
-
-  // const RelatedProduct = getProductByParentCategory(product?.category);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   return (
-    <div className="bg-gray-50">
-      <div className="px-0 py-10 lg:py-10">
-        <div className="mx-auto px-3 lg:px-10 max-w-screen-2xl">
-          <div className="flex items-center pb-4">
-            <ol className="flex items-center w-full overflow-hidden">
-              <li className="text-sm pr-1 transition duration-200 ease-in cursor-pointer  font-semibold">
-                <Link className="!no-underline !text-black hover:!text-emerald-500" href="/">
+    <div className="bg-background text-foreground transition-colors duration-200">
+      <div className="px-0 py-6 lg:py-10">
+        <div className="mx-auto px-4 lg:px-10 max-w-screen-2xl">
+          
+          {/* Breadcrumbs */}
+          <div className="flex items-center pb-6">
+            <ol className="flex items-center w-full overflow-hidden text-sm text-muted-foreground">
+              <li className="font-semibold transition duration-200 ease-in cursor-pointer">
+                <Link className="hover:text-primary" href="/">
                   Home
                 </Link>
               </li>
-              <li className="text-sm mt-[1px]">
-                <IoChevronForward />
+              <li className="mx-2 mt-[1px]">
+                <IoChevronForward className="w-3.5 h-3.5" />
               </li>
-              <li className="text-sm pr-1 transition duration-200 ease-in cursor-pointer hover:text-emerald-500 font-semibold">
-                <Link className="!no-underline !text-black hover:!text-emerald-500" href={`/product/search?category=${product?.category.title?.toLowerCase().split(' ').join('-')}`}>
+              <li className="font-semibold transition duration-200 ease-in cursor-pointer">
+                <Link className="hover:text-primary" href={`/product/search?category=${product?.category.title?.toLowerCase().split(' ').join('-')}`}>
                   {product?.category.title}
                 </Link>
               </li>
-              <li className="text-sm mt-[1px]">
-                <IoChevronForward />
+              <li className="mx-2 mt-[1px]">
+                <IoChevronForward className="w-3.5 h-3.5" />
               </li>
-              <li className="text-sm px-1 transition duration-200 ease-in ">{product?.title}</li>
+              <li className="truncate text-muted-foreground/60">{product?.title}</li>
             </ol>
           </div>
-          <div className="w-full rounded-lg p-3 lg:p-12 bg-white">
-            <div className="flex flex-col xl:flex-row">
-              <div className="flex-shrink-0 xl:pr-10 lg:block w-full mx-auto md:w-6/12 lg:w-5-12 xl:w-4/12">
-                {product?.prices.discount === 0 ? '' : <span className=" text-dark text-sm bg-orange-500 text-white py-1 px-2 rounded font-medium z-10 right-4 top-4">{Math.ceil(product.prices.discount)}% Off</span>}
-                <span
-                  className=" block overflow-hidden bg-none opacity-100 border-0 m-0 p-0 relative "
-                  style={{
-                    boxSizing: 'border-box',
 
-                    width: ' initial',
-                    height: 'initial',
-                  }}
-                >
+          {/* Product Layout Grid */}
+          <div className="w-full rounded-2xl p-4 lg:p-10 bg-card border border-border/40 shadow-sm transition-all duration-200">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+              
+              {/* Sticky Gallery Column */}
+              <div className="lg:col-span-5 xl:col-span-5 lg:sticky lg:top-24 h-fit bg-muted/10 rounded-xl p-4 flex items-center justify-center border border-border/20">
+                <div className="relative w-full max-w-[450px] aspect-square">
+                  {product?.prices.discount > 0 && (
+                    <span className="absolute top-2 left-2 z-10 text-xs bg-red-500 text-white py-1 px-2.5 rounded-full font-bold shadow-sm">
+                      {Math.ceil(product.prices.discount)}% Off
+                    </span>
+                  )}
                   <Image
-                    width={500}
-                    height={500}
-                    // className=' w-80 h-80'
-                    alt={product.title?.data}
+                    fill
+                    alt={product.title}
                     src={product?.image[0]}
-                    sizes="100vw"
+                    className="object-contain rounded-lg filter dark:brightness-95 transition-all"
+                    sizes="(max-w-768px) 100vw, 450px"
+                    priority
                   />
-                </span>
+                </div>
               </div>
-              <div className="w-full">
-                <div className="flex flex-col md:flex-row lg:flex-row xl:flex-row">
-                  <div className="w-full md:w-7/12 md:pr-4 lg:pr-4 xl:pr-12">
-                    <div className="mb-2">
-                      <h1 className="leading-7 text-lg md:text-xl lg:text-2xl mb-1 font-semibold text-gray-800">{product.title}</h1>
-                      <p className="uppercase font-medium text-gray-500">
-                        SKU :<span className="font-bold text-gray-600">{product.sku}</span>
+
+              {/* Details & Info Column */}
+              <div className="lg:col-span-7 xl:col-span-7 space-y-6">
+                <div className="flex flex-col md:flex-row lg:flex-row xl:flex-row gap-6">
+                  
+                  {/* Purchase Details */}
+                  <div className="w-full md:w-7/12 space-y-4">
+                    <div>
+                      <h1 className="leading-tight text-xl md:text-2xl lg:text-3xl font-bold text-foreground">{product.title}</h1>
+                      <p className="text-xs uppercase font-semibold text-muted-foreground tracking-wider mt-1.5">
+                        SKU : <span className="font-bold text-foreground/80">{product.sku}</span>
                       </p>
                     </div>
-                    <div className="font-bold">
-                      <span className="inline-block text-2xl">${product.price}</span>
-                      {product.retailPrice === product.price ? '' : <del className="text-lg font-normal text-gray-400 ml-1">${product.retailPrice}</del>}
+
+                    <div className="flex items-baseline space-x-2">
+                      <span className="text-3xl font-extrabold text-foreground">${product.price.toFixed(2)}</span>
+                      {product.retailPrice !== product.price && (
+                        <del className="text-lg font-normal text-muted-foreground/60">${product.retailPrice.toFixed(2)}</del>
+                      )}
                     </div>
-                    <div className="mb-4 md:mb-5 block">
-                      {product.stock !== 0 && <span className="bg-emerald-100 text-emerald-600 rounded-full inline-flex items-center justify-center px-2 py-1 text-xs font-semibold mt-2 ">In Stock</span>}
-                      {product.stock === 0 && <span className="bg-red-100 text-red-600 rounded-full inline-flex items-center justify-center px-2 py-1 text-xs font-semibold  mt-2">Stock Out</span>}
-                    </div>
+
                     <div>
-                      <p className="text-sm leading-6 text-gray-500 md:leading-7">{product.descriptions}</p>
-                      <div className="flex items-center mt-4">
-                        <div className="flex items-center justify-between space-s-3 sm:space-s-4 w-full">
-                          <div className="group flex items-center justify-between rounded-md overflow-hidden flex-shrink-0 border h-11 md:h-12 border-gray-300">
-                            <button onClick={() => setTotal(total - 1)} disabled={total <= 1 ? true : false} className="flex items-center justify-center flex-shrink-0 h-full transition ease-in-out duration-300 focus:outline-none w-8 md:w-12 text-heading border-e border-gray-300 hover:text-gray-500">
-                              <span className="text-dark text-base">
-                                <IoRemoveOutline />
-                              </span>
-                            </button>
-                            <p className="font-semibold flex items-center justify-center h-full transition-colors duration-250 ease-in-out cursor-default flex-shrink-0 text-base text-heading w-8 md:w-20 xl:w-24">{total}</p>
+                      {product.stock !== 0 ? (
+                        <span className="bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 rounded-full inline-flex items-center justify-center px-3 py-1 text-xs font-semibold">
+                          In Stock
+                        </span>
+                      ) : (
+                        <span className="bg-red-500/10 text-red-500 border border-red-500/20 rounded-full inline-flex items-center justify-center px-3 py-1 text-xs font-semibold">
+                          Stock Out
+                        </span>
+                      )}
+                    </div>
+
+                    <div>
+                      <p className="text-sm leading-relaxed text-muted-foreground">{product.descriptions}</p>
+                      
+                      {/* Quantity & Buy controls */}
+                      <div className="flex items-center mt-6">
+                        <div className="flex items-center justify-between space-x-4 w-full">
+                          
+                          {/* Counter */}
+                          <div className="flex items-center border border-border bg-muted/20 rounded-lg overflow-hidden h-11 md:h-12">
                             <button
-                              disabled={product.quantity === 0 ? true : false}
-                              onClick={() => {
-                                setTotal(total + 1);
-                              }}
-                              className="flex items-center justify-center h-full flex-shrink-0 transition ease-in-out duration-300 focus:outline-none w-8 md:w-12 text-heading border-s border-gray-300 hover:text-gray-500"
+                              onClick={() => setTotal(total - 1)}
+                              disabled={total <= 1}
+                              className="px-4 h-full flex items-center justify-center text-muted-foreground hover:text-foreground disabled:opacity-50 transition-opacity"
                             >
-                              <span className="text-dark text-base">
-                                <IoAddOutline />
-                              </span>
+                              <IoRemoveOutline className="w-4 h-4" />
+                            </button>
+                            <span className="w-12 text-center text-sm font-semibold select-none">{total}</span>
+                            <button
+                              disabled={product.stock === 0}
+                              onClick={() => setTotal(total + 1)}
+                              className="px-4 h-full flex items-center justify-center text-muted-foreground hover:text-foreground disabled:opacity-50 transition-opacity"
+                            >
+                              <IoAddOutline className="w-4 h-4" />
                             </button>
                           </div>
-                          <button disabled={product.quantity === 0 ? true : false} onClick={() => handleAddToCart(product)} className="text-sm leading-4 inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-semibold text-center justify-center border-0 border-transparent rounded-md focus-visible:outline-none focus:outline-none text-white px-4 ml-4 md:px-6 lg:px-8 py-4 md:py-3.5 lg:py-4 hover:text-white bg-emerald-500 hover:bg-emerald-600 w-full h-12">
+
+                          <button
+                            disabled={product.stock === 0}
+                            onClick={() => handleAddToCart(product)}
+                            className="flex-1 h-11 md:h-12 bg-primary text-primary-foreground hover:bg-primary/90 transition-all font-semibold rounded-lg shadow-sm hover:shadow active:scale-[0.98] text-sm flex items-center justify-center"
+                          >
                             Add To Cart
                           </button>
                         </div>
                       </div>
-                      <div className="flex flex-col mt-4">
-                        <span className=" font-semibold py-1 text-sm d-block">
-                          <span className="text-gray-700">Category: </span>
-                          <span className="text-gray-500">{product?.category.title}</span>
+
+                      {/* Meta Details */}
+                      <div className="flex flex-col mt-6 space-y-3 pt-6 border-t border-border/40">
+                        <span className="text-sm font-medium">
+                          <span className="text-muted-foreground">Category: </span>
+                          <span className="text-foreground">{product?.category.title}</span>
                         </span>
-                        <div className="flex flex-row">
-                          {product.tags.map((e, index) => {
-                            return (
-                              <span key={index} className="bg-gray-50 mr-2 border-0 text-gray-600 rounded-full inline-flex items-center justify-center px-3 py-1 text-xs font-semibold  mt-2">
-                                {e}
+                        
+                        {product.tags && product.tags.length > 0 && (
+                          <div className="flex flex-wrap gap-2">
+                            {product.tags.map((tag, index) => (
+                              <span key={index} className="bg-muted text-muted-foreground border border-border/30 rounded-full inline-flex items-center justify-center px-3 py-1 text-xs font-semibold">
+                                {tag}
                               </span>
-                            );
-                          })}
-                        </div>
+                            ))}
+                          </div>
+                        )}
                         <SocialNetwork />
                       </div>
                     </div>
                   </div>
-                  <Informations />
+
+                  {/* Right side info panel */}
+                  <div className="w-full md:w-5/12">
+                    <Informations />
+                  </div>
                 </div>
               </div>
+
             </div>
           </div>
-          <div className="pt-10 llg:pt-20 lg:pb-10"></div>
-          <div className="pt-10 llg:pt-20 lg:pb-10">
-            <h3 className="leading-7 text-lg lg:text-xl mb-3 font-semibold  hover:text-gray-600">Related Products</h3>
-            <div className="flex">
-              <div className="w-full">
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-3 lg:gap-3 ">
-                  {related?.results.map((data, index) => (
-                    <ProductCard key={index} product={data} attributes={attributes} />
-                  ))}
-                </div>
-              </div>
+
+          {/* Related Products Section */}
+          <div className="pt-12 lg:pt-16 pb-12">
+            <h3 className="text-lg lg:text-xl font-bold mb-6 hover:text-primary transition-colors duration-200">Related Products</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6 gap-3 md:gap-4">
+              {related?.results.map((data, index) => (
+                <ProductCard key={index} product={data} attributes={attributes} />
+              ))}
             </div>
           </div>
+
+        </div>
+      </div>
+
+      {/* Mobile Sticky Bottom CTA Bar */}
+      <div className="lg:hidden fixed bottom-16 left-0 right-0 z-30 bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-t border-border/40 p-4 shadow-[0_-4px_12px_rgba(0,0,0,0.06)] flex items-center justify-between space-x-4 animate-fade-in transition-all">
+        <div className="flex flex-col">
+          <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider">Total Price</span>
+          <span className="text-lg font-bold text-foreground">${(product.price * total).toFixed(2)}</span>
+        </div>
+        <div className="flex items-center space-x-2 flex-1 justify-end max-w-[240px]">
+          <div className="flex items-center border border-border rounded-lg bg-muted/30 h-10 overflow-hidden">
+            <button
+              onClick={() => setTotal(total - 1)}
+              disabled={total <= 1}
+              className="px-2 h-full flex items-center justify-center text-muted-foreground disabled:opacity-50"
+            >
+              <IoRemoveOutline />
+            </button>
+            <span className="w-8 text-center text-sm font-semibold">{total}</span>
+            <button
+              disabled={product.stock === 0}
+              onClick={() => setTotal(total + 1)}
+              className="px-2 h-full flex items-center justify-center text-muted-foreground disabled:opacity-50"
+            >
+              <IoAddOutline />
+            </button>
+          </div>
+          
+          <button
+            disabled={product.stock === 0}
+            onClick={() => handleAddToCart(product)}
+            className="h-10 px-4 bg-primary text-primary-foreground font-semibold rounded-lg text-xs hover:bg-primary/90 active:scale-95 transition-all disabled:bg-muted disabled:text-muted-foreground flex-grow"
+          >
+            {product.stock === 0 ? "Out of Stock" : "Buy Now"}
+          </button>
         </div>
       </div>
     </div>

@@ -92,7 +92,7 @@ const CartDrawer = ({setOpen}) => {
                       <span>${(data.price * data.cartQuantity).toFixed(2)}</span>
                     </div>
                     <div className="h-8 w-22 md:w-24 lg:w-24 flex flex-wrap items-center justify-evenly p-1 border border-gray-100 bg-white text-gray-600 rounded-md">
-                      <button onClick={() => dispatch(decreaseCart(data))} >
+                      <button onClick={() => dispatch(decreaseCart(data))} aria-label="Decrease quantity">
                         <span className="text-dark text-base">
                           <IoRemoveOutline />
                         </span>
@@ -100,13 +100,13 @@ const CartDrawer = ({setOpen}) => {
                       <p className="text-sm font-semibold text-dark px-1">
                         {data.cartQuantity}
                       </p>
-                      <button onClick={() => dispatch(incrementCart(data))}>
+                      <button onClick={() => dispatch(incrementCart(data))} aria-label="Increase quantity">
                         <span className="text-dark text-base">
                           <IoAddOutline />
                         </span>
                       </button>
                     </div>
-                    <button onClick={() => dispatch(removeFromCart(data))} className="hover:text-red-600 text-red-400 text-lg cursor-pointer">
+                    <button onClick={() => dispatch(removeFromCart(data))} aria-label="Remove item" className="hover:text-red-600 text-red-400 text-lg cursor-pointer">
                       <MdDelete />
                     </button>
                   </div>

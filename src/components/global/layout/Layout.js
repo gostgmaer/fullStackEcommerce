@@ -3,6 +3,8 @@ import NavBarTop from "./navbar/NavBarTop";
 import Navbar from "./navbar/Navbar";
 import StoreProvider from "@/store/storeProvider";
 import PaypalProvider from "@/components/elements/payment/PaypalProvider";
+import MobileFooter from "./footer/MobileFooter";
+import Footer from "./footer/Footer";
 import "react-toastify/dist/ReactToastify.css";
 
 const Layout = ({ children }) => {
@@ -11,17 +13,12 @@ const Layout = ({ children }) => {
       <ToastContainer />
       <StoreProvider>
         <PaypalProvider>
-          <div className="font-sans dark:text-gray-100  text-gray-800 bg-gray-50 dark:bg-gray-800">
+          <div className="font-sans min-h-screen flex flex-col bg-background text-foreground transition-colors duration-200">
             <NavBarTop />
             <Navbar />
-            <div className="">{children}</div>
-            {/* <MobileFooter /> */}
-            <div className="w-full">
-              <hr className="hr-line"></hr>
-              <div className="border-t border-gray-100 w-full">
-                {/* <Footer /> */}
-              </div>
-            </div>
+            <main className="flex-grow pb-16 lg:pb-0">{children}</main>
+            <MobileFooter />
+            <Footer />
           </div>
         </PaypalProvider>
       </StoreProvider>

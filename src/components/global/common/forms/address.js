@@ -1,16 +1,37 @@
 "use client"
-import { useFormik } from 'formik';
+
+import React, { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
 import { MdArrowForward } from 'react-icons/md';
 import Input from '@/components/global/fields/input';
-import { notifyerror, notifySuccess } from '@/utils/notify/notice';
 import { Select } from '../../../global/fields/SelectField';
+import { notifyerror, notifySuccess } from '@/utils/notify/notice';
 import { useSession } from 'next-auth/react';
 import CustomerServices from '@/helper/network/services/CustomerServices';
 import { useParams, useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
+
+const addressSchema = z.object({
+  firstName: z.string().min(1, 'First Name is required!'),
+  lastName: z.string().min(1, 'Last Name is required!'),
+  phone: z.string().min(1, 'Phone number is required!'),
+  email: z.string().min(1, 'Email address is required!').email('Invalid email address'),
+  address: z.string().min(1, 'Address is required!'),
+  country: z.string().min(1, 'Country is required!'),
+  state: z.string().min(1, 'State is required!'),
+  city: z.string().min(1, 'City is required!'),
+  postalCode: z.string().min(1, 'Pin Code is required!'),
+  type: z.enum(['Shipping', 'Billing'], {
+    errorMap: () => ({ message: 'Address type is required!' }),
+  }),
+});
 
 const AddressForm = ({ currAddress }) => {
     const [csc, setCsc] = useState(null);
+    const { data: session } = useSession();
+    const params = useParams();
+    const route = useRouter();
 
     useEffect(() => {
         import('country-state-city').then((mod) => {
@@ -18,21 +39,54 @@ const AddressForm = ({ currAddress }) => {
         });
     }, []);
 
-    const { data: session, status } = useSession();
-    const params = useParams()
-    const route = useRouter()
+    const addressType = [
+        { key: "Shipping", value: "Shipping" },
+        { key: "Billing", value: "Billing" }
+    ];
 
-    const addressType = [{
-        key: "Shipping",
-        value: "Shipping"
-    }, {
-        key: "Billing",
-        value: "Billing"
-    }]
+    const {
+        register,
+        handleSubmit,
+        watch,
+        setValue,
+        formState: { errors, isSubmitting }
+    } = useForm({
+        resolver: zodResolver(addressSchema),
+        defaultValues: {
+            firstName: currAddress ? currAddress.firstName : "",
+            lastName: currAddress ? currAddress.lastName : "",
+            phone: currAddress ? currAddress.phone : "",
+            email: currAddress ? currAddress.email : "",
+            address: currAddress ? currAddress.address : "",
+            country: currAddress ? currAddress.country : "",
+            state: currAddress ? currAddress.state : "",
+            city: currAddress ? currAddress.city : "",
+            postalCode: currAddress ? currAddress.postalCode : "123456",
+            type: currAddress ? currAddress.type : "Shipping",
+        }
+    });
 
-    const handleSubmit = async (values) => {
-        var response
+    const countryVal = watch("country");
+    const stateVal = watch("state");
+
+    // Reset state/city when country changes
+    useEffect(() => {
+        if (countryVal && currAddress?.country !== countryVal) {
+            setValue("state", "");
+            setValue("city", "");
+        }
+    }, [countryVal, setValue, currAddress]);
+
+    // Reset city when state changes
+    useEffect(() => {
+        if (stateVal && currAddress?.state !== stateVal) {
+            setValue("city", "");
+        }
+    }, [stateVal, setValue, currAddress]);
+
+    const onSubmit = async (values) => {
         try {
+            let response;
             if (params.id) {
                 response = await CustomerServices.updateCustomerAddress(
                     { "Authorization": `Bearer ${session["accessToken"]}` }, values, params
@@ -43,146 +97,135 @@ const AddressForm = ({ currAddress }) => {
                 );
             }
 
+            if (response["statusCode"] === 201 || response["statusCode"] === 200) {
+                notifySuccess(response["message"]);
+                route.push('/user/my-account/profile');
+            } else {
+                notifyerror(response["message"]);
+            }
         } catch (error) {
-            notifyerror(error?.["message"])
+            notifyerror(error?.message || "Something went wrong.");
         }
-        return response
     };
 
-    const formik = useFormik({
-        initialValues: {
-            firstName: currAddress ? currAddress.firstName : "",
-            lastName: currAddress ? currAddress.lastName : "",
-            phone: currAddress ? currAddress.phone : "",
-
-            email: currAddress ? currAddress.email : "",
-            state: currAddress ? currAddress.state : "",
-            address: currAddress ? currAddress.address : "",
-            country: currAddress ? currAddress.country : "",
-            city: currAddress ? currAddress.city : "",
-            postalCode: currAddress ? currAddress.postalCode : "123456",
-            type: currAddress ? currAddress.type : "Shipping",
-        },
-        // validationSchema: contactUsValidation,
-        onSubmit: async (values, { setSubmitting, resetForm, setValues }) => {
-            setSubmitting(true)
-            const res = await handleSubmit(values)
-            if (res["statusCode"] === 201 || res["statusCode"] === 200) {
-                notifySuccess(res["message"])
-                setSubmitting(false)
-                route.push('/user/my-account/profile')
-            } else {
-                setSubmitting(false)
-                notifyerror(res["message"])
-            }
-        },
-    });
-
     return (
-        <>
-            <form onSubmit={formik.handleSubmit}>
-                <div className="flex flex-col gap-x-4 gap-y-5 md:grid md:grid-cols-2 lg:gap-5 text-black">
+        <form onSubmit={handleSubmit(onSubmit)} className="bg-background text-foreground transition-colors duration-200">
+            <div className="flex flex-col gap-x-4 gap-y-5 md:grid md:grid-cols-2 lg:gap-5">
 
-                    <div className=" ">
-                        <Input label={"First name"} type={"text"} additionalAttrs={{
-                            ...formik.getFieldProps("firstName"),
-                            placeholder: "First name", required: true
-                        }} classes={undefined} icon={undefined} id={"firstName"} />
-
-
-
-                    </div>
-                    <div className=" ">
-                        <Input label={"Last name"} type={"text"} additionalAttrs={{
-                            ...formik.getFieldProps("lastName"),
-                            placeholder: "Last name", required: true
-                        }} classes={undefined} icon={undefined} id={"lastName"} />
-
-
-
-                    </div>
-                    <div className=" ">
-                        <Input label={"Phone Number"} type={"text"} additionalAttrs={{
-                            ...formik.getFieldProps("phone"),
-                            placeholder: "Phone Number",
-                        }} classes={undefined} icon={undefined} id={"phone"} />
-
-
-
-                    </div>
-
-                    <div className=" ">
-                        <Input label={"Email Address"} type={"email"} additionalAttrs={{
-                            ...formik.getFieldProps("email"),
-                            placeholder: "infomil@mil.com", required: true
-                        }} classes={undefined} icon={undefined} id={"email"} />
-
-
-                    </div>
-
-
-                    <div className=" ">
-                        <Input label={"Address"} type={"address"} additionalAttrs={{
-                            ...formik.getFieldProps("address"),
-                            placeholder: "34 suit ", required: true
-                        }} classes={undefined} icon={undefined} id={"address"} />
-
-
-                    </div>
-                    <div className="">
-                        <Select label={"Country"} additionalAttrs={{
-                            ...formik.getFieldProps("country"),
-
-                        }} id={"country"} options={csc ? csc.Country.getAllCountries() : []} optionkeys={{ key: "isoCode", value: "name" }} placeholder={"Country"}></Select>
-
-                    </div>
-                    <div className=" ">
-                        <Select label={"State"} additionalAttrs={{
-                            ...formik.getFieldProps("state"),
-
-                        }} id={"state"} options={csc && formik.values.country ? csc.State.getStatesOfCountry(formik.values.country) : []} optionkeys={{ key: "isoCode", value: "name" }} placeholder={"State"}></Select>
-
-
-
-                    </div>
-                    <div className="  ">
-                        <Select label={"City"} additionalAttrs={{
-                            ...formik.getFieldProps("city"),
-
-                        }} id={"city"} options={csc && formik.values.country && formik.values.state ? csc.City.getCitiesOfState(formik.values.country, formik.values.state) : []} optionkeys={{ key: "name", value: "name" }} placeholder={"city"}></Select>
-
-                    </div>
-                    <div className=''>
-                        <Input label={"Pin Code"} type={"text"} additionalAttrs={{
-                            ...formik.getFieldProps("postalCode"),
-                            placeholder: "121313", required: true
-                        }} classes={undefined} icon={undefined} id={"postalCode"} />
-
-
-
-                    </div>
-                    <div className="  ">
-                        <Select label={"Address type"} additionalAttrs={{
-                            ...formik.getFieldProps("type"),
-
-                        }} id={"type"} options={addressType} optionkeys={{ key: "key", value: "value" }} placeholder={"Select"}></Select>
-
-                    </div>
-
-                    <div className=' col-span-full flex justify-end'>
-                        <button
-                            className=" disabled:text-gray-400 disabled:bg-gray-300 col-span-2 inline-flex font-medium items-center bg-gray-700 hover:enabled::bg-gray-800 active:enabled:bg-gray-1000 focus-visible:ring-gray-900/30 text-gray-0  text-white justify-center active:enabled:translate-y-px focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-50 transition-colors duration-200 px-5 py-2 text-base h-12 rounded-md border border-transparent focus-visible:ring-offset-2 bg-blue hover:enabled:bg-gray-900 focus-visible:ring-blue/30 "
-                            type="submit"
-                            disabled={!formik.isValid || formik.isSubmitting}
-                        >
-                            <span>{formik.isSubmitting ? "Saving..." : 'Save'}</span>{" "}
-                            <MdArrowForward className="ms-2 mt-0.5 h-5 w-5" />
-                        </button>
-                    </div>
+                <div>
+                    <Input label={"First name"} type={"text"} additionalAttrs={{
+                        ...register("firstName"),
+                        placeholder: "John",
+                        required: true
+                    }} id={"firstName"} />
+                    {errors.firstName && (
+                        <p className="text-red-500 text-xs mt-1 font-semibold">{errors.firstName.message}</p>
+                    )}
                 </div>
-            </form>
-        </>
-    )
-}
 
-export default AddressForm
+                <div>
+                    <Input label={"Last name"} type={"text"} additionalAttrs={{
+                        ...register("lastName"),
+                        placeholder: "Doe",
+                        required: true
+                    }} id={"lastName"} />
+                    {errors.lastName && (
+                        <p className="text-red-500 text-xs mt-1 font-semibold">{errors.lastName.message}</p>
+                    )}
+                </div>
+
+                <div>
+                    <Input label={"Phone Number"} type={"text"} additionalAttrs={{
+                        ...register("phone"),
+                        placeholder: "1234567890",
+                    }} id={"phone"} />
+                    {errors.phone && (
+                        <p className="text-red-500 text-xs mt-1 font-semibold">{errors.phone.message}</p>
+                    )}
+                </div>
+
+                <div>
+                    <Input label={"Email Address"} type={"email"} additionalAttrs={{
+                        ...register("email"),
+                        placeholder: "john@example.com",
+                        required: true
+                    }} id={"email"} />
+                    {errors.email && (
+                        <p className="text-red-500 text-xs mt-1 font-semibold">{errors.email.message}</p>
+                    )}
+                </div>
+
+                <div className="md:col-span-2">
+                    <Input label={"Address"} type={"text"} additionalAttrs={{
+                        ...register("address"),
+                        placeholder: "123 Main St",
+                        required: true
+                    }} id={"address"} />
+                    {errors.address && (
+                        <p className="text-red-500 text-xs mt-1 font-semibold">{errors.address.message}</p>
+                    )}
+                </div>
+
+                <div>
+                    <Select label={"Country"} additionalAttrs={{
+                        ...register("country"),
+                    }} id={"country"} options={csc ? csc.Country.getAllCountries() : []} optionkeys={{ key: "isoCode", value: "name" }} placeholder={"Country"} />
+                    {errors.country && (
+                        <p className="text-red-500 text-xs mt-1 font-semibold">{errors.country.message}</p>
+                    )}
+                </div>
+
+                <div>
+                    <Select label={"State"} additionalAttrs={{
+                        ...register("state"),
+                    }} id={"state"} options={csc && countryVal ? csc.State.getStatesOfCountry(countryVal) : []} optionkeys={{ key: "isoCode", value: "name" }} placeholder={"State"} />
+                    {errors.state && (
+                        <p className="text-red-500 text-xs mt-1 font-semibold">{errors.state.message}</p>
+                    )}
+                </div>
+
+                <div>
+                    <Select label={"City"} additionalAttrs={{
+                        ...register("city"),
+                    }} id={"city"} options={csc && countryVal && stateVal ? csc.City.getCitiesOfState(countryVal, stateVal) : []} optionkeys={{ key: "name", value: "name" }} placeholder={"City"} />
+                    {errors.city && (
+                        <p className="text-red-500 text-xs mt-1 font-semibold">{errors.city.message}</p>
+                    )}
+                </div>
+
+                <div>
+                    <Input label={"Pin Code"} type={"text"} additionalAttrs={{
+                        ...register("postalCode"),
+                        placeholder: "123456",
+                        required: true
+                    }} id={"postalCode"} />
+                    {errors.postalCode && (
+                        <p className="text-red-500 text-xs mt-1 font-semibold">{errors.postalCode.message}</p>
+                    )}
+                </div>
+
+                <div>
+                    <Select label={"Address type"} additionalAttrs={{
+                        ...register("type"),
+                    }} id={"type"} options={addressType} optionkeys={{ key: "key", value: "value" }} placeholder={"Select"} />
+                    {errors.type && (
+                        <p className="text-red-500 text-xs mt-1 font-semibold">{errors.type.message}</p>
+                    )}
+                </div>
+
+                <div className="col-span-full flex justify-end mt-4">
+                    <button
+                        className="inline-flex font-bold items-center bg-primary text-primary-foreground hover:bg-primary/95 transition-all duration-200 px-6 py-3.5 text-sm h-12 rounded-lg border border-transparent shadow-sm hover:shadow"
+                        type="submit"
+                        disabled={isSubmitting}
+                    >
+                        <span>{isSubmitting ? "Saving..." : 'Save Address'}</span>
+                        <MdArrowForward className="ms-2 h-5 w-5" />
+                    </button>
+                </div>
+            </div>
+        </form>
+    );
+};
+
+export default AddressForm;

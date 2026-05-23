@@ -20,44 +20,31 @@ const Footer = () => {
   // } = useContext(UserContext);
 
   return (
-    <div className="pb-16 lg:pb-0 xl:pb-0 bg-white">
+    <div className="pb-16 lg:pb-0 xl:pb-0 bg-card border-t border-border/40 text-foreground transition-colors duration-200">
       <div className="mx-auto max-w-screen-2xl px-4 sm:px-10">
         <div className="grid grid-cols-2 md:grid-cols-7 xl:grid-cols-12 gap-5 sm:gap-9 lg:gap-11 xl:gap-7 py-10 lg:py-16 justify-between">
           <div className="pb-3.5 sm:pb-0 col-span-1 md:col-span-2 lg:col-span-3">
             <h3 className="text-md lg:leading-7 font-medium mb-4 sm:mb-5 lg:mb-6 pb-0.5">
-              {/* {t("common:footer-menu-title")} */}
               {content["footer-menu-title"]}
             </h3>
             <ul className="text-sm flex flex-col space-y-3">
               <li className="flex items-baseline">
-                <Link href="/about-us" className="text-gray-600 inline-block w-full hover:text-emerald-500">
-                  {/* <a className="text-gray-600 inline-block w-full hover:text-emerald-500">
-                    {t("common:footer-about-us")}
-                  </a> */}
+                <Link href="/about-us" className="text-muted-foreground inline-block w-full hover:text-primary transition-colors">
                   {content["footer-about-us"]}
                 </Link>
               </li>
               <li className="flex items-baseline">
-                <Link href="/contact-us" className="text-gray-600 inline-block w-full hover:text-emerald-500">
-                  {/* <a className="text-gray-600 inline-block w-full hover:text-emerald-500">
-                    {t("common:footer-contact-us")}
-                  </a> */}
+                <Link href="/contact-us" className="text-muted-foreground inline-block w-full hover:text-primary transition-colors">
                   {content["footer-contact-us"]}
                 </Link>
               </li>
               <li className="flex items-baseline">
-                <Link href="/terms-and-conditions" className="text-gray-600 inline-block w-full hover:text-emerald-500">
-                  {/* <a className="text-gray-600 inline-block w-full hover:text-emerald-500">
-                    {t("common:footer-terms-and-conditions")}
-                  </a> */}
+                <Link href="/terms-and-conditions" className="text-muted-foreground inline-block w-full hover:text-primary transition-colors">
                   {content["footer-terms-and-conditions"]}
                 </Link>
               </li>
               <li className="flex items-baseline">
-                <Link href="/privacy-policy" className="text-gray-600 inline-block w-full hover:text-emerald-500">
-                  {/* <a className="text-gray-600 inline-block w-full hover:text-emerald-500">
-                    {t("common:footer-privacy-policy")}
-                  </a> */}
+                <Link href="/privacy-policy" className="text-muted-foreground inline-block w-full hover:text-primary transition-colors">
                     {content["Privacy Policy"]}
                 </Link>
               </li>
@@ -65,42 +52,27 @@ const Footer = () => {
           </div>
           <div className="pb-3.5 sm:pb-0 col-span-1 md:col-span-2 lg:col-span-3">
             <h3 className="text-md lg:leading-7 font-medium mb-4 sm:mb-5 lg:mb-6 pb-0.5">
-              {/* {t("common:footer-top-category")} */}
               {content["footer-top-category"]}
             </h3>
             <ul className="text-sm lg:text-15px flex flex-col space-y-3">
               <li className="flex items-baseline">
-                <Link href="/product/search?category=fish--meat" className="text-gray-600 inline-block w-full hover:text-emerald-500">
-                  {/* <a className="text-gray-600 inline-block w-full hover:text-emerald-500">
-                    {t("common:footer-top-category-fish-meat")}
-                  </a> */}
-
+                <Link href="/product/search?category=fish--meat" className="text-muted-foreground inline-block w-full hover:text-primary transition-colors">
                   {content["footer-top-category-fish-meat"]}
                 </Link>
               </li>
 
               <li className="flex items-baseline">
-                <Link href="/product/search?category=drinks" className="text-gray-600 inline-block w-full hover:text-emerald-500">
-                  {/* <a className="text-gray-600 inline-block w-full hover:text-emerald-500">
-                    {t("common:footer-top-category-soft-drinks")}
-                  </a> */}
+                <Link href="/product/search?category=drinks" className="text-muted-foreground inline-block w-full hover:text-primary transition-colors">
                   {content["footer-top-category-soft-drinks"]}
                 </Link>
               </li>
               <li className="flex items-baseline">
-                <Link href="search?category=baby-care" className="text-gray-600 inline-block w-full hover:text-emerald-500">
-                  {/* <a className="text-gray-600 inline-block w-full hover:text-emerald-500">
-                    {t("common:footer-top-category-baby-care")}
-                    
-                  </a> */}
+                <Link href="search?category=baby-care" className="text-muted-foreground inline-block w-full hover:text-primary transition-colors">
                   {content["footer-top-category-baby-care"]}
                 </Link>
               </li>
               <li className="flex items-baseline">
-                <Link href="search?category=beauty--health" className="text-gray-600 inline-block w-full hover:text-emerald-500">
-                  {/* <a className="text-gray-600 inline-block w-full hover:text-emerald-500">
-                    {t("common:footer-top-category-beauty-health")}
-                  </a> */}
+                <Link href="search?category=beauty--health" className="text-muted-foreground inline-block w-full hover:text-primary transition-colors">
                   {content["footer-top-category-beauty-health"]}
                 </Link>
               </li>
@@ -108,47 +80,14 @@ const Footer = () => {
           </div>
           <div className="pb-3.5 sm:pb-0 col-span-1 md:col-span-2 lg:col-span-3">
             <h3 className="text-md lg:leading-7 font-medium mb-4 sm:mb-5 lg:mb-6 pb-0.5">
-              {/* {t("common:footer-terms-and-policies")} */}
-              {/* {content["footer-terms-and-policies"]} */}
             </h3>
-            {/* <ul className="text-sm lg:text-15px flex flex-col space-y-3">
-              <li className="flex items-baseline">
-                <Link href={`${userInfo?.email ? "/user/dashboard" : "#"}`}>
-                  <a className="text-gray-600 inline-block w-full hover:text-emerald-500">
-                    {t("common:footer-my-account-dashboard")}
-                  </a>
-                </Link>
-              </li>
-              <li className="flex items-baseline">
-                <Link href={`${userInfo?.email ? "/user/my-orders" : "#"}`}>
-                  <a className="text-gray-600 inline-block w-full hover:text-emerald-500">
-                    {t("common:footer-my-account-myOrders")}
-                  </a>
-                </Link>
-              </li>
-              <li className="flex items-baseline">
-                <Link href={`${userInfo?.email ? "/user/dashboard" : "#"}`}>
-                  <a className="text-gray-600 inline-block w-full hover:text-emerald-500">
-                    {t("common:footer-my-account-recentOrders")}
-                  </a>
-                </Link>
-              </li>
-              <li className="flex items-baseline">
-                <Link href={`${userInfo?.email ? "/user/update-profile" : "#"}`}>
-                  <a className="text-gray-600 inline-block w-full hover:text-emerald-500">
-                    {t("common:footer-my-account-updatedProfile")}
-                  </a>
-                </Link>
-              </li>
-            </ul> */}
           </div>
           <div className="pb-3.5 sm:pb-0 col-span-1 md:col-span-2 lg:col-span-3">
             <Link href="/" className="mr-3 lg:mr-12 xl:mr-12" rel="noreferrer">
-            <Image width={110} height={40} src="/logo/logo-color.svg" alt="logo" />
+              <Image width={110} height={40} src="/logo/logo-color.svg" alt="logo" />
             </Link>
-            <p className="leading-7 font-sans text-sm text-gray-600 mt-3">
+            <p className="leading-7 font-sans text-sm text-muted-foreground mt-3">
               <span>
-                {/* {t("common:footer-address")} */}
                 {content["footer-address"]}
               </span>
               <br />
@@ -159,54 +98,52 @@ const Footer = () => {
           </div>
         </div>
 
-        <hr className="hr-line"></hr>
+        <hr className="border-border/40"></hr>
 
-        <div className="mx-auto max-w-screen-2xl px-4 sm:px-10 bg-gray-50 shadow-sm border border-gray-50 rounded-lg">
+        <div className="mx-auto max-w-screen-2xl px-4 sm:px-10 bg-muted/30 dark:bg-zinc-900/30 border border-border/40 rounded-xl my-4">
           <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-5 sm:gap-9 lg:gap-11 xl:gap-7 py-8 items-center justify-between">
             <div className="col-span-1">
               <span className="text-base leading-7 font-medium block mb-2 pb-0.5">
-              
                 {content["footer-follow-us"]}
               </span>
-              <ul className="text-sm flex">
-                <li className="flex items-center mr-3 transition ease-in-out duration-500">
-                  <Link href="https://www.facebook.com"  aria-label="Social Link"
+              <ul className="text-sm flex space-x-4">
+                <li className="flex items-center transition ease-in-out duration-300">
+                  <Link href="https://www.facebook.com" aria-label="Social Link"
                       rel="noreferrer"
                       target="_blank"
-                      className="block text-center mx-auto text-gray-500 hover:text-white">
-                  <FaFacebook/>
+                      className="block text-center text-muted-foreground hover:text-primary text-lg">
+                    <FaFacebook/>
                   </Link>
                 </li>
-                <li className="flex items-center  mr-3 transition ease-in-out duration-500">
-                  <Link href="https://twitter.com"  aria-label="Social Link"
+                <li className="flex items-center transition ease-in-out duration-300">
+                  <Link href="https://twitter.com" aria-label="Social Link"
                       rel="noreferrer"
                       target="_blank"
-                      className="block text-center mx-auto text-gray-500 hover:text-white">
-                   
+                      className="block text-center text-muted-foreground hover:text-primary text-lg">
                     <FaTwitter/>
                   </Link>
                 </li>
-                <li className="flex items-center mr-3 transition ease-in-out duration-500">
-                  <Link href="https://www.pinterest.com"  aria-label="Social Link"
+                <li className="flex items-center transition ease-in-out duration-300">
+                  <Link href="https://www.pinterest.com" aria-label="Social Link"
                       rel="noreferrer"
                       target="_blank"
-                      className="block text-center mx-auto text-gray-500 hover:text-white">
-                  <FaPinterest/>
+                      className="block text-center text-muted-foreground hover:text-primary text-lg">
+                    <FaPinterest/>
                   </Link>
                 </li>
-                <li className="flex items-center  mr-3 transition ease-in-out duration-500">
-                  <Link href="https://www.linkedin.com/in/tranhongtri/"  aria-label="Social Link"
+                <li className="flex items-center transition ease-in-out duration-300">
+                  <Link href="https://www.linkedin.com/in/tranhongtri/" aria-label="Social Link"
                       rel="noreferrer"
                       target="_blank"
-                      className="block text-center mx-auto text-gray-500 hover:text-white">
-                   <FaLinkedinIn/>
+                      className="block text-center text-muted-foreground hover:text-primary text-lg">
+                    <FaLinkedinIn/>
                   </Link>
                 </li>
               </ul>
             </div>
             <div className="col-span-1 text-center hidden lg:block md:block">
               <p className="text-base leading-7 font-medium block">{content["footer-call-us"]}</p>
-              <h5 className="text-2xl font-bold text-emerald-500 leading-7">0333-333-333</h5>
+              <h5 className="text-2xl font-bold text-primary leading-7">0333-333-333</h5>
             </div>
             <div className="col-span-1 hidden lg:block md:block">
               <ul className="lg:text-right">
@@ -214,7 +151,7 @@ const Footer = () => {
                   <Image
                     width={274}
                     height={85}
-                    className="w-full"
+                    className="w-full filter dark:brightness-90"
                     src="/payment-method/payment-logo.png"
                     alt="payment method"
                   />
@@ -225,10 +162,10 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="mx-auto max-w-screen-2xl px-3 sm:px-10 flex justify-center py-4">
-        <p className="text-sm text-gray-500 leading-6">
+      <div className="mx-auto max-w-screen-2xl px-3 sm:px-10 flex justify-center py-4 border-t border-border/20">
+        <p className="text-sm text-muted-foreground leading-6">
           Copyright 2024 @{" "}
-          <Link target="_blank" href="https://todayfruit-store.vercel.app/" className="text-emerald-500" rel="noopener noreferrer">
+          <Link target="_blank" href="https://todayfruit-store.vercel.app/" className="text-primary hover:underline font-semibold" rel="noopener noreferrer">
             Today Fruit
           </Link>
           , All rights reserved.
@@ -239,3 +176,4 @@ const Footer = () => {
 };
 
 export default dynamic(() => Promise.resolve(Footer), { ssr: false });
+

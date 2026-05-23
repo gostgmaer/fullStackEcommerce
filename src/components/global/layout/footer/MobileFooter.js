@@ -3,88 +3,65 @@ import React, { useContext, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
-// import { useCart } from 'react-use-cart';
 import { FiHome, FiUser, FiShoppingCart, FiAlignLeft } from 'react-icons/fi';
 import { SidebarContext } from '@/context/SidebarContext';
-import { UserContext } from '@/context/UserContext';
-// import CategoryDrawer from '../drawer/CategoryDrawer';
-
-
-// import LoginModal from '@component/modal/LoginModal';
-
+import { useSelector } from 'react-redux';
+import { useSession } from 'next-auth/react';
 
 const MobileFooter = () => {
-  const [modalOpen, setModalOpen] = useState(false);
   const { toggleCartDrawer, toggleCategoryDrawer } = useContext(SidebarContext);
-  // const { totalItems } = useCart();
-  const {
-    state: { userInfo },
-  } = useContext(UserContext);
+  const { data: session } = useSession();
+  const { cartTotalQuantity } = useSelector((state) => state?.["cart"]);
 
   return (
     <>
-      {/* <LoginModal modalOpen={modalOpen} setModalOpen={setModalOpen} /> */}
-      <div className="flex flex-col h-full justify-between align-middle bg-white rounded cursor-pointer overflow-y-scroll flex-grow scrollbar-hide w-full">
-        {/* <CategoryDrawer className="w-6 h-6 drop-shadow-xl" /> */}
-      </div>
-      <footer className="lg:hidden fixed z-30 bottom-0 bg-emerald-500 flex items-center justify-between w-full h-16 px-3 sm:px-10">
+      <footer className="lg:hidden fixed z-30 bottom-0 left-0 right-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-t border-border/40 flex items-center justify-between w-full h-16 px-6 sm:px-10 shadow-[0_-4px_12px_rgba(0,0,0,0.03)] transition-colors duration-200">
         <button
           aria-label="Bar"
           onClick={toggleCategoryDrawer}
-          className="flex items-center justify-center flex-shrink-0 h-auto relative focus:outline-none"
+          className="flex items-center justify-center flex-shrink-0 h-auto relative focus:outline-none text-foreground hover:text-primary transition-colors"
         >
-          <span className="text-xl text-white">
-            <FiAlignLeft className="w-6 h-6 drop-shadow-xl" />
-          </span>
+          <FiAlignLeft className="w-6 h-6" />
         </button>
-        <Link href="/">
-          <a className="text-xl text-white" rel="noreferrer" aria-label="Home">
-            {' '}
-            <FiHome className="w-6 h-6 drop-shadow-xl" />
-          </a>
+        
+        <Link href="/" className="text-foreground hover:text-primary transition-colors flex items-center justify-center" aria-label="Home">
+          <FiHome className="w-6 h-6" />
         </Link>
 
         <button
           onClick={toggleCartDrawer}
-          className="h-9 w-9 relative whitespace-nowrap inline-flex items-center justify-center text-white text-lg"
+          aria-label="Cart"
+          className="h-10 w-10 relative whitespace-nowrap inline-flex items-center justify-center text-foreground hover:text-primary transition-colors focus:outline-none"
         >
-          <span className="absolute z-10 top-0 right-0 inline-flex items-center justify-center p-1 h-5 w-5 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 bg-red-500 rounded-full">
-            {/* {totalItems} */}
-          </span>
-          <FiShoppingCart className="w-6 h-6 drop-shadow-xl" />
-        </button>
-        <button
-          aria-label="User"
-          type="button"
-          className="text-xl text-white indicator justify-center"
-        >
-          {userInfo?.image ? (
-            <Link href="/user/dashboard">
-              <a className="relative top-1 w-6 h-6">
-                <Image
-                  width={29}
-                  height={29}
-                  src={userInfo.image}
-                  alt="user"
-                  className="rounded-full"
-                />
-              </a>
-            </Link>
-          ) : userInfo?.name ? (
-            <Link href="/user/dashboard">
-              <a className="leading-none font-bold font-serif block">
-                {userInfo?.name[0]}
-              </a>
-            </Link>
-          ) : (
-            <span onClick={() => setModalOpen(!modalOpen)}>
-              <FiUser className="w-6 h-6 drop-shadow-xl" />
+          {cartTotalQuantity > 0 && (
+            <span className="absolute z-10 top-0.5 right-0.5 inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold leading-none text-white bg-primary rounded-full min-w-4 h-4">
+              {cartTotalQuantity}
             </span>
           )}
+          <FiShoppingCart className="w-6 h-6" />
         </button>
+
+        <div className="flex items-center justify-center">
+          {session ? (
+            <Link href="/user/my-account/dashboard" className="relative flex items-center justify-center w-7 h-7">
+              <Image
+                width={28}
+                height={28}
+                src={session.user.image || '/assets/img/person.png'}
+                alt="user"
+                className="rounded-full border border-border bg-white"
+              />
+            </Link>
+          ) : (
+            <Link href="/auth/login" className="text-foreground hover:text-primary transition-colors flex items-center justify-center">
+              <FiUser className="w-6 h-6" />
+            </Link>
+          )}
+        </div>
       </footer>
     </>
   );
 };
 
 export default dynamic(() => Promise.resolve(MobileFooter), { ssr: false });
+

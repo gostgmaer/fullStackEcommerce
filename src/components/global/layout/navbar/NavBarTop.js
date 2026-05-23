@@ -13,69 +13,57 @@ const NavBarTop = () => {
     <>
   
 
-      <div className="hidden lg:block bg-gray-100">
-        <div className="max-w-screen-2xl mx-auto px-3 sm:px-10">
-          <div className="text-gray-700 py-2 font-sans text-xs font-medium border-b flex justify-between items-center">
+      <div className="hidden lg:block bg-muted/40 text-muted-foreground border-b border-border/40 transition-colors duration-200">
+        <div className="max-w-screen-2xl mx-auto px-4 sm:px-10">
+          <div className="py-2.5 font-sans text-xs font-medium flex justify-between items-center">
             <span className="flex items-center">
-              <FiPhoneCall className="mr-2" />
-              {/* {t("common:Call Us")} */}
+              <FiPhoneCall className="mr-2 text-primary" />
               {content["Call Us"]}
               <Link
                 href="tel:0333333333"
-                className="font-bold text-emerald-500 ml-1"
+                className="font-bold text-primary hover:underline ml-1"
               >
                 0333333333
               </Link>
             </span>
 
-            <div className="lg:text-right flex items-center">
-              <Link href="/about-us" className="font-medium hover:text-emerald-600">
+            <div className="lg:text-right flex items-center space-x-3">
+              <Link href="/about-us" className="hover:text-primary transition-colors duration-200">
                 {content["About Us"]}
               </Link>
-              <span className="mx-2">|</span>
-              <Link href="/contact-us" className="font-medium hover:text-emerald-600">
-
-                {
-                  content["Contact Us"]
-                }
-
+              <span className="text-border">|</span>
+              <Link href="/contact-us" className="hover:text-primary transition-colors duration-200">
+                {content["Contact Us"]}
               </Link>
-              <span className="mx-2">|</span>
+              <span className="text-border">|</span>
               <Link
-              href={"/user/my-account/dashboard"}
-                className="font-medium hover:text-emerald-600"
+                href="/user/my-account/dashboard"
+                className="hover:text-primary transition-colors duration-200"
               >
                 {content["My account"]}
-
               </Link>
-              <span className="mx-2">|</span>
+              <span className="text-border">|</span>
 
               {session ? (
-                <>
-                  {" "}
-                  <button
-                   onClick={() => handleSignOut()}
-                    className="flex items-center font-medium hover:text-emerald-600"
-                  >
-                    <span className="mr-1">
-                      <FiUser />
-                    </span>
-                    {content.logout}
-                  </button>
-                </>
+                <button
+                  onClick={() => handleSignOut()}
+                  className="flex items-center hover:text-primary transition-colors duration-200"
+                >
+                  <span className="mr-1">
+                    <FiUser />
+                  </span>
+                  {content.logout}
+                </button>
               ) : (
-                <>
-                  {" "}
-                  <Link
-                   href={'/auth/login'}
-                    className="flex items-center font-medium hover:text-emerald-600"
-                  >
-                    <span className="mr-1">
-                      <FiUser />
-                    </span>
-                    {content.Login}
-                  </Link>
-                </>
+                <Link
+                  href="/auth/login"
+                  className="flex items-center hover:text-primary transition-colors duration-200"
+                >
+                  <span className="mr-1">
+                    <FiUser />
+                  </span>
+                  {content.Login}
+                </Link>
               )}
             </div>
           </div>

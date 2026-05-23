@@ -4,9 +4,11 @@ import "./globals.css";
 import { ProviderTheme } from "../utils/ProviderTheme";
 import NextAuthProvider from "@/context/sessionContext";
 import Script from "next/script";
-// import { AuthContextProvider } from "@/context/authContext";
+import { SidebarProvider } from "@/context/SidebarContext";
+import { UserProvider } from "@/context/UserContext";
 
 const inter = Inter({ subsets: ["latin"] });
+
 
 export const metadata = {
   generator: "Next.js",
@@ -100,7 +102,11 @@ export default function RootLayout({ children }) {
         <head></head>
 
         <body className={inter.className}>
-          <ProviderTheme>{children}</ProviderTheme>
+          <SidebarProvider>
+            <UserProvider>
+              <ProviderTheme>{children}</ProviderTheme>
+            </UserProvider>
+          </SidebarProvider>
           <Script
             src="https://checkout.razorpay.com/v1/checkout.js"
             strategy="beforeInteractive" // Ensures the script loads before your component renders
