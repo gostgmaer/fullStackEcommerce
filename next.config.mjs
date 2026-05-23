@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
+    // Lint is run separately via `npm run lint`; keeping build output clean.
+    eslint: {
+        ignoreDuringBuilds: true,
+    },
     images: {
         remotePatterns: [
           {
@@ -32,3 +36,4 @@ const nextConfig = {
 };
 
 export default nextConfig;
+
