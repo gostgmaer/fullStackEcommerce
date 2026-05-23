@@ -1,34 +1,27 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp,getApps } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { initializeApp, getApps } from "firebase/app";
 import { getDatabase } from "firebase/database";
-import 'firebase/auth';
 import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 export const config = {
-  apiKey: "AIzaSyA4YJGuYX1gH2Alg46ELUmFZoSECD8g7ik",
-  authDomain: "development-382105.firebaseapp.com",
-  projectId: "development-382105",
-  storageBucket: "development-382105.appspot.com",
-  messagingSenderId: "234636235499",
-  appId: "1:234636235499:web:8060d54ef9ee9ac0bce4ae",
-  databaseURL:
-    "https://development-382105-default-rtdb.asia-southeast1.firebasedatabase.app",
-
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
 };
 
-const app = initializeApp(config);
+// Initialize Firebase
+const app = getApps().length === 0 ? initializeApp(config) : getApps()[0];
 
 const firebaseConfig = () => {
-  const databaseApp = initializeApp(config);
-  return getDatabase(databaseApp)
+  return getDatabase(app);
 };
 export default firebaseConfig;
 
-
-export const firebase_app = getApps().length === 0 ? initializeApp(config) : getApps()[0];
-
-export const firebaseStorage = getStorage(app)
-export const firebaseDatabaseConn = getStorage(app)
+export const firebase_app = app;
+export const firebaseStorage = getStorage(app);
+export const firebaseDatabaseConn = getDatabase(app);

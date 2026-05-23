@@ -1,7 +1,6 @@
 "use client"
 // import useWishlist from '@/context/hooks/useWishlist';
 import { addByIncrement, removeFromCart } from '@/store/reducers/cartSlice';
-import { removeFromwishlist } from '@/store/reducers/wishListSlice';
 import { fetchWishlist, removeFromWishlist } from '@/store/reducers/wishslice';
 import { notifySuccess } from '@/utils/notify/notice';
 import { useSession } from 'next-auth/react';

@@ -1,7 +1,6 @@
 "use client";
 
-import { addToCart, getTotals } from "@/store/cartReducer";
-import { decreaseCart, incrementCart, saveCartToBackend } from "@/store/reducers/cartSlice";
+import { addToCart, decreaseCart, incrementCart, saveCartToBackend } from "@/store/reducers/cartSlice";
 import { IoAdd, IoAddOutline, IoBagAddSharp, IoRemove, IoRemoveOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { useRouter } from 'next/router';
+
 
 const initialState = {
   query: '',

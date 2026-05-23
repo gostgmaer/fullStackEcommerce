@@ -45,9 +45,9 @@ export const getsingle = async (endpint, id, query, header) => {
   try {
     response = await axios.request(option);
   } catch (e) {
-    error = e.response?.data;
+    error = e.response?.data || e.message;
 
-    throw new Error(JSON.stringify(e.response.data));
+    throw new Error(JSON.stringify(e.response?.data || e.message));
   }
   return response?.data ? response?.data : error; // or set initial value
 };
@@ -139,9 +139,9 @@ export const put = async (endpint, body, id, header) => {
   try {
     response = await axios.request(option);
   } catch (e) {
-    error = e.response.data;
+    error = e.response?.data || e.message;
 
-    // throw new Error(JSON.stringify(e.response.data));
+    // throw new Error(JSON.stringify(e.response?.data || e.message));
   }
   return response?.data ? response?.data : error; // or set initial value
 };
@@ -164,9 +164,9 @@ export const del = async (endpoint, id, header) => {
   try {
     response = await axios.request(option);
   } catch (e) {
-    error = e.response.data;
+    error = e.response?.data || e.message;
 
-    // throw new Error(JSON.stringify(e.response.data));
+    // throw new Error(JSON.stringify(e.response?.data || e.message));
   }
   return response?.data ? response?.data : error; // or set initial value
 };

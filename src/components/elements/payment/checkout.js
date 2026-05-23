@@ -10,7 +10,6 @@ import { v4 as uuidv4 } from 'uuid';
 import Input from '../../global/fields/input';
 import { Select } from '../../global/fields/SelectField';
 import OrderSummary from '@/components/elements/product/orderSummary/OrderSummary';
-import { Country, State, City } from 'country-state-city';
 import Link from 'next/link';
 import { MdCreditCard, MdWallet } from 'react-icons/md';
 import { IoArrowForward, IoLogoPaypal, IoReturnUpBack } from 'react-icons/io5';
@@ -19,11 +18,18 @@ import OrderServices from '@/helper/network/services/OrderServices';
 import { emptyCart } from '@/store/reducers/cartSlice';
 
 import { useSession } from 'next-auth/react';
-import { PaypalPayment, RazorpayPayment } from './service';
+import { RazorpayPayment } from './service';
 
 const CheckoutBlock = () => {
     const { data: session, status } = useSession();
     const [code, setCode] = useState("");
+    const [csc, setCsc] = useState(null);
+
+    useEffect(() => {
+        import('country-state-city').then((mod) => {
+            setCsc(mod);
+        });
+    }, []);
 
 
 
@@ -33,15 +39,14 @@ const CheckoutBlock = () => {
         { key: "cashOnDelivery", value: "Cash on Delivery" },
     ];
     const initialValues = {
-
-        firstName: "kishor",
-        lastName: 'SARKAR',
-        email: "IFO@MAIL.com",
-        phone: "1111111111",
-        address: "asd asdk askdj jkasd ",
-        city: 'abuja',
-        country: 'Nigeria',
-        zipCode: '900101',
+        firstName: session?.user?.name ? session.user.name.split(" ")[0] : "",
+        lastName: session?.user?.name ? session.user.name.split(" ").slice(1).join(" ") : "",
+        email: session?.user?.email || "",
+        phone: "",
+        address: "",
+        city: "",
+        country: "",
+        zipCode: "",
         accountCreate: false,
         additionalNotes: "",
         payment_method: "",
@@ -51,6 +56,7 @@ const CheckoutBlock = () => {
 
     const formik = useFormik({
         initialValues: initialValues,
+        enableReinitialize: true,
         validationSchema: checkoutValidation,
         onSubmit: async (values, { setSubmitting }) => {
             // Handle form submission logic here
@@ -59,8 +65,7 @@ const CheckoutBlock = () => {
             setSubmitting(false);
             onchangeSubmit({...values,couponcode:code});
         }
-    },
-    );
+    });
 
 
     let [isPayment, setIsPayment] = useState(false);
@@ -113,10 +118,6 @@ const CheckoutBlock = () => {
             let savedOrder;
 
             switch (payment_method) {
-                case 'paypal':
-
-                    PaypalPayment(requests, session)
-                    break;
 
                 case 'RazorPay':
                   const response = await  RazorpayPayment(requests, session)
@@ -281,7 +282,7 @@ const CheckoutBlock = () => {
                                                 <Select label={"Country"} additionalAttrs={{
                                                     ...formik.getFieldProps("country"),
 
-                                                }} id={"country"} options={Country.getAllCountries()} optionkeys={{ key: "name", value: "name" }} placeholder={"Country"}></Select>
+                                                }} id={"country"} options={csc ? csc.Country.getAllCountries() : []} optionkeys={{ key: "name", value: "name" }} placeholder={"Country"}></Select>
                                                 {formik.errors.country &&
                                                     formik.touched.country && (
                                                         <div className="text-red-500 text-sm">

@@ -1,10 +1,21 @@
-import { Country, State } from 'country-state-city';
+"use client"
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 const AddressCard = ({data}) => {
-console.log(data);
+  const [csc, setCsc] = useState(null);
 
+  useEffect(() => {
+    import('country-state-city').then((mod) => {
+      setCsc(mod);
+    });
+  }, []);
+
+  const stateObj = csc && data.state ? csc.State.getStateByCode(data.state) : null;
+  const countryObj = csc && data.country ? csc.Country.getCountryByCode(data.country) : null;
+
+  const stateName = stateObj ? stateObj.name : data.state;
+  const countryName = countryObj ? countryObj.name : data.country;
 
   return (
     <div className="flex items-center border border-gray-200 w-full rounded-lg p-4 relative">
@@ -23,7 +34,7 @@ console.log(data);
       </h5>
       <p className="text-sm text-gray-500">{data.phone} </p>
       <p className="text-sm text-gray-500">{data.email} </p>
-      <p className="text-sm text-gray-500">{data.address}, {data.city}, {State.getStateByCode(data.state).name}, {Country.getCountryByCode(data.country).name}, {data.postalCode}</p>
+      <p className="text-sm text-gray-500">{data.address}, {data.city}, {stateName}, {countryName}, {data.postalCode}</p>
     </div>
   </div>
   )

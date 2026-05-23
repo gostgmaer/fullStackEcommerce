@@ -4,12 +4,19 @@ import { MdArrowForward } from 'react-icons/md';
 import Input from '@/components/global/fields/input';
 import { notifyerror, notifySuccess } from '@/utils/notify/notice';
 import { Select } from '../../../global/fields/SelectField';
-import { Country, State, City } from 'country-state-city';
 import { useSession } from 'next-auth/react';
 import CustomerServices from '@/helper/network/services/CustomerServices';
 import { useParams, useRouter } from 'next/navigation';
-const AddressForm = ({ currAddress }) => {
+import { useState, useEffect } from 'react';
 
+const AddressForm = ({ currAddress }) => {
+    const [csc, setCsc] = useState(null);
+
+    useEffect(() => {
+        import('country-state-city').then((mod) => {
+            setCsc(mod);
+        });
+    }, []);
 
     const { data: session, status } = useSession();
     const params = useParams()
@@ -126,14 +133,14 @@ const AddressForm = ({ currAddress }) => {
                         <Select label={"Country"} additionalAttrs={{
                             ...formik.getFieldProps("country"),
 
-                        }} id={"country"} options={Country.getAllCountries()} optionkeys={{ key: "isoCode", value: "name" }} placeholder={"Country"}></Select>
+                        }} id={"country"} options={csc ? csc.Country.getAllCountries() : []} optionkeys={{ key: "isoCode", value: "name" }} placeholder={"Country"}></Select>
 
                     </div>
                     <div className=" ">
                         <Select label={"State"} additionalAttrs={{
                             ...formik.getFieldProps("state"),
 
-                        }} id={"state"} options={State.getStatesOfCountry(formik.values.country)} optionkeys={{ key: "isoCode", value: "name" }} placeholder={"State"}></Select>
+                        }} id={"state"} options={csc && formik.values.country ? csc.State.getStatesOfCountry(formik.values.country) : []} optionkeys={{ key: "isoCode", value: "name" }} placeholder={"State"}></Select>
 
 
 
@@ -142,7 +149,7 @@ const AddressForm = ({ currAddress }) => {
                         <Select label={"City"} additionalAttrs={{
                             ...formik.getFieldProps("city"),
 
-                        }} id={"city"} options={City.getCitiesOfState(formik.values.country, formik.values.state)} optionkeys={{ key: "name", value: "name" }} placeholder={"city"}></Select>
+                        }} id={"city"} options={csc && formik.values.country && formik.values.state ? csc.City.getCitiesOfState(formik.values.country, formik.values.state) : []} optionkeys={{ key: "name", value: "name" }} placeholder={"city"}></Select>
 
                     </div>
                     <div className=''>

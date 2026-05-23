@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 
 const initialState = {
-	user: localStorage.getItem('user')
+	user: typeof window !== 'undefined' && localStorage.getItem('user')
 		? JSON.parse(localStorage.getItem('user'))
 		: '',
 };
@@ -14,17 +14,23 @@ export const UserSlice = createSlice({
 		login(state, action) {
 			state.user = action.payload;
 			// Add user data to local storage
-			localStorage.setItem('user', JSON.stringify(state.user));
+			if (typeof window !== 'undefined') {
+				localStorage.setItem('user', JSON.stringify(state.user));
+			}
 		},
 		logout(state, action) {
 			state.user = action.payload;
 			// Remove user data from local storage
-			localStorage.removeItem('user');
+			if (typeof window !== 'undefined') {
+				localStorage.removeItem('user');
+			}
 		},
 		update(state, action) {
 			state.user = null;
 			// Update user data in local storage
-			localStorage.setItem('user', JSON.stringify(state.user));
+			if (typeof window !== 'undefined') {
+				localStorage.setItem('user', JSON.stringify(state.user));
+			}
 		},
 	},
 });

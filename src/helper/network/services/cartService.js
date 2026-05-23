@@ -1,4 +1,4 @@
-import requests from "../serverCall/fetchData";
+import requests from "./httpServices";
 
 const CartServices = {
   addtoCart: async (body, headers) => {

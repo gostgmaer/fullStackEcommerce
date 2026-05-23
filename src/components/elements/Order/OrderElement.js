@@ -1,5 +1,5 @@
 "use client"
-import moment from 'moment';
+import dayjs from 'dayjs';
 import React, { useEffect, useRef } from 'react';
 import ReactToPdf from 'react-to-pdf';
 import ReactToPrint from 'react-to-print';
@@ -152,7 +152,7 @@ function OrderElement({ order }) {
 									</span>
 									<span className="text-sm text-gray-500 block">
 										<span>
-											{moment(data.createdDate).format('MMMM DD, YYYY')}
+											{dayjs(data.createdDate).format('MMMM DD, YYYY')}
 										</span>
 									</span>
 								</div>

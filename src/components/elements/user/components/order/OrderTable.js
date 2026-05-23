@@ -2,7 +2,7 @@
 import { statusColors } from "@/assets/data/static";
 import CurrentTable from "@/components/global/fields/component/Table";
 import OrderServices from "@/helper/network/services/OrderServices";
-import moment from "moment";
+import dayjs from "dayjs";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -44,7 +44,7 @@ const OrderTable = ({ title }) => {
       sorter: (a, b) => a.createdAt - b.createdAt, // Enable sorting for this column
       render: (index, item) => (
         <span className={`capitalize `}>
-          {moment(item.createdAt).format("LL")}
+          {dayjs(item.createdAt).format("MMMM D, YYYY")}
         </span>
       ),
     },

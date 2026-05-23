@@ -34,7 +34,7 @@ const rootReducer = combineReducers({
   const persistConfig = {
 	key: 'root',
 	storage: storageSession, // Session-based storage
-	data: ['cart',"setting", 'wishlist','sidebar','user','isOpen','shoppingCard','products','pagination','queryParam'], // Only persist these reducers
+	whitelist: ['cart',"setting", 'wishlist','sidebar','user','isOpen','shoppingCard','products','pagination','queryParam'], // Only persist these reducers
   };
   
   // Persist reducer with the session storage
