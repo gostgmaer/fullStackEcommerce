@@ -6,83 +6,77 @@ import OrderTable from './order/OrderTable';
 import { useSession } from 'next-auth/react';
 
 // import { useSelector } from 'react-redux';
-const DashboardBlock = ({order}) => {
+const DashboardBlock = ({ order }) => {
+  return (
+    <div className="overflow-hidden">
+      <h2 className="text-xl font-extrabold text-slate-900 dark:text-white mb-6 tracking-tight">
+        Dashboard Overview
+      </h2>
+      <div className="grid gap-5 mb-10 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Total Orders Card */}
+        <div className="group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80 rounded-xl p-5 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 flex items-center gap-4">
+          <div className="flex items-center justify-center p-3 rounded-xl h-12 w-12 text-xl text-primary bg-primary/10 dark:bg-primary/20 transition-colors">
+            <IoCartOutline className="text-2xl" />
+          </div>
+          <div>
+            <h5 className="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">
+              Total Orders
+            </h5>
+            <p className="text-2xl font-black text-slate-800 dark:text-white leading-none">
+              {order?.total || 0}
+            </p>
+          </div>
+        </div>
 
+        {/* Pending Orders Card */}
+        <div className="group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80 rounded-xl p-5 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 flex items-center gap-4">
+          <div className="flex items-center justify-center p-3 rounded-xl h-12 w-12 text-xl text-amber-600 bg-amber-50 dark:text-amber-400 dark:bg-amber-950/30 transition-colors">
+            <IoExpandSharp className="text-2xl" />
+          </div>
+          <div>
+            <h5 className="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">
+              Pending Orders
+            </h5>
+            <p className="text-2xl font-black text-slate-800 dark:text-white leading-none">
+              {order?.pending || 0}
+            </p>
+          </div>
+        </div>
 
+        {/* Processing Orders Card */}
+        <div className="group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80 rounded-xl p-5 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 flex items-center gap-4">
+          <div className="flex items-center justify-center p-3 rounded-xl h-12 w-12 text-xl text-blue-600 bg-blue-50 dark:text-blue-400 dark:bg-blue-950/30 transition-colors">
+            <FaTruck className="text-xl" />
+          </div>
+          <div>
+            <h5 className="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">
+              Processing
+            </h5>
+            <p className="text-2xl font-black text-slate-800 dark:text-white leading-none">
+              {order?.processing || 0}
+            </p>
+          </div>
+        </div>
 
-	  
-	
-	return (
-		<div className="overlow-hidden">
-			<h2 className="text-xl text-black font-semibold mb-5">Dashboard</h2>
-			<div className="grid gap-4 mb-8 md:grid-cols-2 xl:grid-cols-4 ">
-				<div className="flex h-full">
-					<div className="flex items-center border border-gray-200 w-full rounded-lg p-4">
-						<div className="flex items-center justify-center p-3 rounded-full h-12 w-12 text-xl text-center mr-4 text-red-600 bg-red-200">
-						<IoCartOutline />
-						</div>
-						<div>
-							<h5 className="leading-none mb-2 text-base font-medium  text-gray-700">
-								Total Order
-							</h5>
-							<p className="text-xl font-bold leading-none text-gray-800">
-								{order?.total}
-							</p>
-						</div>
-					</div>
-				</div>
-				<div className="flex h-full">
-					<div className="flex items-center border border-gray-200 w-full rounded-lg p-4">
-						<div className="flex items-center justify-center p-3 rounded-full h-12 w-12 text-xl text-center mr-4 text-orange-600 bg-orange-200">
-						<IoExpandSharp/>
-						</div>
-						<div>
-							<h5 className="leading-none mb-2 text-base font-medium  text-gray-700">
-								Pending Order
-							</h5>
-							<p className="text-xl font-bold leading-none text-gray-800">
-								{order?.pending}
-							</p>
-						</div>
-					</div>
-				</div>
-				<div className="flex h-full">
-					<div className="flex items-center border border-gray-200 w-full rounded-lg p-4">
-						<div className="flex items-center justify-center p-3 rounded-full h-12 w-12 text-xl text-center mr-4 text-indigo-600 bg-indigo-200">
-							<FaTruck/>
-						</div>
-						<div>
-							<h5 className="leading-none mb-2 text-base font-medium  text-gray-700">
-								Processing Order
-							</h5>
-							<p className="text-xl font-bold leading-none text-gray-800">
-								{order?.processing}
-							</p>
-						</div>
-					</div>
-				</div>
-				<div className="flex h-full">
-					<div className="flex items-center border border-gray-200 w-full rounded-lg p-4">
-						<div className="flex items-center justify-center p-3 rounded-full h-12 w-12 text-xl text-center mr-4 text-emerald-600 bg-emerald-200">
-							<IoCheckmark/>
-						</div>
-						<div>
-							<h5 className="leading-none mb-2 text-base font-medium  text-gray-700">
-								Complete Order
-							</h5>
-							<p className="text-xl font-bold leading-none text-gray-800">
-								{order?.completed}
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
+        {/* Completed Orders Card */}
+        <div className="group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80 rounded-xl p-5 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300 flex items-center gap-4">
+          <div className="flex items-center justify-center p-3 rounded-xl h-12 w-12 text-xl text-emerald-600 bg-emerald-50 dark:text-emerald-400 dark:bg-emerald-950/30 transition-colors">
+            <IoCheckmark className="text-2xl animate-pulse" />
+          </div>
+          <div>
+            <h5 className="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">
+              Completed
+            </h5>
+            <p className="text-2xl font-black text-slate-800 dark:text-white leading-none">
+              {order?.completed || 0}
+            </p>
+          </div>
+        </div>
+      </div>
 
-			<OrderTable  title="Recent order"/>
-			
-		
-		</div>
-	);
+      <OrderTable title="Recent Orders" />
+    </div>
+  );
 };
 
 export default DashboardBlock;

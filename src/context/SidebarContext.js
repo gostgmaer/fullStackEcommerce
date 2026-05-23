@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo, createContext } from 'react';
+import React, { useState, useMemo, createContext, useCallback } from 'react';
 
 // create context
 export const SidebarContext = createContext(null);
@@ -11,18 +11,18 @@ export const SidebarProvider = ({ children }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
-  const toggleCartDrawer = () => setCartDrawerOpen(!cartDrawerOpen);
-  const closeCartDrawer = () => setCartDrawerOpen(false);
+  const toggleCartDrawer = useCallback(() => setCartDrawerOpen((prev) => !prev), []);
+  const closeCartDrawer = useCallback(() => setCartDrawerOpen(false), []);
 
-  const toggleCategoryDrawer = () => setCategoryDrawerOpen(!categoryDrawerOpen);
-  const closeCategoryDrawer = () => setCategoryDrawerOpen(false);
+  const toggleCategoryDrawer = useCallback(() => setCategoryDrawerOpen((prev) => !prev), []);
+  const closeCategoryDrawer = useCallback(() => setCategoryDrawerOpen(false), []);
 
-  const toggleModal = () => setIsModalOpen(!isModalOpen);
-  const closeModal = () => setIsModalOpen(false);
+  const toggleModal = useCallback(() => setIsModalOpen((prev) => !prev), []);
+  const closeModal = useCallback(() => setIsModalOpen(false), []);
 
-  const handleChangePage = (p) => {
+  const handleChangePage = useCallback((p) => {
     setCurrentPage(p);
-  };
+  }, []);
 
   const value = useMemo(
     () => ({
@@ -43,7 +43,20 @@ export const SidebarProvider = ({ children }) => {
       setIsLoading,
     }),
 
-    [cartDrawerOpen, categoryDrawerOpen, isModalOpen, currentPage, isLoading]
+    [
+      cartDrawerOpen,
+      toggleCartDrawer,
+      closeCartDrawer,
+      categoryDrawerOpen,
+      toggleCategoryDrawer,
+      closeCategoryDrawer,
+      isModalOpen,
+      toggleModal,
+      closeModal,
+      currentPage,
+      handleChangePage,
+      isLoading
+    ]
   );
 
   return (

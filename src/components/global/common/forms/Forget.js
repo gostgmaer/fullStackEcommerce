@@ -1,92 +1,64 @@
 "use client";
 
-import { forgetPasswordValidation } from "@/utils/validation/validation";
-import { useFormik } from "formik";
-import { useRouter } from "next/navigation";
-import { MdKeyboardArrowRight } from "react-icons/md";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import Input from "../../fields/input";
-import { post } from "@/helper/network";
 import { notifyerror, notifySuccess } from "@/utils/notify/notice";
 import CustomerServices from "@/helper/network/services/CustomerServices";
+
+const forgetSchema = z.object({
+  email: z.string().min(1, "Email is required").email("Invalid email address"),
+});
+
 const ForgetForm = () => {
-  // const { handleLoginAuth, user, userId } = useAuthContext();
-  // const [axios, spinner] = useAxios();
-  // const [error, setError] = useState(undefined);
-  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting }
+  } = useForm({
+    resolver: zodResolver(forgetSchema),
+    defaultValues: {
+      email: ""
+    }
+  });
 
-
-  const handleSubmit = async (values) => {
+  const onSubmit = async (values) => {
     try {
-      const res = await CustomerServices.forgetPassword( values);
-     
+      const res = await CustomerServices.forgetPassword(values);
       if (res) {
-        notifySuccess(res.message)
-        return res
+        notifySuccess(res.message || "Password recovery instructions sent!");
       }
     } catch (error) {
-      /////console.log(error);
-      notifyerror(error.message, 300)
+      notifyerror(error?.message || "Something went wrong.");
     }
   };
 
-  const formik = useFormik({
-    initialValues: {
-
-      email: ""
-
-    },
-    validationSchema: forgetPasswordValidation,
-    onSubmit: async (values, { setSubmitting, resetForm, setValues }) => {
-      setSubmitting(true)
-      const res = await handleSubmit(values)
-
-      const messages = {
-        start: "Starting API call...",
-        inProgress: "API call in progress...",
-        success: "API call successful!",
-        failure: "API call failed",
-      };
-
-      // const    res = await useApiWithToaster(handleSubmit,values,messages)
-
-      if (res.statusCode === 200) {
-
-      
-        setSubmitting(false)
-
-
-      } else {
-        setSubmitting(false)
-        notifyerror(res.message)
-      }
-    },
-  });
-
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <div className="flex flex-col gap-x-4 gap-y-5 md:grid md:grid-cols-2 lg:gap-5 text-black">
-
-        <div className="col-span-full ">
-          <Input label={"Email"} type={"text"} additionalAttrs={{
-            ...formik.getFieldProps("email"),
-            placeholder: "Email", required: true
-          }} classes={undefined} icon={undefined} id={"email"} />
-
-
-          {formik.touched.email && formik.errors.email && (
-            <div className="text-red-500 text-sm">{formik.errors.email}</div>
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+      <div className="flex flex-col gap-4 text-slate-800 dark:text-slate-100">
+        <div>
+          <Input
+            label={"Email"}
+            type={"text"}
+            additionalAttrs={{
+              ...register("email"),
+              placeholder: "john@example.com",
+              required: true
+            }}
+            id={"email"}
+          />
+          {errors.email && (
+            <p className="text-red-500 text-xs mt-1 font-semibold">{errors.email.message}</p>
           )}
         </div>
 
-
-
         <button
-          className=" disabled:text-gray-500 disabled:bg-gray-300 col-span-2 inline-flex font-medium items-center bg-gray-700 hover:enabled::bg-gray-800 active:enabled:bg-gray-1000 focus-visible:ring-gray-900/30 text-gray-0  text-white justify-center active:enabled:translate-y-px focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-50 transition-colors duration-200 px-5 py-2 text-base h-12 rounded-md border border-transparent focus-visible:ring-offset-2 bg-blue hover:enabled:bg-gray-900 focus-visible:ring-blue/30  w-full"
+          className="w-full inline-flex font-bold items-center justify-center bg-primary hover:bg-primary/95 text-white shadow-sm active:scale-[0.98] transition-all duration-200 px-5 py-3 text-sm h-12 rounded-lg border border-transparent disabled:opacity-50 mt-2"
           type="submit"
-          disabled={!formik.isValid || formik.isSubmitting}
+          disabled={isSubmitting}
         >
-          <span>{formik.isSubmitting ? "Submitting....." : 'Recover password'}</span>
-
+          <span>{isSubmitting ? "Submitting..." : "Recover password"}</span>
         </button>
       </div>
     </form>

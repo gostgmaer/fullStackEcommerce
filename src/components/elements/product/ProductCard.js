@@ -22,18 +22,11 @@ import WishlistCard from "./wishList";
 // import { useRouter } from "next/router";
 
 const ProductCard = ({ product, attributes }) => {
-  // const { data: session, status } = useSession();
-  // const route = useRouter()
-  // const wishlist = useSelector((state) => state["data"].wishList);
-
-
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleModalOpen = (event, id) => {
     setModalOpen(event);
   };
-
-
 
   return (
     <>
@@ -47,76 +40,56 @@ const ProductCard = ({ product, attributes }) => {
         />
       )}
 
-      <div className="group box-border overflow-hidden flex rounded-md shadow-sm pe-0 flex-col items-center  bg-white dark:bg-gray-800 relative">
-        <div
+      <div className="group relative flex flex-col justify-between overflow-hidden bg-white dark:bg-slate-800/80 border border-slate-100 dark:border-slate-700/60 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 h-full w-full">
+        {/* Top Section: Badges & Image */}
+        <div className="relative w-full pt-4 flex justify-center items-center">
+          <Stock stock={product.stock} card />
+          <Discount discount={Number(product.prices.discount)} product={product} slug={product.slug} modal={false} />
+          <WishlistCard data={product} />
 
-          className="relative flex justify-center w-full cursor-pointer pt-2"
-        >
-          <div className="left-3">
-            <Stock stock={product.stock} card />
-
-          </div>
-          <Discount discount={Number(product.prices.discount)} product={product} slug={product.slug} modal={true} />
           {product?.image?.[0] ? (
-
-            <div className="relative flex justify-center cursor-pointer pt-2 w-full h-44">
-              <div className="relative w-full h-full p-2">
+            <div className="relative w-full h-40 flex justify-center items-center px-4 mt-2">
+              <div className="relative w-full h-full cursor-pointer" onClick={() => handleModalOpen(!modalOpen, product)}>
                 <Image
                   src={product?.image?.[0]}
-                  onClick={() => handleModalOpen(!modalOpen, product)}
                   alt={product?.title}
                   loading="lazy"
-                  
-                  width={210}
-                  height={210}
-                  decoding="async"
-                  data-nimg="fill"
-                  className="object-contain transition duration-150 ease-linear transform group-hover:scale-105 p-2 absolute h-full w-full inset-0  text-white"
-                  sizes="100%"
-
+                  fill
+                  sizes="(max-width: 768px) 150px, 180px"
+                  className="object-contain transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
             </div>
-        
           ) : (
-         
-
-            <div className="relative flex justify-center cursor-pointer pt-2 w-full h-44">
-              <div className="relative w-full h-full p-2">
+            <div className="relative w-full h-40 flex justify-center items-center px-4 mt-2">
+              <div className="relative w-full h-full cursor-pointer" onClick={() => handleModalOpen(!modalOpen, product)}>
                 <Image
                   src="https://res.cloudinary.com/ahossain/image/upload/v1655097002/placeholder_kvepfp.png"
-                  alt="product"
+                  alt="Placeholder"
                   loading="lazy"
-                  width={210}
-                  height={210}
-                  decoding="async"
-                  data-nimg="fill"
-                  className="object-contain transition duration-150 ease-linear transform group-hover:scale-105 p-2 absolute h-full w-full inset-0  text-white"
-                  sizes="100%"
-
+                  fill
+                  sizes="(max-width: 768px) 150px, 180px"
+                  className="object-contain transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
             </div>
           )}
-
-          <div className="right-3 z-10">
-
-            <WishlistCard data={product} />
-          </div>
         </div>
-        <div className="w-full px-3 lg:px-4 pb-4 overflow-hidden">
-          <div className="relative mb-1">
-            <span className="text-gray-400 dark:text-gray-50 font-medium text-xs d-block mb-1">
+
+        {/* Bottom Section: Details & Purchase */}
+        <div className="w-full p-4 flex flex-col justify-between flex-grow mt-2">
+          <div className="relative mb-2">
+            <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider block mb-1">
               {product?.unit}
             </span>
-            <h2 className="text-heading truncate mb-0 block text-sm font-medium text-gray-600 dark:text-gray-200 cursor-pointer">
-              <span className="line-clamp-2">
-                {/* {showingTranslateValue(product?.title, lang)} */}
-                {product?.title}
-              </span>
+            <h2 
+              onClick={() => handleModalOpen(!modalOpen, product)}
+              className="text-sm font-bold tracking-tight text-slate-850 dark:text-slate-100 hover:text-primary transition-colors cursor-pointer line-clamp-2 min-h-[40px] leading-tight"
+            >
+              {product?.title}
             </h2>
           </div>
-          <div className="flex justify-between items-center text-heading text-sm sm:text-base space-s-2 md:text-base lg:text-xl">
+          <div className="flex justify-between items-center mt-3 pt-3 border-t border-slate-50 dark:border-slate-700/50">
             <Price
               card
               product={product}
@@ -124,11 +97,7 @@ const ProductCard = ({ product, attributes }) => {
               price={Number(product?.prices?.price)}
               originalPrice={Number(product?.prices?.originalPrice)}
             />
-
-
-            <div>
-              <AddToCard data={product} />
-            </div>
+            <AddToCard data={product} />
           </div>
         </div>
       </div>

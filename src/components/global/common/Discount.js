@@ -3,36 +3,22 @@
 import { applyDiscount } from "@/helper/functions";
 
 const Discount = ({ discount = 1, product, slug, modal }) => {
+  const discountVal = applyDiscount(product.prices.originalPrice, product.prices.discount);
+
+  if (discountVal <= 0) return null;
+
   return (
-    <>
-      {discount > 1 && (
-        <span
-          className={
-            modal
-              ? "absolute text-dark text-sm bg-orange-500 text-white py-1 px-2 rounded font-medium z-10  right-1 bottom-1"
-              : slug
-              ? "text-dark text-sm bg-orange-500 text-white py-1 px-2 rounded font-medium z-10 right-1 bottom-1"
-              : " absolute text-dark text-xs bg-orange-500 text-white py-1 px-2 rounded font-medium z-10 right-1 bottom-1"
-          }
-        >
-          {applyDiscount(product.prices.originalPrice, product.prices.discount)}% Off
-        </span>
-      )}
-      {discount === undefined && Number(product.prices?.discount) > 1 && (
-        <span
-          className={
-            modal
-              ? "absolute text-dark text-sm bg-orange-500 text-white py-1 px-2 rounded font-medium z-10 right-1 bottom-1"
-              : slug
-              ? "text-dark text-sm bg-orange-500 text-white py-1 px-2 rounded font-medium z-10 right-1 bottom-1"
-              : " absolute text-dark text-xs bg-orange-500 text-white py-1 px-2 rounded font-medium z-10 right-1 bottom-1"
-          }
-        >
-          {applyDiscount(product.prices.originalPrice, product.prices.discount)}
-          % Off
-        </span>
-      )}
-    </>
+    <span
+      className={`font-sans text-[10px] sm:text-xs font-bold bg-primary text-white py-1 px-2.5 rounded-md z-10 shadow-sm leading-none ${
+        modal
+          ? "absolute right-3 bottom-3"
+          : slug
+          ? "text-sm bg-primary text-white py-1 px-2.5 rounded font-bold"
+          : "absolute right-3 top-3"
+      }`}
+    >
+      {discountVal}% OFF
+    </span>
   );
 };
 

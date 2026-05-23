@@ -1,54 +1,85 @@
+"use client";
+
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-const Input = ({ label, type, additionalAttrs, classes, icon, id }) => {
+/**
+ * Premium Input field — dark-mode aware, consistent border, accessible.
+ *
+ * Props:
+ *  - label      {string}  Optional label text (no colon appended)
+ *  - type       {string}  Input type (text, email, password, …)
+ *  - id         {string}  id & name attribute
+ *  - icon       {node}    Optional leading icon element
+ *  - classes    {string}  Extra classes appended to the <input>
+ *  - additionalAttrs {object} Spread onto <input> (register, placeholder, etc.)
+ */
+const Input = ({ label, type, additionalAttrs = {}, classes, icon, id }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+  const inputId = id || (label ? label.trim().replace(/\s+/g, "_").toLowerCase() : undefined);
+  const isPassword = type === "password";
+  const inputType = showPassword && isPassword ? "text" : type;
 
   return (
-    <div className="flex flex-col w-full mb-1">
-      <div className="block">
-       { label && <label className=" block text-sm capitalize font-medium text-gray-600  mb-1">
-          {label}  <span className=" text-red-500 align-sub font-bold text-lg">{additionalAttrs.required && '*'}</span> :{" "}
-        </label>}
-        <div
-          className={`flex items-center peer  w-full transition duration-200  rounded-md bg-transparent  ${icon && "border pl-3.5 h-10 leading-[40px]"
-            }  ${type === "password" && "border h-10 leading-[40px]"}`}
+    <div className="flex flex-col w-full">
+      {label && (
+        <label
+          htmlFor={inputId}
+          className="block text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-1.5"
         >
-          {icon && <button className="pr-3.5">{icon}</button>}
-          <input
-            className={` rounded w-full read-only:bg-gray-100 read-only:border-gray-200  leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500   border px-3.5 h-10 ${type === "password" && "pr-0"
-              }  ${classes && classes}`}
-            type={showPassword && type === "password" ? "text" : type}
-            name={id ? id : label.trim().replace(/\s+/g, "_").toLowerCase()}
-            id={id ? id : label.trim().replace(/\s+/g, "_").toLowerCase()}
-            {...additionalAttrs} // Spread additional attributes/props
-          />
-          {type === "password" && (
-            <>
-              {" "}
-              <button
-                className="px-2"
-                type="button"
-                onClick={togglePasswordVisibility}
-              >
-                {showPassword ? (
-                  <FaEyeSlash
-                    className=" w-5 h-5"
-                    onClick={togglePasswordVisibility}
-                  />
-                ) : (
-                  <FaEye
-                    className="w-5 h-5"
-                    onClick={togglePasswordVisibility}
-                  />
-                )}
-              </button>
-            </>
+          {label}
+          {additionalAttrs?.required && (
+            <span className="text-red-500 ml-0.5 font-bold text-sm leading-none">*</span>
           )}
-        </div>
+        </label>
+      )}
+
+      <div
+        className={[
+          "flex items-center w-full rounded-lg border transition-all duration-150",
+          "bg-white dark:bg-slate-900/80",
+          "border-slate-200 dark:border-slate-700",
+          "focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20",
+          "has-[:disabled]:opacity-50 has-[:read-only]:bg-slate-50 has-[:read-only]:dark:bg-slate-800/60",
+          icon ? "pl-3.5" : "",
+        ].join(" ")}
+      >
+        {icon && (
+          <span className="flex-shrink-0 pr-2 text-slate-400 dark:text-slate-500">
+            {icon}
+          </span>
+        )}
+
+        <input
+          id={inputId}
+          name={inputId}
+          type={inputType}
+          className={[
+            "flex-1 min-w-0 h-10 bg-transparent px-3.5 text-sm",
+            "text-slate-900 dark:text-slate-100",
+            "placeholder:text-slate-400 dark:placeholder:text-slate-500",
+            "focus:outline-none",
+            "read-only:cursor-default",
+            isPassword ? "pr-0" : "",
+            classes || "",
+          ].join(" ")}
+          {...additionalAttrs}
+        />
+
+        {isPassword && (
+          <button
+            type="button"
+            aria-label={showPassword ? "Hide password" : "Show password"}
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="flex-shrink-0 px-3 h-10 flex items-center justify-center text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
+          >
+            {showPassword ? (
+              <FaEyeSlash className="w-4 h-4" />
+            ) : (
+              <FaEye className="w-4 h-4" />
+            )}
+          </button>
+        )}
       </div>
     </div>
   );

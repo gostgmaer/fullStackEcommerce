@@ -19,6 +19,10 @@ module.exports = {
         ring: "hsl(var(--primary))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -42,8 +46,32 @@ module.exports = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      keyframes: {
+        "fade-in": {
+          from: { opacity: "0", transform: "translateY(4px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        "slide-in-right": {
+          from: { opacity: "0", transform: "translateX(8px)" },
+          to: { opacity: "1", transform: "translateX(0)" },
+        },
+        shimmer: {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
+        },
+        "spin-slow": {
+          to: { transform: "rotate(360deg)" },
+        },
+      },
+      animation: {
+        "fade-in": "fade-in 0.2s ease-out both",
+        "slide-in-right": "slide-in-right 0.25s cubic-bezier(0.16,1,0.3,1) both",
+        shimmer: "shimmer 1.5s infinite linear",
+        "spin-slow": "spin-slow 1.2s linear infinite",
+      },
     },
   },
   plugins: [],
 };
+
 

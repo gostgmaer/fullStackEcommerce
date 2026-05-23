@@ -1,27 +1,51 @@
-import React from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
+import React from "react";
+import Link from "next/link";
+import Image from "next/image";
 
 const NotFound = () => {
   return (
-    <>
-   
-      <div className="px-6 py-10 lg:py-20 bg-emerald-50 h-screen flex flex-wrap content-center">
-        <div className="block justify-items-stretch mx-auto items-center text-center">
-          <Image width={650} height={450} src="/404.svg" alt="logo" />
-          <h2 className="font-bold font-serif font-2xl lg:text-4xl leading-6 mb-4">
-            Page is not found!
-          </h2>
-          <p className="block text-center text-base font-sans text-gray-600">
-            Sorry! This page is not found! Please try again later.
-          </p>
+    <div className="min-h-screen bg-background flex items-center justify-center px-6 py-20">
+      <div className="text-center max-w-lg mx-auto animate-fade-in">
+        {/* Illustration */}
+        <div className="flex justify-center mb-8">
+          <Image
+            width={400}
+            height={280}
+            src="/404.svg"
+            alt="404 — Page not found"
+            className="max-w-full opacity-90 dark:opacity-70"
+            priority
+          />
+        </div>
 
-          <Link href="/" className="md:text-sm leading-4 inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-semibold text-center justify-center border-0 border-transparent rounded-md placeholder-white focus-visible:outline-none focus:outline-none bg-emerald-500 text-white px-5 md:px-6 lg:px-8 py-3 md:py-3.5 lg:py-3 hover:text-white hover:bg-emerald-600 h-12 mt-6 text-sm lg:text-base w-full sm:w-auto">
-          Back to Home
+        {/* Heading */}
+        <h1 className="text-5xl font-extrabold text-slate-900 dark:text-white mb-3 tracking-tight">
+          404
+        </h1>
+        <h2 className="text-xl font-bold text-slate-700 dark:text-slate-200 mb-3">
+          Page Not Found
+        </h2>
+        <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-8 max-w-sm mx-auto">
+          Oops! The page you&apos;re looking for doesn&apos;t exist or has been moved. Let&apos;s get you back on track.
+        </p>
+
+        {/* Actions */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <Link
+            href="/"
+            className="inline-flex items-center justify-center px-6 py-3 bg-primary text-primary-foreground font-bold text-sm rounded-xl hover:bg-primary/90 active:scale-[0.98] transition-all duration-200 shadow-sm w-full sm:w-auto"
+          >
+            Back to Home
+          </Link>
+          <Link
+            href="/product"
+            className="inline-flex items-center justify-center px-6 py-3 bg-muted dark:bg-slate-800 text-foreground font-semibold text-sm rounded-xl hover:bg-muted/80 dark:hover:bg-slate-700 active:scale-[0.98] transition-all duration-200 w-full sm:w-auto border border-border"
+          >
+            Browse Products
           </Link>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

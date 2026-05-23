@@ -103,34 +103,34 @@ export default async function Home() {
 
   return (
     <Layout  >
-      <div className="min-h-screen">
+      <div className="min-h-screen bg-background text-foreground transition-colors duration-200">
         {/* <StickyCart /> */}
-        <div className="bg-white dark:bg-gray-700">
-          <div className="mx-auto py-5 max-w-screen-2xl px-3 sm:px-10">
-            <div className="flex w-full">
-              <div className="flex-shrink-0 xl:pr-6 lg:block w-full lg:w-3/5">
+        <div className="bg-background dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800/50">
+          <div className="mx-auto py-8 max-w-screen-2xl px-3 sm:px-10">
+            <div className="flex flex-col lg:flex-row w-full gap-6">
+              <div className="flex-shrink-0 lg:w-3/5 w-full">
                 <MainCarousel />
               </div>
-              <div className="w-full hidden lg:flex">
+              <div className="lg:w-2/5 w-full flex">
                 <OfferCard />
               </div>
             </div>
-            <div className="bg-orange-100 dark:bg-gray-500 px-10 py-6 rounded-lg mt-6 hidden lg:block">
+            <div className="bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800 px-10 py-6 rounded-xl mt-6 hidden lg:block">
               <Banner />
             </div>
           </div>
         </div>
 
         {/* feature category's */}
-        <div className="bg-gray-100 dark:bg-gray-800 lg:py-16 py-10">
+        <div className="bg-slate-50/50 dark:bg-slate-900/50 border-b border-slate-100 dark:border-slate-800 lg:py-16 py-10">
           <div className="mx-auto max-w-screen-2xl px-3 sm:px-10">
             <div className="mb-10 flex justify-center">
               <div className="text-center w-full lg:w-2/5">
-                <h2 className="text-xl lg:text-2xl mb-2 font-serif font-semibold">
+                <h2 className="text-2xl lg:text-3xl mb-2 font-sans font-bold tracking-tight text-slate-900 dark:text-white">
                   {/* {t("common:Featured-title")} */}
                   {content["Featured-title"]}
                 </h2>
-                <p className="text-base font-sans text-gray-600 leading-6">
+                <p className="text-sm sm:text-base font-sans text-slate-500 dark:text-slate-400 leading-relaxed">
                   {/* {t("common:Featured-sub-title")} */}
 
 
@@ -143,15 +143,15 @@ export default async function Home() {
         </div>
 
         {/* popular products */}
-        <div className="bg-gray-50 dark:bg-gray-700 lg:py-16 py-10 mx-auto max-w-screen-2xl px-3 sm:px-10">
+        <div className="bg-background dark:bg-slate-950 lg:py-16 py-10 mx-auto max-w-screen-2xl px-3 sm:px-10">
           <div className="mb-10 flex justify-center">
             <div className="text-center w-full lg:w-2/5">
-              <h2 className="text-xl lg:text-2xl mb-2 font-serif font-semibold">
+              <h2 className="text-2xl lg:text-3xl mb-2 font-sans font-bold tracking-tight text-slate-900 dark:text-white">
 
                 {content["popular-products-title"]}
 
               </h2>
-              <p className="text-base font-sans text-gray-600 dark:text-gray-200 leading-6">
+              <p className="text-sm sm:text-base font-sans text-slate-500 dark:text-slate-400 leading-relaxed">
 
 
                 {content["popular-products-sub-title"]}
@@ -174,9 +174,9 @@ export default async function Home() {
         </div>
 
         {/* promotional banner card */}
-        <div className="block mx-auto max-w-screen-2xl bg-gray-50 dark:bg-gray-700">
+        <div className="block mx-auto max-w-screen-2xl bg-background dark:bg-slate-950">
           <div className="mx-auto max-w-screen-2xl px-4 sm:px-10">
-            <div className="lg:p-16 p-6 bg-emerald-500 shadow-sm border rounded-lg">
+            <div className="bg-transparent">
               <FastDeliveryCard />
             </div>
           </div>
@@ -185,15 +185,15 @@ export default async function Home() {
         {/* discounted products */}
         <div
           id="discount"
-          className="bg-gray-50  dark:bg-gray-700 lg:py-16 py-10 mx-auto max-w-screen-2xl px-3 sm:px-10"
+          className="bg-slate-50/50 dark:bg-slate-900/50 border-t border-slate-100 dark:border-slate-800 lg:py-16 py-10 mt-12 mx-auto max-w-screen-2xl px-3 sm:px-10"
         >
           <div className="mb-10 flex justify-center">
             <div className="text-center w-full lg:w-2/5">
-              <h2 className="text-xl lg:text-2xl mb-2 font-serif font-semibold">
+              <h2 className="text-2xl lg:text-3xl mb-2 font-sans font-bold tracking-tight text-slate-900 dark:text-white">
 
                 {content["discounted-products-title"]}
               </h2>
-              <p className="text-base font-sans text-gray-600 dark:text-gray-200 leading-6">
+              <p className="text-sm sm:text-base font-sans text-slate-500 dark:text-slate-400 leading-relaxed">
 
                 {content["discounted-products-paragraph-text"]}
               </p>

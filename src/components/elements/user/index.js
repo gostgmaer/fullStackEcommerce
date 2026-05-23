@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 import { UserMenu } from '@/assets/fakeData/UserMenu'
 import { signOut } from 'next-auth/react';
 import Link from 'next/link'
@@ -7,52 +8,54 @@ import React from 'react'
 import { MdLockOpen } from 'react-icons/md';
 
 const Userlayout = ({children}) => {
-
-    const path = usePathname()
-
-
+  const path = usePathname();
 
   return (
-    <div className="bg-gray-50">
-    <div className="mx-auto max-w-screen-2xl px-3 sm:px-10">
-        <div className="py-10 lg:py-12 flex flex-col  w-full">
-            <div className="flex-shrink-0 w-full mb-2 mr-7 lg:mr-10 xl:mr-10">
-                <div className="bg-white p-4  rounded-md flex sticky justify-between top-32">
-                    {UserMenu.map((data, index) => (
-                        <span
-                            key={index}
-                            className={`group text-xl p-2  my-2 w-max flex justify-start text-black items-center rounded-md hover:bg-gray-50 hover:text-emerald-600 ${path.includes(`/user/my-account/${data.path}`) ? 'bg-gray-100 text-emerald-600' : ''}`}
-                        >
-                            {data.icon}
-                            <Link
-                                href={`/user/my-account/${data.path}`}
-                                className="  hover:no-underline w-max focus:text-inherit focus:no-underline inline-flex items-center justify-between ml-2  font-medium    group-hover:text-emerald-600"
-                            >
-                                {data.title}
-                            </Link>
-                        </span>
-                    ))}
+    <div className="bg-slate-50/50 dark:bg-slate-950 transition-colors duration-200">
+      <div className="mx-auto max-w-screen-2xl px-4 sm:px-10">
+        <div className="py-8 lg:py-12 flex flex-col w-full gap-6">
+          <div className="flex-shrink-0 w-full">
+            <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-4 rounded-xl flex sticky justify-between items-center top-24 gap-3 overflow-x-auto scrollbar-hide shadow-sm z-30">
+              <div className="flex items-center gap-1 sm:gap-2 overflow-x-auto scrollbar-hide">
+                {UserMenu.map((data, index) => {
+                  const isActive = path.includes(`/user/my-account/${data.path}`);
+                  return (
+                    <Link
+                      key={index}
+                      href={`/user/my-account/${data.path}`}
+                      className={`group flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 whitespace-nowrap !no-underline ${
+                        isActive
+                          ? 'bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary'
+                          : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary'
+                      }`}
+                    >
+                      <span className={`text-base ${isActive ? 'text-primary' : 'text-slate-400 dark:text-slate-500 group-hover:text-primary'}`}>
+                        {data.icon}
+                      </span>
+                      <span>{data.title}</span>
+                    </Link>
+                  );
+                })}
+              </div>
 
-                    <span className="p-2 flex text-xl  items-center rounded-md hover:bg-gray-50  hover:text-emerald-600">
-                        <span className="mr-2 text-black">
-                           <MdLockOpen/>
-                        </span>
-                        <button
-                            onClick={()=>signOut()}
-                            className="inline-flex text-black items-center justify-between text-sm font-medium w-full hover:text-emerald-600"
-                        >
-                            Logout
-                        </button>
-                    </span>
-                </div>
+              <div className="border-l border-slate-100 dark:border-slate-800 pl-3 flex-shrink-0">
+                <button
+                  onClick={() => signOut()}
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-all duration-200"
+                >
+                  <MdLockOpen className="text-base" />
+                  <span>Logout</span>
+                </button>
+              </div>
             </div>
-            <div className="w-full bg-white mt-4 lg:mt-0 p-4 sm:p-5 lg:p-8 rounded-md overflow-hidden">
-               {children}
-            </div>
+          </div>
+          <div className="w-full bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-6 sm:p-8 rounded-xl shadow-sm overflow-hidden text-slate-800 dark:text-slate-100">
+            {children}
+          </div>
         </div>
+      </div>
     </div>
-</div>
   )
 }
 
-export default Userlayout
+export default Userlayout;

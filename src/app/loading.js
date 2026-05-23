@@ -1,17 +1,24 @@
-import React from 'react'
+import React from "react";
 
+/**
+ * Next.js App Router global loading state.
+ * Shown during server-side navigation between pages.
+ */
 const Loading = () => {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black opacity-90 z-50">
-      <div className="flex space-x-4">
-        {/* Animated Dots */}
-        <div className="w-4 h-4 bg-white rounded-full animate-bounce glow    delay-75"></div>
-        <div className="w-4 h-4 bg-white rounded-full animate-bounce glow delay-100"></div>
-        <div className="w-4 h-4 bg-white rounded-full animate-bounce glow delay-150"></div>
-        <div className="w-4 h-4 bg-white rounded-full animate-bounce glow delay-200"></div>
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background/95 backdrop-blur-sm">
+      {/* Spinner ring */}
+      <div className="relative w-14 h-14">
+        <div className="absolute inset-0 rounded-full border-4 border-muted" />
+        <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-primary animate-spin-slow" />
       </div>
-    </div>
-  )
-}
 
-export default Loading
+      {/* Label */}
+      <p className="mt-5 text-sm font-semibold text-muted-foreground tracking-wide animate-pulse">
+        Loading…
+      </p>
+    </div>
+  );
+};
+
+export default Loading;

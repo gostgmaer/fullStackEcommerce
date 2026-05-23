@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useCart } from "react-use-cart";
 import { FiPlus, FiMinus, FiTrash2 } from "react-icons/fi";
 
@@ -14,13 +15,14 @@ const CartItem = ({ item, currency }) => {
 
   return (
     <div className="group w-full h-auto flex justify-start items-center bg-white py-3 px-4 border-b hover:bg-gray-50 transition-all border-gray-100 relative last:border-b-0">
-      <div className="relative flex rounded-full border border-gray-100 shadow-sm overflow-hidden flex-shrink-0 cursor-pointer mr-4">
-        <img
+      <div className="relative flex rounded-full border border-gray-100 shadow-sm overflow-hidden flex-shrink-0 cursor-pointer mr-4 w-10 h-10">
+        <Image
           key={item.id}
           src={item.image}
           width={40}
           height={40}
           alt={item.title}
+          className="object-cover"
         />
       </div>
       <div className="flex flex-col w-full overflow-hidden">

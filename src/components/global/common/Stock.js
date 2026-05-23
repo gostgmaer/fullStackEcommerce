@@ -1,32 +1,26 @@
 "use client";
 import { content } from "@/assets/jsonfile/content";
-// import useTranslation from "next-translate/useTranslation";
 
 const Stock = ({ stock, card }) => {
-  //   const { t } = useTranslation();
-
   return (
     <>
       {stock <= 0 ? (
-        <span className="bg-red-100 absolute left-1 top-1 z-10 text-red-500 dark:text-red-400 rounded-full inline-flex items-center justify-center px-2 py-0 text-xs font-medium font-serif">
+        <span className="absolute left-3 top-3 z-10 font-sans font-bold text-[10px] uppercase tracking-wider bg-red-50 dark:bg-red-950/40 text-red-650 dark:text-red-400 border border-red-100 dark:border-red-900/40 rounded px-2 py-1 leading-none shadow-sm">
           {content.stockOut}
         </span>
       ) : (
-        <>
-          <span
-            className={`${
-              card
-                ? "bg-gray-100 absolute left-1 top-1 z-10 text-emerald-500 rounded-full text-xs px-2 py-0 font-medium"
-                : "bg-emerald-100 text-emerald-500 rounded-full inline-flex items-center justify-center px-2 py-0 text-xs font-semibold font-serif"
-            }`}
-          >
-            {/* {t("common:stock")}  */}
-            {content.stock}:
-            <span className="text-red-500 dark:text-red-400  pl-1 font-bold">
-              {stock}
-            </span>
+        <span
+          className={`font-sans font-semibold text-[10px] leading-none z-10 ${
+            card
+              ? "absolute left-3 top-3 bg-white/90 dark:bg-slate-800/90 text-slate-500 dark:text-slate-300 border border-slate-100 dark:border-slate-700 rounded-md px-2 py-1 shadow-sm"
+              : "inline-flex items-center justify-center bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-350 border border-slate-100 dark:border-slate-700 rounded px-2.5 py-1"
+          }`}
+        >
+          {content.stock}:
+          <span className="text-primary dark:text-primary pl-1 font-extrabold">
+            {stock}
           </span>
-        </>
+        </span>
       )}
     </>
   );

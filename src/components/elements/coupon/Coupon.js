@@ -28,230 +28,137 @@ const Coupon = ({ couponInHome }) => {
 
   return (
     <>
-
-
-{
-  couponInHome? (
-    data?.slice(0, 2).map((coupon) => (
-      <div
-        key={coupon._id}
-        className="coupon coupon-home mx-4 my-5 block md:flex lg:flex md:justify-between lg:justify-between items-center bg-white rounded-md shadow"
-      >
-        <div className="tengah py-2 px-3 flex items-center justify-items-start">
-          <figure>
-            <Image
-              src={coupon.logo}
-          alt="asdad"
-              width={100}
-              height={100}
-              className="rounded-lg"
-            />
-          </figure>
-          <div className="ml-3">
-            <div className="flex items-center font-serif">
-              <h6 className="pl-1 text-base font-medium text-gray-600">
-                <span className="text-lg md:text-xl lg:text-xl text-red-500 font-bold">
-                  {coupon?.discountType?.type === "fixed" ? (
-                    <span>${coupon?.discountType?.value}</span>
+      {couponInHome ? (
+        data?.slice(0, 2).map((coupon) => (
+          <div
+            key={coupon._id}
+            className="mx-auto my-4 flex flex-col md:flex-row justify-between items-center bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700/80 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 p-4 gap-4"
+          >
+            <div className="flex items-center gap-4 flex-grow w-full md:w-auto">
+              <figure className="relative w-16 h-16 bg-slate-50 dark:bg-slate-900 rounded-lg p-2 flex items-center justify-center border border-slate-100 dark:border-slate-800 flex-shrink-0">
+                <Image
+                  src={coupon.logo}
+                  alt={coupon.title}
+                  width={60}
+                  height={60}
+                  className="object-contain rounded"
+                />
+              </figure>
+              <div className="flex-grow">
+                <div className="flex items-center gap-2 flex-wrap mb-1">
+                  <span className="text-lg font-extrabold text-primary">
+                    {coupon?.discountType?.type === "fixed" ? (
+                      <span>${coupon?.discountType?.value}</span>
+                    ) : (
+                      <span>{coupon?.discountPercentage}%</span>
+                    )}
+                  </span>
+                  <span className="text-xs font-bold text-slate-500 uppercase">
+                    Off
+                  </span>
+                  {dayjs().isAfter(dayjs(coupon.endTime)) ? (
+                    <span className="text-red-600 bg-red-50 dark:bg-red-950/30 px-2 py-0.5 rounded-full font-bold text-[10px] uppercase tracking-wider">
+                      Expired
+                    </span>
                   ) : (
-                    <span>{coupon?.discountPercentage}%</span>
+                    <span className="text-emerald-600 bg-emerald-50 dark:bg-emerald-950/30 px-2 py-0.5 rounded-full font-bold text-[10px] uppercase tracking-wider">
+                      Active
+                    </span>
                   )}
-                </span>{" "}
-                Off
-              </h6>
-              <div className="ml-2">
+                </div>
+                <h2 className="font-sans text-sm text-slate-800 dark:text-slate-200 font-bold mb-2">
+                  {coupon?.title}
+                </h2>
                 {dayjs().isAfter(dayjs(coupon.endTime)) ? (
-                  <span className="text-red-600 inline-block px-4 py-1 rounded-full font-medium text-xs bg-red-100">
-                    Inactive
-                  </span>
+                  <div className="flex items-center gap-1 font-sans text-xs text-red-500 font-semibold">
+                    Expired
+                  </div>
                 ) : (
-                  <span className="text-emerald-600 inline-block px-4 py-1 rounded-full font-medium text-xs bg-emerald-100">
-                    Active
-                  </span>
+                  <OfferTimer expiryTimestamp={new Date(coupon.endTime)} />
                 )}
               </div>
             </div>
-            <h2 className="pl-1 font-serif text-base text-gray-700 leading-6 font-semibold mb-2">
-         {coupon?.title}
-            </h2>
-            {dayjs().isAfter(dayjs(coupon.endTime)) ? (
-              <span className="inline-block mb-2">
-                <div className="flex items-center font-semibold">
-                  <span className="flex items-center justify-center bg-red-500 text-white text-sm font-serif font-semibold mx-1 px-2 py-1 rounded">
-                    00
-                  </span>
-                  :
-                  <span className="flex items-center justify-center bg-red-500 text-white text-sm font-serif font-semibold mx-1 px-2 py-1 rounded">
-                    00
-                  </span>
-                  :
-                  <span className="flex items-center justify-center bg-red-500 text-white text-sm font-serif font-semibold mx-1 px-2 py-1 rounded">
-                    00
-                  </span>
-                  :
-                  <span className="flex items-center justify-center bg-red-500 text-white text-sm font-serif font-semibold mx-1 px-2 py-1 rounded">
-                    00
-                  </span>
-                </div>
-              </span>
-            ) : (
-              <span className="inline-block mb-2">
-                <div className="flex items-center font-semibold">
-                  <OfferTimer
-                    expiryTimestamp={new Date(coupon.endTime)}
-                    darkGreen
-                  />
-                </div>
-              </span>
-            )}
-          </div>
-        </div>
-        <div className="md:border-l-2 lg:border-l-2 border-dashed lg:w-1/3 md:w-1/3 relative px-4">
-          <div className="info flex items-center">
-            <div className="w-full">
-              <div className="block">
-                <div className="font-serif border border-dashed bg-emerald-50 py-1 border-emerald-300 rounded-lg text-center block">
-                  <CopyToClipboard
-                    text={coupon.couponCode}
-                    onCopy={() => handleCopied(coupon.couponCode)}
-                  >
-                    <button className="block w-full">
-                      {copied && coupon.couponCode === copiedCode ? (
-                        <span className="text-emerald-600 text-sm leading-7 font-semibold">
-                          Copied!
-                        </span>
-                      ) : (
-                        <span className="uppercase font-serif font-semibold text-sm leading-7 text-emerald-600">
-                          {coupon.couponCode}{" "}
-                        </span>
-                      )}
-                    </button>
-                  </CopyToClipboard>
-                </div>
-              </div>
-              <p className="text-xs leading-4 text-gray-500 mt-2">
-                * This coupon apply when shopping more then{" "}
-                <span className="font-bold">
-                  {"$"}
-                  {coupon.minimumAmount}
-                </span>{" "}
+            <div className="w-full md:w-auto md:border-l md:border-dashed border-slate-200 dark:border-slate-700 md:pl-4 flex flex-col justify-center">
+              <CopyToClipboard
+                text={coupon.couponCode}
+                onCopy={() => handleCopied(coupon.couponCode)}
+              >
+                <button className="w-full min-w-[120px] font-mono font-bold text-xs uppercase tracking-wider border border-dashed border-primary bg-primary/5 text-primary hover:bg-primary/10 transition-colors py-2 rounded-lg text-center block">
+                  {copied && coupon.couponCode === copiedCode ? "Copied!" : coupon.couponCode}
+                </button>
+              </CopyToClipboard>
+              <p className="text-[10px] font-medium text-slate-400 mt-2 text-center">
+                * Min Order: <span className="font-bold text-slate-500">${coupon.minimumAmount}</span>
               </p>
             </div>
           </div>
-        </div>
-      </div>
-    ))
-  ) : (
-    data?.map((coupon) => (
-      <div
-        key={coupon._id}
-        className="coupon block md:flex lg:flex md:justify-between lg:justify-between items-center bg-white rounded-md shadow-sm"
-      >
-        <div className="tengah p-6 flex items-center justify-items-start">
-          <figure>
-            <Image
-              src={coupon.logo}
-              alt={coupon.title}
-              width={120}
-              height={120}
-              className="rounded-lg"
-            />
-          </figure>
-          <div className="ml-5">
-            {dayjs().isAfter(dayjs(coupon.endTime)) ? (
-              <span className="inline-block mb-2">
-                <div className="flex items-center font-semibold">
-                  <span className="flex items-center justify-center bg-red-100 text-sm font-serif font-semibold px-2 py-1 rounded mx-1">
-                    00
-                  </span>
-                  :
-                  <span className="flex items-center justify-center bg-red-100 text-sm font-serif font-semibold px-2 py-1 rounded mx-1">
-                    00
-                  </span>
-                  :
-                  <span className="flex items-center justify-center bg-red-100 text-sm font-serif font-semibold px-2 py-1 rounded mx-1">
-                    00
-                  </span>
-                  :
-                  <span className="flex items-center justify-center bg-red-100 text-sm font-serif font-semibold px-2 py-1 rounded mx-1">
-                    00
-                  </span>
-                </div>
-              </span>
-            ) : (
-              <span className="inline-block mb-2">
-                <div className="flex items-center font-semibold">
-                  <OfferTimer expiryTimestamp={new Date(coupon.endTime)} darkGreen={undefined} />
-                </div>
-              </span>
-            )}
-
-            <h2 className="font-serif text-lg leading-6 font-medium mb-3">
-             {coupon?.title}
-            </h2>
-            <h2 className="pl-1 text-base font-medium text-gray-600">
-              <span className="text-lg md:text-xl lg:text-xl text-red-500 font-bold">
-                {coupon?.discountType?.type === "fixed" ? (
-                  <span>${coupon?.discountType?.value}</span>
-                ) : (
-                  <span>{coupon?.discountType?.value}%</span>
-                )}
-              </span>{" "}
-              Off
-            </h2>
-          </div>
-        </div>
-        <div className="md:border-l-2 lg:border-l-2 border-dashed lg:w-1/3 md:w-1/3 relative px-6">
-          <div className="info flex lg:my-6 md:my-5 mb-6 items-center">
-            <div className="w-full">
-              <div className="block">
-                <div className="font-serif font-medium flex items-center mb-1">
-                  <span>Coupon</span>
-                  <div className="ml-2">
+        ))
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {data?.map((coupon) => (
+            <div
+              key={coupon._id}
+              className="flex flex-col sm:flex-row justify-between items-center bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-800 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 p-5 gap-5"
+            >
+              <div className="flex items-center gap-5 flex-grow w-full sm:w-auto">
+                <figure className="relative w-20 h-20 bg-slate-50 dark:bg-slate-900 rounded-xl p-3 flex items-center justify-center border border-slate-100 dark:border-slate-800 flex-shrink-0">
+                  <Image
+                    src={coupon.logo}
+                    alt={coupon.title}
+                    width={80}
+                    height={80}
+                    className="object-contain rounded-md"
+                  />
+                </figure>
+                <div className="flex-grow">
+                  <h2 className="font-sans text-base text-slate-800 dark:text-slate-200 font-bold mb-1">
+                    {coupon?.title}
+                  </h2>
+                  <div className="flex items-center gap-2 flex-wrap mb-2">
+                    <span className="text-xl font-extrabold text-primary">
+                      {coupon?.discountType?.type === "fixed" ? (
+                        <span>${coupon?.discountType?.value}</span>
+                      ) : (
+                        <span>{coupon?.discountType?.value}%</span>
+                      )}
+                    </span>
+                    <span className="text-xs font-bold text-slate-500 uppercase">
+                      Off
+                    </span>
                     {dayjs().isAfter(dayjs(coupon.endTime)) ? (
-                      <span className="text-red-600 inline-block">
-                        Inactive
+                      <span className="text-red-600 bg-red-50 dark:bg-red-950/30 px-2 py-0.5 rounded-full font-bold text-[10px] uppercase tracking-wider">
+                        Expired
                       </span>
                     ) : (
-                      <span className="text-emerald-600 inline-block">
+                      <span className="text-emerald-600 bg-emerald-50 dark:bg-emerald-950/30 px-2 py-0.5 rounded-full font-bold text-[10px] uppercase tracking-wider">
                         Active
                       </span>
                     )}
                   </div>
-                </div>
-
-                <div className="font-serif border border-dashed bg-emerald-50 py-2 border-emerald-300 rounded-lg text-center block">
-                  <CopyToClipboard
-                    text={coupon.couponCode}
-                    onCopy={() => handleCopied(coupon.couponCode)}
-                  >
-                    <button className="block w-full">
-                      {copied && coupon.couponCode === copiedCode ? (
-                        <span className="text-emerald-600 text-base leading-7 font-semibold">
-                          Copied!
-                        </span>
-                      ) : (
-                        <span className="uppercase font-serif font-semibold text-base leading-7 text-emerald-600">
-                          {coupon.couponCode}{" "}
-                        </span>
-                      )}
-                    </button>
-                  </CopyToClipboard>
+                  {dayjs().isAfter(dayjs(coupon.endTime)) ? (
+                    <div className="text-xs text-red-500 font-semibold">Expired</div>
+                  ) : (
+                    <OfferTimer expiryTimestamp={new Date(coupon.endTime)} />
+                  )}
                 </div>
               </div>
-              <p className="text-xs leading-5 text-gray-500 mt-2">
-                * This coupon code will apply on when you shopping more then{" "}
-                <span className="font-bold text-gray-700">
-                  {"currency"}
-                  {coupon.minimumAmount}
-                </span>{" "}
-              </p>
+              <div className="w-full sm:w-auto sm:border-l sm:border-dashed border-slate-200 dark:border-slate-700 sm:pl-5 flex flex-col justify-center">
+                <CopyToClipboard
+                  text={coupon.couponCode}
+                  onCopy={() => handleCopied(coupon.couponCode)}
+                >
+                  <button className="w-full min-w-[130px] font-mono font-bold text-xs uppercase tracking-wider border border-dashed border-primary bg-primary/5 text-primary hover:bg-primary/10 transition-colors py-2 rounded-lg text-center block">
+                    {copied && coupon.couponCode === copiedCode ? "Copied!" : coupon.couponCode}
+                  </button>
+                </CopyToClipboard>
+                <p className="text-[10px] font-medium text-slate-400 mt-2 text-center">
+                  * Min Order: <span className="font-bold text-slate-500">${coupon.minimumAmount}</span>
+                </p>
+              </div>
             </div>
-          </div>
+          ))}
         </div>
-      </div>
-    ))
-  )}
+      )}
 
 
   

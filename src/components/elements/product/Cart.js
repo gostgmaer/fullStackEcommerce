@@ -15,42 +15,34 @@ function AddToCard({ data }) {
   return (
     <>
 
-      <div className="group box-border  flex rounded-md  pe-0 flex-col items-center  relative">
-      
+      <div className="group box-border flex rounded-lg pe-0 flex-col items-center relative">
         <div className="w-full">
-      
-          <div className="flex justify-between items-center text-heading text-sm sm:text-base space-s-2 md:text-base lg:text-xl">
-          
-
+          <div className="flex justify-between items-center text-sm sm:text-base">
             {cartData ? (
               <div>
-                <div className="h-9 w-auto flex flex-wrap items-center justify-evenly py-1 px-2 bg-emerald-500 text-white rounded">
-                <button onClick={() => dispatch(decreaseCart({...data,id:data._id}))}>
-                    <span className="text-dark text-base">
-                    <IoRemoveOutline />
-                    </span>
+                <div className="h-9 w-auto flex items-center gap-2 py-1 px-2.5 bg-primary text-white rounded-lg shadow-sm border border-primary/20">
+                  <button onClick={() => dispatch(decreaseCart({...data,id:data._id}))} aria-label="Decrease quantity" className="hover:scale-105 active:scale-90 transition-all p-0.5">
+                    <IoRemoveOutline className="text-base text-white" />
                   </button>
-                  <p className="text-sm text-dark px-1 font-serif font-semibold">  {cartData.cartQuantity}</p>
-                  <button onClick={() => dispatch(incrementCart({...data,id:data._id}))}>
-                    <span className="text-dark text-base">
-                      <IoAddOutline />
-                    </span>
+                  <p className="text-xs font-sans font-extrabold text-white px-1 leading-none">
+                    {cartData.cartQuantity}
+                  </p>
+                  <button onClick={() => dispatch(incrementCart({...data,id:data._id}))} aria-label="Increase quantity" className="hover:scale-105 active:scale-90 transition-all p-0.5">
+                    <IoAddOutline className="text-base text-white" />
                   </button>
                 </div>
               </div>
             ) : (
               <button
-                aria-label="cart"
+                aria-label="Add to cart"
                 disabled={data.quantity === 0 ? true : false}
                 onClick={() => handleAddToCart({...data,id:data._id})}
-                className="h-9 w-9 flex items-center justify-center border border-gray-200 rounded text-emerald-500 hover:border-emerald-500 hover:bg-emerald-500 hover:text-white transition-all"
+                className="h-9 w-9 flex items-center justify-center border border-slate-100 dark:border-slate-800 rounded-lg text-primary bg-slate-50 dark:bg-slate-900 hover:bg-primary hover:text-white hover:border-primary transition-all duration-200 shadow-sm active:scale-95 disabled:opacity-50"
               >
-
-                <span className="text-xl">
+                <span className="text-lg">
                   <IoBagAddSharp />
                 </span>{" "}
               </button>
-
             )}
           </div>
         </div>

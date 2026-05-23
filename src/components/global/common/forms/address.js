@@ -89,11 +89,11 @@ const AddressForm = ({ currAddress }) => {
             let response;
             if (params.id) {
                 response = await CustomerServices.updateCustomerAddress(
-                    { "Authorization": `Bearer ${session["accessToken"]}` }, values, params
+                    { "Authorization": `Bearer ${session?.["accessToken"]}` }, values, params
                 );
             } else {
                 response = await CustomerServices.addCustomerAddress(
-                    { "Authorization": `Bearer ${session["accessToken"]}` }, values
+                    { "Authorization": `Bearer ${session?.["accessToken"]}` }, values
                 );
             }
 

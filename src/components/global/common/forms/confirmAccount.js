@@ -16,24 +16,23 @@ const ConfirmForm = () => {
 
   const param = useSearchParams();
 
-  const confirmAccountAction = async (e) => {
-    if (!param.getAll("token")[0]) {
-    } else {
-      try {
-        const confirm = await post(
-          `/user/auth/confirm-account/${param.getAll("token")[0]}`
-        );
-        setUserData(confirm);
-      } catch (error) {
-        ///////console.log(error.message);
-        setError(error.message);
-      }
-    }
-  };
-
   useEffect(() => {
+    const confirmAccountAction = async () => {
+      const token = param.getAll("token")[0];
+      if (token) {
+        try {
+          const confirm = await post(
+            `/user/auth/confirm-account/${token}`
+          );
+          setUserData(confirm);
+        } catch (error) {
+          setError(error.message);
+        }
+      }
+    };
+
     confirmAccountAction();
-  }, []);
+  }, [param]);
 
   return (
     <div className=" flex items-center justify-center bg-gray-100">

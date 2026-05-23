@@ -25,18 +25,13 @@ const ProductList = () => {
   const qdata = useSearchParams();
   const dispatch = useDispatch();
 
-  const getAllSearchParamsAsObject = () => {
-    // const query = useSearchParams();
+  const q = useMemo(() => {
     const paramsObj = {};
-
-    // Iterate over all search params and populate the object
     qdata.forEach((value, key) => {
       paramsObj[key] = value;
     });
-
-    return paramsObj; // Return as a plain object
-  };
-  const q = getAllSearchParamsAsObject();
+    return paramsObj;
+  }, [qdata]);
 
   //   // const data=[]
 
@@ -79,24 +74,20 @@ const ProductList = () => {
     (state) => state["products"]
   );
 
-  const { page, limit, query, category } = q;
   useEffect(() => {
     if (q) {
       dispatch(fetchProducts(q)); // Dispatch the fetchProducts action with the query from the URL
     }
-    //console.log(products, page, limit, query, category);
-  }, [dispatch, page, limit, query, category]);
+  }, [dispatch, q]);
 
   return (
     <Suspense>
       <div>
-        <div className=" justify-between my-3 bg-orange-100 border border-gray-100 rounded p-3 flex items-center">
-          <h6 className="text-sm grid-cols-5 ">
-            Total <span className="font-bold">{products?.total}</span> items
-            Found
+        <div className="flex justify-between items-center bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700/60 rounded-xl p-4 mb-6 shadow-sm">
+          <h6 className="text-sm font-sans font-medium text-slate-600 dark:text-slate-300 m-0">
+            Total <span className="font-bold text-slate-800 dark:text-white">{products?.total || 0}</span> items found
           </h6>
-          <div className=" grid-cols-1">
-            {" "}
+          <div className="w-44 sm:w-52">
             <Select
               options={sortByOptions}
               id={"sort_by"}
@@ -107,25 +98,37 @@ const ProductList = () => {
             />
           </div>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-6 gap-2 md:gap-3 lg:gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-6 gap-3 md:gap-4">
           {isLoading ? (
             <>
-              {Array.from(Array(24).keys()).map((data, index) => {
-                return <Placeholder.Graph active key={index} />;
-              })}
+              {Array.from(Array(24).keys()).map((_, index) => (
+                <Placeholder.Graph active key={index} className="h-64 rounded-xl" />
+              ))}
             </>
+          ) : products?.results?.length === 0 ? (
+            /* Empty State */
+            <div className="col-span-full flex flex-col items-center justify-center py-20 animate-fade-in">
+              <div className="w-16 h-16 rounded-full bg-muted dark:bg-slate-800 flex items-center justify-center mb-4">
+                <svg className="w-8 h-8 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 15.803 7.5 7.5 0 0015.803 15.803z" />
+                </svg>
+              </div>
+              <h3 className="font-bold text-slate-800 dark:text-white text-lg mb-1">No products found</h3>
+              <p className="text-sm text-muted-foreground text-center max-w-xs">
+                Try adjusting your filters or search query to find what you&apos;re looking for.
+              </p>
+            </div>
           ) : (
-            products?.results?.map((data, index) => {
-              return (
-                <ProductCard
-                  key={index}
-                  product={data}
-                  attributes={attributes}
-                />
-              );
-            })
+            products?.results?.map((data, index) => (
+              <ProductCard
+                key={index}
+                product={data}
+                attributes={attributes}
+              />
+            ))
           )}
         </div>
+
         <Pagination
           className="pagination-bar"
           totalCount={products?.total ? products.total : 0}

@@ -1,157 +1,143 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useFormik } from "formik";
-import { loginValidationSchema } from "@/utils/validation/validation";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-
 import { useSession, signIn } from "next-auth/react";
 import Input from "@/components/global/fields/input";
 import { notifyerror } from "@/utils/notify/notice";
 import { MdEmail, MdLock } from "react-icons/md";
-import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
+
+const loginSchema = z.object({
+  email: z.string().min(1, "Email is required").email("Invalid email address"),
+  password: z.string().min(1, "Password is required").min(8, "Password must be at least 8 characters long"),
+});
 
 const LoginForm = () => {
-  const { data: session, status } = useSession();
-  // const { handleLoginAuth, user, userId, authError } = useAuthContext();
-  // const [authError, setAuthError] = useState(undefined);
   const searchParams = useSearchParams();
   const router = useRouter();
-
   const callbackUrl = searchParams.get("callbackUrl") || "/";
-  /////console.log(session, status);
-  const formik = useFormik({
-    initialValues: {
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting }
+  } = useForm({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
       email: "",
       password: "",
-    },
-    validationSchema: loginValidationSchema,
-    onSubmit: async (values) => {
+    }
+  });
 
-
-      console.log("LoginForm values", values);
-      // if (authError) {
-      //   notifyerror(authError, 5000);  
-      console.log("LoginForm callbackUrl", callbackUrl);
-      
-    
-      
-    
+  const onSubmit = async (values) => {
+    try {
       const res = await signIn("credentials", {
         ...values,
+        redirect: false,
         callbackUrl,
       });
 
-      if (res.ok) {
+      if (res?.ok) {
         if (res.url) {
-         const fullUrl = new URL(res.url, window.location.origin);
-         console.log(fullUrl);
-         
+          const fullUrl = new URL(res.url, window.location.origin);
           router.push(fullUrl.pathname || "/");
+        } else {
+          router.push("/");
         }
       } else {
-        notifyerror(res.error, 5000);
+        notifyerror(res?.error || "Invalid credentials", 5000);
       }
-    },
-  });
+    } catch (err) {
+      notifyerror(err?.message || "Something went wrong.", 5000);
+    }
+  };
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <div className="space-y-4 lg:space-y-5">
-        <div className="col-span-full ">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+      <div className="space-y-4">
+        <div>
           <Input
             label={""}
             type={"text"}
             additionalAttrs={{
-              ...formik.getFieldProps("email"),
+              ...register("email"),
               placeholder: "Email",
               required: true,
             }}
-            classes={undefined}
-            icon={<MdEmail />}
+            icon={<MdEmail className="text-slate-400 dark:text-slate-500" />}
             id={"email"}
           />
-
-          {formik.touched.email && formik.errors.email && (
-            <div className="text-red-500 text-sm">{formik.errors.email}</div>
+          {errors.email && (
+            <p className="text-red-500 text-xs mt-1 font-semibold">{errors.email.message}</p>
           )}
         </div>
-        <div className="col-span-full ">
+
+        <div>
           <Input
             label={""}
             type={"password"}
             additionalAttrs={{
-              ...formik.getFieldProps("password"),
+              ...register("password"),
               placeholder: "Password",
               required: true,
               autoComplete: "off",
             }}
-            classes={undefined}
-            icon={<MdLock />}
+            icon={<MdLock className="text-slate-400 dark:text-slate-500" />}
             id={"password"}
           />
-
-          {formik.touched.password && formik.errors.password && (
-            <div className="text-red-500 text-sm">{formik.errors.password}</div>
+          {errors.password && (
+            <p className="text-red-500 text-xs mt-1 font-semibold">{errors.password.message}</p>
           )}
         </div>
-
-        <div className="flex items-center justify-between pb-1">
-          <div className=" flex flex-col [&amp;>label>span]:font-medium">
-            <div className="rizzui-checkbox-container flex flex-row items-center">
-              <div className="relative leading-none">
-                <input
-                  type="checkbox"
-                  className="rizzui-checkbox-input peer disabled:bg-gray-50 disabled:border-gray-200 h-5 w-5 rounded bg-transparent border border-gray-300 checked:!bg-gray-1000 focus:ring-gray-900/30 checked:!border-gray-1000 hover:enabled:border-gray-1000"
-                  name="isRememberMe"
-                />
-              </div>
-              <span className="rizzui-checkbox-label text-sm ml-1.5 rtl:mr-1.5">
-                Remember Me
-              </span>
-            </div>
-          </div>
-          <Link
-            className="h-auto p-0 text-sm font-semibold text-gray-700 underline transition-colors hover:text-primary hover:no-underline"
-            href="/auth/forget-password"
-          >
-            Forgot Password?
-          </Link>
-        </div>
-        <button
-          className=" disabled:text-gray-400 disabled:bg-gray-300 col-span-2 inline-flex font-medium items-center bg-gray-700 hover:enabled::bg-gray-800 active:enabled:bg-gray-1000 focus-visible:ring-gray-900/30 text-gray-0  text-white justify-center active:enabled:translate-y-px focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-50 transition-colors duration-200 px-5 py-2 text-base h-12 rounded-md border border-transparent focus-visible:ring-offset-2 bg-blue hover:enabled:bg-gray-900 focus-visible:ring-blue/30  w-full"
-          type="submit"
-          disabled={!formik.isValid || formik.isSubmitting}
-        >
-          <span>{formik.isSubmitting ? "Submitting..." : "Login"}</span>{" "}
-        </button>
-        <div className="before:content-[' '] relative  mt-0.5 flex items-center  before:absolute before:left-0 before:top-1/2 before:h-px before:w-full before:bg-gray-100   justify-center">
-          <span className="relative z-10 inline-block bg-white text-sm font-medium text-gray-500 dark:bg-gray-50 2xl:text-base ">
-            Or
-          </span>
-        </div>
-        {/* <div className="col-span-full">
-          <button
-            className="rizzui-button inline-flex font-medium items-center text-white justify-center active:enabled:translate-y-px focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-50 transition-colors duration-200 px-4 py-2 text-sm rounded-md border border-transparent focus-visible:ring-offset-2 bg-blue-600  hover:enabled::bg-blue-800 active:enabled:bg-gray-1000 focus-visible:ring-gray-900/30 text-gray-0 h-11 w-full"
-            type="button"
-            onClick={async () => await signIn("google")}
-          >
-            <FaGoogle className="h-4 w-4 mr-1 text-yellow-400" />
-            <span className="truncate">Signin with Google</span>
-          </button>
-        </div> */}
-        <div className="col-span-full">
-          <button
-            className="rizzui-button inline-flex font-medium items-center justify-center active:enabled:translate-y-px focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-50 transition-colors duration-200 px-4 py-2 text-sm rounded-md border border-transparent focus-visible:ring-offset-2 bg-gray-600  hover:enabled:bg-gray-700 focus-visible:ring-blue/30 text-white h-11 w-full"
-            type="button"
-            onClick={async () => await signIn("github")}
-          >
-            <FaGithub className="h-4 w-4 mr-1" />
-            <span className="truncate">Signin with Github</span>
-          </button>
-        </div>
       </div>
+
+      <div className="flex items-center justify-between pb-1 text-sm">
+        <label className="flex items-center cursor-pointer select-none text-slate-600 dark:text-slate-350">
+          <input
+            type="checkbox"
+            className="h-4 w-4 rounded border-slate-300 dark:border-slate-700 bg-transparent text-primary focus:ring-primary/20 mr-2"
+            name="isRememberMe"
+          />
+          Remember Me
+        </label>
+        <Link
+          className="font-semibold text-slate-600 dark:text-slate-300 hover:text-primary transition-colors underline hover:no-underline"
+          href="/auth/forget-password"
+        >
+          Forgot Password?
+        </Link>
+      </div>
+
+      <button
+        className="w-full inline-flex font-bold items-center justify-center bg-primary hover:bg-primary/95 text-white shadow-sm active:scale-[0.98] transition-all duration-200 px-5 py-3 text-sm h-12 rounded-lg border border-transparent disabled:opacity-50"
+        type="submit"
+        disabled={isSubmitting}
+      >
+        <span>{isSubmitting ? "Signing in..." : "Login"}</span>
+      </button>
+
+      <div className="relative flex items-center justify-center my-6">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full border-t border-slate-200 dark:border-slate-800"></div>
+        </div>
+        <span className="relative z-10 px-3 bg-white dark:bg-slate-900 text-xs font-semibold text-slate-450 dark:text-slate-400 uppercase tracking-wider">
+          Or
+        </span>
+      </div>
+
+      <button
+        className="w-full inline-flex font-bold items-center justify-center bg-slate-800 hover:bg-slate-750 dark:bg-slate-900 dark:hover:bg-slate-850 text-white shadow-sm active:scale-[0.98] transition-all duration-200 px-4 py-2.5 text-sm h-11 rounded-lg border border-transparent"
+        type="button"
+        onClick={async () => await signIn("github", { callbackUrl })}
+      >
+        <FaGithub className="h-4 w-4 mr-2" />
+        <span className="truncate">Sign in with Github</span>
+      </button>
     </form>
   );
 };

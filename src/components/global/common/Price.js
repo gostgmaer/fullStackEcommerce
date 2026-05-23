@@ -1,37 +1,30 @@
 "use client"
 const Price = ({ product, price, card, currency, originalPrice }) => {
-
-  //console.log(product, price, card, currency, originalPrice);
-  
-
-  // /////console.log("price", price, "originalPrice", originalPrice, "card", card);
   return (
-    <div className="font-serif product-price font-bold">
+    <div className="font-sans product-price flex items-baseline gap-1.5">
       {product?.variants?.length > 0 ? (
         <>
           <span
             className={
               card
-                ? "inline-block text-lg font-semibold text-gray-800"
-                : "inline-block text-2xl"
+                ? "text-base lg:text-lg font-bold text-slate-900 dark:text-slate-100"
+                : "text-2xl font-extrabold text-slate-900 dark:text-slate-100"
             }
           >
             {currency}
             {price}
           </span>
           {originalPrice > price && !card ? (
-            <>
-              <del
-                className={
-                  card
-                    ? "sm:text-sm font-normal text-base text-gray-400 dark:text-gray-50 ml-1"
-                    : "text-lg font-normal text-gray-400 dark:text-gray-50 ml-1"
-                }
-              >
-                {currency}
-                {parseFloat(originalPrice).toFixed(2)}
-              </del>
-            </>
+            <del
+              className={
+                card
+                  ? "text-xs font-normal text-slate-400 dark:text-slate-500 ml-1 line-through"
+                  : "text-base font-normal text-slate-400 dark:text-slate-500 ml-1 line-through"
+              }
+            >
+              {currency}
+              {parseFloat(originalPrice).toFixed(2)}
+            </del>
           ) : null}
         </>
       ) : (
@@ -39,26 +32,24 @@ const Price = ({ product, price, card, currency, originalPrice }) => {
           <span
             className={
               card
-                ? "inline-block text-lg font-semibold text-gray-800 dark:text-gray-50"
-                : "inline-block text-2xl"
+                ? "text-base lg:text-lg font-bold text-slate-900 dark:text-slate-100"
+                : "text-2xl font-extrabold text-slate-900 dark:text-slate-100"
             }
           >
             {currency}
             {parseFloat(product?.prices?.price).toFixed(2)}
           </span>
           {originalPrice > price && card ? (
-            <>
-              <del
-                className={
-                  card
-                    ? "sm:text-sm font-normal text-base text-gray-400 dark:text-gray-50 ml-1"
-                    : "text-lg font-normal text-gray-400 dark:text-gray-50 ml-1"
-                }
-              >
-                {currency}
-                {parseFloat(originalPrice).toFixed(2)}
-              </del>
-            </>
+            <del
+              className={
+                card
+                  ? "text-xs font-normal text-slate-400 dark:text-slate-500 ml-1 line-through"
+                  : "text-base font-normal text-slate-400 dark:text-slate-500 ml-1 line-through"
+              }
+            >
+              {currency}
+              {parseFloat(originalPrice).toFixed(2)}
+            </del>
           ) : null}
         </>
       )}

@@ -1,184 +1,158 @@
-"use client"
-// import useWishlist from '@/context/hooks/useWishlist';
-import { addByIncrement, removeFromCart } from '@/store/reducers/cartSlice';
+"use client";
+
+import { addByIncrement } from '@/store/reducers/cartSlice';
 import { fetchWishlist, removeFromWishlist } from '@/store/reducers/wishslice';
 import { notifySuccess } from '@/utils/notify/notice';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react'
-import { IoAddOutline, IoRemoveOutline } from 'react-icons/io5';
-import { MdDelete, MdFavorite } from 'react-icons/md';
+import React, { useEffect, useState } from 'react';
+import { IoAddOutline, IoRemoveOutline, IoTrashOutline } from 'react-icons/io5';
+import { MdFavoriteBorder } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Blockwishlist = () => {
-    const { data: session } = useSession();
-    const dispatch = useDispatch();
-    const { wishlist, error } = useSelector((state) => state["wishlist"]);
+  const { data: session } = useSession();
+  const dispatch = useDispatch();
+  const { wishlist } = useSelector((state) => state["wishlist"]);
 
-    const token = { "Authorization": `Bearer ${session?.["accessToken"]}` }
+  useEffect(() => {
+    if (session?.accessToken) {
+      dispatch(fetchWishlist({ Authorization: `Bearer ${session.accessToken}` }));
+    }
+  }, [dispatch, session?.accessToken]);
 
-
-
-
-
-    useEffect(() => {
-        dispatch(fetchWishlist(token)); // Fetch wishlist when component mounts
-    }, [dispatch]);
-    // const { wishlist, addToWishlist, removeFromWishlist, loading, error } = useWishlist();
-
-
-    // useEffect(async ()  => {
-
-    // console.log( await fetchWishlist());
-
-    // }, []);
-
-
-    return (
-        <div className="max-w-screen-2xl mx-auto ">
-            <div className="rounded-md ">
-                <div className="flex flex-col">
-                    {<h3 className="text-lg font-medium mb-5">{`Wish List`}</h3>}
-                    <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                        <div className="align-middle inline-block   rounded-md min-w-full pb-2 sm:px-6 lg:px-8">
-                            <div className="overflow-hidden border-b last:border-b-0 border-gray-100 rounded-md">
-                                <div className="overflow-y-auto flex-grow scrollbar-hide w-full max-h-full">
-
-
-                                    {wishlist?.length === 0 ? (
-                                        <div className="flex flex-col h-full justify-center">
-                                            <div className="flex flex-col items-center">
-                                                <div className="flex justify-center items-center w-20 h-20 rounded-full bg-emerald-100">
-                                                    <span className="text-emerald-600 text-4xl block">
-                                                        <MdFavorite />
-                                                    </span>
-                                                </div>
-                                                <h3 className="font-semibold text-gray-700 text-lg pt-5">
-                                                    Your wishlistItems is empty
-                                                </h3>
-                                                <p className="px-12 text-center text-sm text-gray-500 pt-2">
-                                                    No items added in your wishlist.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    ) : (
-                                        wishlist?.map((data, index) => (
-                                            <WishListCard key={index} data={data.product}></WishListCard>
-                                        ))
-                                    )}
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  return (
+    <div className="max-w-screen-2xl mx-auto">
+      <div className="flex flex-col">
+        <h3 className="text-xl font-extrabold text-slate-900 dark:text-white mb-6 tracking-tight">
+          My Wishlist
+        </h3>
+        
+        {!wishlist || wishlist.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-16 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl text-center shadow-sm">
+            <div className="w-20 h-20 bg-slate-50 dark:bg-slate-800 text-slate-400 dark:text-slate-500 rounded-full flex items-center justify-center mb-5">
+              <MdFavoriteBorder className="text-4xl" />
             </div>
-        </div>
-    )
-}
+            <h3 className="font-bold text-slate-800 dark:text-white text-lg mb-1">
+              Your wishlist is empty
+            </h3>
+            <p className="text-sm text-slate-450 dark:text-slate-400 max-w-sm">
+              Add items that you like to your wishlist so you can buy them later.
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {wishlist.map((item, index) => (
+              item?.product && (
+                <WishListCard key={index} data={item.product} />
+              )
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
 
-export default Blockwishlist
-
-
+export default Blockwishlist;
 
 const WishListCard = ({ data }) => {
+  const dispatch = useDispatch();
+  const [total, setTotal] = useState(1);
+  const { data: session } = useSession();
 
-    const dispatch = useDispatch();
+  const handleAddToCart = (product) => {
+    dispatch(addByIncrement({ product: { ...product, id: product._id }, cartQuantity: total }));
+    notifySuccess(`${product.title} is Successfully Added!`);
+  };
 
-
-    const [total, setTotal] = useState(1)
-
-    const handleAddToCart = (product) => {
-        dispatch(addByIncrement({ product: { ...product, id: product._id }, cartQuantity: total }));
-        notifySuccess(`${product.title} is Successfully Add!`)
+  const handleRemoveFromWishlist = (id) => {
+    if (session?.accessToken) {
+      dispatch(removeFromWishlist({ id, token: { Authorization: `Bearer ${session.accessToken}` } }));
     }
+  };
 
+  const isOutOfStock = data.quantity === 0;
 
-    const { data: session } = useSession();
-    const token = { "Authorization": `Bearer ${session?.["accessToken"]}` }
+  return (
+    <div className="group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col relative overflow-hidden">
+      {/* Delete Button */}
+      <button 
+        onClick={() => handleRemoveFromWishlist(data?._id)} 
+        className="absolute top-4 right-4 p-2 bg-white dark:bg-slate-800 hover:bg-rose-50 dark:hover:bg-rose-950/30 text-slate-450 hover:text-red-500 rounded-xl transition-colors border border-slate-100 dark:border-slate-700/50 shadow-sm active:scale-95 z-10"
+        aria-label="Remove from wishlist"
+      >
+        <IoTrashOutline className="text-sm" />
+      </button>
 
+      {/* Product Image Wrapper */}
+      <div className="relative aspect-square w-full bg-slate-50 dark:bg-slate-950 border border-slate-100/60 dark:border-slate-800 rounded-xl p-4 mb-4 flex items-center justify-center overflow-hidden">
+        {data.image && data.image[0] && (
+          <Image
+            src={data.image[0]}
+            alt={data.title}
+            fill
+            sizes="(max-width: 768px) 100vw, 33vw"
+            className="object-contain rounded-lg p-2 group-hover:scale-105 transition-transform duration-300"
+          />
+        )}
+        {isOutOfStock && (
+          <div className="absolute inset-0 bg-slate-900/60 flex items-center justify-center backdrop-blur-[1px]">
+            <span className="bg-rose-500 text-white font-bold text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow-md">
+              Out of Stock
+            </span>
+          </div>
+        )}
+      </div>
 
-    const handleRemoveFromWishlist = (id) => {
-
-        
-        dispatch(removeFromWishlist({ id, token }));
-    };
-
-
-
-    return (
-        <div
-
-            className="group w-full h-auto flex justify-start  items-center bg-white py-3 px-4 border-b hover:bg-gray-50 transition-all border-gray-100 relative last:border-b-0"
+      {/* Details & Actions */}
+      <div className="flex flex-col flex-grow">
+        <Link
+          href={`/product/${data.slug}`}
+          className="text-sm font-bold text-slate-850 dark:text-slate-200 hover:text-primary transition-colors line-clamp-2 leading-snug mb-2 !no-underline"
         >
-            <div className="relative flex rounded-full border border-gray-100 shadow-sm overflow-hidden flex-shrink-0 cursor-pointer mr-4">
-                <Image
-                    src={data.image[0]}
-                    width={40}
-                    height={40}
-                    alt={data.title}
-                />
-            </div>
-            <div className="flex flex-col w-full overflow-hidden">
-
-                <Link
-                    className="truncate text-sm font-medium !no-underline !text-gray-700 text-heading line-clamp-1"
-                    href={`/product/${data.slug}`}
-                >
-                    {data.title}
-                </Link>
-                <span className="text-xs text-gray-400 mb-1">
-                    Item Price ${data.price}
-                </span>
-                <div className="flex items-center justify-between">
-                    <div className="font-bold text-sm md:text-base text-heading leading-5">
-                        <span>${data.price}</span>
-
-                    </div>
-
-
-                </div>
-            </div>
-            <div className='flex w-full flex-wrap  overflow-hidden'>
-                <div className="flex items-center ">
-                    <div className="flex items-center justify-between space-s-3 sm:space-s-4 w-full">
-                        <div className="group flex items-center justify-between rounded-md overflow-hidden flex-shrink-0 border h-11 md:h-12 border-gray-300">
-                            <button
-                                onClick={() => setTotal(total - 1)}
-                                disabled={total <= 1 ? true : false}
-                                className="flex items-center justify-center flex-shrink-0 h-full transition ease-in-out duration-300 focus:outline-none w-8 md:w-12 text-heading border-e border-gray-300 hover:text-gray-500"
-                            >
-                                <span className="text-dark text-base">
-                                    <IoRemoveOutline />
-                                </span>
-                            </button>
-                            <p className="font-semibold flex items-center justify-center h-full transition-colors duration-250 ease-in-out  flex-shrink-0 text-base text-heading w-8 md:w-20 xl:w-24">
-                                {total}
-                            </p>
-                            <button
-                                disabled={data.quantity === 0 ? true : false}
-                                onClick={() => {
-
-                                    setTotal(total + 1)
-                                }} className="flex items-center justify-center h-full flex-shrink-0 transition ease-in-out duration-300 focus:outline-none w-8 md:w-12 text-heading border-s border-gray-300 hover:text-gray-500">
-                                <span className="text-dark text-base">
-                                    <IoAddOutline />
-                                </span>
-                            </button>
-                        </div>
-                        <button disabled={data.quantity === 0 ? true : false} onClick={() => handleAddToCart(data)} className="text-sm leading-4 inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-semibold text-center justify-center border-0 border-transparent rounded-md focus-visible:outline-none focus:outline-none text-white px-4 ml-4 md:px-6 lg:px-8 py-4 md:py-3.5 lg:py-4 hover:text-white bg-emerald-500 hover:bg-emerald-600 w-full h-12">
-                            Add To Cart
-                        </button>
-                    </div>
-                </div>
-
-            </div>
-            <div>
-                <button onClick={() => handleRemoveFromWishlist(data?._id)} className="hover:text-red-600 text-red-400 text-lg cursor-pointer">
-                    <MdDelete />
-                </button>
-            </div>
+          {data.title}
+        </Link>
+        
+        <div className="flex items-baseline gap-2 mb-4">
+          <span className="text-lg font-black text-slate-950 dark:text-white">${data.price?.toFixed(2)}</span>
+          {data.originalPrice && data.originalPrice > data.price && (
+            <span className="text-xs text-slate-400 line-through">${data.originalPrice.toFixed(2)}</span>
+          )}
         </div>
-    )
-}
+
+        {/* Quantity Controls & Add to Cart */}
+        <div className="mt-auto pt-2 flex flex-col gap-3">
+          <div className="flex items-center justify-between border border-slate-200 dark:border-slate-850 rounded-lg h-10 overflow-hidden bg-slate-50/50 dark:bg-slate-850">
+            <button
+              onClick={() => setTotal(Math.max(1, total - 1))}
+              disabled={total <= 1 || isOutOfStock}
+              className="flex items-center justify-center w-10 h-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors disabled:opacity-40"
+            >
+              <IoRemoveOutline className="text-slate-600 dark:text-slate-350" />
+            </button>
+            <span className="font-extrabold text-xs text-slate-800 dark:text-slate-200 w-10 text-center">
+              {total}
+            </span>
+            <button
+              onClick={() => setTotal(total + 1)}
+              disabled={isOutOfStock}
+              className="flex items-center justify-center w-10 h-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors disabled:opacity-40"
+            >
+              <IoAddOutline className="text-slate-600 dark:text-slate-350" />
+            </button>
+          </div>
+
+          <button 
+            disabled={isOutOfStock} 
+            onClick={() => handleAddToCart(data)} 
+            className="w-full h-10 inline-flex items-center justify-center text-xs font-bold bg-primary hover:bg-primary/95 text-white rounded-lg transition-all duration-200 active:scale-[0.98] shadow-sm disabled:opacity-40 cursor-pointer"
+          >
+            Add To Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};

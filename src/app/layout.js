@@ -6,6 +6,8 @@ import NextAuthProvider from "@/context/sessionContext";
 import Script from "next/script";
 import { SidebarProvider } from "@/context/SidebarContext";
 import { UserProvider } from "@/context/UserContext";
+import StoreProvider from "@/store/storeProvider";
+import PaypalProvider from "@/components/elements/payment/PaypalProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -102,11 +104,15 @@ export default function RootLayout({ children }) {
         <head></head>
 
         <body className={inter.className}>
-          <SidebarProvider>
-            <UserProvider>
-              <ProviderTheme>{children}</ProviderTheme>
-            </UserProvider>
-          </SidebarProvider>
+          <StoreProvider>
+            <PaypalProvider>
+              <SidebarProvider>
+                <UserProvider>
+                  <ProviderTheme>{children}</ProviderTheme>
+                </UserProvider>
+              </SidebarProvider>
+            </PaypalProvider>
+          </StoreProvider>
           <Script
             src="https://checkout.razorpay.com/v1/checkout.js"
             strategy="beforeInteractive" // Ensures the script loads before your component renders

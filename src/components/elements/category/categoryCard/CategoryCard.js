@@ -44,79 +44,47 @@ const CategoryCard = () => {
   };
 
   return (
-    <div className="w-full grid grid-col gap-4 grid-cols-1 2xl:gap-6 xl:grid-cols-3 md:grid-cols-2">
+    <div className="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
       {CategoriesData.map((categoryCard, index) => {
         return (
           <div
             key={index}
-            className=" rounded-lg mx-auto w-full relative  overlow-hidden transition ease-out duration-400 delay-150 transform hover:shadow-xl"
+            className="group relative w-full h-44 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-slate-150/40 dark:border-slate-800"
           >
             <Link
               onClick={() => {
                 handleClick(categoryCard.path);
               }}
-              className="block cursor-pointer"
+              className="block w-full h-full cursor-pointer !no-underline"
               href={"/product/search?category="+categoryCard.path}
             >
-              <span
-                style={{
-                  boxSizing: "border-box",
-                  display: "block",
-                  overflow: "hidden",
-                  width: "initial",
-                  height: "initial",
-                  background: "none",
-                  opacity: "1",
-                  border: "0px",
-                  margin: "0px",
-                  padding: "0px",
-                  position: "relative",
-                }}
-              >
-                <span
-                  style={{
-                    boxSizing: "border-box",
-                    display: " block",
-                    width: "initial",
-                    height: "initial",
-                    background: " none",
-                    opacity: "1",
-                    border: "0px",
-                    margin: "0px",
-                    padding: "42.5455% 0px 0px",
-                  }}
-                ></span>
+              {/* Background Image */}
+              <div className="absolute inset-0 w-full h-full">
                 <Image
-                 alt="Taste of"
-                 sizes="100vw"
-                 height={200}
-                 width={300}
-              
-                 src={categoryCard.img}
-                 decoding="async"
-                 data-nimg="responsive"
-                 className="object-cover rounded-lg p-0 m-auto max-h-full min-h-full min-w-full max-w-full inset-0 absolute"
- 
-                >
+                  alt={categoryCard.name}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  src={categoryCard.img}
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  priority={index === 0}
+                />
+                <div className="absolute inset-0 bg-slate-950/25 group-hover:bg-slate-950/35 transition-colors duration-300" />
+              </div>
 
-                </Image>
-            
-              </span>
-              <div className="absolute top-0 left-0 z-10 p-r-16 flex-col flex w-full text-center justify-center">
-                <div className="pt-4">
-                  <h2 className="text-base sm:text-lg md:text-lg lg:text-lg font-semibold text-gray-100">
-                    Taste of <br />
-                    <span className="text-lg sm:text-2xl md:text-2xl lg:text-2xl font-bold text-white">
-                      {categoryCard.name}
-                    </span>
-                  </h2>
-                  <p className="text-sm  text-gray-50">
-                    Weekend discount offer
-                  </p>
-                  <button className="hidden sm:block lg:block text-xs mx-auto leading-6 font-medium mt-4 px-4 py-1 bg-green-500 text-center rounded-full text-white hover:bg-emerald-600">
-                    Shop Now
-                  </button>
-                </div>
+              {/* Text content */}
+              <div className="absolute inset-0 z-10 p-6 flex flex-col justify-center items-start text-white">
+                <h2 className="text-xs font-semibold uppercase tracking-wider text-slate-200 mb-1">
+                  Taste of
+                </h2>
+                <span className="text-xl sm:text-2xl font-extrabold tracking-tight text-white mb-1">
+                  {categoryCard.name}
+                </span>
+                <p className="text-[11px] font-medium text-slate-200 mb-3">
+                  Weekend discount offer
+                </p>
+                <span className="inline-flex items-center justify-center text-[10px] font-bold uppercase tracking-wider px-4.5 py-1.5 bg-primary hover:bg-primary/95 text-white rounded-full transition-all duration-200 active:scale-95 shadow">
+                  Shop Now
+                </span>
               </div>
             </Link>
           </div>

@@ -32,14 +32,14 @@ const MainCarousel = () => {
         }}
         modules={[Autoplay, Pagination, Navigation]}
      
-        className="mySwiper"
+        className="mySwiper rounded-xl overflow-hidden shadow-sm"
       >
         {sliderData.map((item, i) => (
           <SwiperSlide
-            className="h-full relative rounded-lg overflow-hidden"
+            className="h-full relative rounded-xl overflow-hidden"
             key={i + 1}
           >
-            <div className="text-sm  hover:text-emerald-dark">
+            <div className="text-sm h-full w-full">
               <Image
                 layout="responsive"
                 width={950}
@@ -49,21 +49,17 @@ const MainCarousel = () => {
                 className="object-cover"
               />
             </div>
-            <div className="absolute top-0 left-0 z-10 p-r-16 flex-col flex w-full h-full place-items-start justify-center">
-              <div className="pl-4 pr-12 sm:pl-10 sm:pr-16 w-10/12 lg:w-8/12 xl:w-7/12">
-                <h1 className="mb-2 font-serif text-xl sm:text-lg md:text-2xl line-clamp-1 md:line-clamp-none  lg:line-clamp-none  lg:text-3xl font-bold  text-gray-800">
+            <div className="absolute top-0 left-0 z-10 flex flex-col w-full h-full justify-center bg-slate-950/10 dark:bg-slate-950/20">
+              <div className="pl-6 pr-12 sm:pl-12 sm:pr-16 w-10/12 lg:w-9/12 xl:w-8/12">
+                <h1 className="mb-2 font-sans text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight">
                   {/* {t(`common:${item.title}`)} */}
-                  {item.title}
+                  {item.title === 'Slider1Title' ? "The Best Quality Products Guaranteed!" : item.title === 'Slider2Title' ? "Best Different Type of Grocery Store" : "Quality Freshness Guaranteed!"}
                 </h1>
-                <p className="text-base leading-6  font-sans line-clamp-1 dark:text-gray-700  md:line-clamp-none lg:line-clamp-none">
+                <p className="text-sm sm:text-base leading-relaxed font-sans text-slate-700 font-medium mb-4 max-w-md line-clamp-2 md:line-clamp-none">
                   {/* {t(`common:${item.info}`)} */}
-                  {item.info}
+                  {item.info === 'Slider1description' ? "Dramatically facilitate effective total linkage for go forward processes..." : item.info === 'Slider2description' ? "Quickly aggregate empowered networks after emerging products..." : "Intrinsicly fashion performance based products rather than accurate benefits..."}
                 </p>
-                <Link href={item.url}>
-                  {/* <a className="hidden sm:inline-block lg:inline-block text-sm leading-6 font-serif font-medium mt-6 px-6 py-2 bg-emerald-500 text-center rounded-md text-white hover:bg-emerald-600">
-                   
-                    
-                  </a> */}
+                <Link href={item.url} className="inline-flex items-center justify-center text-sm font-semibold px-6 py-2.5 bg-primary hover:bg-primary/95 text-white rounded-lg shadow-sm transition-all duration-200 active:scale-[0.98] cursor-pointer !no-underline">
                   {content['Slider-btn']}
                 </Link>
               </div>

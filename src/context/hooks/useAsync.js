@@ -16,21 +16,18 @@ const useAsync = (asyncFunction) => {
         const res = await asyncFunction({ cancelToken: source.token });
         if (!unmounted) {
           setData(res);
-          // /////console.log("res", res);
           setError("");
           setLoading(false);
         }
       } catch (err) {
         setErrCode(err?.response?.status);
         if (!unmounted) {
-          /////console.log(err.message);
           setError(err.message);
           if (axios.isCancel(err)) {
             setError(err.message);
             setLoading(false);
             setData({});
           } else {
-            // /////console.log('another error happened:' + err.message);
             setError(err.message);
             setLoading(false);
             setData({});
@@ -43,9 +40,7 @@ const useAsync = (asyncFunction) => {
       unmounted = true;
       source.cancel("Cancelled in cleanup");
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [currentPage]);
-  }, []);
+  }, [asyncFunction]);
 
   useEffect(() => {
     if (errCode === 401) {

@@ -1,12 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* @import 'resuit/dist/resuit.css'; */
 @import 'rsuite/dist/rsuite.min.css';
 
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
 :root {
   --background: 0 0% 100%;
   --foreground: 240 10% 3.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 240 10% 3.9%;
   --primary: 263.4 70% 50.4%;
   --primary-foreground: 210 20% 98%;
   --muted: 240 4.8% 95.9%;
@@ -14,12 +18,15 @@
   --accent: 142.1 76.2% 36.3%;
   --accent-foreground: 210 20% 98%;
   --border: 240 5.9% 90%;
+  --ring: 263.4 70% 50.4%;
   --radius: 0.75rem;
 }
 
 .dark {
   --background: 240 10% 3.9%;
   --foreground: 0 0% 98%;
+  --card: 240 10% 6%;
+  --card-foreground: 0 0% 98%;
   --primary: 263.4 70% 50.4%;
   --primary-foreground: 210 20% 98%;
   --muted: 240 3.7% 15.9%;
@@ -27,45 +34,128 @@
   --accent: 142.1 76.2% 36.3%;
   --accent-foreground: 210 20% 98%;
   --border: 240 3.7% 15.9%;
+  --ring: 263.4 70% 60%;
 }
 
+/* ============================================================
+   BASE STYLES
+   ============================================================ */
 body {
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
+::selection {
+  background-color: hsl(var(--primary) / 0.2);
+  color: hsl(var(--foreground));
+}
+
+/* ============================================================
+   UTILITY LAYER
+   ============================================================ */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+
+  /* Scrollbar hide */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Animation utilities */
+  .animate-fade-in {
+    animation: fade-in 0.2s ease-out both;
+  }
+
+  .animate-slide-in-right {
+    animation: slide-in-right 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .animate-shimmer {
+    animation: shimmer 1.5s infinite linear;
+    background: linear-gradient(
+      90deg,
+      hsl(var(--muted)) 0%,
+      hsl(var(--muted-foreground) / 0.1) 50%,
+      hsl(var(--muted)) 100%
+    );
+    background-size: 200% 100%;
+  }
+
+  .animate-spin-slow {
+    animation: spin 1.2s linear infinite;
+  }
 }
 
-/* Custom bounce animation */
-@keyframes bounce {
-  0%, 100% {
+/* ============================================================
+   KEYFRAMES
+   ============================================================ */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
     transform: translateY(0);
   }
-  50% {
-    transform: translateY(-20px);
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
-/* Glow effect */
-@keyframes glow {
-  0%, 100% {
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
   }
-  50% {
-    box-shadow: 0 0 20px rgba(255, 255, 255, 1);
+  100% {
+    background-position: 200% 0;
   }
 }
 
-/* Applying custom animations */
-.animate-bounce {
-  animation: bounce 1s infinite;
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-.glow {
-  animation: glow 1.5s infinite alternate;
+/* Legacy bounce (kept for backward compat) */
+@keyframes bounce-custom {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-16px); }
+}
+
+/* ============================================================
+   COMPONENT LAYER
+   ============================================================ */
+@layer components {
+  /* Premium focus ring — applied via Tailwind focus-visible */
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--ring))] focus-visible:ring-offset-2 focus-visible:ring-offset-[hsl(var(--background))];
+  }
+
+  /* Skeleton shimmer block */
+  .skeleton {
+    @apply rounded-lg animate-shimmer;
+    min-height: 1rem;
+  }
+
+  /* Card base */
+  .card-base {
+    @apply bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm;
+  }
 }

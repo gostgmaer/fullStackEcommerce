@@ -16,39 +16,40 @@ const ImageUpload = ({ imagePreview, setImagePreview,label }) => {
   const [url, setUrl] = useState(undefined);
   const [file, setFile] = useState(undefined);
 
-  const onFileUpload = () => {
-    if (!file) return;
+  useEffect(() => {
+    const onFileUpload = () => {
+      if (!file) return;
 
-    const storageRef = ref(firebaseStorage, `/Images/${file?.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
+      const storageRef = ref(firebaseStorage, `/Images/${file?.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, file);
 
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        var progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setProgrss(progress);
-      },
-      (err) => {
-        ///////console.log(err);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          setUrl(url);
-          setImagePreview(url);
-        });
-      }
-    );
-  };
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          var progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          setProgrss(progress);
+        },
+        (err) => {
+          ///////console.log(err);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
+            setUrl(downloadUrl);
+            setImagePreview(downloadUrl);
+          });
+        }
+      );
+    };
+
+    onFileUpload();
+  }, [file, setImagePreview]);
+
   const onFileChange = (e) => {
     e.preventDefault();
     setFile(e.target.files[0]);
   };
-
-  useEffect(() => {
-    onFileUpload();
-  }, [file]);
 
   return (
     <div className=" flex justify-start items-end gap-5 ">

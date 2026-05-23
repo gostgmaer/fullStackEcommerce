@@ -1,345 +1,246 @@
 "use client"
 import dayjs from 'dayjs';
 import React, { useEffect, useRef } from 'react';
-import ReactToPdf from 'react-to-pdf';
 import ReactToPrint from 'react-to-print';
-
 import Link from 'next/link';
-import { MdDelete } from 'react-icons/md';
+import { MdDelete, MdPrint, MdCheckCircle } from 'react-icons/md';
 import OrderServices from '@/helper/network/services/OrderServices';
 import { useSession } from 'next-auth/react';
 import { notifySuccess } from '@/utils/notify/notice';
 import { useRouter } from 'next/navigation';
 
 function OrderElement({ order }) {
-	const printRef = useRef();
-	const { data: session, status } = useSession();
-	const route = useRouter()
+  const printRef = useRef();
+  const { data: session } = useSession();
+  const route = useRouter();
 
+  const data = order?.results;
 
-	const data = order.results
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
-	// console.log(order);
+  if (!data) {
+    return (
+      <div className="min-h-screen bg-slate-50/50 dark:bg-slate-950 flex items-center justify-center py-12 transition-colors duration-200">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+          <span className="text-sm font-semibold text-slate-500 dark:text-slate-400">Loading order details...</span>
+        </div>
+      </div>
+    );
+  }
 
-	//console.log(data);
+  const cancelOrders = async (id) => {
+    const response = await OrderServices.cancelOrder({ id: id }, {
+      Authorization: `Bearer ${session["accessToken"]}`,
+    });
+    if (response.statusCode == "200") {
+      notifySuccess(response?.message);
+      setTimeout(() => {
+        route.push('/user/my-account/my-orders');
+      }, 3000);
+    }
+  };
 
-	var formatter = new Intl.NumberFormat('en-US', {
-		style: 'currency',
-		currency: 'USD',
-	});
-	useEffect(() => {
-		window.scrollTo(0, 0);
-	}, []);
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });
 
+  const getStatusBadge = (statusVal) => {
+    const normStatus = (statusVal || "").toLowerCase();
+    let bg = "bg-slate-50 text-slate-700 dark:bg-slate-800 dark:text-slate-350 border-slate-200/50 dark:border-slate-750";
+    if (["completed", "delivered", "payment-received", "success", "paid"].includes(normStatus)) {
+      bg = "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/20 dark:text-emerald-400 border-emerald-150/40 dark:border-emerald-900/30";
+    } else if (["pending", "processing", "shipped", "in-transit", "ready-for-pickup", "order-accepted", "awaiting-fulfillment"].includes(normStatus)) {
+      bg = "bg-amber-50 text-amber-700 dark:bg-amber-950/20 dark:text-amber-450 border-amber-150/40 dark:border-amber-900/30";
+    } else if (["canceled", "failed", "payment-failed", "order-declined"].includes(normStatus)) {
+      bg = "bg-rose-50 text-rose-700 dark:bg-rose-950/20 dark:text-rose-450 border-rose-150/40 dark:border-rose-900/30";
+    }
+    return (
+      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border ${bg} capitalize`}>
+        {statusVal || "Pending"}
+      </span>
+    );
+  };
 
-	const cancelOrders = async (id) => {
-		const response = await OrderServices.cancelOrder({ id: id }, {
-			Authorization: `Bearer ${session["accessToken"]}`,
-		})
-		if (response.statusCode == "200") {
-			notifySuccess(response?.message)
-			setTimeout(() => {
-				route.push('/user/my-account/my-orders')
-			}, 3000);
-		}
-	}
+  return (
+    <div className="min-h-screen bg-slate-50/50 dark:bg-slate-950 py-8 lg:py-12 transition-colors duration-200">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-10">
+        
+        {/* Success Alert Banner */}
+        <div className="bg-emerald-50 dark:bg-emerald-950/10 border border-emerald-150/50 dark:border-emerald-900/30 rounded-2xl mb-8 px-6 py-4 flex items-center gap-4">
+          <MdCheckCircle className="text-emerald-500 text-3xl flex-shrink-0 animate-bounce" />
+          <div className="text-sm text-emerald-800 dark:text-emerald-400">
+            <span className="font-extrabold text-base block mb-0.5">Order Received Successfully!</span>
+            Thank you <span className="font-bold">{data.firstName} {data.lastName}</span>. Your order has been placed and is currently being processed.
+          </div>
+        </div>
 
+        {/* Invoice Printable Card */}
+        <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80 rounded-2xl shadow-sm overflow-hidden" ref={printRef}>
+          
+          {/* Invoice Header */}
+          <div className="bg-slate-50/70 dark:bg-slate-950/40 border-b border-slate-100 dark:border-slate-850 p-8 sm:p-10">
+            <div className="flex flex-col sm:flex-row justify-between items-start gap-6 pb-6 border-b border-slate-100/70 dark:border-slate-850">
+              <div>
+                <h1 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white uppercase mb-2">Invoice</h1>
+                <p className="text-xs font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
+                  Order ID: <span className="text-slate-650 dark:text-slate-350">#{data._id}</span>
+                </p>
+              </div>
+              <div className="text-left sm:text-right">
+                <Link href="/" className="text-xl font-black text-primary hover:text-primary/90 transition-colors !no-underline mb-2 block">
+                  Storefront
+                </Link>
+                <p className="text-xs text-slate-450 dark:text-slate-400 leading-relaxed">
+                  Kazım Karabekir, No:5 Ümraniye,<br />İstanbul 34000
+                </p>
+              </div>
+            </div>
 
+            {/* Billing details grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6 text-sm">
+              <div className="flex flex-col">
+                <span className="font-bold text-xs uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">
+                  Date
+                </span>
+                <span className="font-semibold text-slate-700 dark:text-slate-300">
+                  {dayjs(data.createdDate || data.createdAt).format('MMMM DD, YYYY')}
+                </span>
+              </div>
+              <div className="flex flex-col">
+                <span className="font-bold text-xs uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">
+                  Invoice No.
+                </span>
+                <span className="font-mono font-bold text-slate-700 dark:text-slate-300">
+                  #{data.invoice || data._id?.substring(0, 8)}
+                </span>
+              </div>
+              <div className="flex flex-col sm:items-end sm:text-right">
+                <span className="font-bold text-xs uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">
+                  Invoice To
+                </span>
+                <span className="font-semibold text-slate-700 dark:text-slate-300">
+                  {data.firstName} {data.lastName}
+                </span>
+                <span className="text-xs text-slate-450 dark:text-slate-400 leading-relaxed mt-0.5">
+                  {data.streetAddress},<br />
+                  {data.city}, {data.country}, {data.zipPostal}
+                </span>
+              </div>
+            </div>
+          </div>
 
+          {/* Items Table */}
+          <div className="px-8 sm:px-10 py-6 overflow-x-auto">
+            <table className="w-full border-collapse text-left text-sm text-slate-700 dark:text-slate-300">
+              <thead>
+                <tr className="border-b border-slate-100 dark:border-slate-800 text-xs font-bold uppercase tracking-wider text-slate-455 dark:text-slate-500 bg-slate-50/50 dark:bg-slate-850">
+                  <th scope="col" className="px-4 py-3 rounded-l-lg">Sr.</th>
+                  <th scope="col" className="px-4 py-3">Product Name</th>
+                  <th scope="col" className="px-4 py-3 text-center">Quantity</th>
+                  <th scope="col" className="px-4 py-3 text-center">Item Price</th>
+                  <th scope="col" className="px-4 py-3 text-right rounded-r-lg">Amount</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-850">
+                {data.items?.map((item, index) => (
+                  <tr key={index} className="hover:bg-slate-50/30 dark:hover:bg-slate-800/10">
+                    <td className="px-4 py-4 font-medium text-slate-400 dark:text-slate-500">{index + 1}</td>
+                    <td className="px-4 py-4 font-bold text-slate-800 dark:text-slate-200">
+                      {item.product?.title || "Product Item"}
+                    </td>
+                    <td className="px-4 py-4 text-center font-semibold text-slate-900 dark:text-white">
+                      {item.quantity}
+                    </td>
+                    <td className="px-4 py-4 text-center font-semibold">
+                      {formatter.format(item.product?.price || 0)}
+                    </td>
+                    <td className="px-4 py-4 text-right font-extrabold text-slate-900 dark:text-white">
+                      {formatter.format((item.product?.price || 0) * item.quantity)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
-	return (
-		<div className="bg-gray-50">
-			<div className="max-w-screen-2xl mx-auto py-10 px-3 sm:px-6">
-				<div className="!bg-emerald-100 rounded-md mb-5 px-4 py-3">
-					<label>
-						Thank you{' '}
-						<span className="font-bold text-emerald-600">
-							{data.firstName} {data.lastName},
-						</span>{' '}
-						Your order have been received !
-					</label>
-				</div>
-				<div className="bg-white rounded-lg shadow-sm" ref={printRef}>
-					<div>
-						<div className="bg-indigo-50 p-8 rounded-t-xl">
-							<div className="flex lg:flex-row md:flex-col lg:items-center justify-between pb-4 border-b border-gray-50">
-								<h1 className="font-bold  text-2xl uppercase">Invoice</h1>
-								<div className="lg:text-right text-left">
-									<h2 className="text-lg font-semibold mt-4 lg:mt-0 md:mt-0 h-20">
-										<Link href="/">
-											<span
-												style={{
+          {/* Totals Summary */}
+          <div className="bg-slate-50/60 dark:bg-slate-950/40 border-t border-slate-100 dark:border-slate-850 p-8 sm:p-10">
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-6 text-sm">
+              <div className="flex flex-col">
+                <span className="font-bold text-xs uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">
+                  Payment Method
+                </span>
+                <span className="font-bold text-slate-850 dark:text-slate-250 capitalize">
+                  {data.payment_method || "COD"}
+                </span>
+              </div>
+              <div className="flex flex-col">
+                <span className="font-bold text-xs uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">
+                  Shipping Cost
+                </span>
+                <span className="font-semibold text-emerald-600 dark:text-emerald-400">
+                  Free
+                </span>
+              </div>
+              <div className="flex flex-col">
+                <span className="font-bold text-xs uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">
+                  Discount
+                </span>
+                <span className="font-semibold text-slate-600 dark:text-slate-400">
+                  $0.00
+                </span>
+              </div>
+              <div className="flex flex-col sm:items-end">
+                <span className="font-bold text-xs uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">
+                  Total Amount
+                </span>
+                <span className="text-2xl font-black text-primary">
+                  {formatter.format(data.total || 0)}
+                </span>
+              </div>
+            </div>
+          </div>
 
-													display: 'inline-block',
-													overflow: 'hidden',
-													width: 'initial',
-													height: 'initial',
-													background: 'none',
-													opacity: '1',
-													border: ' 0px',
-													margin: '0px',
-													padding: '0px',
-													position: 'relative',
-													maxWidth: '100%',
-												}}
-											>
-												<span
-													style={{
-														boxSizing: 'border-box',
-														display: 'block',
-														width: 'initial',
-														height: 'initial',
-														background: 'none',
-														opacity: '1',
-														border: '0px',
-														margin: '0px',
-														padding: '0px',
-														maxWidth: '100%',
-													}}
-												>
-													{/* <img
-														alt=""
-														aria-hidden="true"
-														src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%27100%27%20height=%27100%27/%3e"
-														style={{
-															display: 'block',
-															maxWidth: '100%',
-															width: 'initial',
-															height: 'initial',
-															background: 'none',
-															opacity: '1',
-															border: '0px',
-															margin: '0px',
-															padding: '0px',
-														}}
-													/> */}
-												</span>
-												{/* <img
-													alt="logo"
-													srcSet={`${Logo} 1x,${Logo} 2x`}
-													src={`${Logo}`}
-													decoding="async"
-													data-nimg="intrinsic"
-													className="rounded-lg "
-													style={{
-														position: 'absolute',
-														inset: '0px',
-														boxSizing: 'border-box',
-														padding: '0px',
-														border: 'none',
-														margin: 'auto',
-														display: 'block',
-														width: '0px',
-														height: '0px',
-														minWidth: '100%',
-														maxWidth: '100%',
-														minHeight: ' 100%',
-														maxHeight: '100%',
-													}}
-												/> */}
-											</span>
-										</Link>
-									</h2>
-									<p className="text-sm text-gray-500">
-										Kazım Karabekir, No:5 Ümraniye, <br /> İstanbul 34000{' '}
-									</p>
-								</div>
-							</div>
-							<div className="flex lg:flex-row md:flex-row flex-col justify-between pt-4">
-								<div className="mb-3 md:mb-0 lg:mb-0 flex flex-col">
-									<span className="font-bold  text-sm uppercase text-gray-600 block">
-										Date
-									</span>
-									<span className="text-sm text-gray-500 block">
-										<span>
-											{dayjs(data.createdDate).format('MMMM DD, YYYY')}
-										</span>
-									</span>
-								</div>
-								<div className="mb-3 md:mb-0 lg:mb-0 flex flex-col">
-									<span className="font-bold  text-sm uppercase text-gray-600 block">
-										Invoice No.
-									</span>
-									<span className="text-sm text-gray-500 block">
-										#{data.invoice}
-									</span>
-								</div>
-								<div className="flex flex-col lg:text-right text-left">
-									<span className="font-bold  text-sm uppercase text-gray-600 block">
-										Invoice To.
-									</span>
-									<span className="text-sm text-gray-500 block">
-										{data.firstName} {data.lastName}
-										<br />
-										{data.streetAddress}
-										<br />
-										{data.city}, {data.country}, {data.zipPostal}
-									</span>
-								</div>
-							</div>
-						</div>
-						<div>
-							<div className="overflow-hidden lg:overflow-visible px-8 my-10">
-								<div className="-my-2 overflow-x-auto">
-									<table className="table-auto min-w-full border border-gray-100 divide-y divide-gray-200">
-										<thead className="bg-gray-50">
-											<tr className="text-xs bg-gray-100">
-												<th
-													scope="col"
-													className=" font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider text-left"
-												>
-													Sr.
-												</th>
-												<th
-													scope="col"
-													className=" font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider text-left"
-												>
-													Product Name
-												</th>
-												<th
-													scope="col"
-													className=" font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider text-center"
-												>
-													Quantity
-												</th>
-												<th
-													scope="col"
-													className=" font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider text-center"
-												>
-													Item Price
-												</th>
-												<th
-													scope="col"
-													className=" font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider text-right"
-												>
-													Amount
-												</th>
-											</tr>
-										</thead>
-										<tbody className="bg-white divide-y divide-gray-100 text-serif text-sm">
-											{data.items.map((item, index) => (
-												<tr key={index}>
-													<th className="px-6 py-1 whitespace-nowrap font-normal text-gray-500 text-left">
-														{index + 1}
-													</th>
-													<td className="px-6 py-1 whitespace-nowrap font-normal text-gray-500">
-														{item.product.title}
-													</td>
-													<td className="px-6 py-1 whitespace-nowrap font-bold text-center">
-														{item.quantity}
-													</td>
-													<td className="px-6 py-1 whitespace-nowrap font-bold text-center font-DejaVu">
-														{formatter.format(item.product.price)}
-													</td>
-													<td className="px-6 py-1 whitespace-nowrap text-right font-bold font-DejaVu k-grid text-red-500">
-														{formatter.format(item.product.price * item.quantity)}
-													</td>
-												</tr>
-											))}
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-						<div className="border-t border-b border-gray-100 p-10 bg-emerald-50">
-							<div className="flex lg:flex-row md:flex-row flex-col justify-between pt-4">
-								<div className="mb-3 md:mb-0 lg:mb-0 flex flex-col sm:flex-wrap">
-									<span className="mb-1 font-bold  text-sm uppercase text-gray-600 block">
-										Payment Method
-									</span>
-									<span className="text-sm text-gray-500 font-semibold  block">
-										{data.payment_method}
-									</span>
-								</div>
-								<div className="mb-3 md:mb-0 lg:mb-0 flex flex-col sm:flex-wrap">
-									<span className="mb-1 font-bold  text-sm uppercase text-gray-600 block">
-										Shipping Cost
-									</span>
-									{/* <span className="text-sm text-gray-500 font-semibold block">
-										{data.shippingOption === 'FedEx'
-											? formatter.format(60)
-											: formatter.format(20)}
-									</span> */}
-								</div>
-								<div className="mb-3 md:mb-0 lg:mb-0 flex flex-col sm:flex-wrap">
-									<span className="mb-1 font-bold  text-sm uppercase text-gray-600 block">
-										Discount
-									</span>
-									<span className="text-sm text-gray-500 font-semibold block">
-										$0.00
-									</span>
-								</div>
-								<div className="flex flex-col sm:flex-wrap">
-									<span className="mb-1 font-bold text-sm uppercase text-gray-600 block">
-										Total Amount
-									</span>
-									<span className="text-2xl  font-bold text-red-500 block">
-										{formatter.format(data.total)}
-									</span>
-								</div>
-							</div>
-						</div>
-					</div>
-					
-				</div>
-				<div className="bg-white p-8 rounded-b-xl">
-						<div className="flex lg:flex-row md:flex-row sm:flex-row flex-col justify-between">
-							<ReactToPrint
-								trigger={() => (
-									<button className="mb-3 sm:mb-0 md:mb-0 lg:mb-0 flex items-center justify-center bg-emerald-500 hover:bg-emerald-600 text-white transition-all font-serif text-sm font-semibold h-10 py-2 px-5 rounded-md">
-										Print Invoice{' '}
-										<span className="ml-2">
-											<svg
-												stroke="currentColor"
-												fill="currentColor"
-												strokeWidth="0"
-												viewBox="0 0 512 512"
-												height="1em"
-												width="1em"
-												xmlns="http://www.w3.org/2000/svg"
-											>
-												<path
-													fill="none"
-													strokeLinejoin="round"
-													strokeWidth="32"
-													d="M384 368h24a40.12 40.12 0 0040-40V168a40.12 40.12 0 00-40-40H104a40.12 40.12 0 00-40 40v160a40.12 40.12 0 0040 40h24"
-												></path>
-												<rect
-													width="256"
-													height="208"
-													x="128"
-													y="240"
-													fill="none"
-													strokeLinejoin="round"
-													strokeWidth="32"
-													rx="24.32"
-													ry="24.32"
-												></rect>
-												<path
-													fill="none"
-													strokeLinejoin="round"
-													strokeWidth="32"
-													d="M384 128v-24a40.12 40.12 0 00-40-40H168a40.12 40.12 0 00-40 40v24"
-												></path>
-												<circle cx="392" cy="184" r="24"></circle>
-											</svg>
-										</span>
-									</button>
-								)}
-								content={() => printRef.current} />
-							<div className='flex lg:flex-row md:flex-row sm:flex-row flex-col justify-between'>
+        </div>
 
-								<button onClick={() => cancelOrders(data?._id)} className='mb-3 sm:mb-0 md:mb-0 lg:mb-0 flex items-center justify-center bg-emerald-500 hover:bg-emerald-600 text-white transition-all font-serif text-sm font-semibold h-10 py-2 px-5 rounded-md'>
-									<MdDelete /> Cancel order
-								</button>
+        {/* Action Buttons Toolbar */}
+        <div className="flex flex-col sm:flex-row justify-between gap-4 mt-8 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-6 rounded-2xl shadow-sm">
+          <ReactToPrint
+            trigger={() => (
+              <button className="inline-flex items-center justify-center gap-2 text-sm font-bold h-11 px-6 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl transition-all active:scale-[0.98] shadow-sm cursor-pointer">
+                <MdPrint className="text-lg" />
+                <span>Print Invoice</span>
+              </button>
+            )}
+            content={() => printRef.current}
+          />
+          
+          <div className="flex items-center gap-4">
+            {data.status?.toLowerCase() === 'pending' && (
+              <button 
+                onClick={() => cancelOrders(data._id)} 
+                className="inline-flex items-center justify-center gap-2 text-sm font-bold h-11 px-6 bg-rose-50 dark:bg-rose-950/20 hover:bg-rose-100 dark:hover:bg-rose-900/30 text-rose-600 dark:text-rose-400 rounded-xl transition-all active:scale-[0.98] border border-rose-100 dark:border-rose-900/30 cursor-pointer"
+              >
+                <MdDelete className="text-lg" />
+                <span>Cancel Order</span>
+              </button>
+            )}
+            <Link
+              href="/user/my-account/my-orders"
+              className="inline-flex items-center justify-center text-sm font-bold h-11 px-6 bg-primary hover:bg-primary/95 text-white rounded-xl shadow-sm transition-all duration-200 active:scale-[0.98] !no-underline cursor-pointer"
+            >
+              Back to Orders
+            </Link>
+          </div>
+        </div>
 
-
-							</div>
-						</div>
-					</div>
-			</div>
-		</div>
-	);
+      </div>
+    </div>
+  );
 }
 
 export default OrderElement;

@@ -19,7 +19,7 @@ const profileSchema = z.object({
 });
 
 const UpdateProfile = ({ user }) => {
-	const [selectedImage, setSelectedImage] = useState(user["profilePicture"]);
+	const [selectedImage, setSelectedImage] = useState(user?.profilePicture || user?.image || "");
 	const { data: session } = useSession();
 
 	const {

@@ -1,21 +1,17 @@
-import { Drawer, ButtonToolbar, Button, Placeholder } from 'rsuite';
-//internal import
+"use client";
 
 import React, { useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import SideDrawer from "../drawer/drawar";
-import { IoAddOutline, IoCart, IoCartSharp, IoClose, IoRemoveOutline } from 'react-icons/io5';
-import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
-import { decreaseCart, getTotals, incrementCart, removeFromCart } from '@/store/reducers/cartSlice';
-import { MdDelete } from 'react-icons/md';
 import Image from 'next/image';
-const CartDrawer = ({setOpen}) => {
+import { IoAddOutline, IoCart, IoClose, IoRemoveOutline } from 'react-icons/io5';
+import { MdDelete } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux';
+import { decreaseCart, getTotals, incrementCart, removeFromCart } from '@/store/reducers/cartSlice';
 
-
-
+const CartDrawer = ({ setOpen }) => {
   const cart = useSelector((state) => state["cart"]);
-  const { cartTotalAmount } = useSelector((state) => state["cart"])
+  const { cartTotalAmount } = useSelector((state) => state["cart"]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,118 +19,158 @@ const CartDrawer = ({setOpen}) => {
   }, [cart, dispatch]);
 
   return (
-    <>
-      <div className="drawer-mask"></div>
-      <div className="flex flex-col w-full h-full justify-between items-middle bg-white rounded ">
-        <div className="w-full flex justify-between items-center relative px-5 py-4 border-b bg-indigo-50 border-gray-100">
-          <h2 className="font-semibold  text-gray-800 text-lg m-0 text-heading flex items-center">
-            <span className="text-xl mr-2 ">
-              <IoCartSharp />
-            </span>
+    <div className="flex flex-col w-full h-full bg-background dark:bg-slate-900">
+
+      {/* Header */}
+      <div className="flex items-center justify-between px-5 py-4 border-b border-border/60 bg-muted/30 dark:bg-slate-800/40 flex-shrink-0">
+        <div className="flex items-center space-x-2">
+          <div className="p-1.5 rounded-lg bg-primary/10 text-primary">
+            <IoCart className="w-5 h-5" />
+          </div>
+          <h2 className="font-bold text-base text-foreground tracking-tight">
             Shopping Cart
           </h2>
-          <button
-            onClick={() => setOpen(false)}
-            className="inline-flex text-base items-center justify-center text-gray-500 p-2 focus:outline-none transition-opacity group"
-          >
-            <IoClose />
-            <span className="font-sens text-sm text-gray-500 group-hover:text-red-400 ml-1">
-              Close
+          {cart.cartItems.length > 0 && (
+            <span className="inline-flex items-center justify-center h-5 min-w-[20px] px-1.5 text-xs font-bold text-white bg-primary rounded-full">
+              {cart.cartItems.length}
             </span>
-          </button>
+          )}
         </div>
-        <div className="overflow-y-auto flex-grow scrollbar-hide w-full max-h-full">
-          { }
+        <button
+          onClick={() => setOpen(false)}
+          aria-label="Close cart"
+          className="flex items-center justify-center w-8 h-8 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 dark:hover:bg-slate-700 transition-colors"
+        >
+          <IoClose className="w-5 h-5" />
+        </button>
+      </div>
 
-          {cart.cartItems.length === 0 ? (
-            <div className="flex flex-col h-full justify-center">
-              <div className="flex flex-col items-center">
-                <div className="flex justify-center items-center w-20 h-20 rounded-full bg-emerald-100">
-                  <span className="text-emerald-600 text-4xl block">
-                   <IoCart/>
-                  </span>
-                </div>
-                <h3 className="font-semibold text-gray-700 text-lg pt-5">
-                  Your cart is empty
-                </h3>
-                <p className="px-12 text-center text-sm text-gray-500 pt-2">
-                  No items added in your cart. Please add product to your cart
-                  list.
-                </p>
-              </div>
+      {/* Items */}
+      <div className="overflow-y-auto flex-grow scrollbar-hide">
+        {cart.cartItems.length === 0 ? (
+          /* Empty State */
+          <div className="flex flex-col items-center justify-center h-full px-8 py-16 animate-fade-in">
+            <div className="flex items-center justify-center w-20 h-20 rounded-full bg-muted dark:bg-slate-800 mb-5">
+              <IoCart className="w-9 h-9 text-muted-foreground" />
             </div>
-          ) : (
-            cart.cartItems.map((data, index) => (
+            <h3 className="font-bold text-foreground text-lg mb-1.5">
+              Your cart is empty
+            </h3>
+            <p className="text-center text-sm text-muted-foreground leading-relaxed mb-6 max-w-[200px]">
+              Add items to your cart to get started.
+            </p>
+            <button
+              onClick={() => setOpen(false)}
+              className="px-5 py-2.5 bg-primary text-primary-foreground text-sm font-semibold rounded-lg hover:bg-primary/90 transition-colors"
+            >
+              Browse Products
+            </button>
+          </div>
+        ) : (
+          <div className="divide-y divide-border/60">
+            {cart.cartItems.map((data, index) => (
               <div
                 key={index}
-                className="group w-full h-auto flex justify-start  items-center bg-white py-3 px-4 border-b hover:bg-gray-50 transition-all border-gray-100 relative last:border-b-0"
+                className="group flex items-center gap-3 px-4 py-3.5 hover:bg-muted/30 dark:hover:bg-slate-800/40 transition-colors"
               >
-                <div className="relative flex rounded-full border border-gray-100 shadow-sm overflow-hidden flex-shrink-0 cursor-pointer mr-4">
+                {/* Product Image */}
+                <div className="relative flex-shrink-0 w-14 h-14 rounded-xl overflow-hidden border border-border/60 bg-muted/30">
                   <Image
                     src={data.image[0]}
-                    width={40}
-                    height={40}
+                    fill
+                    sizes="56px"
                     alt={data.title}
+                    className="object-cover"
                   />
                 </div>
-                <div className="flex flex-col w-full overflow-hidden">
+
+                {/* Product Info */}
+                <div className="flex-1 min-w-0">
                   <Link
-                    className="truncate text-sm font-medium !no-underline !text-gray-700 text-heading line-clamp-1"
                     href={`/product/${data.slug}`}
+                    onClick={() => setOpen(false)}
+                    className="block text-sm font-semibold text-foreground hover:text-primary transition-colors truncate leading-snug mb-0.5"
                   >
                     {data.title}
                   </Link>
-                  <span className="text-xs text-gray-400 mb-1">
-                    Item Price ${data.price.toFixed(2)}
-                  </span>
-                  <div className="flex items-center justify-between">
-                    <div className="font-bold text-sm md:text-base text-heading leading-5">
-                      <span>${(data.price * data.cartQuantity).toFixed(2)}</span>
-                    </div>
-                    <div className="h-8 w-22 md:w-24 lg:w-24 flex flex-wrap items-center justify-evenly p-1 border border-gray-100 bg-white text-gray-600 rounded-md">
-                      <button onClick={() => dispatch(decreaseCart(data))} aria-label="Decrease quantity">
-                        <span className="text-dark text-base">
-                          <IoRemoveOutline />
-                        </span>
+                  <p className="text-xs text-muted-foreground mb-2">
+                    ${data.price.toFixed(2)} each
+                  </p>
+
+                  {/* Quantity + Price row */}
+                  <div className="flex items-center justify-between gap-2">
+                    {/* Quantity stepper */}
+                    <div className="flex items-center gap-1 bg-muted/60 dark:bg-slate-800 border border-border/60 rounded-lg px-1 h-7">
+                      <button
+                        onClick={() => dispatch(decreaseCart(data))}
+                        aria-label="Decrease quantity"
+                        className="w-5 h-5 flex items-center justify-center rounded hover:bg-muted dark:hover:bg-slate-700 text-foreground transition-colors"
+                      >
+                        <IoRemoveOutline className="w-3.5 h-3.5" />
                       </button>
-                      <p className="text-sm font-semibold text-dark px-1">
+                      <span className="text-xs font-bold text-foreground min-w-[16px] text-center px-0.5">
                         {data.cartQuantity}
-                      </p>
-                      <button onClick={() => dispatch(incrementCart(data))} aria-label="Increase quantity">
-                        <span className="text-dark text-base">
-                          <IoAddOutline />
-                        </span>
+                      </span>
+                      <button
+                        onClick={() => dispatch(incrementCart(data))}
+                        aria-label="Increase quantity"
+                        className="w-5 h-5 flex items-center justify-center rounded hover:bg-muted dark:hover:bg-slate-700 text-foreground transition-colors"
+                      >
+                        <IoAddOutline className="w-3.5 h-3.5" />
                       </button>
                     </div>
-                    <button onClick={() => dispatch(removeFromCart(data))} aria-label="Remove item" className="hover:text-red-600 text-red-400 text-lg cursor-pointer">
-                      <MdDelete />
+
+                    {/* Line total */}
+                    <span className="text-sm font-bold text-foreground">
+                      ${(data.price * data.cartQuantity).toFixed(2)}
+                    </span>
+
+                    {/* Remove */}
+                    <button
+                      onClick={() => dispatch(removeFromCart(data))}
+                      aria-label={`Remove ${data.title}`}
+                      className="p-1 text-slate-400 hover:text-red-500 dark:text-slate-500 dark:hover:text-red-400 transition-colors rounded"
+                    >
+                      <MdDelete className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
               </div>
-            ))
-          )}
-        </div>
-
-       { cart.cartItems.length&& <div className="mx-5 my-3">
-          <span>
-            <Link
-              href={cart.cartItems.length === 0 ? "/" : "/checkout"}
-              onClick={() => setOpen(false)}
-              className=" w-full py-3 px-3 rounded-lg !text-white !no-underline !bg-emerald-500 hover:!bg-emerald-600 flex items-center justify-between bg-heading text-sm sm:text-base  focus:outline-none transition duration-300"
-            >
-              <span className="align-middle font-medium ">
-                Proceed To Checkout
-              </span>
-              <span className="rounded-lg font-bold  py-2 px-3 bg-white text-emerald-600">
-                ${cartTotalAmount}
-              </span>
-            </Link>
-          </span>
-        </div>}
+            ))}
+          </div>
+        )}
       </div>
 
-    </>
+      {/* Footer — Checkout CTA */}
+      {cart.cartItems.length > 0 && (
+        <div className="flex-shrink-0 p-4 border-t border-border/60 bg-background dark:bg-slate-900 space-y-3 animate-fade-in">
+          {/* Subtotal */}
+          <div className="flex items-center justify-between text-sm">
+            <span className="text-muted-foreground font-medium">Subtotal</span>
+            <span className="font-bold text-foreground text-base">
+              ${Number(cartTotalAmount).toFixed(2)}
+            </span>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Taxes and shipping calculated at checkout.
+          </p>
+          <Link
+            href="/checkout"
+            onClick={() => setOpen(false)}
+            className="flex items-center justify-center w-full py-3 px-4 bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-xl text-sm transition-all duration-200 active:scale-[0.98] shadow-sm"
+          >
+            Proceed to Checkout →
+          </Link>
+          <button
+            onClick={() => setOpen(false)}
+            className="w-full py-2.5 text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Continue Shopping
+          </button>
+        </div>
+      )}
+    </div>
   );
 };
+
 export default dynamic(() => Promise.resolve(CartDrawer), { ssr: false });
