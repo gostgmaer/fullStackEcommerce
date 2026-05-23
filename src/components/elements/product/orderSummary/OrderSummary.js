@@ -161,7 +161,7 @@ function OrderSummary({ code, setCode }) {
 					<div className="flex items-center text-sm w-full font-medium text-muted-foreground">
 						Subtotal
 						<span className="ml-auto text-foreground font-bold">
-							${cartTotalAmount.toFixed(2)}
+							${Number(cartTotalAmount || 0).toFixed(2)}
 						</span>
 					</div>
 					<div className="flex items-center text-sm w-full font-medium text-muted-foreground">
@@ -182,7 +182,7 @@ function OrderSummary({ code, setCode }) {
 					<div className="flex items-center font-bold justify-between text-sm uppercase">
 						Total Cost
 						<span className="font-extrabold text-lg text-foreground">
-							${discount ? discount.toFixed(2) : cartTotalAmount.toFixed(2)}
+							${discount ? Number(discount).toFixed(2) : Number(cartTotalAmount || 0).toFixed(2)}
 						</span>
 					</div>
 				</div>

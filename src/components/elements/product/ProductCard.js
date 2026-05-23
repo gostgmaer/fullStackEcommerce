@@ -3,29 +3,16 @@ import Discount from "@/components/global/common/Discount";
 import Price from "@/components/global/common/Price";
 import Stock from "@/components/global/common/Stock";
 import ProductModal from "@/components/global/modal/ProductModal";
-
-// import { useDispatch, useSelector } from "react-redux";
-// import {
-//   addToCart,
-//   addToWishlist,
-//   removeFromWishlist,
-// } from "@/store/cartReducer";
-// import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useState } from "react";
-import { IoAdd, IoBagAddSharp, IoRemove } from "react-icons/io5";
-import { MdFavorite } from "react-icons/md";
 import AddToCard from "./Cart";
 import WishlistCard from "./wishList";
-
-// import { useSession } from "next-auth/react";
-// import { useRouter } from "next/router";
 
 const ProductCard = ({ product, attributes }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
-  const handleModalOpen = (event, id) => {
-    setModalOpen(event);
+  const handleModalOpen = (value) => {
+    setModalOpen(value);
   };
 
   return (
@@ -49,7 +36,7 @@ const ProductCard = ({ product, attributes }) => {
 
           {product?.image?.[0] ? (
             <div className="relative w-full h-40 flex justify-center items-center px-4 mt-2">
-              <div className="relative w-full h-full cursor-pointer" onClick={() => handleModalOpen(!modalOpen, product)}>
+              <div className="relative w-full h-full cursor-pointer" onClick={() => handleModalOpen(!modalOpen)}>
                 <Image
                   src={product?.image?.[0]}
                   alt={product?.title}
@@ -62,7 +49,7 @@ const ProductCard = ({ product, attributes }) => {
             </div>
           ) : (
             <div className="relative w-full h-40 flex justify-center items-center px-4 mt-2">
-              <div className="relative w-full h-full cursor-pointer" onClick={() => handleModalOpen(!modalOpen, product)}>
+              <div className="relative w-full h-full cursor-pointer" onClick={() => handleModalOpen(!modalOpen)}>
                 <Image
                   src="https://res.cloudinary.com/ahossain/image/upload/v1655097002/placeholder_kvepfp.png"
                   alt="Placeholder"
@@ -83,7 +70,7 @@ const ProductCard = ({ product, attributes }) => {
               {product?.unit}
             </span>
             <h2 
-              onClick={() => handleModalOpen(!modalOpen, product)}
+              onClick={() => handleModalOpen(!modalOpen)}
               className="text-sm font-bold tracking-tight text-slate-850 dark:text-slate-100 hover:text-primary transition-colors cursor-pointer line-clamp-2 min-h-[40px] leading-tight"
             >
               {product?.title}

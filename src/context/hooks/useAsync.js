@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 
 const useAsync = (asyncFunction) => {
@@ -20,18 +21,11 @@ const useAsync = (asyncFunction) => {
           setLoading(false);
         }
       } catch (err) {
-        setErrCode(err?.response?.status);
         if (!unmounted) {
+          setErrCode(err?.response?.status);
           setError(err.message);
-          if (axios.isCancel(err)) {
-            setError(err.message);
-            setLoading(false);
-            setData({});
-          } else {
-            setError(err.message);
-            setLoading(false);
-            setData({});
-          }
+          setLoading(false);
+          setData({});
         }
       }
     })();

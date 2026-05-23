@@ -1,10 +1,9 @@
 "use client";
-import { patch } from "@/helper/network";
 import { notifyerror, notifySuccess } from "@/utils/notify/notice";
 import { resetPasswordValidation } from "@/utils/validation/validation";
 import { useFormik } from "formik";
 import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React from "react";
 import Input from "../../fields/input";
 import CustomerServices from "@/helper/network/services/CustomerServices";
 
@@ -38,16 +37,9 @@ const ResetForm = ({ props }) => {
       confirmPassword: "",
     },
     validationSchema: resetPasswordValidation,
-    onSubmit: async (values, { setSubmitting, resetForm, setValues }) => {
+    onSubmit: async (values, { setSubmitting, resetForm }) => {
       setSubmitting(true);
       const res = await handleSubmit(values);
-
-      const messages = {
-        start: "Starting API call...",
-        inProgress: "API call in progress...",
-        success: "API call successful!",
-        failure: "API call failed",
-      };
 
       if (res["statusCode"] === 200) {
         notifySuccess("Reset Successfully! Please Login with New Password");
@@ -83,7 +75,7 @@ const ResetForm = ({ props }) => {
         </div>
         <div className="col-span-full">
           <Input
-            label={"Confirm Pssword"}
+            label={"Confirm Password"}
             type={"password"}
             additionalAttrs={{
               ...formik.getFieldProps("confirmPassword"),
@@ -102,7 +94,7 @@ const ResetForm = ({ props }) => {
         </div>
 
         <button
-          className=" disabled:text-gray-400 disabled:bg-gray-300 col-span-2 inline-flex font-medium items-center bg-gray-700 hover:enabled::bg-gray-800 active:enabled:bg-gray-1000 focus-visible:ring-gray-900/30 text-gray-0  text-white justify-center active:enabled:translate-y-px focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-50 transition-colors duration-200 px-5 py-2 text-base h-12 rounded-md border border-transparent focus-visible:ring-offset-2 bg-blue hover:enabled:bg-gray-900 focus-visible:ring-blue/30  w-full"
+          className="col-span-2 inline-flex font-bold items-center justify-center bg-primary hover:bg-primary/90 text-primary-foreground transition-colors duration-200 px-5 py-2 text-base h-12 rounded-lg border border-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 disabled:opacity-50 w-full"
           type="submit"
           disabled={!formik.isValid || formik.isSubmitting}
         >

@@ -1,40 +1,9 @@
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState } from "react";
 import Link from "next/link";
-import { Transition, Popover } from "@headlessui/react";
-// import SettingServices from "@services/SettingServices";
-// import useTranslation from "next-translate/useTranslation";
-
-import { FiChevronDown, FiChevronUp } from "react-icons/fi";
+import { Popover } from "@headlessui/react";
 import { content } from "@/assets/jsonfile/content";
-import { useRouter } from "next/navigation";
-//internal import
-// import { pages } from "@utils/data";
-// import Category from "@component/category/Category";
-// import { notifyError } from "@utils/toast";
 
 const NavbarPromo = () => {
-  // const { t } = useTranslation();
-
-  const router = useRouter();
-  // const { locale } = router;
-  const [data, setData] = useState([]);
-  const [currentLang, setCurrentLang] = useState({});
-
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const res = await SettingServices.getAllLanguages();
-  //       setData(res);
-
-  //       const result = res?.find((lang) => lang?.iso_code === locale);
-  //       setCurrentLang(result);
-  //     } catch (err) {
-  //       notifyError(err);
-  //       // /////console.log("error on getting lang", err);
-  //     }
-  //   })();
-  // }, []);
-
   return (
     <>
       <div className="hidden lg:block bg-card text-foreground border-b border-border/40 transition-colors duration-200">
@@ -65,7 +34,7 @@ const NavbarPromo = () => {
                     >
                       {content.FAQ}
                     </Link>
-                    
+
                     <Link
                       href="/offer"
                       className="relative inline-flex items-center h-6 bg-red-100 dark:bg-red-950/40 ml-2 py-0 px-2.5 rounded-full text-xs font-semibold text-red-500 dark:text-red-400 hover:text-red-600 transition-colors"
@@ -102,4 +71,3 @@ const NavbarPromo = () => {
 };
 
 export default NavbarPromo;
-

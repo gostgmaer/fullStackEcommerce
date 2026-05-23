@@ -24,15 +24,13 @@ export const AuthContextProvider = ({ children }) => {
 
 
     if (session) {
-      var currentsession = session;
+      const currentsession = session;
       if (session["accessToken"]) {
         const token = session["accessToken"].split(".");
         setToken("headerPayload", `${token[0]}.${token[1]}`, session["exp"]);
-        setToken("signature", `${token[2]}`, session.user["exp"]);
+        setToken("signature", `${token[2]}`, session.user?.["exp"]);
       }
-      // delete currentsession["user"];
-      // delete currentsession["accessToken"];
-      storeCookiesOfObject(currentsession)
+      storeCookiesOfObject(currentsession);
     }
 
     if (!session) {
@@ -149,13 +147,30 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
-  // React.useEffect(() => {
-  //   unsubscribe();
-  // }, []);
-
   useEffect(() => {
-    const tokenRefreshInterval = setInterval(getToken, 10 * 60 * 1000);
+    const getTokenFresh = async () => {
+      try {
+        const refreshToken = Cookies.get("refreshToken");
+        if (refreshToken) {
+          const res = await post("/user/auth/session/refresh/token", {
+            token: refreshToken,
+          });
+          const decoded = jwtDecode(res.access_token);
+          setToken(
+            "accessToken",
+            res.access_token,
+            decoded["exp"],
+            "ACCESS_TOKEN"
+          );
+          setUserId(decoded);
+        }
+      } catch {
+        setUser(undefined);
+        setUserId(undefined);
+      }
+    };
 
+    const tokenRefreshInterval = setInterval(getTokenFresh, 10 * 60 * 1000);
     return () => clearInterval(tokenRefreshInterval);
   }, []);
 

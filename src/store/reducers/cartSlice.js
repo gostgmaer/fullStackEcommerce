@@ -1,4 +1,4 @@
-"use client"
+
 import CartServices from "@/helper/network/services/cartService";
 import { notifyerror, notifyinfo, notifySuccess, notifywarning } from "@/utils/notify/notice";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
@@ -69,43 +69,27 @@ export const CartSlice = createSlice({
     },
 
     removeFromCart(state, action) {
-      state.cartItems.map((cartItem) => {
-        if (cartItem.id === action.payload.id) {
-          const nextCartItems = state.cartItems.filter(
-            (item) => item.id !== cartItem.id
-          );
-
-          state.cartItems = nextCartItems;
-        }
-       
-        notifyerror("Product Remove Success!")
-        return state;
-      });
+      const prevLength = state.cartItems.length;
+      state.cartItems = state.cartItems.filter(
+        (item) => item.id !== action.payload.id
+      );
+      if (state.cartItems.length < prevLength) {
+        notifyerror("Product removed from cart!");
+      }
     },
     decreaseCart(state, action) {
       const itemIndex = state.cartItems.findIndex(
         (item) => item.id === action.payload.id
       );
 
+      if (itemIndex < 0) return;
+
       if (state.cartItems[itemIndex].cartQuantity > 1) {
         state.cartItems[itemIndex].cartQuantity -= 1;
-        localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
-      } else{
-        state.cartItems.map((cartItem) => {
-          if (cartItem.id === action.payload.id) {
-            const nextCartItems = state.cartItems.filter(
-              (item) => item.id !== cartItem.id
-            );
-  
-            state.cartItems = nextCartItems;
-          }
-        //  localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
-     
-          return state;
-        });
+      } else {
+        state.cartItems.splice(itemIndex, 1);
       }
-      notifywarning("Cart Quantity reduce!")
-     
+      notifywarning("Cart quantity reduced!");
     },
     incrementCart(state, action) {
       const product = state.cartItems.findIndex(
@@ -180,7 +164,8 @@ export const CartSlice = createSlice({
       .addCase(saveCartToBackend.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload;
-        console.error('Error saving cart:', action.payload);
+        // eslint-disable-next-line no-console
+        if (process.env.NODE_ENV === 'development') console.error('Cart save failed:', action.payload);
       });
   },
 });

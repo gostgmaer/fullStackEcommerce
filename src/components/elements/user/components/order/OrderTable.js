@@ -1,12 +1,11 @@
 "use client";
-import { statusColors } from "@/assets/data/static";
 import CurrentTable from "@/components/global/fields/component/Table";
 import OrderServices from "@/helper/network/services/OrderServices";
 import dayjs from "dayjs";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { FaEye, FaPen } from "react-icons/fa";
+import { FaEye } from "react-icons/fa";
 import { Placeholder } from "rsuite";
 
 const OrderTable = ({ title }) => {

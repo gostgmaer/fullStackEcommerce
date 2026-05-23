@@ -34,18 +34,9 @@ const Contact = () => {
             isAgreed: "false",
         },
         validationSchema: contactUsValidation,
-        onSubmit: async (values, { setSubmitting, resetForm, setValues }) => {
-            setSubmitting(true)
-            const res = await handleSubmit(values)
-
-            const messages = {
-                start: "Starting API call...",
-                inProgress: "API call in progress...",
-                success: "API call successful!",
-                failure: "API call failed",
-            };
-
-            // const    res = await useApiWithToaster(handleSubmit,values,messages)
+        onSubmit: async (values, { setSubmitting, resetForm }) => {
+            setSubmitting(true);
+            const res = await handleSubmit(values);
 
             if (res.statusCode === 201) {
 
@@ -64,8 +55,8 @@ const Contact = () => {
     return (
         <>
             <form onSubmit={formik.handleSubmit}>
-                <div className="flex flex-col gap-x-4 gap-y-5 md:grid md:grid-cols-2 lg:gap-5 text-black">
-                    <div className=" col-span-full text-black ">
+                <div className="flex flex-col gap-x-4 gap-y-5 md:grid md:grid-cols-2 lg:gap-5">
+                <div className="col-span-full">
 
                         <Label type={"h2"} className='text-lg font-semibold'>For any suppoort just send your query</Label>
                         <Label type={"p"} className='text-sm'>Collaboratively promote client-focused convergence vis-a-vis customer-directed alignments via plagiarized strategic users and standardized infrastructures.</Label>
@@ -139,7 +130,7 @@ const Contact = () => {
                     </div>
                   
                     <button
-                        className=" disabled:text-gray-400 disabled:bg-gray-300 col-span-2 inline-flex font-medium items-center bg-gray-700 hover:enabled::bg-gray-800 active:enabled:bg-gray-1000 focus-visible:ring-gray-900/30 text-gray-0  text-white justify-center active:enabled:translate-y-px focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-50 transition-colors duration-200 px-5 py-2 text-base h-12 rounded-md border border-transparent focus-visible:ring-offset-2 bg-blue hover:enabled:bg-gray-900 focus-visible:ring-blue/30  w-full"
+                        className="col-span-2 inline-flex font-bold items-center justify-center bg-primary hover:bg-primary/90 text-primary-foreground transition-colors duration-200 px-5 py-2 text-base h-12 rounded-lg border border-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 disabled:opacity-50 w-full"
                         type="submit"
                         disabled={!formik.isValid || formik.isSubmitting}
                     >

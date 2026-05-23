@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { attributes } from '@/assets/fakeData/Products';
+
 import ProductCard from '@/components/elements/product/ProductCard';
 import Informations from '@/components/global/common/informations/Informations';
 import SocialNetwork from '@/components/global/common/SocialNetwork';
@@ -68,10 +68,10 @@ const SingleProduct = ({ props }) => {
                   )}
                   <Image
                     fill
-                    alt={product.title}
-                    src={product?.image[0]}
+                    alt={product?.title || 'Product image'}
+                    src={product?.image?.[0] || 'https://res.cloudinary.com/ahossain/image/upload/v1655097002/placeholder_kvepfp.png'}
                     className="object-contain rounded-lg filter dark:brightness-95 transition-all"
-                    sizes="(max-w-768px) 100vw, 450px"
+                    sizes="(max-width: 768px) 100vw, 450px"
                     priority
                   />
                 </div>
@@ -91,9 +91,9 @@ const SingleProduct = ({ props }) => {
                     </div>
 
                     <div className="flex items-baseline space-x-2">
-                      <span className="text-3xl font-extrabold text-foreground">${product.price.toFixed(2)}</span>
-                      {product.retailPrice !== product.price && (
-                        <del className="text-lg font-normal text-muted-foreground/60">${product.retailPrice.toFixed(2)}</del>
+                      <span className="text-3xl font-extrabold text-foreground">${Number(product?.prices?.price || 0).toFixed(2)}</span>
+                      {product?.prices?.originalPrice && product.prices.originalPrice !== product.prices.price && (
+                        <del className="text-lg font-normal text-muted-foreground/60">${Number(product.prices.originalPrice).toFixed(2)}</del>
                       )}
                     </div>
 
@@ -180,8 +180,8 @@ const SingleProduct = ({ props }) => {
           <div className="pt-12 lg:pt-16 pb-12">
             <h3 className="text-lg lg:text-xl font-bold mb-6 hover:text-primary transition-colors duration-200">Related Products</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6 gap-3 md:gap-4">
-              {related?.results.map((data, index) => (
-                <ProductCard key={index} product={data} attributes={attributes} />
+              {related?.results?.map((data, index) => (
+                <ProductCard key={index} product={data} />
               ))}
             </div>
           </div>
@@ -193,7 +193,7 @@ const SingleProduct = ({ props }) => {
       <div className="lg:hidden fixed bottom-16 left-0 right-0 z-30 bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-t border-border/40 p-4 shadow-[0_-4px_12px_rgba(0,0,0,0.06)] flex items-center justify-between space-x-4 animate-fade-in transition-all">
         <div className="flex flex-col">
           <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider">Total Price</span>
-          <span className="text-lg font-bold text-foreground">${(product.price * total).toFixed(2)}</span>
+          <span className="text-lg font-bold text-foreground">${(Number(product?.prices?.price || 0) * total).toFixed(2)}</span>
         </div>
         <div className="flex items-center space-x-2 flex-1 justify-end max-w-[240px]">
           <div className="flex items-center border border-border rounded-lg bg-muted/30 h-10 overflow-hidden">
