@@ -43,9 +43,9 @@ function OrderElement({ order }) {
     }
   };
 
-  const formatter = new Intl.NumberFormat('en-US', {
+  const formatter = new Intl.NumberFormat('en-IN', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'INR',
   });
 
   const getStatusBadge = (statusVal) => {
@@ -234,7 +234,7 @@ function OrderElement({ order }) {
                   Shipping Cost
                 </span>
                 <span className="font-semibold text-emerald-600 dark:text-emerald-400">
-                  Free
+                  {data.shippingPrice ? formatter.format(data.shippingPrice) : "Free"}
                 </span>
               </div>
               <div className="flex flex-col">
@@ -242,7 +242,7 @@ function OrderElement({ order }) {
                   Discount
                 </span>
                 <span className="font-semibold text-slate-600 dark:text-slate-400">
-                  $0.00
+                  {formatter.format(data.discount || 0)}
                 </span>
               </div>
               <div className="flex flex-col sm:items-end">
@@ -250,7 +250,7 @@ function OrderElement({ order }) {
                   Total Amount
                 </span>
                 <span className="text-2xl font-black text-primary">
-                  {formatter.format(data.total || 0)}
+                  {formatter.format(data.totalPrice || data.total || 0)}
                 </span>
               </div>
             </div>
@@ -278,6 +278,16 @@ function OrderElement({ order }) {
               >
                 <MdDelete className="text-lg" />
                 <span>Cancel Order</span>
+              </button>
+            )}
+            {data.status?.toLowerCase() === 'delivered' && (
+              <button 
+                onClick={() => {
+                  notifySuccess("Return request initiated. Our support team will contact you shortly.");
+                }} 
+                className="inline-flex items-center justify-center gap-2 text-sm font-bold h-11 px-6 bg-amber-50 dark:bg-amber-950/20 hover:bg-amber-100 dark:hover:bg-amber-900/30 text-amber-600 dark:text-amber-400 rounded-xl transition-all active:scale-[0.98] border border-amber-100 dark:border-amber-900/30 cursor-pointer"
+              >
+                <span>Request Return</span>
               </button>
             )}
             <Link

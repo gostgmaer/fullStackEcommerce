@@ -43,29 +43,36 @@ export const CartSlice = createSlice({
 
   reducers: {
     addToCart(state, action) {
-  
+
       const product = state.cartItems.findIndex(
         (item) => item.id === action.payload.id
       );
 
- 
-      
+      const stockLimit = action.payload.stock || action.payload.quantity || 999;
+
       if (product >= 0) {
+        if (state.cartItems[product].cartQuantity >= stockLimit) {
+          notifyerror("Maximum available stock reached");
+          return state;
+        }
         state.cartItems[product].cartQuantity += 1;
         const cartData = {
           productId: action.payload.id,
-          quantity: state.cartItems[product >= 0 ? product : state.cartItems.length - 1].cartQuantity,
+          quantity: state.cartItems[product].cartQuantity,
         };
-   
+
       } else {
+        if (stockLimit < 1) {
+          notifyerror("Sorry, this item is out of stock!");
+          return state;
+        }
         const tempProduct = { ...action.payload, cartQuantity: 1 };
-  
         state.cartItems.push(tempProduct);
       }
 
       notifySuccess("Product Add Success!")
       return state;
-      
+
     },
 
     removeFromCart(state, action) {
@@ -95,12 +102,22 @@ export const CartSlice = createSlice({
       const product = state.cartItems.findIndex(
         (item) => item.id === action.payload.id
       );
+      const stockLimit = action.payload.stock || action.payload.quantity || 999;
+
       if (product >= 0) {
+        if (state.cartItems[product].cartQuantity >= stockLimit) {
+          notifyerror("Maximum available stock reached");
+          return state;
+        }
         state.cartItems[product].cartQuantity += 1;
       } else {
+        if (stockLimit < 1) {
+          notifyerror("Sorry, this item is out of stock!");
+          return state;
+        }
         const tempProduct = { ...action.payload, cartQuantity: 1 };
         state.cartItems.push(tempProduct);
-       
+
       }
       notifyinfo("Cart Quantity Increase!")
      // localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
@@ -109,17 +126,26 @@ export const CartSlice = createSlice({
       const product = state.cartItems.findIndex(
         (item) => item.id === action.payload.product.id
       );
+      const stockLimit = action.payload.product.stock || action.payload.product.quantity || 999;
+      const requestedQuantity = action.payload.cartQuantity === 1 ? 1 : action.payload.cartQuantity;
+
       if (product >= 0) {
-        state.cartItems[product].cartQuantity +=action.payload.cartQuantity;
+        if (state.cartItems[product].cartQuantity + requestedQuantity > stockLimit) {
+          notifyerror(`Cannot add more. Only ${stockLimit} available in stock.`);
+          return state;
+        }
+        state.cartItems[product].cartQuantity += requestedQuantity;
       } else {
-        const cartQuantity = action.payload.cartQuantity===1?1:action.payload.cartQuantity 
-        const tempProduct = { ...action.payload.product,cartQuantity};
+        if (requestedQuantity > stockLimit) {
+          notifyerror(`Cannot add more. Only ${stockLimit} available in stock.`);
+          return state;
+        }
+        const tempProduct = { ...action.payload.product, cartQuantity: requestedQuantity };
 
         state.cartItems.push(tempProduct);
-       
+
       }
-      notifySuccess("Product add success!")
-    //  localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+      notifySuccess("Product add success!")    //  localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
     emptyCart: (state) => {
       state.cartItems = [];

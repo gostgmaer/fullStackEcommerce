@@ -86,7 +86,7 @@ const OrderTable = ({ title }) => {
       key: "totalPrice",
       render: (index, item) => (
         <span className="font-bold text-slate-800 dark:text-slate-100">
-          ${(item.totalPrice || 0).toFixed(2)}
+          ₹{(item.totalPrice || item.total || 0).toFixed(2)}
         </span>
       ),
     },

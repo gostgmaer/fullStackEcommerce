@@ -8,7 +8,7 @@ import { IoAddOutline, IoBag, IoRemoveOutline } from 'react-icons/io5';
 import { MdDelete } from 'react-icons/md';
 import { useSelector, useDispatch } from 'react-redux';
 
-function OrderSummary({ code, setCode, shippingPrice = 0 }) {
+function OrderSummary({ code, setCode, shippingPrice = 0, discount, setDiscount }) {
 	const cart = useSelector((state) => state['cart']);
 	const { cartTotalAmount } = useSelector((state) => state["cart"]);
 	const dispatch = useDispatch();
@@ -22,7 +22,6 @@ function OrderSummary({ code, setCode, shippingPrice = 0 }) {
 	const [loading, setLoading] = useState(false);
 	// const [total, setTotal] = useState(cartTotalAmount);
 	const [isCoupon, setIsCoupon] = useState(false);
-	const [discount, setDiscount] = useState(null);
 
 	// Handle form submission
 	const handleApplyCoupon = async (e) => {

@@ -391,12 +391,26 @@ const CartPage = () => {
                     </div>
                   </div>
 
-                  <Link
-                    href="/checkout"
-                    className="w-full inline-flex items-center justify-center text-sm font-bold py-3 px-4 bg-primary hover:bg-primary/95 text-primary-foreground rounded-lg shadow-sm transition-all duration-200 active:scale-[0.98] cursor-pointer !no-underline"
-                  >
-                    Proceed to Checkout
-                  </Link>
+                  {finalTotal < 50 ? (
+                    <div className="w-full text-center">
+                      <button
+                        disabled
+                        className="w-full inline-flex items-center justify-center text-sm font-bold py-3 px-4 bg-muted text-muted-foreground rounded-lg shadow-sm cursor-not-allowed opacity-70"
+                      >
+                        Proceed to Checkout
+                      </button>
+                      <p className="text-xs text-red-500 mt-2 font-semibold">
+                        Minimum order amount is ₹50.00
+                      </p>
+                    </div>
+                  ) : (
+                    <Link
+                      href="/checkout"
+                      className="w-full inline-flex items-center justify-center text-sm font-bold py-3 px-4 bg-primary hover:bg-primary/95 text-primary-foreground rounded-lg shadow-sm transition-all duration-200 active:scale-[0.98] cursor-pointer !no-underline"
+                    >
+                      Proceed to Checkout
+                    </Link>
+                  )}
 
                   {/* Trust Badge */}
                   <div className="flex items-center justify-center gap-1.5 mt-4 text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
@@ -415,12 +429,21 @@ const CartPage = () => {
                 <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider">Order Total</span>
                 <span className="text-lg font-black text-primary">₹{finalTotal.toFixed(2)}</span>
               </div>
-              <Link
-                href="/checkout"
-                className="inline-flex items-center justify-center text-xs font-bold py-2.5 px-6 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg shadow-md active:scale-95 transition-all !no-underline"
-              >
-                Checkout Now
-              </Link>
+              {finalTotal < 50 ? (
+                <button
+                  disabled
+                  className="inline-flex items-center justify-center text-xs font-bold py-2.5 px-6 bg-muted text-muted-foreground rounded-lg shadow-md cursor-not-allowed opacity-70"
+                >
+                  Min ₹50
+                </button>
+              ) : (
+                <Link
+                  href="/checkout"
+                  className="inline-flex items-center justify-center text-xs font-bold py-2.5 px-6 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg shadow-md active:scale-95 transition-all !no-underline"
+                >
+                  Checkout Now
+                </Link>
+              )}
             </div>
           )}
 

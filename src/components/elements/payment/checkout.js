@@ -12,6 +12,7 @@ import Link from 'next/link';
 import { MdCreditCard, MdWallet } from 'react-icons/md';
 import { IoArrowForward, IoReturnUpBack } from 'react-icons/io5';
 import OrderServices from '@/helper/network/services/OrderServices';
+import CustomerServices from '@/helper/network/services/CustomerServices';
 import { emptyCart } from '@/store/reducers/cartSlice';
 import { useSession } from 'next-auth/react';
 import { RazorpayPayment } from './service';
@@ -39,6 +40,7 @@ const CheckoutBlock = () => {
     const [code, setCode] = useState("");
     const [csc, setCsc] = useState(null);
     const [activeStep, setActiveStep] = useState(1);
+    const [discount, setDiscount] = useState(0);
 
     const router = useRouter();
     const dispatch = useDispatch();
@@ -54,13 +56,12 @@ const CheckoutBlock = () => {
             setCsc(mod);
         });
         window.scrollTo(0, 0);
-        
+
         const storedCoupon = localStorage.getItem('cartCouponCode');
         if (storedCoupon) {
             setCode(storedCoupon);
         }
     }, []);
-
     const {
         register,
         handleSubmit,
@@ -85,20 +86,46 @@ const CheckoutBlock = () => {
     });
 
     useEffect(() => {
-        if (session?.user) {
-            reset({
-                firstName: session.user.name ? session.user.name.split(" ")[0] : "",
-                lastName: session.user.name ? session.user.name.split(" ").slice(1).join(" ") : "",
-                email: session.user.email || "",
-                phone: "",
-                address: "",
-                city: "",
-                country: "",
-                zipCode: "",
-                payment_method: "",
-                additionalNotes: "",
-            });
-        }
+        const fetchProfileData = async () => {
+            if (session?.user && session?.accessToken) {
+                try {
+                    const profile = await CustomerServices.getProfile(null, { "Authorization": `Bearer ${session.accessToken}` });
+                    const user = profile?.result;
+                    if (user) {
+                        const defaultAddress = user.address?.[0] || {};
+                        reset({
+                            firstName: user.firstName || session.user.name?.split(" ")[0] || "",
+                            lastName: user.lastName || session.user.name?.split(" ").slice(1).join(" ") || "",
+                            email: user.email || session.user.email || "",
+                            phone: user.phoneNumber || "",
+                            address: defaultAddress.streetAddress || "",
+                            city: defaultAddress.city || "",
+                            country: defaultAddress.country || "",
+                            zipCode: defaultAddress.zipPostal || "",
+                            payment_method: "",
+                            additionalNotes: "",
+                        });
+                    }
+                } catch (err) {
+                    console.error("Failed to load profile for checkout", err);
+                }
+            } else if (session?.user) {
+                reset({
+                    firstName: session.user.name ? session.user.name.split(" ")[0] : "",
+                    lastName: session.user.name ? session.user.name.split(" ").slice(1).join(" ") : "",
+                    email: session.user.email || "",
+                    phone: "",
+                    address: "",
+                    city: "",
+                    country: "",
+                    zipCode: "",
+                    payment_method: "",
+                    additionalNotes: "",
+                });
+            }
+        };
+
+        fetchProfileData();
     }, [session, reset]);
 
     const handleNextStep1 = async () => {
@@ -129,7 +156,8 @@ const CheckoutBlock = () => {
             ...values,
             couponcode: code,
             cartTotalAmount,
-            totalPrice: Number(cartTotalAmount + shPrice),
+            discount: discount,
+            totalPrice: Number(cartTotalAmount + shPrice - discount),
         };
 
         const { payment_method } = data;
@@ -442,7 +470,7 @@ const CheckoutBlock = () => {
                     </div>
 
                     {/* Order Summary Sidebar */}
-                    <OrderSummary code={code} setCode={setCode} shippingPrice={shippingPrice} />
+                    <OrderSummary code={code} setCode={setCode} shippingPrice={shippingPrice} discount={discount} setDiscount={setDiscount} />
 
                 </div>
             </div>
