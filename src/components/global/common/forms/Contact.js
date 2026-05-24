@@ -38,7 +38,7 @@ const Contact = () => {
             setSubmitting(true);
             const res = await handleSubmit(values);
 
-            if (res.statusCode === 201) {
+            if (res && res.statusCode === 201) {
 
                 notifySuccess('Your message sent successfully. We will contact you shortly.')
                // resetForm()
@@ -47,7 +47,7 @@ const Contact = () => {
 
             } else {
                 setSubmitting(false)
-                notifyerror(res.message)
+                notifyerror(res?.message || "Something went wrong.")
             }
         },
     });

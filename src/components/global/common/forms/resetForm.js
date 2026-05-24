@@ -41,21 +41,21 @@ const ResetForm = ({ props }) => {
       setSubmitting(true);
       const res = await handleSubmit(values);
 
-      if (res["statusCode"] === 200) {
+      if (res && res["statusCode"] === 200) {
         notifySuccess("Reset Successfully! Please Login with New Password");
         resetForm();
         setSubmitting(false);
         router.push("/auth/login");
       } else {
         setSubmitting(false);
-        notifyerror(res["message"]);
+        notifyerror(res?.["message"] || "Something went wrong.");
       }
     },
   });
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <div className="flex flex-col gap-x-4 gap-y-5 md:grid md:grid-cols-2 lg:gap-5 text-black">
+      <div className="flex flex-col gap-x-4 gap-y-5 md:grid md:grid-cols-2 lg:gap-5">
         <div className=" col-span-full ">
           <Input
             label={"Password"}

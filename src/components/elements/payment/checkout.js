@@ -128,7 +128,7 @@ const CheckoutBlock = () => {
         const { payment_method } = data;
 
         try {
-            const requests = await OrderServices.addOrder(data, { "Authorization": `Bearer ${session["accessToken"]}` });
+            const requests = await OrderServices.addOrder(data, { "Authorization": `Bearer ${session?.["accessToken"]}` });
 
             switch (payment_method) {
                 case 'RazorPay':
