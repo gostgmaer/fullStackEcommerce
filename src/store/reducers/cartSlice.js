@@ -30,9 +30,9 @@ export const saveCartToBackend = createAsyncThunk(
   async (cartData, thunkAPI) => {
     try {
       const response = await CartServices.addtoCart(cartData)
-      return response.data; // Returning the response
+      return response; // fetch client already returns parsed data
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response ? error.response.data : error.message);
+      return thunkAPI.rejectWithValue(error.message || 'Cart save failed');
     }
   }
 );

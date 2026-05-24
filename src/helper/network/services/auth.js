@@ -27,11 +27,11 @@ const authService = {
   forgetPassword: async (body, headers) => {
     return await requests.post("/user/auth/forget-password", body, headers);
   },
-  resetPassword: async (body, headers) => {
+  resetPassword: async (body, token) => {
     return await requests.post(
-      "/user/auth/reset-password/:token",
+      `/user/auth/reset-password/${token}`,
       body,
-      headers
+      {}
     );
   },
   verifyEmailAddress: async (body) => {

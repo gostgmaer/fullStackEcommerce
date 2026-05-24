@@ -5,12 +5,12 @@ const CartServices = {
     return requests.post("/cart/add", body, headers);
   },
 
-  updateCartItem: async (body, headers) => {
-    return requests.post("/cart/update/:id", body, headers);
+  updateCartItem: async (id, body, headers) => {
+    return requests.post(`/cart/${id}/add`, body, headers);
   },
 
-  removeFromCartItem: async (body, headers) => {
-    return requests.post("/cart/remove/:id", body, headers);
+  removeFromCartItem: async (id, body, headers) => {
+    return requests.post(`/cart/${id}/remove`, body, headers);
   },
   getCustomerCart: async (query, headers) => {
     return requests.get(`/cart`, query, headers);
