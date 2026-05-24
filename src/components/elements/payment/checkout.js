@@ -175,7 +175,11 @@ const CheckoutBlock = () => {
 
             switch (payment_method) {
                 case 'RazorPay':
-                    const response = await RazorpayPayment(requests, session);
+                    const response = await RazorpayPayment(requests, session, {
+                        name: `${values.firstName} ${values.lastName}`,
+                        email: values.email,
+                        phone: values.phone,
+                    });
                     notifySuccess(response["message"]);
                     router.push(`/order/${response["result"]._id}`);
                     dispatch(emptyCart());

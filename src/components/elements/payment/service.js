@@ -64,7 +64,7 @@ import { useDispatch } from 'react-redux';
 // };
 
 
-const RazorpayPayment = async (requests, session, navigate, dispatch) => {
+const RazorpayPayment = async (requests, session, userData = {}) => {
     try {
         // Step 1: Create order on the backend
         const { id: order_id, amount, currency, payment_method } = requests["result"];
@@ -72,12 +72,12 @@ const RazorpayPayment = async (requests, session, navigate, dispatch) => {
         // Step 2: Initialize Razorpay checkout
         return new Promise((resolve, reject) => {
             const options = {
-                key: razorPayPublic, // Replace with your Razorpay key_id
+                key: razorPayPublic,
                 amount: amount,
                 currency: currency,
                 name: 'Your Company Name',
-                description: 'Payment for Order #123',
-                order_id: order_id, // Pass Razorpay order_id from backend
+                description: `Payment for Order`,
+                order_id: order_id,
                 handler: async function (response) {
                     try {
                         // Razorpay returns these three values after successful payment
@@ -105,9 +105,9 @@ const RazorpayPayment = async (requests, session, navigate, dispatch) => {
                     }
                 },
                 prefill: {
-                    name: 'John Doe',
-                    email: 'johndoe@example.com',
-                    contact: '9999999999',
+                    name: userData.name || '',
+                    email: userData.email || '',
+                    contact: userData.phone || '',
                 },
                 theme: {
                     color: '#3399cc',
