@@ -7,9 +7,14 @@ import Layout from "@/components/global/layout/Layout";
 
 import ProductServices from "@/helper/network/services/ProductServices";
 import AttributeServices from "@/helper/network/services/AttributeServices";
+import { cache } from "react";
+
+const getProductBySlugCached = cache(async (params) => {
+  return ProductServices.getProductBySlug(params);
+});
 
 export async function generateMetadata({ params, searchParams }, parent) {
-  const product = await ProductServices.getProductBySlug(params);
+  const product = await getProductBySlugCached(params);
   const results = product?.results;
 
   if (!results) {
@@ -92,7 +97,7 @@ export default ProductScreen;
 export const getRecord = async (params) => {
   var related;
   var attributes = [];
-  const product = await ProductServices.getProductBySlug(params);
+  const product = await getProductBySlugCached(params);
 
   if (product && product.results) {
     if (product.results.category && product.results.category._id) {

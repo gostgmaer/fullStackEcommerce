@@ -234,14 +234,11 @@ export default async function Home() {
 
 
 export const getAllRecord = async () => {
+  const [popular, discount, category] = await Promise.all([
+    ProductServices.getPopularProducts(),
+    ProductServices.getDiscountedProducts(),
+    CategoryServices.getShowingCategory(),
+  ]);
 
-
-  const popular = await ProductServices.getPopularProducts()
-  const discount = await ProductServices.getDiscountedProducts()
-  const category = await CategoryServices.getShowingCategory()
-
-  return {
-    popular, discount,category
-  }
-
-}
+  return { popular, discount, category };
+};

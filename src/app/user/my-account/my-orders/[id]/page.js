@@ -5,6 +5,7 @@ import Userlayout from '@/components/elements/user';
 import Layout from '@/components/global/layout/Layout'
 import OrderServices from '@/helper/network/services/OrderServices';
 import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation';
 import React from 'react'
 
 
@@ -14,8 +15,11 @@ const Index = async (props) => {
   // @ts-ignore
   const session = await getServerSession(authOptions);
 
+  if (!session?.accessToken) {
+    redirect('/auth/login');
+  }
 
-  const order = await OrderServices.getOrderById(props.params, { "Authorization": `Bearer ${session?.["accessToken"]}` })
+  const order = await OrderServices.getOrderById(props.params, { "Authorization": `Bearer ${session["accessToken"]}` })
 
 
   return (

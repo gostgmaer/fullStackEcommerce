@@ -1,14 +1,3 @@
-'use client';
-import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-
-const PaypalProvider = ({ children }) => {
-    return    <PayPalScriptProvider deferLoading={true}>{children}</PayPalScriptProvider>;
-}
-
-export default PaypalProvider
-
-
-
-
-
-
+// DEPRECATED: PayPal provider removed (dead code)
+// Active payment flow uses Razorpay
+export default function PaypalProvider({ children }) { return children; }

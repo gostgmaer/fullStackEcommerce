@@ -7,6 +7,7 @@ import OrderTable from '@/components/elements/user/components/order/OrderTable'
 import Layout from '@/components/global/layout/Layout'
 import OrderServices from '@/helper/network/services/OrderServices'
 import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
 import React from 'react'
 
 
@@ -16,7 +17,12 @@ const Index = async (props) => {
 
   // @ts-ignore
   const session = await getServerSession(authOptions);
-  const order = await OrderServices.getOrderCustomer(props.params, { "Authorization": `Bearer ${session?.["accessToken"]}` })
+
+  if (!session?.accessToken) {
+    redirect('/auth/login');
+  }
+
+  const order = await OrderServices.getOrderCustomer(props.params, { "Authorization": `Bearer ${session["accessToken"]}` })
 
 
   return (

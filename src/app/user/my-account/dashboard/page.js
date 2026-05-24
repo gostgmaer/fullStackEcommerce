@@ -5,6 +5,7 @@ import DashboardBlock from '@/components/elements/user/components/Dashboard';
 import Layout from '@/components/global/layout/Layout'
 import CustomerServices from '@/helper/network/services/CustomerServices';
 import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation';
 import React from 'react'
 
 
@@ -12,7 +13,11 @@ const Index = async (props) => {
 
   const session = await getServerSession(authOptions);
 
-  const dashboard = await CustomerServices.customerDashboard(null, { "Authorization": `Bearer ${session?.["accessToken"]}` })
+  if (!session?.accessToken) {
+    redirect('/auth/login');
+  }
+
+  const dashboard = await CustomerServices.customerDashboard(null, { "Authorization": `Bearer ${session["accessToken"]}` })
 
 
 

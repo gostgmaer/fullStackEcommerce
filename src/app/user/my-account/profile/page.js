@@ -6,6 +6,7 @@ import ProfileBlock from '@/components/elements/user/components/profile/ProfileB
 import Layout from '@/components/global/layout/Layout'
 import CustomerServices from '@/helper/network/services/CustomerServices'
 import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
 import React from 'react'
 
 
@@ -15,7 +16,12 @@ const Index = async (props) => {
 
   // @ts-ignore
   const session = await getServerSession(authOptions);
-  const profile = await CustomerServices.getProfile(null, { "Authorization": `Bearer ${session?.["accessToken"]}` })
+
+  if (!session?.accessToken) {
+    redirect('/auth/login');
+  }
+
+  const profile = await CustomerServices.getProfile(null, { "Authorization": `Bearer ${session["accessToken"]}` })
 
 
   return (
