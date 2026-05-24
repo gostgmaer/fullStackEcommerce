@@ -39,14 +39,15 @@ const CheckoutBlock = () => {
     const [code, setCode] = useState("");
     const [csc, setCsc] = useState(null);
     const [activeStep, setActiveStep] = useState(1);
-    const isFreeShipCoupon = code?.toUpperCase().trim() === "FREESHIP";
-    const shippingPrice = (cartTotalAmount >= 500 || isFreeShipCoupon) ? 0 : 50;
 
     const router = useRouter();
     const dispatch = useDispatch();
     const { cartTotalAmount } = useSelector((state) => state['cart']);
     const { ...item } = useSelector((state) => state["cart"]);
     const Id = uuidv4();
+
+    const isFreeShipCoupon = code?.toUpperCase().trim() === "FREESHIP";
+    const shippingPrice = (cartTotalAmount >= 500 || isFreeShipCoupon) ? 0 : 50;
 
     useEffect(() => {
         import('country-state-city').then((mod) => {
