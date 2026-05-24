@@ -24,7 +24,7 @@ const MainModal = ({ modalOpen, setModalOpen, children }) => {
         <DialogBackdrop className="fixed inset-0 bg-black/30" />
 
         <div className="fixed inset-0 flex w-screen items-center justify-center">
-          <DialogPanel className="min-w-lg max-w-5xl space-y-4 rounded-xl bg-white/5 backdrop-blur-full transition duration-300 ease-out data-[closed]:ease-in data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0 ">
+          <DialogPanel className="min-w-lg max-w-5xl space-y-4 rounded-xl bg-card/5 backdrop-blur-full transition duration-300 ease-out data-[closed]:ease-in data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0 ">
             {children}
           </DialogPanel>
         </div>
@@ -32,7 +32,7 @@ const MainModal = ({ modalOpen, setModalOpen, children }) => {
           <button
             onClick={() => setModalOpen(false)}
             type="button"
-            className="inline-flex cursor-pointer justify-center px-2 py-2 text-base font-medium text-red-500 bg-white border border-transparent rounded-full hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+            className="inline-flex cursor-pointer justify-center px-2 py-2 text-base font-medium text-destructive bg-card border border-transparent rounded-full hover:bg-destructive/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary"
           >
             <IoClose />
           </button>

@@ -19,10 +19,10 @@ const CartDrawer = ({ setOpen }) => {
   }, [cart, dispatch]);
 
   return (
-    <div className="flex flex-col w-full h-full bg-background dark:bg-slate-900">
+    <div className="flex flex-col w-full h-full bg-background">
 
       {/* Header */}
-      <div className="flex items-center justify-between px-5 py-4 border-b border-border/60 bg-muted/30 dark:bg-slate-800/40 flex-shrink-0">
+      <div className="flex items-center justify-between px-5 py-4 border-b border-border/60 bg-muted/30 flex-shrink-0">
         <div className="flex items-center space-x-2">
           <div className="p-1.5 rounded-lg bg-primary/10 text-primary">
             <IoCart className="w-5 h-5" />
@@ -39,7 +39,7 @@ const CartDrawer = ({ setOpen }) => {
         <button
           onClick={() => setOpen(false)}
           aria-label="Close cart"
-          className="flex items-center justify-center w-8 h-8 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 dark:hover:bg-slate-700 transition-colors"
+          className="flex items-center justify-center w-8 h-8 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
         >
           <IoClose className="w-5 h-5" />
         </button>
@@ -71,7 +71,7 @@ const CartDrawer = ({ setOpen }) => {
             {cart.cartItems.map((data, index) => (
               <div
                 key={index}
-                className="group flex items-center gap-3 px-4 py-3.5 hover:bg-muted/30 dark:hover:bg-slate-800/40 transition-colors"
+                className="group flex items-center gap-3 px-4 py-3.5 hover:bg-muted/30 transition-colors"
               >
                 {/* Product Image */}
                 <div className="relative flex-shrink-0 w-14 h-14 rounded-xl overflow-hidden border border-border/60 bg-muted/30">
@@ -100,11 +100,11 @@ const CartDrawer = ({ setOpen }) => {
                   {/* Quantity + Price row */}
                   <div className="flex items-center justify-between gap-2">
                     {/* Quantity stepper */}
-                    <div className="flex items-center gap-1 bg-muted/60 dark:bg-slate-800 border border-border/60 rounded-lg px-1 h-7">
+                    <div className="flex items-center gap-1 bg-muted/60 border border-border/60 rounded-lg px-1 h-7">
                       <button
                         onClick={() => dispatch(decreaseCart(data))}
                         aria-label="Decrease quantity"
-                        className="w-5 h-5 flex items-center justify-center rounded hover:bg-muted dark:hover:bg-slate-700 text-foreground transition-colors"
+                        className="w-5 h-5 flex items-center justify-center rounded hover:bg-muted text-foreground transition-colors"
                       >
                         <IoRemoveOutline className="w-3.5 h-3.5" />
                       </button>
@@ -114,7 +114,7 @@ const CartDrawer = ({ setOpen }) => {
                       <button
                         onClick={() => dispatch(incrementCart(data))}
                         aria-label="Increase quantity"
-                        className="w-5 h-5 flex items-center justify-center rounded hover:bg-muted dark:hover:bg-slate-700 text-foreground transition-colors"
+                        className="w-5 h-5 flex items-center justify-center rounded hover:bg-muted text-foreground transition-colors"
                       >
                         <IoAddOutline className="w-3.5 h-3.5" />
                       </button>
@@ -129,7 +129,7 @@ const CartDrawer = ({ setOpen }) => {
                     <button
                       onClick={() => dispatch(removeFromCart(data))}
                       aria-label={`Remove ${data.title}`}
-                      className="p-1 text-slate-400 hover:text-red-500 dark:text-slate-500 dark:hover:text-red-400 transition-colors rounded"
+                      className="p-1 text-muted-foreground hover:text-destructive transition-colors rounded"
                     >
                       <MdDelete className="w-4 h-4" />
                     </button>
@@ -143,7 +143,7 @@ const CartDrawer = ({ setOpen }) => {
 
       {/* Footer — Checkout CTA */}
       {cart.cartItems.length > 0 && (
-        <div className="flex-shrink-0 p-4 border-t border-border/60 bg-background dark:bg-slate-900 space-y-3 animate-fade-in">
+        <div className="flex-shrink-0 p-4 border-t border-border/60 bg-background space-y-3 animate-fade-in">
           {/* Subtotal */}
           <div className="flex items-center justify-between text-sm">
             <span className="text-muted-foreground font-medium">Subtotal</span>

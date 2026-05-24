@@ -41,17 +41,17 @@ const FeatureCategory = (props) => {
       <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         {props?.category?.results?.map((category, i) => (
           <li className="group h-full" key={i + 1}>
-            <div className="flex flex-col w-full h-full card-base hover:shadow-premium-hover p-5 cursor-pointer relative overflow-hidden">
+            <div className="flex flex-col w-full h-full card-base hover:shadow-premium-hover hover:-translate-y-1 p-5 cursor-pointer relative overflow-hidden transition-all duration-400">
               <a href={`/product/search?category=${category.title}&_id=${category._id}`} className="absolute inset-0 z-10"></a>
-              <div className="flex flex-col items-center text-center gap-4 relative z-0">
-                <div className="w-16 h-16 rounded-full bg-muted/20 flex items-center justify-center p-3 group-hover:bg-primary/10 transition-colors duration-500">
+              <div className="flex flex-col items-center text-center gap-3 relative z-0">
+                <div className="w-14 h-14 rounded-xl bg-primary/5 dark:bg-primary/10 flex items-center justify-center p-2.5 group-hover:bg-primary/10 dark:group-hover:bg-primary/15 group-hover:scale-110 transition-all duration-400">
                   {category.images ? (
                     <Image
                       src={category?.images[0]}
                       alt={category.title}
                       width={48}
                       height={48}
-                      className="object-contain group-hover:scale-110 transition-transform duration-500"
+                      className="object-contain transition-transform duration-500"
                     />
                   ) : (
                     <Image
@@ -59,13 +59,13 @@ const FeatureCategory = (props) => {
                       alt={category.title}
                       width={48}
                       height={48}
-                      className="object-contain opacity-50 group-hover:scale-110 transition-transform duration-500"
+                      className="object-contain opacity-50 transition-transform duration-500"
                     />
                   )}
                 </div>
 
                 <div className="w-full">
-                  <h3 className="text-sm text-foreground font-bold leading-tight line-clamp-1 group-hover:text-primary transition-colors">
+                  <h3 className="text-sm text-foreground font-bold leading-tight line-clamp-1 group-hover:text-primary transition-colors duration-200">
                     {category?.title}
                   </h3>
                   

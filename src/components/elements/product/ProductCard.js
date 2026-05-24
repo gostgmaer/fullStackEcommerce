@@ -27,9 +27,9 @@ const ProductCard = ({ product, attributes }) => {
         />
       )}
 
-      <div className="group relative flex flex-col justify-between overflow-hidden card-base hover:shadow-premium-hover h-full w-full">
+      <div className="group relative flex flex-col justify-between overflow-hidden card-base hover:shadow-premium-hover hover:-translate-y-1 h-full w-full transition-all duration-400">
         {/* Top Section: Badges & Image */}
-        <div className="relative w-full pt-4 flex justify-center items-center bg-muted/10 dark:bg-muted/5 group-hover:bg-muted/20 transition-colors duration-300">
+        <div className="relative w-full pt-4 flex justify-center items-center bg-muted/10 dark:bg-muted/5 group-hover:bg-muted/15 transition-colors duration-400">
           <Stock stock={product.stock} card />
           <Discount discount={Number(product.prices.discount)} product={product} slug={product.slug} modal={false} />
           <WishlistCard data={product} />
@@ -43,7 +43,7 @@ const ProductCard = ({ product, attributes }) => {
                   loading="lazy"
                   fill
                   sizes="(max-width: 768px) 150px, 180px"
-                  className="object-contain transition-transform duration-500 group-hover:scale-110 drop-shadow-sm"
+                  className="object-contain transition-transform duration-500 ease-out group-hover:scale-105 drop-shadow-sm"
                 />
               </div>
             </div>
@@ -56,7 +56,7 @@ const ProductCard = ({ product, attributes }) => {
                   loading="lazy"
                   fill
                   sizes="(max-width: 768px) 150px, 180px"
-                  className="object-contain transition-transform duration-500 group-hover:scale-110 opacity-70"
+                  className="object-contain transition-transform duration-500 ease-out group-hover:scale-105 opacity-70"
                 />
               </div>
             </div>
@@ -64,19 +64,19 @@ const ProductCard = ({ product, attributes }) => {
         </div>
 
         {/* Bottom Section: Details & Purchase */}
-        <div className="w-full p-5 flex flex-col justify-between flex-grow mt-2 bg-card">
+        <div className="w-full p-4 sm:p-5 flex flex-col justify-between flex-grow bg-card">
           <div className="relative mb-2">
-            <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider block mb-1">
+            <span className="text-[10px] font-bold text-muted-foreground/70 uppercase tracking-wider block mb-1.5">
               {product?.unit || "Unit"}
             </span>
             <h2 
               onClick={() => handleModalOpen(!modalOpen)}
-              className="text-sm font-bold tracking-tight text-foreground hover:text-primary transition-colors cursor-pointer line-clamp-2 min-h-[40px] leading-snug"
+              className="text-sm font-semibold tracking-tight text-foreground hover:text-primary transition-colors duration-200 cursor-pointer line-clamp-2 min-h-[40px] leading-snug"
             >
               {product?.title}
             </h2>
           </div>
-          <div className="flex justify-between items-center mt-4 pt-4 border-t border-border/40">
+          <div className="flex justify-between items-center mt-3 pt-3 border-t border-border/30">
             <Price
               card
               product={product}

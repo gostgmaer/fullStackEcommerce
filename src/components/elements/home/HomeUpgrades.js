@@ -30,18 +30,18 @@ export function TrustBar() {
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 my-12">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 my-12">
       {trustItems.map((item, idx) => (
         <div
           key={idx}
           className="flex items-center gap-4 p-5 card-base hover:shadow-premium hover:-translate-y-1 transition-all duration-400 group"
         >
-          <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-muted/20 flex items-center justify-center group-hover:bg-primary/10 transition-colors duration-300">
+          <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary/5 dark:bg-primary/10 flex items-center justify-center group-hover:bg-primary/10 dark:group-hover:bg-primary/15 group-hover:scale-110 transition-all duration-300">
             {item.icon}
           </div>
           <div>
             <h4 className="text-sm font-bold text-foreground">{item.title}</h4>
-            <p className="text-xs text-muted-foreground mt-1">{item.desc}</p>
+            <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{item.desc}</p>
           </div>
         </div>
       ))}
@@ -80,25 +80,26 @@ export function Testimonials() {
 
   return (
     <div className="my-16">
-      <div className="text-center max-w-2xl mx-auto mb-14">
-        <span className="text-xs font-bold text-primary uppercase tracking-widest block mb-3">Social Proof</span>
-        <h3 className="text-3xl sm:text-4xl font-black font-serif mt-1 text-foreground">What Our Customers Say</h3>
-        <p className="text-sm sm:text-base text-muted-foreground mt-3">
+      <div className="section-heading mb-14">
+        <span className="section-label">Social Proof</span>
+        <h3 className="section-title">What Our Customers Say</h3>
+        <p className="section-subtitle">
           Read genuine reviews from verified shoppers who trust us for their daily organic needs.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {reviews.map((rev) => (
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {reviews.map((rev, idx) => (
           <div
             key={rev.id}
-            className="p-8 card-base flex flex-col justify-between hover:shadow-premium transition-all duration-400"
+            className="p-7 lg:p-8 card-base flex flex-col justify-between hover:shadow-premium hover:-translate-y-1 transition-all duration-400"
+            style={{ animationDelay: `${idx * 0.1}s` }}
           >
             <div className="space-y-4">
               {/* Stars */}
-              <div className="flex gap-1.5">
+              <div className="flex gap-1">
                 {Array.from(Array(rev.stars)).map((_, i) => (
-                  <FiStar key={i} className="w-5 h-5 fill-amber-500 text-amber-500" />
+                  <FiStar key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
                 ))}
               </div>
               <p className="text-sm text-foreground/80 italic leading-relaxed">
@@ -106,12 +107,12 @@ export function Testimonials() {
               </p>
             </div>
             
-            <div className="flex items-center justify-between mt-8 pt-6 border-t border-border/40">
+            <div className="flex items-center justify-between mt-6 pt-5 border-t border-border/30">
               <div>
                 <h5 className="text-sm font-bold text-foreground">{rev.name}</h5>
-                <span className="text-[10px] font-bold text-primary uppercase tracking-wider">{rev.role}</span>
+                <span className="text-[10px] font-semibold text-accent uppercase tracking-wider">{rev.role}</span>
               </div>
-              <span className="text-xs text-muted-foreground font-mono">{rev.date}</span>
+              <span className="text-[11px] text-muted-foreground">{rev.date}</span>
             </div>
           </div>
         ))}
@@ -136,19 +137,20 @@ export function NewsletterSignup() {
   };
 
   return (
-    <div className="my-16 p-10 md:p-16 rounded-3xl bg-foreground text-background relative overflow-hidden shadow-premium">
-      <div className="absolute right-0 bottom-0 top-0 w-1/2 bg-[radial-gradient(circle_at_bottom_right,_var(--tw-gradient-stops))] from-primary/30 via-transparent to-transparent opacity-80 hidden md:block"></div>
-      <div className="absolute left-0 top-0 w-64 h-64 bg-primary/20 blur-3xl rounded-full mix-blend-screen opacity-50"></div>
+    <div className="my-16 p-10 md:p-14 rounded-2xl bg-primary text-primary-foreground relative overflow-hidden">
+      <div className="absolute right-0 bottom-0 top-0 w-1/2 bg-[radial-gradient(circle_at_bottom_right,_var(--tw-gradient-stops))] from-accent/20 via-transparent to-transparent opacity-80 hidden md:block"></div>
+      <div className="absolute left-0 top-0 w-64 h-64 bg-accent/10 blur-3xl rounded-full mix-blend-screen opacity-50"></div>
+      <div className="absolute right-10 top-10 w-32 h-32 bg-accent/10 blur-2xl rounded-full mix-blend-screen opacity-30 animate-float"></div>
       
-      <div className="relative z-10 flex flex-col md:flex-row justify-between items-center gap-12">
+      <div className="relative z-10 flex flex-col md:flex-row justify-between items-center gap-10">
         <div className="space-y-4 text-center md:text-left max-w-xl">
-          <div className="inline-flex items-center justify-center p-3 bg-background/10 text-primary-foreground backdrop-blur-sm rounded-2xl mb-2">
-            <FiMail className="w-6 h-6" />
+          <div className="inline-flex items-center justify-center p-3 bg-primary-foreground/10 backdrop-blur-sm rounded-xl mb-2">
+            <FiMail className="w-5 h-5" />
           </div>
-          <h3 className="text-3xl md:text-4xl font-black font-serif text-background">
+          <h3 className="text-2xl md:text-3xl font-black font-serif">
             Join Our Newsletter & Save
           </h3>
-          <p className="text-base text-background/80 leading-relaxed">
+          <p className="text-sm opacity-80 leading-relaxed">
             Subscribe to our weekly newsletter to receive exclusive discount codes, flash sale alerts, and fresh product announcements directly in your inbox.
           </p>
         </div>

@@ -25,7 +25,7 @@ const Input = ({ label, type, additionalAttrs = {}, classes, icon, id }) => {
       {label && (
         <label
           htmlFor={inputId}
-          className="block text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400 mb-1.5"
+          className="block text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-1.5"
         >
           {label}
           {additionalAttrs?.required && (
@@ -36,16 +36,16 @@ const Input = ({ label, type, additionalAttrs = {}, classes, icon, id }) => {
 
       <div
         className={[
-          "flex items-center w-full rounded-lg border transition-all duration-150",
-          "bg-white dark:bg-slate-900/80",
-          "border-slate-200 dark:border-slate-700",
-          "focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20",
-          "has-[:disabled]:opacity-50 has-[:read-only]:bg-slate-50 has-[:read-only]:dark:bg-slate-800/60",
+          "flex items-center w-full rounded-xl border transition-all duration-200",
+          "bg-card",
+          "border-border",
+          "focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/15",
+          "has-[:disabled]:opacity-50 has-[:read-only]:bg-muted/30",
           icon ? "pl-3.5" : "",
         ].join(" ")}
       >
         {icon && (
-          <span className="flex-shrink-0 pr-2 text-slate-400 dark:text-slate-500">
+          <span className="flex-shrink-0 pr-2 text-muted-foreground">
             {icon}
           </span>
         )}
@@ -55,9 +55,9 @@ const Input = ({ label, type, additionalAttrs = {}, classes, icon, id }) => {
           name={inputId}
           type={inputType}
           className={[
-            "flex-1 min-w-0 h-10 bg-transparent px-3.5 text-sm",
-            "text-slate-900 dark:text-slate-100",
-            "placeholder:text-slate-400 dark:placeholder:text-slate-500",
+            "flex-1 min-w-0 h-11 bg-transparent px-3.5 text-sm",
+            "text-foreground",
+            "placeholder:text-muted-foreground",
             "focus:outline-none",
             "read-only:cursor-default",
             isPassword ? "pr-0" : "",

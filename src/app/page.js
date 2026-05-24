@@ -106,36 +106,36 @@ export default async function Home() {
   return (
     <Layout  >
       <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
-        {/* <StickyCart /> */}
-        <div className="bg-gradient-to-b from-muted/30 to-background dark:from-muted/10 dark:to-background border-b border-border/40 relative overflow-hidden">
+        {/* Hero Section with Carousel */}
+        <div className="bg-gradient-to-b from-muted/40 via-muted/10 to-background dark:from-muted/10 dark:via-background dark:to-background border-b border-border/40 relative overflow-hidden">
           <div className="absolute inset-0 bg-[url('https://res.cloudinary.com/ahossain/image/upload/v1697204480/pattern_bg_hzt68z.png')] opacity-[0.03] dark:opacity-[0.02] pointer-events-none mix-blend-overlay"></div>
-          <div className="mx-auto py-10 lg:py-14 max-w-screen-2xl px-4 sm:px-10 relative z-10">
-            <div className="flex flex-col lg:flex-row w-full gap-8">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="mx-auto py-8 lg:py-12 max-w-screen-2xl px-4 sm:px-10 relative z-10">
+            <div className="flex flex-col lg:flex-row w-full gap-6 lg:gap-8">
               <div className="flex-shrink-0 lg:w-3/5 w-full animate-slide-up">
                 <MainCarousel />
               </div>
-              <div className="lg:w-2/5 w-full flex animate-slide-in-right">
+              <div className="lg:w-2/5 w-full flex animate-slide-in-right" style={{ animationDelay: '0.15s' }}>
                 <OfferCard />
               </div>
             </div>
-            <div className="bg-card/50 backdrop-blur-md border border-border/60 px-10 py-8 rounded-3xl mt-8 hidden lg:block shadow-sm">
+            <div className="bg-card/60 backdrop-blur-xl border border-border/50 px-8 lg:px-10 py-7 rounded-2xl mt-8 hidden lg:block shadow-premium hover:shadow-premium-hover transition-all duration-400">
               <Banner />
             </div>
           </div>
         </div>
 
-        {/* feature category's */}
-        <div className="bg-background border-b border-border/40 lg:py-24 py-16">
+        {/* Featured Categories */}
+        <div className="bg-background border-b border-border/30 lg:py-24 py-16">
           <div className="mx-auto max-w-screen-2xl px-4 sm:px-10">
             <div className="mb-14 flex justify-center">
-              <div className="text-center w-full max-w-2xl">
-                <span className="text-primary font-bold tracking-widest text-xs uppercase mb-3 block">Discover Categories</span>
-                <h2 className="text-3xl lg:text-4xl mb-4 font-serif font-black tracking-tight text-foreground">
-                  {/* {t("common:Featured-title")} */}
+              <div className="section-heading">
+                <span className="section-label">Discover Categories</span>
+                <h2 className="section-title">
                   {content["Featured-title"]}
                 </h2>
-                <p className="text-base font-sans text-muted-foreground leading-relaxed">
-                  {/* {t("common:Featured-sub-title")} */}
+                <p className="section-subtitle">
                   {content["Featured-sub-title"]}
                 </p>
               </div>
@@ -149,77 +149,78 @@ export default async function Home() {
           </div>
         </div>
 
-        {/* popular products */}
-        <div className="bg-muted/10 dark:bg-muted/5 lg:py-24 py-16 mx-auto max-w-screen-2xl px-4 sm:px-10">
+        {/* Popular Products */}
+        <div className="bg-muted/5 dark:bg-muted/5 lg:py-24 py-16 mx-auto max-w-screen-2xl px-4 sm:px-10">
           <div className="mb-14 flex justify-center">
-            <div className="text-center w-full max-w-2xl">
-              <span className="text-primary font-bold tracking-widest text-xs uppercase mb-3 block">Top Picks</span>
-              <h2 className="text-3xl lg:text-4xl mb-4 font-serif font-black tracking-tight text-foreground">
+            <div className="section-heading">
+              <span className="section-label">Top Picks</span>
+              <h2 className="section-title">
                 {content["popular-products-title"]}
               </h2>
-              <p className="text-base font-sans text-muted-foreground leading-relaxed">
+              <p className="section-subtitle">
                 {content["popular-products-sub-title"]}
               </p>
             </div>
           </div>
-          <div className="flex">
-            <div className="w-full">
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-6 lg:gap-8">
-                {result.popular.results?.slice(0, 18).map((product) => (
+          <div className="w-full">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-5 lg:gap-6">
+              {result.popular.results?.slice(0, 18).map((product, idx) => (
+                <div key={product._id} className="animate-fade-in-up" style={{ animationDelay: `${Math.min(idx * 0.05, 0.4)}s` }}>
                   <ProductCard
-                    key={product._id}
                     product={product}
                     attributes={attributes}
                   />
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* promotional banner card */}
+        {/* Promotional Banner */}
         <div className="block mx-auto max-w-screen-2xl bg-background lg:py-10 py-6">
           <div className="mx-auto max-w-screen-2xl px-4 sm:px-10">
-            <div className="bg-transparent overflow-hidden rounded-3xl">
+            <div className="bg-transparent overflow-hidden rounded-2xl">
               <FastDeliveryCard />
             </div>
           </div>
         </div>
 
-        {/* discounted products */}
+        {/* Discounted Products */}
         <div
           id="discount"
-          className="bg-background border-t border-border/40 lg:py-24 py-16 mx-auto max-w-screen-2xl px-4 sm:px-10"
+          className="bg-background border-t border-border/30 lg:py-24 py-16 mx-auto max-w-screen-2xl px-4 sm:px-10"
         >
           <div className="mb-14 flex justify-center">
-            <div className="text-center w-full max-w-2xl">
-              <span className="text-red-500 font-bold tracking-widest text-xs uppercase mb-3 block">Limited Time Offers</span>
-              <h2 className="text-3xl lg:text-4xl mb-4 font-serif font-black tracking-tight text-foreground">
+            <div className="section-heading">
+              <span className="inline-flex items-center gap-1.5 text-xs font-bold tracking-widest uppercase mb-3 text-destructive">
+                <span className="w-2 h-2 rounded-full bg-destructive animate-pulse-soft"></span>
+                Limited Time Offers
+              </span>
+              <h2 className="section-title">
                 {content["discounted-products-title"]}
               </h2>
-              <p className="text-base font-sans text-muted-foreground leading-relaxed">
+              <p className="section-subtitle">
                 {content["discounted-products-paragraph-text"]}
               </p>
             </div>
           </div>
-          <div className="flex">
-            <div className="w-full">
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-6 lg:gap-8">
-                {result.discount.results?.slice(0, 12).map((product) => (
+          <div className="w-full">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-5 lg:gap-6">
+              {result.discount.results?.slice(0, 12).map((product, idx) => (
+                <div key={product._id} className="animate-fade-in-up" style={{ animationDelay: `${Math.min(idx * 0.05, 0.3)}s` }}>
                   <ProductCard
-                    key={product._id}
                     product={product}
                     attributes={attributes}
                   />
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
 
         {/* Social Proof & Marketing */}
-        <div className="bg-muted/20 dark:bg-muted/5 border-t border-border/40">
-          <div className="mx-auto max-w-screen-2xl px-4 sm:px-10 py-16 lg:py-24 space-y-20">
+        <div className="bg-muted/10 dark:bg-muted/5 border-t border-border/30">
+          <div className="mx-auto max-w-screen-2xl px-4 sm:px-10 py-16 lg:py-24 space-y-16 lg:space-y-20">
             <RecentlyViewed />
             <Testimonials />
             <NewsletterSignup />

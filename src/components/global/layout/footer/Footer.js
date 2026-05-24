@@ -20,86 +20,86 @@ const Footer = () => {
   // } = useContext(UserContext);
 
   return (
-    <div className="pb-16 lg:pb-0 xl:pb-0 bg-card border-t border-border/40 text-foreground transition-colors duration-200">
+    <div className="pb-16 lg:pb-0 xl:pb-0 bg-card border-t border-border/30 text-foreground transition-colors duration-200">
       <div className="mx-auto max-w-screen-2xl px-4 sm:px-10">
         <div className="grid grid-cols-2 md:grid-cols-7 xl:grid-cols-12 gap-5 sm:gap-9 lg:gap-11 xl:gap-7 py-10 lg:py-16 justify-between">
           <div className="pb-3.5 sm:pb-0 col-span-1 md:col-span-2 lg:col-span-3">
-            <h3 className="text-md lg:leading-7 font-medium mb-4 sm:mb-5 lg:mb-6 pb-0.5">
+            <h3 className="text-sm lg:leading-7 font-bold mb-4 sm:mb-5 lg:mb-6 pb-0.5 uppercase tracking-wider text-foreground">
               {content["footer-menu-title"]}
             </h3>
             <ul className="text-sm flex flex-col space-y-3">
               <li className="flex items-baseline">
-                <Link href="/about-us" className="text-muted-foreground inline-block w-full hover:text-primary transition-colors">
+                <Link href="/about-us" className="text-muted-foreground inline-block w-full hover:text-primary hover:translate-x-1 transition-all duration-200">
                   {content["footer-about-us"]}
                 </Link>
               </li>
               <li className="flex items-baseline">
-                <Link href="/contact-us" className="text-muted-foreground inline-block w-full hover:text-primary transition-colors">
+                <Link href="/contact-us" className="text-muted-foreground inline-block w-full hover:text-primary hover:translate-x-1 transition-all duration-200">
                   {content["footer-contact-us"]}
                 </Link>
               </li>
               <li className="flex items-baseline">
-                <Link href="/terms-and-conditions" className="text-muted-foreground inline-block w-full hover:text-primary transition-colors">
+                <Link href="/terms-and-conditions" className="text-muted-foreground inline-block w-full hover:text-primary hover:translate-x-1 transition-all duration-200">
                   {content["footer-terms-and-conditions"]}
                 </Link>
               </li>
               <li className="flex items-baseline">
-                <Link href="/privacy-policy" className="text-muted-foreground inline-block w-full hover:text-primary transition-colors">
+                <Link href="/privacy-policy" className="text-muted-foreground inline-block w-full hover:text-primary hover:translate-x-1 transition-all duration-200">
                     {content["Privacy Policy"]}
                 </Link>
               </li>
             </ul>
           </div>
           <div className="pb-3.5 sm:pb-0 col-span-1 md:col-span-2 lg:col-span-3">
-            <h3 className="text-md lg:leading-7 font-medium mb-4 sm:mb-5 lg:mb-6 pb-0.5">
+            <h3 className="text-sm lg:leading-7 font-bold mb-4 sm:mb-5 lg:mb-6 pb-0.5 uppercase tracking-wider text-foreground">
               {content["footer-top-category"]}
             </h3>
             <ul className="text-sm lg:text-15px flex flex-col space-y-3">
               <li className="flex items-baseline">
-                <Link href="/product/search?category=fish--meat" className="text-muted-foreground inline-block w-full hover:text-primary transition-colors">
+                <Link href="/product/search?category=fish--meat" className="text-muted-foreground inline-block w-full hover:text-primary hover:translate-x-1 transition-all duration-200">
                   {content["footer-top-category-fish-meat"]}
                 </Link>
               </li>
 
               <li className="flex items-baseline">
-                <Link href="/product/search?category=drinks" className="text-muted-foreground inline-block w-full hover:text-primary transition-colors">
+                <Link href="/product/search?category=drinks" className="text-muted-foreground inline-block w-full hover:text-primary hover:translate-x-1 transition-all duration-200">
                   {content["footer-top-category-soft-drinks"]}
                 </Link>
               </li>
               <li className="flex items-baseline">
-                <Link href="search?category=baby-care" className="text-muted-foreground inline-block w-full hover:text-primary transition-colors">
+                <Link href="/product/search?category=baby-care" className="text-muted-foreground inline-block w-full hover:text-primary hover:translate-x-1 transition-all duration-200">
                   {content["footer-top-category-baby-care"]}
                 </Link>
               </li>
               <li className="flex items-baseline">
-                <Link href="search?category=beauty--health" className="text-muted-foreground inline-block w-full hover:text-primary transition-colors">
+                <Link href="/product/search?category=beauty--health" className="text-muted-foreground inline-block w-full hover:text-primary hover:translate-x-1 transition-all duration-200">
                   {content["footer-top-category-beauty-health"]}
                 </Link>
               </li>
             </ul>
           </div>
           <div className="pb-3.5 sm:pb-0 col-span-1 md:col-span-2 lg:col-span-3">
-            <h3 className="text-md lg:leading-7 font-medium mb-4 sm:mb-5 lg:mb-6 pb-0.5">
+            <h3 className="text-sm lg:leading-7 font-bold mb-4 sm:mb-5 lg:mb-6 pb-0.5 uppercase tracking-wider text-foreground">
               Customer Support
             </h3>
             <ul className="text-sm flex flex-col space-y-3">
               <li className="flex items-baseline">
-                <Link href="/track-order" className="text-muted-foreground inline-block w-full hover:text-primary transition-colors">
+                <Link href="/track-order" className="text-muted-foreground inline-block w-full hover:text-primary hover:translate-x-1 transition-all duration-200">
                   Track Your Order
                 </Link>
               </li>
               <li className="flex items-baseline">
-                <Link href="/faqs" className="text-muted-foreground inline-block w-full hover:text-primary transition-colors">
+                <Link href="/faqs" className="text-muted-foreground inline-block w-full hover:text-primary hover:translate-x-1 transition-all duration-200">
                   Frequently Asked Questions
                 </Link>
               </li>
               <li className="flex items-baseline">
-                <Link href="/shipping-policy" className="text-muted-foreground inline-block w-full hover:text-primary transition-colors">
+                <Link href="/shipping-policy" className="text-muted-foreground inline-block w-full hover:text-primary hover:translate-x-1 transition-all duration-200">
                   Shipping & Delivery
                 </Link>
               </li>
               <li className="flex items-baseline">
-                <Link href="/return-policy" className="text-muted-foreground inline-block w-full hover:text-primary transition-colors">
+                <Link href="/return-policy" className="text-muted-foreground inline-block w-full hover:text-primary hover:translate-x-1 transition-all duration-200">
                   Returns & Refunds
                 </Link>
               </li>
@@ -121,9 +121,9 @@ const Footer = () => {
           </div>
         </div>
 
-        <hr className="border-border/40"></hr>
+        <hr className="border-border/20"></hr>
 
-        <div className="mx-auto max-w-screen-2xl px-4 sm:px-10 bg-muted/30 dark:bg-zinc-900/30 border border-border/40 rounded-xl my-4">
+        <div className="mx-auto max-w-screen-2xl px-4 sm:px-10 bg-muted/20 dark:bg-muted/5 border border-border/30 rounded-xl my-4">
           <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-5 sm:gap-9 lg:gap-11 xl:gap-7 py-8 items-center justify-between">
             <div className="col-span-1">
               <span className="text-base leading-7 font-medium block mb-2 pb-0.5">
@@ -185,8 +185,8 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="mx-auto max-w-screen-2xl px-3 sm:px-10 flex justify-center py-4 border-t border-border/20">
-        <p className="text-sm text-muted-foreground leading-6">
+      <div className="mx-auto max-w-screen-2xl px-3 sm:px-10 flex justify-center py-5 border-t border-border/20">
+        <p className="text-xs text-muted-foreground/70 leading-6">
           Copyright 2024 @{" "}
           <Link target="_blank" href="https://todayfruit-store.vercel.app/" className="text-primary hover:underline font-semibold" rel="noopener noreferrer">
             Today Fruit

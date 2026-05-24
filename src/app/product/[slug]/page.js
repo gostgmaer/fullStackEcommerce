@@ -35,10 +35,14 @@ const ProductScreen = async ({ params, searchParams }) => {
   if (!data || !data.product) {
     return (
       <Layout>
-        <div className="min-h-screen flex items-center justify-center">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold text-foreground mb-4">404</h1>
-            <p className="text-muted-foreground">Product not found</p>
+        <div className="min-h-[60vh] flex items-center justify-center bg-background">
+          <div className="text-center animate-fade-in">
+            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-muted/30 flex items-center justify-center">
+              <span className="text-3xl">🔍</span>
+            </div>
+            <h1 className="text-2xl font-black font-serif text-foreground mb-2">Product Not Found</h1>
+            <p className="text-sm text-muted-foreground mb-6">The product you&apos;re looking for doesn&apos;t exist or has been removed.</p>
+            <a href="/" className="btn-primary !no-underline">Back to Shop</a>
           </div>
         </div>
       </Layout>

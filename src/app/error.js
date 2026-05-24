@@ -21,10 +21,10 @@ const ErrorPage = ({ error, reset }) => {
         </div>
 
         {/* Content */}
-        <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white mb-2 tracking-tight">
+        <h1 className="text-2xl font-extrabold text-foreground mb-2 tracking-tight">
           Something went wrong
         </h1>
-        <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-2">
+        <p className="text-sm text-muted-foreground leading-relaxed mb-2">
           An unexpected error occurred. Our team has been notified.
         </p>
         {/* Show error message in dev only */}

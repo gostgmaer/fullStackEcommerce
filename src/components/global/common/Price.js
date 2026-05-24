@@ -7,8 +7,8 @@ const Price = ({ product, price, card, currency, originalPrice }) => {
           <span
             className={
               card
-                ? "text-base lg:text-lg font-bold text-slate-900 dark:text-slate-100"
-                : "text-2xl font-extrabold text-slate-900 dark:text-slate-100"
+                ? "text-base lg:text-lg font-bold text-foreground"
+                : "text-2xl font-extrabold text-foreground"
             }
           >
             {currency}
@@ -18,8 +18,8 @@ const Price = ({ product, price, card, currency, originalPrice }) => {
             <del
               className={
                 card
-                  ? "text-xs font-normal text-slate-400 dark:text-slate-500 ml-1 line-through"
-                  : "text-base font-normal text-slate-400 dark:text-slate-500 ml-1 line-through"
+                  ? "text-xs font-normal text-muted-foreground ml-1 line-through"
+                  : "text-base font-normal text-muted-foreground ml-1 line-through"
               }
             >
               {currency}
@@ -32,8 +32,8 @@ const Price = ({ product, price, card, currency, originalPrice }) => {
           <span
             className={
               card
-                ? "text-base lg:text-lg font-bold text-slate-900 dark:text-slate-100"
-                : "text-2xl font-extrabold text-slate-900 dark:text-slate-100"
+                ? "text-base lg:text-lg font-bold text-foreground"
+                : "text-2xl font-extrabold text-foreground"
             }
           >
             {currency}
@@ -43,8 +43,8 @@ const Price = ({ product, price, card, currency, originalPrice }) => {
             <del
               className={
                 card
-                  ? "text-xs font-normal text-slate-400 dark:text-slate-500 ml-1 line-through"
-                  : "text-base font-normal text-slate-400 dark:text-slate-500 ml-1 line-through"
+                  ? "text-xs font-normal text-muted-foreground ml-1 line-through"
+                  : "text-base font-normal text-muted-foreground ml-1 line-through"
               }
             >
               {currency}

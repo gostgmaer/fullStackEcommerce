@@ -196,7 +196,7 @@ const ProductModal = ({
   return (
     <>
       <MainModal modalOpen={modalOpen} setModalOpen={setModalOpen}>
-        <div className="inline-block overflow-y-auto h-full align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+        <div className="inline-block overflow-y-auto h-full align-middle transition-all transform bg-card shadow-xl rounded-2xl">
           <div className="flex flex-col lg:flex-row md:flex-row w-full max-w-4xl overflow-hidden">
             <Link href={`/product/${product.slug}`} passHref className="flex-shrink-0 flex items-center justify-center h-auto cursor-pointer">
               <div
@@ -226,7 +226,7 @@ const ProductModal = ({
 
             <div className="w-full flex flex-col p-5 md:p-8 text-left">
               <div className="mb-2 md:mb-2.5 block -mt-1.5">
-                <Link href={`/product/${product.slug}`}  className=" text-gray-700">
+                <Link href={`/product/${product.slug}`}  className=" text-foreground">
                   <h1
                     // onClick={() => setModalOpen(false)}
                     className="text-heading text-lg md:text-xl lg:text-2xl font-semibold font-serif hover:text-black cursor-pointer"
@@ -242,7 +242,7 @@ const ProductModal = ({
                   <Stock stock={product.stock} card />
                 </div>
               </div>
-              <p className="text-sm leading-6 text-gray-500 md:leading-6">
+              <p className="text-sm leading-6 text-muted-foreground md:leading-6">
 
                 {product?.descriptions}
               </p>
@@ -259,7 +259,7 @@ const ProductModal = ({
               <div className="mb-1">
                 {variantTitle?.map((a, i) => (
                   <span key={a._id}>
-                    <h4 className="text-sm py-1 font-serif text-gray-700 font-bold">
+                    <h4 className="text-sm py-1 font-serif text-foreground font-bold">
 
                       {a?.name}
                     </h4>
@@ -283,23 +283,23 @@ const ProductModal = ({
 
               <div className="flex items-center justify-center mt-4">
                 <div className="flex items-center justify-center w-full space-s-3 sm:space-s-4 ">
-                  <div className="group flex items-center justify-between rounded-md overflow-hidden flex-shrink-0 border h-11 md:h-12 border-gray-300">
+                  <div className="group flex items-center justify-between rounded-md overflow-hidden flex-shrink-0 border h-11 md:h-12 border-border">
                     <button
                       onClick={() => setTotal(total - 1)}
                       disabled={total <= 1 ? true : false}
 
-                      className={total <= 1 ? "flex items-center !cursor-default text-black justify-center flex-shrink-0 h-full transition ease-in-out duration-300 focus:outline-none w-8 md:w-12 text-heading border-e border-gray-300 hover:text-gray-500" : "flex items-center !cursor-pointer text-black justify-center flex-shrink-0 h-full transition ease-in-out duration-300 focus:outline-none w-8 md:w-12 text-heading border-e border-gray-300 hover:text-gray-500"}
+                      className={total <= 1 ? "flex items-center !cursor-default text-foreground justify-center flex-shrink-0 h-full transition ease-in-out duration-300 focus:outline-none w-8 md:w-12 text-heading border-e border-border hover:text-muted-foreground" : "flex items-center !cursor-pointer text-foreground justify-center flex-shrink-0 h-full transition ease-in-out duration-300 focus:outline-none w-8 md:w-12 text-heading border-e border-border hover:text-muted-foreground"}
                     >
                       <span className=" text-base ">
                        <IoRemoveOutline/>
                       </span>
                     </button>
-                    <p className="text-black font-semibold flex items-center justify-center h-full transition-colors duration-250 ease-in-out cursor-default flex-shrink-0 text-base text-heading w-8 md:w-20 xl:w-24">
+                    <p className="text-foreground font-semibold flex items-center justify-center h-full transition-colors duration-250 ease-in-out cursor-default flex-shrink-0 text-base text-heading w-8 md:w-20 xl:w-24">
                       {total}
                     </p>
                     <button
                       onClick={() => setTotal(total + 1)}
-                      className={product.quantity === 0 ? "  !cursor-default flex items-center justify-center h-full text-black flex-shrink-0 transition ease-in-out duration-300 focus:outline-none w-8 md:w-12 text-heading border-s border-gray-300 hover:text-gray-500" : "  !cursor-pointer flex items-center justify-center h-full text-black flex-shrink-0 transition ease-in-out duration-300 focus:outline-none w-8 md:w-12 text-heading border-s border-gray-300 hover:text-gray-500"}
+                      className={product.quantity === 0 ? "  !cursor-default flex items-center justify-center h-full text-foreground flex-shrink-0 transition ease-in-out duration-300 focus:outline-none w-8 md:w-12 text-heading border-s border-border hover:text-muted-foreground" : "  !cursor-pointer flex items-center justify-center h-full text-foreground flex-shrink-0 transition ease-in-out duration-300 focus:outline-none w-8 md:w-12 text-heading border-s border-border hover:text-muted-foreground"}
                       tabIndex={0}
                       disabled={product.quantity === 0 ? true : false}
                     >
@@ -319,7 +319,7 @@ const ProductModal = ({
                 <div className="flex items-center justify-between space-s-3 sm:space-s-4 w-full">
                   <div>
                     <span className="font-serif font-semibold py-1 text-sm d-block">
-                      <span className="text-gray-700">
+                      <span className="text-foreground">
                 
                       
                         {content.category}
@@ -330,7 +330,7 @@ const ProductModal = ({
                       >
                         <button
                           type="button"
-                          className="text-gray-600 font-serif font-medium underline ml-2 hover:text-teal-600"
+                          className="text-muted-foreground font-serif font-medium underline ml-2 hover:text-primary"
                          
                         >
                           {product?.category?.title}

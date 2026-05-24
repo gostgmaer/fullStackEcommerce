@@ -69,12 +69,12 @@ const ResetPassword = ({ setShowResetPassword, setModalOpen }) => {
         <Link href="/">
           <a className="text-3xl font-bold font-serif">Forget Password</a>
         </Link>
-        <p className="text-sm md:text-base text-gray-500 mt-2 mb-8 sm:mb-10">
+        <p className="text-sm md:text-base text-muted-foreground mt-2 mb-8 sm:mb-10">
           Reset Your Password
         </p>
       </div>
       <form onSubmit={formik.handleSubmit}>
-        <div className="flex flex-col gap-x-4 gap-y-5 md:grid md:grid-cols-2 lg:gap-5 text-black">
+        <div className="flex flex-col gap-x-4 gap-y-5 md:grid md:grid-cols-2 lg:gap-5 text-foreground">
 
           <div className="col-span-full ">
             <Input label={"Email"} type={"text"} additionalAttrs={{
@@ -101,7 +101,7 @@ const ResetPassword = ({ setShowResetPassword, setModalOpen }) => {
           </div>
 
           <button
-            className=" disabled:text-gray-400 disabled:bg-gray-300 col-span-2 inline-flex font-medium items-center bg-gray-700 hover:enabled::bg-gray-800 active:enabled:bg-gray-1000 focus-visible:ring-gray-900/30 text-gray-0  text-white justify-center active:enabled:translate-y-px focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-50 transition-colors duration-200 px-5 py-2 text-base h-12 rounded-md border border-transparent focus-visible:ring-offset-2 bg-blue hover:enabled:bg-gray-900 focus-visible:ring-blue/30  w-full"
+            className="btn-primary col-span-2 inline-flex font-medium items-center justify-center transition-colors duration-200 px-5 py-2 text-base h-12 rounded-xl w-full disabled:opacity-50 disabled:cursor-not-allowed"
             type="submit"
             disabled={!formik.isValid || formik.isSubmitting}
           >

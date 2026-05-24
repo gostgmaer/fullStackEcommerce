@@ -62,13 +62,13 @@ const Login = ({ setShowResetPassword, setModalOpen }) => {
     <>
       <div className="text-center mb-6">
         <h2 className="text-3xl font-bold font-serif">Login</h2>
-        <p className="text-sm md:text-base text-gray-500 mt-2 mb-8 sm:mb-10">
+        <p className="text-sm md:text-base text-muted-foreground mt-2 mb-8 sm:mb-10">
           Login with your email and password
         </p>
       </div>
 
       <form onSubmit={formik.handleSubmit}>
-        <div className="flex flex-col gap-x-4 gap-y-5 md:grid md:grid-cols-2 lg:gap-5 text-black">
+        <div className="flex flex-col gap-x-4 gap-y-5 md:grid md:grid-cols-2 lg:gap-5 text-foreground">
 
           <div className="col-span-full ">
             <Input label={"Email"} type={"text"} additionalAttrs={{
@@ -105,7 +105,7 @@ const Login = ({ setShowResetPassword, setModalOpen }) => {
           </div>
 
           <button
-            className=" disabled:text-gray-400 disabled:bg-gray-300 col-span-2 inline-flex font-medium items-center bg-gray-700 hover:enabled::bg-gray-800 active:enabled:bg-gray-1000 focus-visible:ring-gray-900/30 text-gray-0  text-white justify-center active:enabled:translate-y-px focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-50 transition-colors duration-200 px-5 py-2 text-base h-12 rounded-md border border-transparent focus-visible:ring-offset-2 bg-blue hover:enabled:bg-gray-900 focus-visible:ring-blue/30  w-full"
+            className="btn-primary col-span-2 inline-flex font-medium items-center justify-center transition-colors duration-200 px-5 py-2 text-base h-12 rounded-xl w-full disabled:opacity-50 disabled:cursor-not-allowed"
             type="submit"
             disabled={!formik.isValid || formik.isSubmitting}
           >
@@ -113,8 +113,8 @@ const Login = ({ setShowResetPassword, setModalOpen }) => {
 
           </button>
 
-          <div className="before:content-[' '] relative  mt-0.5 flex items-center  before:absolute before:left-0 before:top-1/2 before:h-px before:w-full before:bg-gray-100 mb-5 2xl:mb-7 justify-center">
-              <span className="relative z-10 inline-block bg-white text-sm font-medium text-gray-500 dark:bg-gray-50 2xl:text-base p-2.5">
+          <div className="before:content-[' '] relative  mt-0.5 flex items-center  before:absolute before:left-0 before:top-1/2 before:h-px before:w-full before:bg-border mb-5 2xl:mb-7 justify-center">
+              <span className="relative z-10 inline-block bg-card text-sm font-medium text-muted-foreground 2xl:text-base p-2.5">
                 Or
               </span>
             </div>
