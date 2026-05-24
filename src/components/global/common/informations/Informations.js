@@ -2,11 +2,11 @@ import React from "react";
 
 function Informations() {
   return (
-    <div className="w-full xl:w-5/12 lg:w-6/12 md:w-5/12">
-      <div className="mt-6 md:mt-0 lg:mt-0 bg-gray-50 border border-gray-100 p-4 lg:p-8 rounded-lg">
-        <ul className="my-0">
-          <li className="flex items-center py-3">
-            <span className="text-xl text-gray-400 items-start mr-4">
+    <div className="w-full">
+      <div className="mt-6 md:mt-0 lg:mt-0 bg-card border border-border/40 p-4 lg:p-8 rounded-xl shadow-sm">
+        <ul className="my-0 space-y-1">
+          <li className="flex items-center py-3 border-b border-border/10 last:border-0">
+            <span className="text-xl text-primary items-start mr-4">
               <svg
                 stroke="currentColor"
                 fill="none"
@@ -24,14 +24,13 @@ function Informations() {
                 <circle cx="18.5" cy="18.5" r="2.5"></circle>
               </svg>
             </span>
-            <p className="font-sans leading-5 text-sm text-gray-500">
-              Free shipping apply to all orders over shipping{" "}
-              <span className="font-semibold">$100</span>
+            <p className="font-sans leading-5 text-sm text-muted-foreground">
+              Free shipping apply to all orders over{" "}
+              <span className="font-semibold text-foreground">$5</span>
             </p>
           </li>
-          <li className="flex items-center py-3">
-            <span className="text-xl text-gray-400 items-start mr-4">
-                
+          <li className="flex items-center py-3 border-b border-border/10 last:border-0">
+            <span className="text-xl text-primary items-start mr-4">
               <svg
                 stroke="currentColor"
                 fill="none"
@@ -47,12 +46,12 @@ function Informations() {
                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
               </svg>
             </span>
-            <p className="font-sans leading-5 text-sm text-gray-500">
-              Home Delivery within <span className="font-semibold">1 Hour</span>
+            <p className="font-sans leading-5 text-sm text-muted-foreground">
+              Home Delivery within <span className="font-semibold text-foreground">1 Hour</span>
             </p>
           </li>
-          <li className="flex items-center py-3">
-            <span className="text-xl text-gray-400 items-start mr-4">
+          <li className="flex items-center py-3 border-b border-border/10 last:border-0">
+            <span className="text-xl text-primary items-start mr-4">
               <svg
                 stroke="currentColor"
                 fill="none"
@@ -68,12 +67,12 @@ function Informations() {
                 <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
               </svg>
             </span>
-            <p className="font-sans leading-5 text-sm text-gray-500">
+            <p className="font-sans leading-5 text-sm text-muted-foreground">
               Cash on Delivery Available
             </p>
           </li>
-          <li className="flex items-center py-3">
-            <span className="text-xl text-gray-400 items-start mr-4">
+          <li className="flex items-center py-3 border-b border-border/10 last:border-0">
+            <span className="text-xl text-primary items-start mr-4">
               <svg
                 stroke="currentColor"
                 fill="none"
@@ -91,13 +90,12 @@ function Informations() {
                 <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
               </svg>
             </span>
-            <p className="font-sans leading-5 text-sm text-gray-500">
-              <span className="font-semibold">7</span> Days returns money back
-              guarantee
+            <p className="font-sans leading-5 text-sm text-muted-foreground">
+              <span className="font-semibold text-foreground">7</span> Days returns money back guarantee
             </p>
           </li>
-          <li className="flex items-center py-3">
-            <span className="text-xl text-gray-400 items-start mr-4">
+          <li className="flex items-center py-3 border-b border-border/10 last:border-0">
+            <span className="text-xl text-primary items-start mr-4">
               <svg
                 stroke="currentColor"
                 fill="none"
@@ -114,12 +112,12 @@ function Informations() {
                 <line x1="1" y1="1" x2="23" y2="23"></line>
               </svg>
             </span>
-            <p className="font-sans leading-5 text-sm text-gray-500">
-              Warranty not available this item
+            <p className="font-sans leading-5 text-sm text-muted-foreground">
+              Warranty not available for this item
             </p>
           </li>
-          <li className="flex items-center py-3">
-            <span className="text-xl text-gray-400 items-start mr-4">
+          <li className="flex items-center py-3 border-b border-border/10 last:border-0">
+            <span className="text-xl text-primary items-start mr-4">
               <svg
                 stroke="currentColor"
                 fill="none"
@@ -142,12 +140,12 @@ function Informations() {
                 <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
               </svg>
             </span>
-            <p className="font-sans leading-5 text-sm text-gray-500">
-              Guaranteed 100% organic from natural products.
+            <p className="font-sans leading-5 text-sm text-muted-foreground">
+              Guaranteed 100% organic/natural product
             </p>
           </li>
-          <li className="flex items-center py-3">
-            <span className="text-xl text-gray-400 items-start mr-4">
+          <li className="flex items-center py-3 last:border-0">
+            <span className="text-xl text-primary items-start mr-4">
               <svg
                 stroke="currentColor"
                 fill="none"
@@ -163,8 +161,8 @@ function Informations() {
                 <circle cx="12" cy="10" r="3"></circle>
               </svg>
             </span>
-            <p className="font-sans leading-5 text-sm text-gray-500">
-              Delivery from our pick point Challenge Bus Terminal Ibadan Oyo Nigeria
+            <p className="font-sans leading-5 text-sm text-muted-foreground">
+              Local pick-up and fast shipping available
             </p>
           </li>
         </ul>

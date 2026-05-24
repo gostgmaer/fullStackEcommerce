@@ -6,6 +6,7 @@ import SingleProduct from "@/components/elements/product/singleProduct";
 import Layout from "@/components/global/layout/Layout";
 
 import ProductServices from "@/helper/network/services/ProductServices";
+import AttributeServices from "@/helper/network/services/AttributeServices";
 
 export async function generateMetadata({ params, searchParams }, parent) {
   const { results } = await ProductServices.getProductBySlug(params);
@@ -217,12 +218,20 @@ export default ProductScreen;
 
 export const getRecord = async (params) => {
   var related;
+  var attributes = [];
   const product = await ProductServices.getProductBySlug(params);
 
   if (product) {
     related = await ProductServices.getRelatedProducts({
       category: product.results.category._id,
     });
+    try {
+      const attrsData = await AttributeServices.getShowingAttributes();
+      attributes = attrsData?.results || attrsData || [];
+    } catch (err) {
+      console.error("Failed to fetch attributes:", err);
+    }
   }
-  return { product: product.results, related };
+  return { product: product.results, related, attributes };
 };
+

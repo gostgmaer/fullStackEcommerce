@@ -172,8 +172,8 @@ function OrderSummary({ code, setCode }) {
 					</div>
 					<div className="flex items-center text-sm w-full font-medium text-muted-foreground">
 						Discount
-						<span className="ml-auto font-bold text-orange-400">
-							$0.00
+						<span className="ml-auto font-bold text-emerald-500">
+							{discount && cartTotalAmount > discount ? `-$${(cartTotalAmount - discount).toFixed(2)}` : "$0.00"}
 						</span>
 					</div>
 				</div>

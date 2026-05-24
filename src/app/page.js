@@ -11,6 +11,7 @@ import ProductCard from "@/components/elements/product/ProductCard";
 import Layout from "@/components/global/layout/Layout";
 import CategoryServices from "@/helper/network/services/CategoryServices";
 import ProductServices from "@/helper/network/services/ProductServices";
+import { TrustBar, Testimonials, NewsletterSignup } from "@/components/elements/home/HomeUpgrades";
 
 // import { serverMethod } from "@/helper/network/serverCall/datafetch";
 
@@ -139,6 +140,9 @@ export default async function Home() {
               </div>
             </div>
             <FeatureCategory category={result.category} />
+
+            {/* Trust Badges Bar */}
+            <TrustBar />
           </div>
         </div>
 
@@ -212,6 +216,12 @@ export default async function Home() {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Social Proof & Marketing */}
+        <div className="mx-auto max-w-screen-2xl px-3 sm:px-10 pb-8">
+          <Testimonials />
+          <NewsletterSignup />
         </div>
       </div>
 

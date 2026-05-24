@@ -52,6 +52,11 @@ const CheckoutBlock = () => {
             setCsc(mod);
         });
         window.scrollTo(0, 0);
+        
+        const storedCoupon = localStorage.getItem('cartCouponCode');
+        if (storedCoupon) {
+            setCode(storedCoupon);
+        }
     }, []);
 
     const {
@@ -109,8 +114,8 @@ const CheckoutBlock = () => {
     };
 
     const onchangeSubmit = async (values) => {
-        if (cartTotalAmount < 100) {
-            return notifyerror('Order Items must worth more than $100');
+        if (cartTotalAmount < 5) {
+            return notifyerror('Order Items must worth more than $5');
         }
 
         const shPrice = shippingPrice; // Default shipping price

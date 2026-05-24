@@ -78,6 +78,57 @@ function OrderElement({ order }) {
           </div>
         </div>
 
+        {/* Live Order Tracking Stepper */}
+        <div className="bg-card border border-border/40 p-6 lg:p-8 rounded-2xl mb-8 shadow-sm transition-all duration-200">
+          <h3 className="text-sm font-bold text-foreground mb-6 flex items-center justify-between uppercase tracking-wider">
+            <span>Live Order Tracking</span>
+            <span className="text-xs text-muted-foreground font-mono">Status: {data.status || "Pending"}</span>
+          </h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
+            {[
+              { label: "Order Placed", desc: "We have received your order", active: true },
+              { label: "Processing", desc: "Preparing your items", active: ["processing", "shipped", "in-transit", "completed", "delivered", "payment-received", "success", "paid"].includes((data.status || "").toLowerCase()) },
+              { label: "In Transit", desc: "On the way to you", active: ["shipped", "in-transit", "completed", "delivered"].includes((data.status || "").toLowerCase()) },
+              { label: "Delivered", desc: "Package has arrived", active: ["completed", "delivered"].includes((data.status || "").toLowerCase()) }
+            ].map((step, idx, arr) => (
+              <div key={idx} className="flex md:flex-col items-center gap-4 text-left md:text-center relative">
+                {/* Stepper Circle */}
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm border-2 z-10 transition-all duration-300 ${
+                  step.active 
+                    ? "bg-primary border-primary text-primary-foreground shadow" 
+                    : "bg-muted border-border text-muted-foreground"
+                }`}>
+                  {idx + 1}
+                </div>
+                
+                {/* Stepper Connection Line */}
+                {idx < 3 && (
+                  <div className={`hidden md:block absolute top-5 left-[calc(50%+20px)] w-[calc(100%-40px)] h-0.5 -z-0 transition-colors duration-300 ${
+                    arr[idx+1].active ? "bg-primary" : "bg-border/60"
+                  }`} />
+                )}
+
+                <div className="flex flex-col">
+                  <span className={`text-sm font-bold ${step.active ? "text-foreground" : "text-muted-foreground"}`}>{step.label}</span>
+                  <span className="text-xs text-muted-foreground/80 mt-0.5 leading-relaxed">{step.desc}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          {/* Direct link CTA */}
+          <div className="mt-6 pt-4 border-t border-border/30 flex flex-col sm:flex-row items-center justify-between text-xs text-muted-foreground gap-3">
+            <span>Tracking reference code: <strong className="font-mono text-foreground">{data.invoice || data._id?.substring(0, 8)}</strong></span>
+            <Link
+              href="/shipping-policy"
+              className="text-primary font-semibold hover:underline"
+            >
+              View Shipping & Delivery FAQs
+            </Link>
+          </div>
+        </div>
+
         {/* Invoice Printable Card */}
         <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80 rounded-2xl shadow-sm overflow-hidden" ref={printRef}>
           
