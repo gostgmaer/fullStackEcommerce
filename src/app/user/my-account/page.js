@@ -16,7 +16,7 @@ const Index = async (props) => {
 
   // @ts-ignore
   const session = await getServerSession(authOptions);
-  const order = await OrderServices.getOrderCustomer(props.params, { "Authorization": `Bearer ${session["accessToken"]}` })
+  const order = await OrderServices.getOrderCustomer(props.params, { "Authorization": `Bearer ${session?.["accessToken"]}` })
 
 
   return (

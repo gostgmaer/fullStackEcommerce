@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Link from "next/link";
+
 import { Popover } from "@headlessui/react";
 import { content } from "@/assets/jsonfile/content";
 

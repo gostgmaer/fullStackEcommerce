@@ -15,7 +15,7 @@ const Index = async (props) => {
     const session = await getServerSession(authOptions);
 
 
-    const data = await CustomerServices.fetchCustomerSingleAddress({ "Authorization": `Bearer ${session["accessToken"]}` },props.params)
+    const data = await CustomerServices.fetchCustomerSingleAddress({ "Authorization": `Bearer ${session?.["accessToken"]}` },props.params)
     
 
 

@@ -12,7 +12,7 @@ const Index = async (props) => {
 
   const session = await getServerSession(authOptions);
 
-  const dashboard = await CustomerServices.customerDashboard(null, { "Authorization": `Bearer ${session["accessToken"]}` })
+  const dashboard = await CustomerServices.customerDashboard(null, { "Authorization": `Bearer ${session?.["accessToken"]}` })
 
 
 

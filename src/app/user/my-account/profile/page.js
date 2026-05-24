@@ -15,7 +15,7 @@ const Index = async (props) => {
 
   // @ts-ignore
   const session = await getServerSession(authOptions);
-  const profile = await CustomerServices.getProfile(null, { "Authorization": `Bearer ${session["accessToken"]}` })
+  const profile = await CustomerServices.getProfile(null, { "Authorization": `Bearer ${session?.["accessToken"]}` })
 
 
   return (
