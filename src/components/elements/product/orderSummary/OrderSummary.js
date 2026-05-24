@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 function OrderSummary({ code, setCode, shippingPrice = 0, discount, setDiscount }) {
 	const cart = useSelector((state) => state['cart']);
-	const { cartTotalAmount } = useSelector((state) => state["cart"]);
+	const { cartTotalAmount, cartTaxAmount } = useSelector((state) => state["cart"]);
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(getTotals());
@@ -175,13 +175,19 @@ function OrderSummary({ code, setCode, shippingPrice = 0, discount, setDiscount 
 							{discount && cartTotalAmount > discount ? `-₹${(cartTotalAmount - discount).toFixed(2)}` : "₹0.00"}
 						</span>
 					</div>
+					<div className="flex items-center text-sm w-full font-medium text-muted-foreground">
+						Tax (GST 5%)
+						<span className="ml-auto text-foreground font-bold">
+							₹{Number(cartTaxAmount || 0).toFixed(2)}
+						</span>
+					</div>
 				</div>
 				
 				<div className="border-t border-border mt-4 pt-4">
 					<div className="flex items-center font-bold justify-between text-sm uppercase">
 						Total Cost
 						<span className="font-extrabold text-lg text-foreground">
-							₹{(discount ? Number(discount + shippingPrice) : Number(cartTotalAmount + shippingPrice)).toFixed(2)}
+							₹{(discount ? Number(discount + shippingPrice + cartTaxAmount) : Number(cartTotalAmount + shippingPrice + cartTaxAmount)).toFixed(2)}
 						</span>
 					</div>
 				</div>

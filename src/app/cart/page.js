@@ -14,7 +14,7 @@ import ProductServices from '@/helper/network/services/ProductServices';
 
 const CartPage = () => {
   const cart = useSelector((state) => state["cart"]);
-  const { cartTotalAmount } = useSelector((state) => state["cart"]);
+  const { cartTotalAmount, cartTaxAmount } = useSelector((state) => state["cart"]);
   const dispatch = useDispatch();
 
   // Coupon States
@@ -129,7 +129,7 @@ const CartPage = () => {
     }
   }, [cartTotalAmount, applyCoupon]);
 
-  const finalTotal = Math.max(cartTotalAmount + shippingCost - couponDiscount, 0);
+  const finalTotal = Math.max(cartTotalAmount + shippingCost + cartTaxAmount - couponDiscount, 0);
 
   return (
     <Layout>
@@ -337,7 +337,7 @@ const CartPage = () => {
                     <div className="flex justify-between text-muted-foreground">
                       <span>Tax estimate</span>
                       <span className="font-semibold text-foreground">
-                        ₹0.00
+                        ₹{cartTaxAmount.toFixed(2)}
                       </span>
                     </div>
                   </div>

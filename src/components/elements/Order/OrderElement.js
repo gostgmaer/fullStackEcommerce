@@ -245,6 +245,14 @@ function OrderElement({ order }) {
                   {formatter.format(data.discount || 0)}
                 </span>
               </div>
+              <div className="flex flex-col">
+                <span className="font-bold text-xs uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">
+                  Tax
+                </span>
+                <span className="font-semibold text-slate-600 dark:text-slate-400">
+                  {formatter.format(data.taxAmount || 0)}
+                </span>
+              </div>
               <div className="flex flex-col sm:items-end">
                 <span className="font-bold text-xs uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">
                   Total Amount

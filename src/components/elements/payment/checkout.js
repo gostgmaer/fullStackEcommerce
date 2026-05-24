@@ -33,6 +33,9 @@ const checkoutSchema = z.object({
     errorMap: () => ({ message: 'Payment Method is required!' }),
   }),
   additionalNotes: z.string().optional(),
+  termsAccepted: z.boolean().refine(val => val === true, {
+    message: 'You must accept the terms and conditions',
+  }),
 });
 
 const CheckoutBlock = () => {
@@ -44,7 +47,7 @@ const CheckoutBlock = () => {
 
     const router = useRouter();
     const dispatch = useDispatch();
-    const { cartTotalAmount } = useSelector((state) => state['cart']);
+    const { cartTotalAmount, cartTaxAmount } = useSelector((state) => state['cart']);
     const { ...item } = useSelector((state) => state["cart"]);
     const Id = uuidv4();
 
@@ -62,6 +65,7 @@ const CheckoutBlock = () => {
             setCode(storedCoupon);
         }
     }, []);
+
     const {
         register,
         handleSubmit,
@@ -82,6 +86,7 @@ const CheckoutBlock = () => {
             zipCode: "",
             payment_method: "",
             additionalNotes: "",
+            termsAccepted: false,
         }
     });
 
@@ -104,6 +109,7 @@ const CheckoutBlock = () => {
                             zipCode: defaultAddress.zipPostal || "",
                             payment_method: "",
                             additionalNotes: "",
+                            termsAccepted: false,
                         });
                     }
                 } catch (err) {
@@ -121,6 +127,7 @@ const CheckoutBlock = () => {
                     zipCode: "",
                     payment_method: "",
                     additionalNotes: "",
+                    termsAccepted: false,
                 });
             }
         };
@@ -157,7 +164,8 @@ const CheckoutBlock = () => {
             couponcode: code,
             cartTotalAmount,
             discount: discount,
-            totalPrice: Number(cartTotalAmount + shPrice - discount),
+            taxAmount: cartTaxAmount,
+            totalPrice: Number(cartTotalAmount + shPrice + cartTaxAmount - discount),
         };
 
         const { payment_method } = data;
@@ -441,6 +449,22 @@ const CheckoutBlock = () => {
                                         {errors.payment_method && (
                                             <p className="text-red-500 text-xs font-semibold">{errors.payment_method.message}</p>
                                         )}
+
+                                        <div className="pt-4 border-t border-border/40">
+                                            <label className="flex items-start space-x-3 cursor-pointer group">
+                                                <input
+                                                    type="checkbox"
+                                                    {...register("termsAccepted")}
+                                                    className="mt-1 h-4 w-4 rounded border-border text-primary focus:ring-primary/20 cursor-pointer"
+                                                />
+                                                <div className="text-xs leading-relaxed text-muted-foreground group-hover:text-foreground transition-colors">
+                                                    I have read and agree to the website <Link href="/terms-and-conditions" className="text-primary font-bold hover:underline">Terms and Conditions</Link> and <Link href="/privacy-policy" className="text-primary font-bold hover:underline">Privacy Policy</Link>
+                                                </div>
+                                            </label>
+                                            {errors.termsAccepted && (
+                                                <p className="text-red-500 text-[10px] font-bold mt-1.5 uppercase tracking-wider">{errors.termsAccepted.message}</p>
+                                            )}
+                                        </div>
                                         
                                         {/* Action buttons */}
                                         <div className="flex flex-col sm:flex-row gap-4 pt-4 border-t border-border/40">

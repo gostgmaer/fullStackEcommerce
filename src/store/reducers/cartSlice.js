@@ -9,6 +9,7 @@ const initialState = {
   error:null,
   cartTotalQuantity: 0,
   cartTotalAmount: 0,
+  cartTaxAmount: 0,
 };
 
 
@@ -174,6 +175,7 @@ export const CartSlice = createSlice({
       total = parseFloat(total.toFixed(2));
       state.cartTotalQuantity = quantity;
       state.cartTotalAmount = total;
+      state.cartTaxAmount = parseFloat((total * 0.05).toFixed(2));
     }
   },
 
