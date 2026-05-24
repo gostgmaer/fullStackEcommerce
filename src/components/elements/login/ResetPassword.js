@@ -17,7 +17,7 @@ const ResetPassword = ({ setShowResetPassword, setModalOpen }) => {
 
   const handleSubmit = async (values) => {
     try {
-      const res = await post("/contact", values);
+      const res = await post("/user/auth/forget-password", values);
       if (res) {
         return res
       }
