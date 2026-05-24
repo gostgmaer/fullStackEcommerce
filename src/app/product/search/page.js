@@ -6,6 +6,7 @@ import CategoryCard from "@/components/elements/category/categoryCard/CategoryCa
 import ProductList from "@/components/elements/product/productList/ProductList";
 import Layout from "@/components/global/layout/Layout";
 import PageHeading from "@/components/global/layout/heading/pageHeading";
+import RecentlyViewed from "@/components/elements/product/RecentlyViewed";
 
 const SearchContent = () => {
   const searchParams = useSearchParams();
@@ -35,6 +36,9 @@ const SearchContent = () => {
 
             {/* Main Product Grid */}
             <ProductList />
+
+            {/* Recently Viewed Products */}
+            <RecentlyViewed />
           </div>
         </div>
       </div>

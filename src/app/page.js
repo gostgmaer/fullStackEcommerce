@@ -12,6 +12,7 @@ import Layout from "@/components/global/layout/Layout";
 import CategoryServices from "@/helper/network/services/CategoryServices";
 import ProductServices from "@/helper/network/services/ProductServices";
 import { TrustBar, Testimonials, NewsletterSignup } from "@/components/elements/home/HomeUpgrades";
+import RecentlyViewed from "@/components/elements/product/RecentlyViewed";
 
 // import { serverMethod } from "@/helper/network/serverCall/datafetch";
 
@@ -220,6 +221,7 @@ export default async function Home() {
 
         {/* Social Proof & Marketing */}
         <div className="mx-auto max-w-screen-2xl px-3 sm:px-10 pb-8">
+          <RecentlyViewed />
           <Testimonials />
           <NewsletterSignup />
         </div>

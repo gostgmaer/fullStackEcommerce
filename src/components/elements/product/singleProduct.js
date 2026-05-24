@@ -35,6 +35,14 @@ const SingleProduct = ({ props }) => {
   // Tabs state
   const [activeTab, setActiveTab] = useState("description");
 
+  // Dynamic Delivery & Countdown States
+  const [timeLeft, setTimeLeft] = useState("");
+  const [deliveryDate, setDeliveryDate] = useState("");
+
+  // Bundle cross-sell states
+  const [bundleProduct, setBundleProduct] = useState(null);
+  const [includeBundle, setIncludeBundle] = useState(true);
+
   // Load and sort variant titles based on attributes list
   useEffect(() => {
     if (product?.variants && product.variants.length > 0) {
@@ -74,6 +82,32 @@ const SingleProduct = ({ props }) => {
     }
   }, [product]);
 
+  // Save to recently viewed history list
+  useEffect(() => {
+    if (product && product._id) {
+      try {
+        const viewedStr = localStorage.getItem("recentlyViewedProducts") || "[]";
+        let viewed = JSON.parse(viewedStr);
+        // Remove current if duplicate
+        viewed = viewed.filter((item) => item._id !== product._id);
+        // Prepend current product
+        viewed.unshift({
+          _id: product._id,
+          title: product.title,
+          slug: product.slug,
+          image: product.image,
+          prices: product.prices,
+          unit: product.unit,
+          stock: product.stock,
+        });
+        // Slice to max 6 history items
+        localStorage.setItem("recentlyViewedProducts", JSON.stringify(viewed.slice(0, 6)));
+      } catch (err) {
+        console.error("Failed to update recently viewed history:", err);
+      }
+    }
+  }, [product]);
+
   // Handle updates when a variant attribute option is clicked
   useEffect(() => {
     if (!product || !product.variants || product.variants.length === 0) return;
@@ -97,10 +131,44 @@ const SingleProduct = ({ props }) => {
         setActiveImage(matched.image);
       }
     } else {
-      // Set stock to 0 if selection leads to an invalid variant path
       setStock(0);
     }
   }, [selectVariant, variantTitle, product]);
+
+  // Calculate dynamic delivery date and cutoff timer
+  useEffect(() => {
+    const options = { weekday: 'long', month: 'short', day: 'numeric' };
+    const date = new Date();
+    date.setDate(date.getDate() + 2); // Standard 2-day promise
+    setDeliveryDate(date.toLocaleDateString('en-US', options));
+
+    const interval = setInterval(() => {
+      const now = new Date();
+      const cutoff = new Date();
+      cutoff.setHours(18, 0, 0, 0); // 6:00 PM shipping cutoff daily
+
+      let diff = cutoff - now;
+      if (diff < 0) {
+        cutoff.setDate(cutoff.getDate() + 1);
+        diff = cutoff - now;
+      }
+
+      const hrs = Math.floor(diff / (1000 * 60 * 60));
+      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+      setTimeLeft(`${hrs}h ${mins}m ${secs}s`);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Set Frequently Bought Together item
+  useEffect(() => {
+    if (related?.results && related.results.length > 0) {
+      setBundleProduct(related.results[0]);
+    }
+  }, [related]);
 
   const handleAddToCart = () => {
     if (stock <= 0) {
@@ -141,9 +209,61 @@ const SingleProduct = ({ props }) => {
     notifySuccess(`${cartItemTitle} is Successfully Added!`);
   };
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  const handleAddBundleToCart = () => {
+    if (stock <= 0) {
+      notifyerror("Main item is out of stock!");
+      return;
+    }
+
+    // Add main item
+    const hasVariants = product.variants && product.variants.length > 0;
+    const variantIdSuffix = hasVariants
+      ? "-" + variantTitle.map((att) => selectVariant[att._id]).join("-")
+      : "";
+    const cartItemId = product._id + variantIdSuffix;
+
+    const variantNameSuffix = hasVariants
+      ? " - " + variantTitle
+          .map((att) => att.variants?.find((v) => v._id === selectVariant[att._id])?.name)
+          .filter(Boolean)
+          .join(", ")
+      : "";
+    const cartItemTitle = product.title + variantNameSuffix;
+
+    const cartProduct = {
+      ...product,
+      id: cartItemId,
+      title: cartItemTitle,
+      image: [activeImage, ...(product.image || []).slice(1)],
+      sku: sku || product.sku,
+      stock: stock,
+      prices: {
+        price: price,
+        originalPrice: originalPrice,
+        discount: discount,
+      },
+      variant: selectVariant || {},
+    };
+
+    dispatch(addByIncrement({ product: cartProduct, cartQuantity: total }));
+
+    // Add bundle item if selected
+    if (includeBundle && bundleProduct) {
+      const bundleCartProduct = {
+        ...bundleProduct,
+        id: bundleProduct._id,
+        prices: {
+          price: Number(bundleProduct.prices?.price || 0),
+          originalPrice: Number(bundleProduct.prices?.originalPrice || 0),
+          discount: Number(bundleProduct.prices?.discount || 0),
+        }
+      };
+      dispatch(addByIncrement({ product: bundleCartProduct, cartQuantity: 1 }));
+      notifySuccess(`Bundle Added: ${product.title} + ${bundleProduct.title}!`);
+    } else {
+      notifySuccess(`${cartItemTitle} is Successfully Added!`);
+    }
+  };
 
   return (
     <div className="bg-background text-foreground transition-colors duration-200">
@@ -174,7 +294,7 @@ const SingleProduct = ({ props }) => {
           </div>
 
           {/* Product Layout Grid */}
-          <div className="w-full rounded-2xl p-4 lg:p-10 bg-card border border-border/40 shadow-sm transition-all duration-200 mb-10">
+          <div className="w-full rounded-2xl p-4 lg:p-10 bg-card border border-border/40 shadow-sm transition-all duration-200 mb-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
               
               {/* Gallery Column */}
@@ -242,18 +362,40 @@ const SingleProduct = ({ props }) => {
                       )}
                     </div>
 
-                    {/* Stock Status */}
+                    {/* Stock Status & Low stock warnings */}
                     <div>
-                      {stock !== 0 ? (
-                        <span className="bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 rounded-full inline-flex items-center justify-center px-3 py-1 text-xs font-semibold">
-                          In Stock ({stock} available)
-                        </span>
+                      {stock > 0 ? (
+                        <div className="space-y-1.5">
+                          <span className="bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 rounded-full inline-flex items-center justify-center px-3 py-1 text-xs font-semibold">
+                            In Stock ({stock} available)
+                          </span>
+                          {stock < 15 && (
+                            <p className="text-xs font-bold text-red-500 animate-pulse flex items-center gap-1">
+                              ⚠️ Hurry! Only {stock} items left in stock.
+                            </p>
+                          )}
+                        </div>
                       ) : (
                         <span className="bg-red-500/10 text-red-500 border border-red-500/20 rounded-full inline-flex items-center justify-center px-3 py-1 text-xs font-semibold">
                           Stock Out
                         </span>
                       )}
                     </div>
+
+                    {/* Dynamic Delivery estimate countdown */}
+                    {stock > 0 && deliveryDate && timeLeft && (
+                      <div className="bg-muted/30 border border-border/40 rounded-xl p-3 flex items-center gap-3">
+                        <span className="text-xl">🚚</span>
+                        <div className="text-xs">
+                          <p className="text-foreground font-semibold">
+                            Get it by <span className="text-primary font-bold">{deliveryDate}</span>
+                          </p>
+                          <p className="text-[10px] mt-0.5 text-muted-foreground">
+                            Order in the next <span className="font-mono font-bold text-foreground bg-muted/60 px-1 py-0.5 rounded">{timeLeft}</span>
+                          </p>
+                        </div>
+                      </div>
+                    )}
 
                     {/* Short Description */}
                     <div>
@@ -316,6 +458,22 @@ const SingleProduct = ({ props }) => {
                       </div>
                     </div>
 
+                    {/* Trust Seals Checkout Logos */}
+                    {stock > 0 && (
+                      <div className="pt-4 border-t border-border/40 space-y-2">
+                        <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider block">
+                          Guaranteed Safe Checkout
+                        </span>
+                        <div className="flex flex-wrap gap-2 text-xs font-mono font-bold text-muted-foreground">
+                          <span className="bg-muted/40 px-2.5 py-1 rounded border border-border/30 text-foreground/80">VISA</span>
+                          <span className="bg-muted/40 px-2.5 py-1 rounded border border-border/30 text-foreground/80">MC</span>
+                          <span className="bg-muted/40 px-2.5 py-1 rounded border border-border/30 text-foreground/80">AMEX</span>
+                          <span className="bg-muted/40 px-2.5 py-1 rounded border border-border/30 text-foreground/80">PayPal</span>
+                          <span className="bg-muted/40 px-2.5 py-1 rounded border border-border/30 text-foreground/80">Stripe</span>
+                        </div>
+                      </div>
+                    )}
+
                     {/* Meta Details */}
                     <div className="flex flex-col mt-6 space-y-3 pt-6 border-t border-border/40">
                       <span className="text-sm font-medium">
@@ -346,6 +504,64 @@ const SingleProduct = ({ props }) => {
 
             </div>
           </div>
+
+          {/* Frequently Bought Together Bundle Upsell widget */}
+          {stock > 0 && bundleProduct && (
+            <div className="w-full rounded-2xl bg-card border border-border/40 shadow-sm p-5 lg:p-8 mb-8">
+              <h3 className="text-sm font-bold text-foreground mb-4 uppercase tracking-wider">Frequently Bought Together</h3>
+              <div className="flex flex-col md:flex-row items-center gap-6">
+                
+                {/* Visual Connection */}
+                <div className="flex items-center gap-4 flex-wrap justify-center">
+                  <div className="flex flex-col items-center">
+                    <div className="relative w-20 h-20 bg-white border border-border/40 rounded-xl p-2 flex items-center justify-center shadow-sm">
+                      <Image fill className="object-contain p-1" src={activeImage || product.image?.[0] || 'https://res.cloudinary.com/ahossain/image/upload/v1655097002/placeholder_kvepfp.png'} alt={product.title} sizes="80px" />
+                    </div>
+                    <span className="text-[10px] font-bold text-muted-foreground max-w-[100px] truncate text-center mt-1.5">{product.title}</span>
+                  </div>
+                  <span className="text-xl font-bold text-muted-foreground">+</span>
+                  <div className="flex flex-col items-center">
+                    <div className="relative w-20 h-20 bg-white border border-border/40 rounded-xl p-2 flex items-center justify-center shadow-sm">
+                      <Image fill className="object-contain p-1" src={bundleProduct.image?.[0] || 'https://res.cloudinary.com/ahossain/image/upload/v1655097002/placeholder_kvepfp.png'} alt={bundleProduct.title} sizes="80px" />
+                    </div>
+                    <span className="text-[10px] font-bold text-muted-foreground max-w-[100px] truncate text-center mt-1.5">{bundleProduct.title}</span>
+                  </div>
+                </div>
+
+                {/* Bundle math & purchase CTA */}
+                <div className="flex-1 md:border-l border-border/30 md:pl-6 space-y-3 w-full">
+                  <div className="flex items-center justify-between text-xs sm:text-sm">
+                    <label className="flex items-center cursor-pointer select-none text-muted-foreground font-semibold">
+                      <input
+                        type="checkbox"
+                        checked={includeBundle}
+                        onChange={(e) => setIncludeBundle(e.target.checked)}
+                        className="h-4 w-4 rounded border-border bg-transparent text-primary focus:ring-primary/20 mr-2.5"
+                      />
+                      Add Bundle item: <span className="font-bold text-foreground ml-1">{bundleProduct.title}</span>
+                    </label>
+                    <span className="font-bold text-foreground">${Number(bundleProduct.prices?.price || 0).toFixed(2)}</span>
+                  </div>
+
+                  <div className="flex items-center justify-between border-t border-border/30 pt-3">
+                    <div>
+                      <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wide">Bundle Price:</span>
+                      <p className="text-lg font-black text-foreground">
+                        ${(price + (includeBundle ? Number(bundleProduct.prices?.price || 0) : 0)).toFixed(2)}
+                      </p>
+                    </div>
+                    <button
+                      onClick={handleAddBundleToCart}
+                      className="bg-primary hover:bg-primary/95 text-primary-foreground text-xs font-bold py-2.5 px-5 rounded-lg transition active:scale-95 shadow-sm"
+                    >
+                      Add Both to Cart
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          )}
 
           {/* Upgraded specifications, reviews & policy tab layout */}
           <div className="w-full rounded-2xl bg-card border border-border/40 shadow-sm p-4 lg:p-10 mb-12">

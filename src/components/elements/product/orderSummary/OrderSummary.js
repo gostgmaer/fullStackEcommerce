@@ -186,6 +186,24 @@ function OrderSummary({ code, setCode }) {
 						</span>
 					</div>
 				</div>
+
+				{/* Visual Secure Payment Trust Seals */}
+				<div className="mt-5 pt-4 border-t border-border/30 text-center space-y-2">
+					<div className="flex items-center justify-center gap-1.5 text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+						<svg className="w-3 h-3 text-emerald-500" stroke="currentColor" fill="none" strokeWidth="2.5" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
+							<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+							<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+						</svg>
+						PCI-DSS Secured Checkout
+					</div>
+					<div className="flex flex-wrap justify-center gap-1.5 text-[9px] font-bold font-mono text-muted-foreground">
+						<span className="bg-muted/40 px-2 py-0.5 rounded border border-border/30 text-foreground/75">VISA</span>
+						<span className="bg-muted/40 px-2 py-0.5 rounded border border-border/30 text-foreground/75">MASTERCARD</span>
+						<span className="bg-muted/40 px-2 py-0.5 rounded border border-border/30 text-foreground/75">AMEX</span>
+						<span className="bg-muted/40 px-2 py-0.5 rounded border border-border/30 text-foreground/75">PAYPAL</span>
+						<span className="bg-muted/40 px-2 py-0.5 rounded border border-border/30 text-foreground/75">STRIPE</span>
+					</div>
+				</div>
 			</div>
 		</div>
 	);
