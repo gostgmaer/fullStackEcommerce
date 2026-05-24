@@ -6,17 +6,85 @@ import SocialNetwork from '@/components/global/common/SocialNetwork';
 import VariantList from '@/components/global/common/variants/VariantList';
 import Link from 'next/link';
 import { addByIncrement } from '@/store/reducers/cartSlice';
-import { useDispatch } from 'react-redux';
-import { IoAddOutline, IoChevronForward, IoRemoveOutline, IoStar, IoStarHalf, IoCheckmarkCircleSharp } from 'react-icons/io5';
+import { useDispatch, useSelector } from 'react-redux';
+import { IoAddOutline, IoChevronForward, IoRemoveOutline, IoStar, IoStarHalf, IoCheckmarkCircleSharp, IoHeart, IoHeartOutline } from 'react-icons/io5';
 import { notifySuccess, notifyerror } from '@/utils/notify/notice';
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
+import { addToWishlist, removeFromWishlist, fetchWishlist } from '@/store/reducers/wishslice';
+import { useRouter } from 'next/navigation';
 
 const SingleProduct = ({ props }) => {
   const dispatch = useDispatch();
+  const router = useRouter();
+  const { data: session, status } = useSession();
   const { product, related, attributes = [] } = props;
 
   // Quantity Counter
   const [total, setTotal] = useState(1);
+
+  const { wishlist } = useSelector((state) => state["wishlist"]) || { wishlist: [] };
+
+  // Fetch wishlist if authenticated and not loaded
+  useEffect(() => {
+    if (session?.accessToken) {
+      dispatch(fetchWishlist({ Authorization: `Bearer ${session.accessToken}` }));
+    }
+  }, [dispatch, session?.accessToken]);
+
+  const token = session?.accessToken ? { Authorization: `Bearer ${session.accessToken}` } : null;
+  const isWishlisted = wishlist?.some((item) => item?.product?._id === product?._id);
+
+  const handleToggleWishlist = () => {
+    if (status !== "authenticated" || !token) {
+      notifyerror("Please login to save items to your wishlist!");
+      return;
+    }
+    if (isWishlisted) {
+      dispatch(removeFromWishlist({ id: product._id, token }));
+    } else {
+      dispatch(addToWishlist({ id: product._id, token }));
+    }
+  };
+
+  const handleBuyNow = () => {
+    if (stock <= 0) {
+      notifyerror("Sorry, this item is out of stock!");
+      return;
+    }
+
+    const hasVariants = product.variants && product.variants.length > 0;
+    const variantIdSuffix = hasVariants
+      ? "-" + variantTitle.map((att) => selectVariant[att._id]).join("-")
+      : "";
+    const cartItemId = product._id + variantIdSuffix;
+
+    const variantNameSuffix = hasVariants
+      ? " - " + variantTitle
+          .map((att) => att.variants?.find((v) => v._id === selectVariant[att._id])?.name)
+          .filter(Boolean)
+          .join(", ")
+      : "";
+    const cartItemTitle = product.title + variantNameSuffix;
+
+    const cartProduct = {
+      ...product,
+      id: cartItemId,
+      title: cartItemTitle,
+      image: [activeImage, ...(product.image || []).slice(1)],
+      sku: sku || product.sku,
+      stock: stock,
+      prices: {
+        price: price,
+        originalPrice: originalPrice,
+        discount: discount,
+      },
+      variant: selectVariant || {},
+    };
+
+    dispatch(addByIncrement({ product: cartProduct, cartQuantity: total }));
+    router.push("/checkout");
+  };
 
   // Variant States
   const [variantTitle, setVariantTitle] = useState([]);
@@ -356,9 +424,9 @@ const SingleProduct = ({ props }) => {
 
                     {/* Pricing */}
                     <div className="flex items-baseline space-x-2">
-                      <span className="text-3xl font-extrabold text-foreground">${Number(price).toFixed(2)}</span>
+                      <span className="text-3xl font-extrabold text-foreground">₹{Number(price).toFixed(2)}</span>
                       {originalPrice && originalPrice !== price && (
-                        <del className="text-lg font-normal text-muted-foreground/60">${Number(originalPrice).toFixed(2)}</del>
+                        <del className="text-lg font-normal text-muted-foreground/60">₹{Number(originalPrice).toFixed(2)}</del>
                       )}
                     </div>
 
@@ -426,34 +494,62 @@ const SingleProduct = ({ props }) => {
                     )}
 
                     {/* Quantity & Buy controls */}
-                    <div className="flex items-center mt-6">
-                      <div className="flex items-center justify-between space-x-4 w-full">
-                        
-                        {/* Counter */}
-                        <div className="flex items-center border border-border bg-muted/20 rounded-lg overflow-hidden h-11 md:h-12">
-                          <button
-                            onClick={() => setTotal(total - 1)}
-                            disabled={total <= 1}
-                            className="px-4 h-full flex items-center justify-center text-muted-foreground hover:text-foreground disabled:opacity-50 transition-opacity"
-                          >
-                            <IoRemoveOutline className="w-4 h-4" />
-                          </button>
-                          <span className="w-12 text-center text-sm font-semibold select-none">{total}</span>
-                          <button
-                            disabled={stock === 0}
-                            onClick={() => setTotal(total + 1)}
-                            className="px-4 h-full flex items-center justify-center text-muted-foreground hover:text-foreground disabled:opacity-50 transition-opacity"
-                          >
-                            <IoAddOutline className="w-4 h-4" />
-                          </button>
-                        </div>
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-4 mt-6">
+                      {/* Counter */}
+                      <div className="flex items-center border border-border bg-muted/20 rounded-lg overflow-hidden h-12 justify-between w-full sm:w-32">
+                        <button
+                          type="button"
+                          onClick={() => setTotal(total - 1)}
+                          disabled={total <= 1}
+                          className="px-3 h-full flex items-center justify-center text-muted-foreground hover:text-foreground disabled:opacity-50 transition-opacity"
+                        >
+                          <IoRemoveOutline className="w-4 h-4" />
+                        </button>
+                        <span className="w-10 text-center text-sm font-bold select-none text-foreground">{total}</span>
+                        <button
+                          type="button"
+                          disabled={stock === 0}
+                          onClick={() => setTotal(total + 1)}
+                          className="px-3 h-full flex items-center justify-center text-muted-foreground hover:text-foreground disabled:opacity-50 transition-opacity"
+                        >
+                          <IoAddOutline className="w-4 h-4" />
+                        </button>
+                      </div>
 
+                      {/* CTAs */}
+                      <div className="flex items-center gap-3 flex-1 w-full">
                         <button
                           disabled={stock === 0}
                           onClick={handleAddToCart}
-                          className="flex-1 h-11 md:h-12 bg-primary text-primary-foreground hover:bg-primary/90 transition-all font-semibold rounded-lg shadow-sm hover:shadow active:scale-[0.98] text-sm flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="flex-1 h-12 bg-muted hover:bg-muted/80 text-foreground border border-border/80 transition-all font-bold rounded-lg shadow-sm active:scale-[0.98] text-sm flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                          {stock === 0 ? "Out of Stock" : "Add To Cart"}
+                          Add To Cart
+                        </button>
+
+                        <button
+                          disabled={stock === 0}
+                          onClick={handleBuyNow}
+                          className="flex-1 h-12 bg-primary text-primary-foreground hover:bg-primary/95 transition-all font-bold rounded-lg shadow-md active:scale-[0.98] text-sm flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          Buy Now
+                        </button>
+
+                        {/* Wishlist Button */}
+                        <button
+                          type="button"
+                          onClick={handleToggleWishlist}
+                          className={`w-12 h-12 rounded-lg border flex items-center justify-center transition-all shadow-sm active:scale-95 flex-shrink-0 ${
+                            isWishlisted
+                              ? "bg-red-50 dark:bg-red-950/30 border-red-200 dark:border-red-900/50 text-red-500 hover:text-red-650"
+                              : "bg-muted border-border hover:bg-muted/80 text-muted-foreground hover:text-foreground"
+                          }`}
+                          aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
+                        >
+                          {isWishlisted ? (
+                            <IoHeart className="w-5 h-5 fill-red-500 text-red-500" />
+                          ) : (
+                            <IoHeartOutline className="w-5 h-5" />
+                          )}
                         </button>
                       </div>
                     </div>
@@ -462,14 +558,14 @@ const SingleProduct = ({ props }) => {
                     {stock > 0 && (
                       <div className="pt-4 border-t border-border/40 space-y-2">
                         <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider block">
-                          Guaranteed Safe Checkout
+                          Guaranteed Safe & Secure Checkout
                         </span>
                         <div className="flex flex-wrap gap-2 text-xs font-mono font-bold text-muted-foreground">
+                          <span className="bg-muted/40 px-2.5 py-1 rounded border border-border/30 text-foreground/80">RuPay</span>
+                          <span className="bg-muted/40 px-2.5 py-1 rounded border border-border/30 text-foreground/80">UPI</span>
                           <span className="bg-muted/40 px-2.5 py-1 rounded border border-border/30 text-foreground/80">VISA</span>
                           <span className="bg-muted/40 px-2.5 py-1 rounded border border-border/30 text-foreground/80">MC</span>
-                          <span className="bg-muted/40 px-2.5 py-1 rounded border border-border/30 text-foreground/80">AMEX</span>
-                          <span className="bg-muted/40 px-2.5 py-1 rounded border border-border/30 text-foreground/80">PayPal</span>
-                          <span className="bg-muted/40 px-2.5 py-1 rounded border border-border/30 text-foreground/80">Stripe</span>
+                          <span className="bg-muted/40 px-2.5 py-1 rounded border border-border/30 text-foreground/80">NetBanking</span>
                         </div>
                       </div>
                     )}
@@ -540,14 +636,14 @@ const SingleProduct = ({ props }) => {
                       />
                       Add Bundle item: <span className="font-bold text-foreground ml-1">{bundleProduct.title}</span>
                     </label>
-                    <span className="font-bold text-foreground">${Number(bundleProduct.prices?.price || 0).toFixed(2)}</span>
+                    <span className="font-bold text-foreground">₹{Number(bundleProduct.prices?.price || 0).toFixed(2)}</span>
                   </div>
 
                   <div className="flex items-center justify-between border-t border-border/30 pt-3">
                     <div>
                       <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wide">Bundle Price:</span>
                       <p className="text-lg font-black text-foreground">
-                        ${(price + (includeBundle ? Number(bundleProduct.prices?.price || 0) : 0)).toFixed(2)}
+                        ₹{(price + (includeBundle ? Number(bundleProduct.prices?.price || 0) : 0)).toFixed(2)}
                       </p>
                     </div>
                     <button
@@ -694,7 +790,7 @@ const SingleProduct = ({ props }) => {
                     <div className="space-y-2">
                       <h4 className="font-semibold text-foreground text-sm">Delivery Information</h4>
                       <p className="text-sm">We provide shipping across all areas. Enjoy next-day delivery on local orders placed before 3 PM. Standard delivery windows are between 1 to 3 business days.</p>
-                      <p className="text-sm font-semibold text-primary">Free shipping threshold is only $5.00!</p>
+                      <p className="text-sm font-semibold text-primary">Free shipping threshold is only ₹500.00!</p>
                     </div>
                     <div className="space-y-2">
                       <h4 className="font-semibold text-foreground text-sm">Easy Returns & Exchanges</h4>
@@ -724,31 +820,26 @@ const SingleProduct = ({ props }) => {
       <div className="lg:hidden fixed bottom-16 left-0 right-0 z-30 bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-t border-border/40 p-4 shadow-[0_-4px_12px_rgba(0,0,0,0.06)] flex items-center justify-between space-x-4 animate-fade-in transition-all">
         <div className="flex flex-col">
           <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider">Total Price</span>
-          <span className="text-lg font-bold text-foreground">${(Number(price) * total).toFixed(2)}</span>
+          <span className="text-lg font-black text-primary">₹{(Number(price) * total).toFixed(2)}</span>
         </div>
-        <div className="flex items-center space-x-2 flex-1 justify-end max-w-[240px]">
-          <div className="flex items-center border border-border rounded-lg bg-muted/30 h-10 overflow-hidden">
-            <button
-              onClick={() => setTotal(total - 1)}
-              disabled={total <= 1}
-              className="px-2 h-full flex items-center justify-center text-muted-foreground disabled:opacity-50"
-            >
-              <IoRemoveOutline />
-            </button>
-            <span className="w-8 text-center text-sm font-semibold">{total}</span>
-            <button
-              disabled={stock === 0}
-              onClick={() => setTotal(total + 1)}
-              className="px-2 h-full flex items-center justify-center text-muted-foreground disabled:opacity-50"
-            >
-              <IoAddOutline />
-            </button>
-          </div>
-          
+        <div className="flex items-center space-x-2 flex-1 justify-end max-w-[260px]">
+          <button
+            type="button"
+            onClick={handleToggleWishlist}
+            className={`w-10 h-10 rounded-lg border flex items-center justify-center transition-all ${
+              isWishlisted
+                ? "bg-red-50 dark:bg-red-950/30 border-red-200 dark:border-red-900/50 text-red-500"
+                : "bg-muted border-border text-muted-foreground"
+            }`}
+            aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
+          >
+            {isWishlisted ? <IoHeart className="w-5 h-5 fill-red-500" /> : <IoHeartOutline className="w-5 h-5" />}
+          </button>
+
           <button
             disabled={stock === 0}
-            onClick={handleAddToCart}
-            className="h-10 px-4 bg-primary text-primary-foreground font-semibold rounded-lg text-xs hover:bg-primary/90 active:scale-95 transition-all disabled:bg-muted disabled:text-muted-foreground flex-grow"
+            onClick={handleBuyNow}
+            className="h-10 px-4 bg-primary text-primary-foreground font-bold rounded-lg text-xs hover:bg-primary/90 active:scale-95 transition-all disabled:bg-muted disabled:text-muted-foreground flex-grow"
           >
             {stock === 0 ? "Out of Stock" : "Buy Now"}
           </button>

@@ -48,7 +48,7 @@ const Coupon = ({ couponInHome }) => {
                 <div className="flex items-center gap-2 flex-wrap mb-1">
                   <span className="text-lg font-extrabold text-primary">
                     {coupon?.discountType?.type === "fixed" ? (
-                      <span>${coupon?.discountType?.value}</span>
+                      <span>₹{coupon?.discountType?.value}</span>
                     ) : (
                       <span>{coupon?.discountPercentage}%</span>
                     )}
@@ -88,7 +88,7 @@ const Coupon = ({ couponInHome }) => {
                 </button>
               </CopyToClipboard>
               <p className="text-[10px] font-medium text-slate-400 mt-2 text-center">
-                * Min Order: <span className="font-bold text-slate-500">${coupon.minimumAmount}</span>
+                * Min Order: <span className="font-bold text-slate-500">₹{coupon.minimumAmount}</span>
               </p>
             </div>
           </div>
@@ -117,7 +117,7 @@ const Coupon = ({ couponInHome }) => {
                   <div className="flex items-center gap-2 flex-wrap mb-2">
                     <span className="text-xl font-extrabold text-primary">
                       {coupon?.discountType?.type === "fixed" ? (
-                        <span>${coupon?.discountType?.value}</span>
+                        <span>₹{coupon?.discountType?.value}</span>
                       ) : (
                         <span>{coupon?.discountType?.value}%</span>
                       )}
@@ -152,7 +152,7 @@ const Coupon = ({ couponInHome }) => {
                   </button>
                 </CopyToClipboard>
                 <p className="text-[10px] font-medium text-slate-400 mt-2 text-center">
-                  * Min Order: <span className="font-bold text-slate-500">${coupon.minimumAmount}</span>
+                  * Min Order: <span className="font-bold text-slate-500">₹{coupon.minimumAmount}</span>
                 </p>
               </div>
             </div>

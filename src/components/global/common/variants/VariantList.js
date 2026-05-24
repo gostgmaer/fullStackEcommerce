@@ -79,7 +79,7 @@ const VariantList = ({
             )}
         </select>
       ) : (
-        <div className="grid lg:grid-cols-3 grid-cols-2">
+        <div className="flex flex-wrap gap-2 mt-1">
           {[
             ...new Map(
               variants?.map((v) => [v[att], v].filter(Boolean))
@@ -97,8 +97,8 @@ const VariantList = ({
                         key={i + 1}
                         className={`${
                           Object?.values(selectVariant).includes(vl[att])
-                            ? "bg-emerald-500 text-white mr-2 border-0 rounded-full inline-flex items-center justify-center px-3 py-1 text-xs font-serif mt-2 focus:outline-none"
-                            : "bg-gray-100 mr-2 border-0 text-gray-600 rounded-full inline-flex items-center justify-center px-3 py-1 text-xs font-serif mt-2 focus:outline-none"
+                            ? "bg-primary text-primary-foreground border border-primary/20 px-3.5 py-1.5 rounded-lg text-xs font-sans font-bold transition-all shadow-sm focus:outline-none"
+                            : "bg-muted hover:bg-muted/85 text-foreground border border-border/60 px-3.5 py-1.5 rounded-lg text-xs font-sans font-semibold transition-all hover:border-border focus:outline-none"
                         }`}
                       >
                         {/* {showingTranslateValue(el.name, lang)} */}

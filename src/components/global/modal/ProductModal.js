@@ -256,7 +256,7 @@ const ProductModal = ({
                   product={product}
                   price={price}
                   card
-                  currency={"$"}
+                  currency={"₹"}
                   originalPrice={originalPrice}
                 />
               </div>

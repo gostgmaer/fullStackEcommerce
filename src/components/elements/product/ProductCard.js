@@ -22,7 +22,7 @@ const ProductCard = ({ product, attributes }) => {
           modalOpen={modalOpen}
           setModalOpen={setModalOpen}
           product={product}
-          currency={"$"}
+          currency={"₹"}
           attributes={attributes}
         />
       )}
@@ -80,7 +80,7 @@ const ProductCard = ({ product, attributes }) => {
             <Price
               card
               product={product}
-              currency={"$"}
+              currency={"₹"}
               price={Number(product?.prices?.price)}
               originalPrice={Number(product?.prices?.originalPrice)}
             />

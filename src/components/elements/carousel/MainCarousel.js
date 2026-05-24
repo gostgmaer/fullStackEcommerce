@@ -49,19 +49,23 @@ const MainCarousel = () => {
                 className="object-cover"
               />
             </div>
-            <div className="absolute top-0 left-0 z-10 flex flex-col w-full h-full justify-center bg-slate-950/10 dark:bg-slate-950/20">
-              <div className="pl-6 pr-12 sm:pl-12 sm:pr-16 w-10/12 lg:w-9/12 xl:w-8/12">
-                <h1 className="mb-2 font-sans text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight">
-                  {/* {t(`common:${item.title}`)} */}
-                  {item.title === 'Slider1Title' ? "100% Organic Fresh Harvest Delivered Daily" : item.title === 'Slider2Title' ? "Premium Artisanal Quality, Locally Sourced" : "Eat Fresh, Live Better — Save 10% Today"}
-                </h1>
-                <p className="text-sm sm:text-base leading-relaxed font-sans text-slate-700 font-medium mb-4 max-w-md line-clamp-2 md:line-clamp-none">
-                  {/* {t(`common:${item.info}`)} */}
-                  {item.info === 'Slider1description' ? "Experience farm-fresh organic groceries, hand-picked and delivered straight to your door within 1 hour. Healthy eating made effortless." : item.info === 'Slider2description' ? "Discover curated gourmet selections, organic pantry essentials, and seasonal specialties crafted by local farms." : "Get premium quality groceries at the best value prices. Use code WELCOME10 at checkout on your first order."}
-                </p>
-                <Link href={item.url} className="inline-flex items-center justify-center text-sm font-semibold px-6 py-2.5 bg-primary hover:bg-primary/95 text-white rounded-lg shadow-sm transition-all duration-200 active:scale-[0.98] cursor-pointer !no-underline">
-                  {content['Slider-btn']}
-                </Link>
+            <div className="absolute top-0 left-0 z-10 flex flex-col w-full h-full justify-center bg-slate-950/5 dark:bg-slate-950/20">
+              <div className="pl-6 pr-6 sm:pl-12 w-10/12 lg:w-3/5 xl:w-1/2">
+                <div className="bg-white/80 dark:bg-slate-900/85 backdrop-blur-md border border-white/40 dark:border-slate-800/40 p-6 sm:p-8 rounded-2xl shadow-xl space-y-3">
+                  <h1 className="font-sans text-lg sm:text-xl md:text-2xl lg:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
+                    {/* {t(`common:${item.title}`)} */}
+                    {item.title === 'Slider1Title' ? "100% Organic Fresh Harvest Delivered Daily" : item.title === 'Slider2Title' ? "Premium Artisanal Quality, Locally Sourced" : "Eat Fresh, Live Better — Save 10% Today"}
+                  </h1>
+                  <p className="text-xs sm:text-sm leading-relaxed font-sans text-slate-700 dark:text-slate-350 font-medium line-clamp-2 md:line-clamp-none">
+                    {/* {t(`common:${item.info}`)} */}
+                    {item.info === 'Slider1description' ? "Experience farm-fresh organic groceries, hand-picked and delivered straight to your door within 1 hour. Healthy eating made effortless." : item.info === 'Slider2description' ? "Discover curated gourmet selections, organic pantry essentials, and seasonal specialties crafted by local farms." : "Get premium quality groceries at the best value prices. Use code WELCOME10 at checkout on your first order."}
+                  </p>
+                  <div className="pt-1.5">
+                    <Link href={item.url} className="inline-flex items-center justify-center text-xs sm:text-sm font-bold px-5 py-2.5 bg-primary hover:bg-primary/95 text-white rounded-lg shadow-sm transition-all duration-200 active:scale-[0.98] cursor-pointer !no-underline">
+                      {content['Slider-btn']}
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
           </SwiperSlide>

@@ -21,9 +21,9 @@ function FastDeliveryCard() {
           </p>
           <Link
             className="inline-flex items-center justify-center text-sm font-semibold mt-6 px-6 py-2.5 bg-primary hover:bg-primary/95 text-white rounded-lg shadow-sm transition-all duration-200 active:scale-[0.98] cursor-pointer !no-underline"
-            href="/#downloadApp"
+            href="/product/search?query="
           >
-            Download App
+            Shop Organic Now
           </Link>
         </div>
         <div className="w-full lg:w-2/5 flex justify-center lg:justify-end">

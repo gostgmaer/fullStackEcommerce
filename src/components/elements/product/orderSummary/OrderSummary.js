@@ -8,7 +8,7 @@ import { IoAddOutline, IoBag, IoRemoveOutline } from 'react-icons/io5';
 import { MdDelete } from 'react-icons/md';
 import { useSelector, useDispatch } from 'react-redux';
 
-function OrderSummary({ code, setCode }) {
+function OrderSummary({ code, setCode, shippingPrice = 0 }) {
 	const cart = useSelector((state) => state['cart']);
 	const { cartTotalAmount } = useSelector((state) => state["cart"]);
 	const dispatch = useDispatch();
@@ -86,12 +86,12 @@ function OrderSummary({ code, setCode }) {
 											{cartItem.title}
 										</Link>
 										<span className="text-xs text-muted-foreground mb-1">
-											Item Price ${cartItem.price.toFixed(2)}
+											Item Price ₹{cartItem.price.toFixed(2)}
 										</span>
 										<div className="flex items-center justify-between">
 											<div className="font-bold text-sm md:text-base leading-5">
 												<span className="text-foreground">
-													${(cartItem.price * cartItem.cartQuantity).toFixed(2)}
+													₹{(cartItem.price * cartItem.cartQuantity).toFixed(2)}
 												</span>
 											</div>
 											<div className="h-8 flex flex-wrap items-center justify-evenly p-1 border border-border bg-muted/40 text-muted-foreground rounded-lg">
@@ -161,19 +161,19 @@ function OrderSummary({ code, setCode }) {
 					<div className="flex items-center text-sm w-full font-medium text-muted-foreground">
 						Subtotal
 						<span className="ml-auto text-foreground font-bold">
-							${Number(cartTotalAmount || 0).toFixed(2)}
+							₹{Number(cartTotalAmount || 0).toFixed(2)}
 						</span>
 					</div>
 					<div className="flex items-center text-sm w-full font-medium text-muted-foreground">
 						Shipping Cost
 						<span className="ml-auto text-foreground font-bold">
-							$0.00
+							₹{Number(shippingPrice).toFixed(2)}
 						</span>
 					</div>
 					<div className="flex items-center text-sm w-full font-medium text-muted-foreground">
 						Discount
 						<span className="ml-auto font-bold text-emerald-500">
-							{discount && cartTotalAmount > discount ? `-$${(cartTotalAmount - discount).toFixed(2)}` : "$0.00"}
+							{discount && cartTotalAmount > discount ? `-₹${(cartTotalAmount - discount).toFixed(2)}` : "₹0.00"}
 						</span>
 					</div>
 				</div>
@@ -182,7 +182,7 @@ function OrderSummary({ code, setCode }) {
 					<div className="flex items-center font-bold justify-between text-sm uppercase">
 						Total Cost
 						<span className="font-extrabold text-lg text-foreground">
-							${discount ? Number(discount).toFixed(2) : Number(cartTotalAmount || 0).toFixed(2)}
+							₹{(discount ? Number(discount + shippingPrice) : Number(cartTotalAmount + shippingPrice)).toFixed(2)}
 						</span>
 					</div>
 				</div>

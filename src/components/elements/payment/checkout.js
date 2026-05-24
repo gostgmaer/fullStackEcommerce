@@ -39,7 +39,8 @@ const CheckoutBlock = () => {
     const [code, setCode] = useState("");
     const [csc, setCsc] = useState(null);
     const [activeStep, setActiveStep] = useState(1);
-    const [shippingPrice, setShippingPrice] = useState(50);
+    const isFreeShipCoupon = code?.toUpperCase().trim() === "FREESHIP";
+    const shippingPrice = (cartTotalAmount >= 500 || isFreeShipCoupon) ? 0 : 50;
 
     const router = useRouter();
     const dispatch = useDispatch();
@@ -114,11 +115,11 @@ const CheckoutBlock = () => {
     };
 
     const onchangeSubmit = async (values) => {
-        if (cartTotalAmount < 5) {
-            return notifyerror('Order Items must worth more than $5');
+        if (cartTotalAmount < 50) {
+            return notifyerror('Order Items must worth more than ₹50');
         }
 
-        const shPrice = shippingPrice; // Default shipping price
+        const shPrice = shippingPrice; // Dynamic shipping price
         const data = {
             invoice: Id,
             shippingPrice: shPrice,
@@ -194,6 +195,7 @@ const CheckoutBlock = () => {
                                             <Input label={"First Name"} type={"text"} additionalAttrs={{
                                                 ...register("firstName"),
                                                 placeholder: "John",
+                                                autoComplete: "given-name",
                                             }} id={"firstName"} />
                                             {errors.firstName && (
                                                 <p className="text-red-500 text-xs mt-1 font-medium">{errors.firstName.message}</p>
@@ -203,6 +205,7 @@ const CheckoutBlock = () => {
                                             <Input label={"Last Name"} type={"text"} additionalAttrs={{
                                                 ...register("lastName"),
                                                 placeholder: "Doe",
+                                                autoComplete: "family-name",
                                             }} id={"lastName"} />
                                             {errors.lastName && (
                                                 <p className="text-red-500 text-xs mt-1 font-medium">{errors.lastName.message}</p>
@@ -212,6 +215,7 @@ const CheckoutBlock = () => {
                                             <Input label={"Email"} type={"email"} additionalAttrs={{
                                                 ...register("email"),
                                                 placeholder: "john@example.com",
+                                                autoComplete: "email",
                                             }} id={"email"} />
                                             {errors.email && (
                                                 <p className="text-red-500 text-xs mt-1 font-medium">{errors.email.message}</p>
@@ -221,6 +225,7 @@ const CheckoutBlock = () => {
                                             <Input label={"Phone"} type={"text"} additionalAttrs={{
                                                 ...register("phone"),
                                                 placeholder: "1234567890",
+                                                autoComplete: "tel",
                                             }} id={"phone"} />
                                             {errors.phone && (
                                                 <p className="text-red-500 text-xs mt-1 font-medium">{errors.phone.message}</p>
@@ -280,6 +285,7 @@ const CheckoutBlock = () => {
                                             <Input label={"Shipping Address"} type={"text"} additionalAttrs={{
                                                 ...register("address"),
                                                 placeholder: "123 Main St",
+                                                autoComplete: "street-address",
                                             }} id={"address"} />
                                             {errors.address && (
                                                 <p className="text-red-500 text-xs mt-1 font-medium">{errors.address.message}</p>
@@ -289,6 +295,7 @@ const CheckoutBlock = () => {
                                             <Input label={"City"} type={"text"} additionalAttrs={{
                                                 ...register("city"),
                                                 placeholder: "New York",
+                                                autoComplete: "address-level2",
                                             }} id={"city"} />
                                             {errors.city && (
                                                 <p className="text-red-500 text-xs mt-1 font-medium">{errors.city.message}</p>
@@ -297,6 +304,7 @@ const CheckoutBlock = () => {
                                         <div className="col-span-6 md:col-span-2">
                                             <Select label={"Country"} additionalAttrs={{
                                                 ...register("country"),
+                                                autoComplete: "country-name",
                                             }} id={"country"} options={csc ? csc.Country.getAllCountries() : []} optionkeys={{ key: "name", value: "name" }} placeholder={"Country"} />
                                             {errors.country && (
                                                 <p className="text-red-500 text-xs mt-1 font-medium">{errors.country.message}</p>
@@ -306,6 +314,7 @@ const CheckoutBlock = () => {
                                             <Input label={"Zip Code"} type={"text"} additionalAttrs={{
                                                 ...register("zipCode"),
                                                 placeholder: "10001",
+                                                autoComplete: "postal-code",
                                             }} id={"zipCode"} />
                                             {errors.zipCode && (
                                                 <p className="text-red-500 text-xs mt-1 font-medium">{errors.zipCode.message}</p>
@@ -432,7 +441,7 @@ const CheckoutBlock = () => {
                     </div>
 
                     {/* Order Summary Sidebar */}
-                    <OrderSummary code={code} setCode={setCode} />
+                    <OrderSummary code={code} setCode={setCode} shippingPrice={shippingPrice} />
 
                 </div>
             </div>

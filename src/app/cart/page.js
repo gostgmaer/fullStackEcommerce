@@ -47,8 +47,9 @@ const CartPage = () => {
   }, []);
 
   // Shipping Calculations
-  const freeShippingThreshold = 50;
-  const shippingCost = cartTotalAmount >= freeShippingThreshold ? 0 : 5.00;
+  const freeShippingThreshold = 500;
+  const isFreeShipCoupon = couponSuccess && localStorage.getItem('cartCouponCode') === "FREESHIP";
+  const shippingCost = (cartTotalAmount >= freeShippingThreshold || isFreeShipCoupon) ? 0 : 50.00;
   const progressPercent = Math.min((cartTotalAmount / freeShippingThreshold) * 100, 100);
   const remainingForFreeShipping = Math.max(freeShippingThreshold - cartTotalAmount, 0);
 
@@ -58,7 +59,7 @@ const CartPage = () => {
       const discountAmt = cartTotalAmount * 0.10;
       setCouponDiscount(discountAmt);
       setCouponSuccess(true);
-      setCouponMessage(`WELCOME10 applied! 10% Off (-$${discountAmt.toFixed(2)})`);
+      setCouponMessage(`WELCOME10 applied! 10% Off (-₹${discountAmt.toFixed(2)})`);
       localStorage.setItem('cartCouponCode', uppercaseCode);
     } else if (uppercaseCode === "FREESHIP") {
       setCouponDiscount(0);
@@ -96,7 +97,7 @@ const CartPage = () => {
         const discountAmt = Math.max(cartTotalAmount - finalPrice, 0);
         setCouponDiscount(discountAmt);
         setCouponSuccess(true);
-        setCouponMessage(`Discount Applied: -$${discountAmt.toFixed(2)}`);
+        setCouponMessage(`Discount Applied: -₹${discountAmt.toFixed(2)}`);
         localStorage.setItem('cartCouponCode', codeStr);
       } else {
         simulateLocalCoupon(codeStr);
@@ -213,7 +214,7 @@ const CartPage = () => {
                             Price
                           </span>
                           <span className="text-sm font-semibold text-foreground">
-                            ${Number(item.price).toFixed(2)}
+                            ₹{Number(item.price).toFixed(2)}
                           </span>
                         </div>
 
@@ -247,7 +248,7 @@ const CartPage = () => {
                           </span>
                           <div className="text-right">
                             <span className="text-sm font-bold text-foreground block">
-                              ${(item.price * item.cartQuantity).toFixed(2)}
+                              ₹{(item.price * item.cartQuantity).toFixed(2)}
                             </span>
                             <button
                               onClick={() => dispatch(removeFromCart(item))}
@@ -282,7 +283,7 @@ const CartPage = () => {
                     <span className="text-muted-foreground">
                       {remainingForFreeShipping > 0 ? (
                         <>
-                          Spend <span className="font-bold text-foreground">${remainingForFreeShipping.toFixed(2)}</span> more for <span className="text-primary font-bold">FREE SHIPPING</span>
+                          Spend <span className="font-bold text-foreground">₹{remainingForFreeShipping.toFixed(2)}</span> more for <span className="text-primary font-bold">FREE SHIPPING</span>
                         </>
                       ) : (
                         <span className="text-emerald-500 font-bold flex items-center gap-1">
@@ -312,13 +313,13 @@ const CartPage = () => {
                     <div className="flex justify-between text-muted-foreground">
                       <span>Subtotal</span>
                       <span className="font-semibold text-foreground">
-                        ${cartTotalAmount.toFixed(2)}
+                        ₹{cartTotalAmount.toFixed(2)}
                       </span>
                     </div>
                     <div className="flex justify-between text-muted-foreground">
                       <span>Shipping estimate</span>
                       <span className={`font-semibold ${shippingCost === 0 ? "text-emerald-500" : "text-foreground"}`}>
-                        {shippingCost === 0 ? "Free" : `$${shippingCost.toFixed(2)}`}
+                        {shippingCost === 0 ? "Free" : `₹${shippingCost.toFixed(2)}`}
                       </span>
                     </div>
                     
@@ -328,7 +329,7 @@ const CartPage = () => {
                           <IoGiftOutline className="text-primary" /> Coupon Discount
                         </span>
                         <span className="font-semibold text-emerald-500">
-                          -${couponDiscount.toFixed(2)}
+                          -₹{couponDiscount.toFixed(2)}
                         </span>
                       </div>
                     )}
@@ -336,7 +337,7 @@ const CartPage = () => {
                     <div className="flex justify-between text-muted-foreground">
                       <span>Tax estimate</span>
                       <span className="font-semibold text-foreground">
-                        $0.00
+                        ₹0.00
                       </span>
                     </div>
                   </div>
@@ -385,7 +386,7 @@ const CartPage = () => {
                     <div className="flex justify-between items-baseline text-foreground">
                       <span className="text-base font-bold">Order Total</span>
                       <span className="text-xl font-extrabold text-primary">
-                        ${finalTotal.toFixed(2)}
+                        ₹{finalTotal.toFixed(2)}
                       </span>
                     </div>
                   </div>
@@ -404,6 +405,22 @@ const CartPage = () => {
                   </div>
                 </div>
               </div>
+            </div>
+          )}
+
+          {/* Mobile Sticky Bottom Checkout Bar */}
+          {cart.cartItems.length > 0 && (
+            <div className="lg:hidden fixed bottom-16 left-0 right-0 z-30 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-t border-border/40 p-4 shadow-[0_-4px_12px_rgba(0,0,0,0.06)] flex items-center justify-between animate-fade-in transition-all">
+              <div className="flex flex-col">
+                <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider">Order Total</span>
+                <span className="text-lg font-black text-primary">₹{finalTotal.toFixed(2)}</span>
+              </div>
+              <Link
+                href="/checkout"
+                className="inline-flex items-center justify-center text-xs font-bold py-2.5 px-6 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg shadow-md active:scale-95 transition-all !no-underline"
+              >
+                Checkout Now
+              </Link>
             </div>
           )}
 
