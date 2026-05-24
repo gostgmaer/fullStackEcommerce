@@ -8,7 +8,8 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { sliderData } from '@/utils/data';
 import { content } from '@/assets/jsonfile/content';
-import { Navigation,Pagination,Autoplay } from 'swiper/modules';
+import { Navigation,Pagination,Autoplay, EffectFade } from 'swiper/modules';
+import 'swiper/css/effect-fade';
 // import useTranslation from "next-translate/useTranslation";
 
 
@@ -18,61 +19,74 @@ import { Navigation,Pagination,Autoplay } from 'swiper/modules';
 const MainCarousel = () => {
   // const { t } = useTranslation();
   return (
-    <>
+    <div className="relative rounded-3xl overflow-hidden shadow-premium group">
       <Swiper
-        spaceBetween={30}
+        spaceBetween={0}
         centeredSlides={true}
+        effect="fade"
         autoplay={{
-          delay: 2000,
+          delay: 5000,
           disableOnInteraction: false,
         }}
         loop={true}
         pagination={{
           clickable: true,
+          dynamicBullets: true,
         }}
-        modules={[Autoplay, Pagination, Navigation]}
-     
-        className="mySwiper rounded-xl overflow-hidden shadow-sm"
+        modules={[Autoplay, Pagination, Navigation, EffectFade]}
+        className="mySwiper h-[450px] lg:h-[500px]"
       >
         {sliderData.map((item, i) => (
           <SwiperSlide
-            className="h-full relative rounded-xl overflow-hidden"
+            className="h-full relative w-full overflow-hidden"
             key={i + 1}
           >
-            <div className="text-sm h-full w-full">
+            <div className="absolute inset-0 w-full h-full">
               <Image
-                layout="responsive"
-                width={950}
-                height={400}
                 src={item.image}
                 alt={item.title}
-                className="object-cover"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 60vw, 50vw"
+                className="object-cover transform scale-105 hover:scale-100 transition-transform duration-[10000ms] ease-out"
+                priority={i === 0}
               />
+              <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/60 to-transparent"></div>
             </div>
-            <div className="absolute top-0 left-0 z-10 flex flex-col w-full h-full justify-center bg-slate-950/5 dark:bg-slate-950/20">
-              <div className="pl-6 pr-6 sm:pl-12 w-10/12 lg:w-3/5 xl:w-1/2">
-                <div className="bg-white/80 dark:bg-slate-900/85 backdrop-blur-md border border-white/40 dark:border-slate-800/40 p-6 sm:p-8 rounded-2xl shadow-xl space-y-3">
-                  <h1 className="font-sans text-lg sm:text-xl md:text-2xl lg:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
-                    {/* {t(`common:${item.title}`)} */}
-                    {item.title === 'Slider1Title' ? "100% Organic Fresh Harvest Delivered Daily" : item.title === 'Slider2Title' ? "Premium Artisanal Quality, Locally Sourced" : "Eat Fresh, Live Better — Save 10% Today"}
-                  </h1>
-                  <p className="text-xs sm:text-sm leading-relaxed font-sans text-slate-700 dark:text-slate-350 font-medium line-clamp-2 md:line-clamp-none">
-                    {/* {t(`common:${item.info}`)} */}
-                    {item.info === 'Slider1description' ? "Experience farm-fresh organic groceries, hand-picked and delivered straight to your door within 1 hour. Healthy eating made effortless." : item.info === 'Slider2description' ? "Discover curated gourmet selections, organic pantry essentials, and seasonal specialties crafted by local farms." : "Get premium quality groceries at the best value prices. Use code WELCOME10 at checkout on your first order."}
-                  </p>
-                  <div className="pt-1.5">
-                    <Link href={item.url} className="inline-flex items-center justify-center text-xs sm:text-sm font-bold px-5 py-2.5 bg-primary hover:bg-primary/95 text-white rounded-lg shadow-sm transition-all duration-200 active:scale-[0.98] cursor-pointer !no-underline">
-                      {content['Slider-btn']}
-                    </Link>
-                  </div>
+            <div className="absolute top-0 left-0 z-10 flex flex-col w-full h-full justify-center">
+              <div className="pl-8 sm:pl-16 md:pl-20 w-11/12 lg:w-4/5 xl:w-2/3 space-y-6 animate-slide-in-right">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 backdrop-blur-sm">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                  </span>
+                  <span className="text-[10px] font-bold uppercase tracking-widest">Fresh Arrivals</span>
+                </div>
+                
+                <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-foreground leading-[1.1] drop-shadow-sm">
+                  {/* {t(`common:${item.title}`)} */}
+                  {item.title === 'Slider1Title' ? "100% Organic Fresh Harvest Delivered Daily" : item.title === 'Slider2Title' ? "Premium Artisanal Quality, Locally Sourced" : "Eat Fresh, Live Better — Save 10% Today"}
+                </h1>
+                
+                <p className="text-sm sm:text-base md:text-lg leading-relaxed font-sans text-muted-foreground font-medium max-w-lg">
+                  {/* {t(`common:${item.info}`)} */}
+                  {item.info === 'Slider1description' ? "Experience farm-fresh organic groceries, hand-picked and delivered straight to your door within 1 hour. Healthy eating made effortless." : item.info === 'Slider2description' ? "Discover curated gourmet selections, organic pantry essentials, and seasonal specialties crafted by local farms." : "Get premium quality groceries at the best value prices. Use code WELCOME10 at checkout on your first order."}
+                </p>
+                
+                <div className="pt-4 flex items-center gap-4">
+                  <Link href={item.url} className="btn-premium px-8 py-3.5 bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_4px_14px_0_hsl(var(--primary)/40%)] text-sm !no-underline">
+                    {content['Slider-btn']}
+                  </Link>
+                  <Link href="/about-us" className="btn-premium px-8 py-3.5 bg-background text-foreground border border-border/80 hover:bg-muted shadow-sm text-sm !no-underline">
+                    Learn More
+                  </Link>
                 </div>
               </div>
             </div>
           </SwiperSlide>
         ))}
       </Swiper>
-    </>
+    </div>
   );
 };
 
-export default MainCarousel
+export default MainCarousel;

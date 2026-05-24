@@ -31,10 +31,11 @@ const Coupon = ({ couponInHome }) => {
         data?.slice(0, 2).map((coupon) => (
           <div
             key={coupon._id}
-            className="mx-auto my-4 flex flex-col md:flex-row justify-between items-center bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700/80 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 p-4 gap-4"
+            className="mx-auto my-4 flex flex-col md:flex-row justify-between items-center bg-card border border-border/40 rounded-2xl shadow-sm hover:shadow-premium-hover transition-all duration-300 p-5 gap-5 relative overflow-hidden"
           >
-            <div className="flex items-center gap-4 flex-grow w-full md:w-auto">
-              <figure className="relative w-16 h-16 bg-slate-50 dark:bg-slate-900 rounded-lg p-2 flex items-center justify-center border border-slate-100 dark:border-slate-800 flex-shrink-0">
+            <div className="absolute inset-y-0 left-0 w-1 bg-primary/50"></div>
+            <div className="flex items-center gap-5 flex-grow w-full md:w-auto">
+              <figure className="relative w-16 h-16 bg-muted/20 rounded-xl p-2 flex items-center justify-center flex-shrink-0">
                 <Image
                   src={coupon.logo}
                   alt={coupon.title}
@@ -45,27 +46,27 @@ const Coupon = ({ couponInHome }) => {
               </figure>
               <div className="flex-grow">
                 <div className="flex items-center gap-2 flex-wrap mb-1">
-                  <span className="text-lg font-extrabold text-primary">
+                  <span className="text-xl font-black text-primary">
                     {coupon?.discountType?.type === "fixed" ? (
                       <span>₹{coupon?.discountType?.value}</span>
                     ) : (
                       <span>{coupon?.discountPercentage}%</span>
                     )}
                   </span>
-                  <span className="text-xs font-bold text-slate-500 uppercase">
+                  <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
                     Off
                   </span>
                   {dayjs().isAfter(dayjs(coupon.endTime)) ? (
-                    <span className="text-red-600 bg-red-50 dark:bg-red-950/30 px-2 py-0.5 rounded-full font-bold text-[10px] uppercase tracking-wider">
+                    <span className="text-red-500 bg-red-500/10 px-2 py-0.5 rounded-md font-bold text-[10px] uppercase tracking-wider">
                       Expired
                     </span>
                   ) : (
-                    <span className="text-emerald-600 bg-emerald-50 dark:bg-emerald-950/30 px-2 py-0.5 rounded-full font-bold text-[10px] uppercase tracking-wider">
+                    <span className="text-emerald-600 bg-emerald-500/10 px-2 py-0.5 rounded-md font-bold text-[10px] uppercase tracking-wider">
                       Active
                     </span>
                   )}
                 </div>
-                <h2 className="font-sans text-sm text-slate-800 dark:text-slate-200 font-bold mb-2">
+                <h2 className="font-sans text-sm text-foreground font-bold mb-2">
                   {coupon?.title}
                 </h2>
                 {dayjs().isAfter(dayjs(coupon.endTime)) ? (
@@ -77,17 +78,17 @@ const Coupon = ({ couponInHome }) => {
                 )}
               </div>
             </div>
-            <div className="w-full md:w-auto md:border-l md:border-dashed border-slate-200 dark:border-slate-700 md:pl-4 flex flex-col justify-center">
+            <div className="w-full md:w-auto md:border-l md:border-dashed border-border/60 md:pl-6 flex flex-col justify-center">
               <CopyToClipboard
                 text={coupon.couponCode}
                 onCopy={() => handleCopied(coupon.couponCode)}
               >
-                <button className="w-full min-w-[120px] font-mono font-bold text-xs uppercase tracking-wider border border-dashed border-primary bg-primary/5 text-primary hover:bg-primary/10 transition-colors py-2 rounded-lg text-center block">
+                <button className="w-full min-w-[130px] font-mono font-bold text-xs uppercase tracking-wider border-2 border-dashed border-primary/50 bg-primary/5 text-primary hover:bg-primary/10 hover:border-primary transition-colors py-2.5 rounded-xl text-center block active:scale-[0.98]">
                   {copied && coupon.couponCode === copiedCode ? "Copied!" : coupon.couponCode}
                 </button>
               </CopyToClipboard>
-              <p className="text-[10px] font-medium text-slate-400 mt-2 text-center">
-                * Min Order: <span className="font-bold text-slate-500">₹{coupon.minimumAmount}</span>
+              <p className="text-[10px] font-medium text-muted-foreground mt-2 text-center">
+                * Min Order: <span className="font-bold text-foreground">₹{coupon.minimumAmount}</span>
               </p>
             </div>
           </div>
@@ -97,39 +98,40 @@ const Coupon = ({ couponInHome }) => {
           {data?.map((coupon) => (
             <div
               key={coupon._id}
-              className="flex flex-col sm:flex-row justify-between items-center bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-800 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 p-5 gap-5"
+              className="flex flex-col sm:flex-row justify-between items-center card-base hover:shadow-premium-hover transition-all duration-300 p-6 gap-6 relative overflow-hidden"
             >
-              <div className="flex items-center gap-5 flex-grow w-full sm:w-auto">
-                <figure className="relative w-20 h-20 bg-slate-50 dark:bg-slate-900 rounded-xl p-3 flex items-center justify-center border border-slate-100 dark:border-slate-800 flex-shrink-0">
+              <div className="absolute inset-y-0 left-0 w-1.5 bg-primary/60"></div>
+              <div className="flex items-center gap-6 flex-grow w-full sm:w-auto">
+                <figure className="relative w-20 h-20 bg-muted/20 rounded-2xl p-3 flex items-center justify-center flex-shrink-0">
                   <Image
                     src={coupon.logo}
                     alt={coupon.title}
                     width={80}
                     height={80}
-                    className="object-contain rounded-md"
+                    className="object-contain rounded-md drop-shadow-sm"
                   />
                 </figure>
                 <div className="flex-grow">
-                  <h2 className="font-sans text-base text-slate-800 dark:text-slate-200 font-bold mb-1">
+                  <h2 className="font-sans text-base text-foreground font-bold mb-1.5">
                     {coupon?.title}
                   </h2>
-                  <div className="flex items-center gap-2 flex-wrap mb-2">
-                    <span className="text-xl font-extrabold text-primary">
+                  <div className="flex items-center gap-2 flex-wrap mb-3">
+                    <span className="text-2xl font-black text-primary">
                       {coupon?.discountType?.type === "fixed" ? (
                         <span>₹{coupon?.discountType?.value}</span>
                       ) : (
                         <span>{coupon?.discountType?.value}%</span>
                       )}
                     </span>
-                    <span className="text-xs font-bold text-slate-500 uppercase">
+                    <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
                       Off
                     </span>
                     {dayjs().isAfter(dayjs(coupon.endTime)) ? (
-                      <span className="text-red-600 bg-red-50 dark:bg-red-950/30 px-2 py-0.5 rounded-full font-bold text-[10px] uppercase tracking-wider">
+                      <span className="text-red-500 bg-red-500/10 px-2.5 py-0.5 rounded-md font-bold text-[10px] uppercase tracking-wider">
                         Expired
                       </span>
                     ) : (
-                      <span className="text-emerald-600 bg-emerald-50 dark:bg-emerald-950/30 px-2 py-0.5 rounded-full font-bold text-[10px] uppercase tracking-wider">
+                      <span className="text-emerald-600 bg-emerald-500/10 px-2.5 py-0.5 rounded-md font-bold text-[10px] uppercase tracking-wider">
                         Active
                       </span>
                     )}
@@ -141,12 +143,12 @@ const Coupon = ({ couponInHome }) => {
                   )}
                 </div>
               </div>
-              <div className="w-full sm:w-auto sm:border-l sm:border-dashed border-slate-200 dark:border-slate-700 sm:pl-5 flex flex-col justify-center">
+              <div className="w-full sm:w-auto sm:border-l-2 sm:border-dashed border-border/60 sm:pl-6 flex flex-col justify-center">
                 <CopyToClipboard
                   text={coupon.couponCode}
                   onCopy={() => handleCopied(coupon.couponCode)}
                 >
-                  <button className="w-full min-w-[130px] font-mono font-bold text-xs uppercase tracking-wider border border-dashed border-primary bg-primary/5 text-primary hover:bg-primary/10 transition-colors py-2 rounded-lg text-center block">
+                  <button className="w-full min-w-[140px] font-mono font-black text-sm uppercase tracking-wider border-2 border-dashed border-primary/50 bg-primary/5 text-primary hover:bg-primary/10 hover:border-primary transition-colors py-3 rounded-xl text-center block active:scale-[0.98]">
                     {copied && coupon.couponCode === copiedCode ? "Copied!" : coupon.couponCode}
                   </button>
                 </CopyToClipboard>

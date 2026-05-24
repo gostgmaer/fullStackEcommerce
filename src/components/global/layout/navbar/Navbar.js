@@ -89,7 +89,7 @@ const Navbar = () => {
         <CartDrawer setOpen={setOpenCart} />
       </SideDrawer>
 
-      <div className="sticky top-0 z-20 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm transition-colors duration-200">
+      <div className="sticky top-0 z-50 w-full glass-effect transition-colors duration-300">
         <div className="max-w-screen-2xl mx-auto px-4 sm:px-10">
           
           {/* Mobile Header elements (Logo, and Right Actions) */}

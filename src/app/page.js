@@ -105,37 +105,37 @@ export default async function Home() {
 
   return (
     <Layout  >
-      <div className="min-h-screen bg-background text-foreground transition-colors duration-200">
+      <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
         {/* <StickyCart /> */}
-        <div className="bg-background dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800/50">
-          <div className="mx-auto py-8 max-w-screen-2xl px-3 sm:px-10">
-            <div className="flex flex-col lg:flex-row w-full gap-6">
-              <div className="flex-shrink-0 lg:w-3/5 w-full">
+        <div className="bg-gradient-to-b from-muted/30 to-background dark:from-muted/10 dark:to-background border-b border-border/40 relative overflow-hidden">
+          <div className="absolute inset-0 bg-[url('https://res.cloudinary.com/ahossain/image/upload/v1697204480/pattern_bg_hzt68z.png')] opacity-[0.03] dark:opacity-[0.02] pointer-events-none mix-blend-overlay"></div>
+          <div className="mx-auto py-10 lg:py-14 max-w-screen-2xl px-4 sm:px-10 relative z-10">
+            <div className="flex flex-col lg:flex-row w-full gap-8">
+              <div className="flex-shrink-0 lg:w-3/5 w-full animate-slide-up">
                 <MainCarousel />
               </div>
-              <div className="lg:w-2/5 w-full flex">
+              <div className="lg:w-2/5 w-full flex animate-slide-in-right">
                 <OfferCard />
               </div>
             </div>
-            <div className="bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800 px-10 py-6 rounded-xl mt-6 hidden lg:block">
+            <div className="bg-card/50 backdrop-blur-md border border-border/60 px-10 py-8 rounded-3xl mt-8 hidden lg:block shadow-sm">
               <Banner />
             </div>
           </div>
         </div>
 
         {/* feature category's */}
-        <div className="bg-slate-50/50 dark:bg-slate-900/50 border-b border-slate-100 dark:border-slate-800 lg:py-16 py-10">
-          <div className="mx-auto max-w-screen-2xl px-3 sm:px-10">
-            <div className="mb-10 flex justify-center">
-              <div className="text-center w-full lg:w-2/5">
-                <h2 className="text-2xl lg:text-3xl mb-2 font-sans font-bold tracking-tight text-slate-900 dark:text-white">
+        <div className="bg-background border-b border-border/40 lg:py-24 py-16">
+          <div className="mx-auto max-w-screen-2xl px-4 sm:px-10">
+            <div className="mb-14 flex justify-center">
+              <div className="text-center w-full max-w-2xl">
+                <span className="text-primary font-bold tracking-widest text-xs uppercase mb-3 block">Discover Categories</span>
+                <h2 className="text-3xl lg:text-4xl mb-4 font-serif font-black tracking-tight text-foreground">
                   {/* {t("common:Featured-title")} */}
                   {content["Featured-title"]}
                 </h2>
-                <p className="text-sm sm:text-base font-sans text-slate-500 dark:text-slate-400 leading-relaxed">
+                <p className="text-base font-sans text-muted-foreground leading-relaxed">
                   {/* {t("common:Featured-sub-title")} */}
-
-
                   {content["Featured-sub-title"]}
                 </p>
               </div>
@@ -143,29 +143,28 @@ export default async function Home() {
             <FeatureCategory category={result.category} />
 
             {/* Trust Badges Bar */}
-            <TrustBar />
+            <div className="mt-16">
+              <TrustBar />
+            </div>
           </div>
         </div>
 
         {/* popular products */}
-        <div className="bg-background dark:bg-slate-950 lg:py-16 py-10 mx-auto max-w-screen-2xl px-3 sm:px-10">
-          <div className="mb-10 flex justify-center">
-            <div className="text-center w-full lg:w-2/5">
-              <h2 className="text-2xl lg:text-3xl mb-2 font-sans font-bold tracking-tight text-slate-900 dark:text-white">
-
+        <div className="bg-muted/10 dark:bg-muted/5 lg:py-24 py-16 mx-auto max-w-screen-2xl px-4 sm:px-10">
+          <div className="mb-14 flex justify-center">
+            <div className="text-center w-full max-w-2xl">
+              <span className="text-primary font-bold tracking-widest text-xs uppercase mb-3 block">Top Picks</span>
+              <h2 className="text-3xl lg:text-4xl mb-4 font-serif font-black tracking-tight text-foreground">
                 {content["popular-products-title"]}
-
               </h2>
-              <p className="text-sm sm:text-base font-sans text-slate-500 dark:text-slate-400 leading-relaxed">
-
-
+              <p className="text-base font-sans text-muted-foreground leading-relaxed">
                 {content["popular-products-sub-title"]}
               </p>
             </div>
           </div>
           <div className="flex">
             <div className="w-full">
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-3 lg:gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-6 lg:gap-8">
                 {result.popular.results?.slice(0, 18).map((product) => (
                   <ProductCard
                     key={product._id}
@@ -179,9 +178,9 @@ export default async function Home() {
         </div>
 
         {/* promotional banner card */}
-        <div className="block mx-auto max-w-screen-2xl bg-background dark:bg-slate-950">
+        <div className="block mx-auto max-w-screen-2xl bg-background lg:py-10 py-6">
           <div className="mx-auto max-w-screen-2xl px-4 sm:px-10">
-            <div className="bg-transparent">
+            <div className="bg-transparent overflow-hidden rounded-3xl">
               <FastDeliveryCard />
             </div>
           </div>
@@ -190,23 +189,22 @@ export default async function Home() {
         {/* discounted products */}
         <div
           id="discount"
-          className="bg-slate-50/50 dark:bg-slate-900/50 border-t border-slate-100 dark:border-slate-800 lg:py-16 py-10 mt-12 mx-auto max-w-screen-2xl px-3 sm:px-10"
+          className="bg-background border-t border-border/40 lg:py-24 py-16 mx-auto max-w-screen-2xl px-4 sm:px-10"
         >
-          <div className="mb-10 flex justify-center">
-            <div className="text-center w-full lg:w-2/5">
-              <h2 className="text-2xl lg:text-3xl mb-2 font-sans font-bold tracking-tight text-slate-900 dark:text-white">
-
+          <div className="mb-14 flex justify-center">
+            <div className="text-center w-full max-w-2xl">
+              <span className="text-red-500 font-bold tracking-widest text-xs uppercase mb-3 block">Limited Time Offers</span>
+              <h2 className="text-3xl lg:text-4xl mb-4 font-serif font-black tracking-tight text-foreground">
                 {content["discounted-products-title"]}
               </h2>
-              <p className="text-sm sm:text-base font-sans text-slate-500 dark:text-slate-400 leading-relaxed">
-
+              <p className="text-base font-sans text-muted-foreground leading-relaxed">
                 {content["discounted-products-paragraph-text"]}
               </p>
             </div>
           </div>
           <div className="flex">
             <div className="w-full">
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-3 lg:gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-6 lg:gap-8">
                 {result.discount.results?.slice(0, 12).map((product) => (
                   <ProductCard
                     key={product._id}
@@ -220,10 +218,12 @@ export default async function Home() {
         </div>
 
         {/* Social Proof & Marketing */}
-        <div className="mx-auto max-w-screen-2xl px-3 sm:px-10 pb-8">
-          <RecentlyViewed />
-          <Testimonials />
-          <NewsletterSignup />
+        <div className="bg-muted/20 dark:bg-muted/5 border-t border-border/40">
+          <div className="mx-auto max-w-screen-2xl px-4 sm:px-10 py-16 lg:py-24 space-y-20">
+            <RecentlyViewed />
+            <Testimonials />
+            <NewsletterSignup />
+          </div>
         </div>
       </div>
 

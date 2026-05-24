@@ -27,15 +27,15 @@ const ProductCard = ({ product, attributes }) => {
         />
       )}
 
-      <div className="group relative flex flex-col justify-between overflow-hidden bg-white dark:bg-slate-800/80 border border-slate-100 dark:border-slate-700/60 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 h-full w-full">
+      <div className="group relative flex flex-col justify-between overflow-hidden card-base hover:shadow-premium-hover h-full w-full">
         {/* Top Section: Badges & Image */}
-        <div className="relative w-full pt-4 flex justify-center items-center">
+        <div className="relative w-full pt-4 flex justify-center items-center bg-muted/10 dark:bg-muted/5 group-hover:bg-muted/20 transition-colors duration-300">
           <Stock stock={product.stock} card />
           <Discount discount={Number(product.prices.discount)} product={product} slug={product.slug} modal={false} />
           <WishlistCard data={product} />
 
           {product?.image?.[0] ? (
-            <div className="relative w-full h-40 flex justify-center items-center px-4 mt-2">
+            <div className="relative w-full h-44 flex justify-center items-center px-4 mt-2 mb-2">
               <div className="relative w-full h-full cursor-pointer" onClick={() => handleModalOpen(!modalOpen)}>
                 <Image
                   src={product?.image?.[0]}
@@ -43,12 +43,12 @@ const ProductCard = ({ product, attributes }) => {
                   loading="lazy"
                   fill
                   sizes="(max-width: 768px) 150px, 180px"
-                  className="object-contain transition-transform duration-300 group-hover:scale-105"
+                  className="object-contain transition-transform duration-500 group-hover:scale-110 drop-shadow-sm"
                 />
               </div>
             </div>
           ) : (
-            <div className="relative w-full h-40 flex justify-center items-center px-4 mt-2">
+            <div className="relative w-full h-44 flex justify-center items-center px-4 mt-2 mb-2">
               <div className="relative w-full h-full cursor-pointer" onClick={() => handleModalOpen(!modalOpen)}>
                 <Image
                   src="https://res.cloudinary.com/ahossain/image/upload/v1655097002/placeholder_kvepfp.png"
@@ -56,7 +56,7 @@ const ProductCard = ({ product, attributes }) => {
                   loading="lazy"
                   fill
                   sizes="(max-width: 768px) 150px, 180px"
-                  className="object-contain transition-transform duration-300 group-hover:scale-105"
+                  className="object-contain transition-transform duration-500 group-hover:scale-110 opacity-70"
                 />
               </div>
             </div>
@@ -64,19 +64,19 @@ const ProductCard = ({ product, attributes }) => {
         </div>
 
         {/* Bottom Section: Details & Purchase */}
-        <div className="w-full p-4 flex flex-col justify-between flex-grow mt-2">
+        <div className="w-full p-5 flex flex-col justify-between flex-grow mt-2 bg-card">
           <div className="relative mb-2">
-            <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider block mb-1">
-              {product?.unit}
+            <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider block mb-1">
+              {product?.unit || "Unit"}
             </span>
             <h2 
               onClick={() => handleModalOpen(!modalOpen)}
-              className="text-sm font-bold tracking-tight text-slate-850 dark:text-slate-100 hover:text-primary transition-colors cursor-pointer line-clamp-2 min-h-[40px] leading-tight"
+              className="text-sm font-bold tracking-tight text-foreground hover:text-primary transition-colors cursor-pointer line-clamp-2 min-h-[40px] leading-snug"
             >
               {product?.title}
             </h2>
           </div>
-          <div className="flex justify-between items-center mt-3 pt-3 border-t border-slate-50 dark:border-slate-700/50">
+          <div className="flex justify-between items-center mt-4 pt-4 border-t border-border/40">
             <Price
               card
               product={product}

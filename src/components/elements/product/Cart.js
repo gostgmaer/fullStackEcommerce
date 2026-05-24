@@ -24,23 +24,23 @@ function AddToCard({ data }) {
         <div className="flex justify-between items-center text-sm sm:text-base">
           {cartData ? (
             <div>
-              <div className="h-9 w-auto flex items-center gap-2 py-1 px-2.5 bg-primary text-white rounded-lg shadow-sm border border-primary/20">
+              <div className="h-10 w-auto flex items-center gap-3 py-1 px-3 bg-primary text-primary-foreground rounded-xl shadow-[0_4px_14px_0_hsl(var(--primary)/30%)] transition-all duration-300">
                 <button
                   onClick={() => dispatch(decreaseCart({ ...data, id: data._id }))}
                   aria-label="Decrease quantity"
-                  className="hover:scale-105 active:scale-90 transition-all p-0.5"
+                  className="hover:bg-white/20 rounded-md p-1 transition-colors"
                 >
-                  <IoRemoveOutline className="text-base text-white" />
+                  <IoRemoveOutline className="text-base text-primary-foreground" />
                 </button>
-                <p className="text-xs font-sans font-extrabold text-white px-1 leading-none">
+                <p className="text-xs font-bold font-mono text-primary-foreground px-1 leading-none w-4 text-center">
                   {cartData.cartQuantity}
                 </p>
                 <button
                   onClick={() => dispatch(incrementCart({ ...data, id: data._id }))}
                   aria-label="Increase quantity"
-                  className="hover:scale-105 active:scale-90 transition-all p-0.5"
+                  className="hover:bg-white/20 rounded-md p-1 transition-colors"
                 >
-                  <IoAddOutline className="text-base text-white" />
+                  <IoAddOutline className="text-base text-primary-foreground" />
                 </button>
               </div>
             </div>
@@ -49,7 +49,7 @@ function AddToCard({ data }) {
               aria-label="Add to cart"
               disabled={data.stock === 0}
               onClick={() => handleAddToCart({ ...data, id: data._id })}
-              className="h-9 w-9 flex items-center justify-center border border-slate-100 dark:border-slate-800 rounded-lg text-primary bg-slate-50 dark:bg-slate-900 hover:bg-primary hover:text-white hover:border-primary transition-all duration-200 shadow-sm active:scale-95 disabled:opacity-50"
+              className="btn-premium h-10 w-10 border border-border/60 text-foreground bg-muted/30 hover:bg-primary hover:text-primary-foreground hover:border-primary hover:shadow-[0_4px_14px_0_hsl(var(--primary)/30%)] disabled:opacity-50 group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary"
             >
               <span className="text-lg">
                 <IoBagAddSharp />

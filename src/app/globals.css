@@ -4,37 +4,49 @@
 @import 'rsuite/dist/rsuite.min.css';
 
 /* ============================================================
-   DESIGN TOKENS
+   DESIGN TOKENS - PREMIUM LUXURY THEME
    ============================================================ */
 :root {
   --background: 0 0% 100%;
-  --foreground: 240 10% 3.9%;
+  --foreground: 220 15% 10%;
   --card: 0 0% 100%;
-  --card-foreground: 240 10% 3.9%;
-  --primary: 263.4 70% 50.4%;
-  --primary-foreground: 210 20% 98%;
-  --muted: 240 4.8% 95.9%;
-  --muted-foreground: 240 3.8% 46.1%;
-  --accent: 142.1 76.2% 36.3%;
-  --accent-foreground: 210 20% 98%;
-  --border: 240 5.9% 90%;
-  --ring: 263.4 70% 50.4%;
+  --card-foreground: 220 15% 10%;
+  
+  /* Deep Premium Midnight/Slate as Primary */
+  --primary: 222 47% 11%;
+  --primary-foreground: 210 40% 98%;
+  
+  /* Muted sophisticated zinc/gray */
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  
+  /* Rich emerald for success/accents */
+  --accent: 152 57% 40%;
+  --accent-foreground: 210 40% 98%;
+  
+  --border: 214.3 31.8% 91.4%;
+  --ring: 222 47% 11%;
   --radius: 0.75rem;
 }
 
 .dark {
-  --background: 240 10% 3.9%;
-  --foreground: 0 0% 98%;
-  --card: 240 10% 6%;
-  --card-foreground: 0 0% 98%;
-  --primary: 263.4 70% 50.4%;
-  --primary-foreground: 210 20% 98%;
-  --muted: 240 3.7% 15.9%;
-  --muted-foreground: 240 5% 64.9%;
-  --accent: 142.1 76.2% 36.3%;
-  --accent-foreground: 210 20% 98%;
-  --border: 240 3.7% 15.9%;
-  --ring: 263.4 70% 60%;
+  --background: 222 47% 11%;
+  --foreground: 210 40% 98%;
+  --card: 222 47% 11%;
+  --card-foreground: 210 40% 98%;
+  
+  /* Pristine white/light for dark mode primary */
+  --primary: 210 40% 98%;
+  --primary-foreground: 222 47% 11%;
+  
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+  
+  --accent: 152 57% 40%;
+  --accent-foreground: 210 40% 98%;
+  
+  --border: 217.2 32.6% 17.5%;
+  --ring: 212.7 26.8% 83.9%;
 }
 
 /* ============================================================
@@ -43,11 +55,12 @@
 body {
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-feature-settings: "rlig" 1, "calt" 1;
 }
 
 ::selection {
-  background-color: hsl(var(--primary) / 0.2);
+  background-color: hsl(var(--primary) / 0.15);
   color: hsl(var(--foreground));
 }
 
@@ -68,17 +81,21 @@ body {
     display: none;
   }
 
-  /* Animation utilities */
+  /* Custom Animations */
   .animate-fade-in {
-    animation: fade-in 0.2s ease-out both;
+    animation: fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
   .animate-slide-in-right {
-    animation: slide-in-right 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: slide-in-right 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
   .animate-shimmer {
-    animation: shimmer 1.5s infinite linear;
+    animation: shimmer 2s infinite linear;
     background: linear-gradient(
       90deg,
       hsl(var(--muted)) 0%,
@@ -87,9 +104,9 @@ body {
     );
     background-size: 200% 100%;
   }
-
-  .animate-spin-slow {
-    animation: spin 1.2s linear infinite;
+  
+  .glass-effect {
+    @apply bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg border-b border-border shadow-sm;
   }
 }
 
@@ -97,9 +114,14 @@ body {
    KEYFRAMES
    ============================================================ */
 @keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
   from {
     opacity: 0;
-    transform: translateY(4px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -110,7 +132,7 @@ body {
 @keyframes slide-in-right {
   from {
     opacity: 0;
-    transform: translateX(8px);
+    transform: translateX(12px);
   }
   to {
     opacity: 1;
@@ -119,33 +141,17 @@ body {
 }
 
 @keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Legacy bounce (kept for backward compat) */
-@keyframes bounce-custom {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-16px); }
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
 /* ============================================================
    COMPONENT LAYER
    ============================================================ */
 @layer components {
-  /* Premium focus ring — applied via Tailwind focus-visible */
+  /* Premium focus ring */
   .focus-ring {
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--ring))] focus-visible:ring-offset-2 focus-visible:ring-offset-[hsl(var(--background))];
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary focus-visible:ring-offset-background transition-shadow duration-200;
   }
 
   /* Skeleton shimmer block */
@@ -154,8 +160,13 @@ body {
     min-height: 1rem;
   }
 
-  /* Card base */
+  /* Premium Card base */
   .card-base {
-    @apply bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-sm;
+    @apply bg-card text-card-foreground border border-border/60 rounded-2xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] hover:shadow-[0_8px_30px_-4px_rgba(6,81,237,0.1)] transition-all duration-300;
+  }
+  
+  /* Premium Button base */
+  .btn-premium {
+    @apply inline-flex items-center justify-center font-medium transition-all duration-300 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none rounded-xl;
   }
 }

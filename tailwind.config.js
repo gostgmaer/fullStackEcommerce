@@ -10,7 +10,7 @@ module.exports = {
     fontFamily: {
       sans: ["Inter", "Open Sans", "sans-serif"],
       serif: ["Playfair Display", "Georgia", "serif"],
-      DejaVu: ["DejaVu Sans", "Arial", "sans-serif"],
+      mono: ["Fira Code", "monospace"],
     },
     extend: {
       colors: {
@@ -41,19 +41,26 @@ module.exports = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      boxShadow: {
+        'premium': '0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 0 3px rgba(0,0,0,0.02)',
+        'premium-hover': '0 8px 30px -4px rgba(0, 0, 0, 0.1), 0 0 4px rgba(0,0,0,0.03)',
       },
       keyframes: {
         "fade-in": {
-          from: { opacity: "0", transform: "translateY(4px)" },
+          from: { opacity: "0", transform: "translateY(8px)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
         "slide-in-right": {
-          from: { opacity: "0", transform: "translateX(8px)" },
+          from: { opacity: "0", transform: "translateX(16px)" },
           to: { opacity: "1", transform: "translateX(0)" },
+        },
+        "slide-up": {
+          from: { opacity: "0", transform: "translateY(16px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        "scale-in": {
+          from: { opacity: "0", transform: "scale(0.95)" },
+          to: { opacity: "1", transform: "scale(1)" },
         },
         shimmer: {
           "0%": { backgroundPosition: "-200% 0" },
@@ -64,14 +71,14 @@ module.exports = {
         },
       },
       animation: {
-        "fade-in": "fade-in 0.2s ease-out both",
-        "slide-in-right": "slide-in-right 0.25s cubic-bezier(0.16,1,0.3,1) both",
-        shimmer: "shimmer 1.5s infinite linear",
-        "spin-slow": "spin-slow 1.2s linear infinite",
+        "fade-in": "fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both",
+        "slide-in-right": "slide-in-right 0.4s cubic-bezier(0.16, 1, 0.3, 1) both",
+        "slide-up": "slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both",
+        "scale-in": "scale-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) both",
+        shimmer: "shimmer 2s infinite linear",
+        "spin-slow": "spin-slow 2s linear infinite",
       },
     },
   },
   plugins: [],
 };
-
-

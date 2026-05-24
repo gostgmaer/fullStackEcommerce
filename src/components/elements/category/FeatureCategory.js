@@ -38,60 +38,54 @@ const FeatureCategory = (props) => {
 
   return (
     <>
-      <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6">
+      <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         {props?.category?.results?.map((category, i) => (
-          <li className="group" key={i + 1}>
-            <div className="flex w-full h-full border border-gray-100 dark:border-gray-500 shadow-sm bg-white dark:bg-gray-600 p-4 cursor-pointer transition duration-200 ease-linear transform group-hover:shadow-lg">
-              <div className="flex items-center">
-                <div>
+          <li className="group h-full" key={i + 1}>
+            <div className="flex flex-col w-full h-full card-base hover:shadow-premium-hover p-5 cursor-pointer relative overflow-hidden">
+              <a href={`/product/search?category=${category.title}&_id=${category._id}`} className="absolute inset-0 z-10"></a>
+              <div className="flex flex-col items-center text-center gap-4 relative z-0">
+                <div className="w-16 h-16 rounded-full bg-muted/20 flex items-center justify-center p-3 group-hover:bg-primary/10 transition-colors duration-500">
                   {category.images ? (
                     <Image
                       src={category?.images[0]}
-                      alt="category"
-                      width={35}
-                      height={35}
+                      alt={category.title}
+                      width={48}
+                      height={48}
+                      className="object-contain group-hover:scale-110 transition-transform duration-500"
                     />
                   ) : (
                     <Image
                       src="https://res.cloudinary.com/ahossain/image/upload/v1655097002/placeholder_kvepfp.png"
-                      alt="category"
-                      width={35}
-                      height={35}
+                      alt={category.title}
+                      width={48}
+                      height={48}
+                      className="object-contain opacity-50 group-hover:scale-110 transition-transform duration-500"
                     />
                   )}
                 </div>
 
-                <div className="pl-4">
-                  <h3
-
-                    className="text-sm text-gray-600 dark:text-gray-200 font-serif font-medium leading-tight line-clamp-1  group-hover"
-                  >
-                    <a
-                      href={`/product/search?category=${category.title}&_id=${category._id}`}
-                      className="flex items-center font-serif text-xs text-gray-400 dark:text-gray-800 cursor-pointer"
-                    >
-
-                      {category?.title}
-                    </a>
-
+                <div className="w-full">
+                  <h3 className="text-sm text-foreground font-bold leading-tight line-clamp-1 group-hover:text-primary transition-colors">
+                    {category?.title}
                   </h3>
-                  {category?.child?.length ? <ul className="pt-1 mt-1">
-                    {category?.child?.slice(0, 3).map((child) => (
-                      <li key={child.path} className="pt-1">
-                        <a
-                          href={`/product/search?category=${child.title}&_id=${child._id}`}
-                          className="flex items-center font-serif text-xs text-gray-400 dark:text-gray-800 cursor-pointer"
-                        >
-                          <span className="text-xs text-gray-400 dark:text-gray-800">
-                            <IoChevronForwardSharp />
-                          </span>
-                          {child?.name}
-                        </a>
-
-
-                      </li>
-                    ))}
-                  </ul>:''}
+                  
+                  {category?.child?.length > 0 && (
+                    <ul className="pt-2 mt-2 border-t border-border/40 opacity-0 group-hover:opacity-100 max-h-0 group-hover:max-h-20 transition-all duration-300 overflow-hidden">
+                      {category?.child?.slice(0, 2).map((child) => (
+                        <li key={child.path} className="pt-1.5">
+                          <a
+                            href={`/product/search?category=${child.title}&_id=${child._id}`}
+                            className="flex items-center justify-center text-[10px] text-muted-foreground hover:text-primary transition-colors"
+                          >
+                            <span className="text-primary mr-1">
+                              <IoChevronForwardSharp className="w-3 h-3" />
+                            </span>
+                            <span className="truncate">{child?.name}</span>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
               </div>
             </div>

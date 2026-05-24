@@ -5,13 +5,16 @@ import Coupon from '../coupon/Coupon';
 const OfferCard = () => {
   return (
     <div className="w-full group h-full">
-      <div className="bg-white dark:bg-slate-850 h-full border border-slate-100 dark:border-slate-700 transition-all duration-300 rounded-xl overflow-hidden shadow-sm group-hover:shadow-md">
-        <div className="bg-slate-50 dark:bg-slate-800/50 text-slate-900 dark:text-white px-6 py-4 border-b border-slate-100 dark:border-slate-700 flex items-center justify-center">
-          <h3 className="text-sm font-sans font-bold tracking-tight text-center uppercase">
-            {content['OfferCard-Title']}
+      <div className="card-base h-full flex flex-col justify-between overflow-hidden shadow-premium hover:shadow-premium-hover rounded-3xl relative">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-2xl pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-32 h-32 bg-accent/5 rounded-full blur-2xl pointer-events-none"></div>
+        
+        <div className="bg-muted/30 backdrop-blur-md px-6 py-5 border-b border-border/40 flex items-center justify-center relative z-10">
+          <h3 className="text-sm font-sans font-black tracking-widest text-primary text-center uppercase">
+            {content['OfferCard-Title'] || "Special Offers"}
           </h3>
         </div>
-        <div className="overflow-hidden p-4">
+        <div className="p-6 relative z-10 flex-grow flex items-center justify-center bg-card">
           <Coupon couponInHome />
         </div>
       </div>
