@@ -1,22 +1,6 @@
 import requests from "./httpServices";
 
 const CustomerServices = {
-  customerLogin: async (body) => {
-    return requests.post("/customer/auth/login", body);
-  },
-
-  verifyEmailAddress: async (body) => {
-    return requests.post("/customer/auth/verify-email", body);
-  },
-
-  registerCustomer: async (token, body) => {
-    return requests.post(`/customer/auth/register/${token}`, body);
-  },
-
-  signUpWithProvider(token, body) {
-    return requests.post(`/customer/auth/signup/${token}`, body);
-  },
-
   forgetPassword: async (body) => {
     return requests.post("/user/auth/forget-password",body);
   },
@@ -25,7 +9,6 @@ const CustomerServices = {
     return requests.post(`/user/auth/reset-password/${token}`, body, undefined);
   },
 
-  
   getProfile: async (query, headers) => {
     return requests.get("/users/customer/profile",query,null, headers,0);
   },

@@ -10,13 +10,6 @@ const OrderServices = {
   verifyOrder: async (body, headers) => {
     return requests.post("/orders/verify-payment", body, headers);
   },
-  createOrder: async (body, headers) => {
-    return requests.post("/orders/customer/order/create", body, headers);
-  },
-  createPaymentIntent: async (body, headers) => {
-    return requests.post("/orders/create-payment-intent", body, headers);
-  },
-
   getOrderCustomer: async (query, headers) => {
     return requests.get(`/orders/customer/fetch`, query,null, headers,1);
   },
