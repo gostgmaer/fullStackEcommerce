@@ -185,9 +185,11 @@ const Navbar = () => {
                     >
                       <div className="relative w-8 h-8 rounded bg-white flex-shrink-0 border border-border/55 p-0.5 flex items-center justify-center">
                         {product.image?.[0] ? (
-                          <img
+                          <Image
                             src={product.image[0]}
                             alt={product.title}
+                            width={32}
+                            height={32}
                             className="w-full h-full object-contain"
                           />
                         ) : (
@@ -210,7 +212,7 @@ const Navbar = () => {
                     onClick={() => setShowSuggestions(false)}
                     className="text-xs font-semibold text-primary hover:underline flex items-center justify-between"
                   >
-                    <span>View all results for "{searchText}"</span>
+                    <span>View all results for &quot;{searchText}&quot;</span>
                     <span>→</span>
                   </Link>
                 </div>
@@ -277,9 +279,11 @@ const Navbar = () => {
                       >
                         <div className="relative w-8 h-8 rounded bg-white flex-shrink-0 border border-border/50 p-0.5 flex items-center justify-center">
                           {product.image?.[0] ? (
-                            <img
+                            <Image
                               src={product.image[0]}
                               alt={product.title}
+                              width={32}
+                              height={32}
                               className="w-full h-full object-contain"
                             />
                           ) : (
@@ -302,7 +306,7 @@ const Navbar = () => {
                       onClick={() => setShowSuggestions(false)}
                       className="text-xs font-semibold text-primary hover:underline flex items-center justify-between"
                     >
-                      <span>View all results for "{searchText}"</span>
+                      <span>View all results for &quot;{searchText}&quot;</span>
                       <span>→</span>
                     </Link>
                   </div>

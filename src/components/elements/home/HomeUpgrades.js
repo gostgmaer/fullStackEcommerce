@@ -102,7 +102,7 @@ export function Testimonials() {
                 ))}
               </div>
               <p className="text-sm text-muted-foreground italic leading-relaxed">
-                "{rev.comment}"
+                &quot;{rev.comment}&quot;
               </p>
             </div>
             

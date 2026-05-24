@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
@@ -52,8 +52,29 @@ const CartPage = () => {
   const progressPercent = Math.min((cartTotalAmount / freeShippingThreshold) * 100, 100);
   const remainingForFreeShipping = Math.max(freeShippingThreshold - cartTotalAmount, 0);
 
+  const simulateLocalCoupon = useCallback((codeStr) => {
+    const uppercaseCode = codeStr.toUpperCase().trim();
+    if (uppercaseCode === "SAVE10" || uppercaseCode === "WELCOME10") {
+      const discountAmt = cartTotalAmount * 0.10;
+      setCouponDiscount(discountAmt);
+      setCouponSuccess(true);
+      setCouponMessage(`WELCOME10 applied! 10% Off (-$${discountAmt.toFixed(2)})`);
+      localStorage.setItem('cartCouponCode', uppercaseCode);
+    } else if (uppercaseCode === "FREESHIP") {
+      setCouponDiscount(0);
+      setCouponSuccess(true);
+      setCouponMessage("Free shipping code applied successfully!");
+      localStorage.setItem('cartCouponCode', uppercaseCode);
+    } else {
+      setCouponDiscount(0);
+      setCouponSuccess(false);
+      setCouponMessage("Invalid or expired coupon code.");
+      localStorage.removeItem('cartCouponCode');
+    }
+  }, [cartTotalAmount]);
+
   // Coupon validation
-  const applyCoupon = async (codeStr) => {
+  const applyCoupon = useCallback(async (codeStr) => {
     if (!codeStr) return;
     setLoadingCoupon(true);
     setCouponMessage("");
@@ -84,28 +105,7 @@ const CartPage = () => {
       simulateLocalCoupon(codeStr);
     }
     setLoadingCoupon(false);
-  };
-
-  const simulateLocalCoupon = (codeStr) => {
-    const uppercaseCode = codeStr.toUpperCase().trim();
-    if (uppercaseCode === "SAVE10" || uppercaseCode === "WELCOME10") {
-      const discountAmt = cartTotalAmount * 0.10;
-      setCouponDiscount(discountAmt);
-      setCouponSuccess(true);
-      setCouponMessage(`WELCOME10 applied! 10% Off (-$${discountAmt.toFixed(2)})`);
-      localStorage.setItem('cartCouponCode', uppercaseCode);
-    } else if (uppercaseCode === "FREESHIP") {
-      setCouponDiscount(0);
-      setCouponSuccess(true);
-      setCouponMessage("Free shipping code applied successfully!");
-      localStorage.setItem('cartCouponCode', uppercaseCode);
-    } else {
-      setCouponDiscount(0);
-      setCouponSuccess(false);
-      setCouponMessage("Invalid or expired coupon code.");
-      localStorage.removeItem('cartCouponCode');
-    }
-  };
+  }, [cart, cartTotalAmount, simulateLocalCoupon]);
 
   const handleCouponSubmit = (e) => {
     e.preventDefault();
@@ -126,7 +126,7 @@ const CartPage = () => {
     if (storedCoupon) {
       applyCoupon(storedCoupon);
     }
-  }, [cartTotalAmount]);
+  }, [cartTotalAmount, applyCoupon]);
 
   const finalTotal = Math.max(cartTotalAmount + shippingCost - couponDiscount, 0);
 

@@ -52,7 +52,7 @@ const ReturnPolicy = () => {
               <div className="p-6 bg-card border border-border rounded-xl">
                 <h4 className="font-bold text-foreground mb-2">Registered Users</h4>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Log in to your account, go to <Link href="/user/my-account/my-orders" className="text-primary hover:underline font-medium">My Orders</Link>, select the order containing the item, and click the "Return Items" button.
+                  Log in to your account, go to <Link href="/user/my-account/my-orders" className="text-primary hover:underline font-medium">My Orders</Link>, select the order containing the item, and click the &quot;Return Items&quot; button.
                 </p>
               </div>
               <div className="p-6 bg-card border border-border rounded-xl">
@@ -120,7 +120,7 @@ const ReturnPolicy = () => {
               <li>Gift cards / digital vouchers.</li>
               <li>Downloadable software products.</li>
               <li>Personal care, hygiene, and intimate apparel items (for health reasons).</li>
-              <li>Products marked as "Final Sale" or "Clearance" at checkout.</li>
+              <li>Products marked as &quot;Final Sale&quot; or &quot;Clearance&quot; at checkout.</li>
             </ul>
           </section>
 

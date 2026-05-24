@@ -252,7 +252,7 @@ export default function FAQContent() {
         <div>
           <h4 className="text-xl font-bold text-foreground mb-2">Still need help?</h4>
           <p className="text-sm text-muted-foreground max-w-md">
-            If you didn't find the answers to your questions, please don't hesitate to reach out. Our customer support team is ready to assist you.
+            If you didn&apos;t find the answers to your questions, please don&apos;t hesitate to reach out. Our customer support team is ready to assist you.
           </p>
         </div>
         <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">

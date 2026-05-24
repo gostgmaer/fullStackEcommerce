@@ -68,7 +68,7 @@ const ShippingPolicy = () => {
               3. Shipment Tracking
             </h3>
             <p className="text-muted-foreground leading-relaxed">
-              When your order has shipped, you will receive an email notification from us which will include a tracking number you can use to check its status. Please allow up to 24 hours for the tracking information to become active in the carrier's system.
+              When your order has shipped, you will receive an email notification from us which will include a tracking number you can use to check its status. Please allow up to 24 hours for the tracking information to become active in the carrier&apos;s system.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               You can also track your order directly on our website by visiting our <strong>Track Order</strong> page and entering your unique Order ID and email address.
