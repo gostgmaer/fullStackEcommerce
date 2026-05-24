@@ -148,7 +148,7 @@ const CartPage = () => {
                 Your cart is empty
               </h2>
               <p className="text-muted-foreground max-w-md mb-8 text-sm">
-                Looks like you haven&apos;t added anything to your cart yet. Browse our collections to find the best organic products.
+                Looks like you haven&apos;t added anything to your cart yet. Browse our collections to find the best furniture pieces.
               </p>
               <Link
                 href="/"

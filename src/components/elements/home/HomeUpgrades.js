@@ -57,7 +57,7 @@ export function Testimonials() {
       name: "Sarah Jenkins",
       role: "Verified Buyer",
       stars: 5,
-      comment: "Absolutely outstanding quality! The fresh fruits and vegetables arrived perfectly packed and crisp. Delivery took under 2 hours, which is exceptional. Highly recommend their organic selections!",
+      comment: "Absolutely outstanding quality! The solid wood dining table arrived perfectly packed and looks stunning in my home. White-glove delivery took under 2 hours. Highly recommend their collections!",
       date: "May 12, 2026",
     },
     {
@@ -65,26 +65,26 @@ export function Testimonials() {
       name: "Marcus Vance",
       role: "Regular Customer",
       stars: 5,
-      comment: "I love the checkout speed and how easy it is to track orders. Had to contact support once to update my shipping details and they resolved it in minutes. A truly premium shopping experience.",
+      comment: "I love the custom upholstery options and how easy it is to track orders. Had to contact support once to update my fabric choice and they resolved it in minutes. A truly premium shopping experience.",
       date: "April 28, 2026",
     },
     {
       id: 3,
       name: "Elena Rostova",
-      role: "Tech Professional",
+      role: "Interior Designer",
       stars: 5,
-      comment: "The best online grocery and organic shop I've ever used. The website is extremely fast, dark mode looks gorgeous, and variant selections are seamless. 10 out of 10!",
+      comment: "The best online furniture and decor store I've ever used. The website is extremely fast, the checkout is gorgeous, and custom selections are seamless. 10 out of 10!",
       date: "May 19, 2026",
     },
   ];
 
   return (
     <div className="my-16">
-      <div className="section-heading mb-14">
-        <span className="section-label">Social Proof</span>
-        <h3 className="section-title">What Our Customers Say</h3>
-        <p className="section-subtitle">
-          Read genuine reviews from verified shoppers who trust us for their daily organic needs.
+      <div className="text-center max-w-2xl mx-auto mb-14">
+        <span className="text-xs font-bold text-primary uppercase tracking-widest block mb-3">Social Proof</span>
+        <h3 className="text-3xl sm:text-4xl font-black font-serif mt-1 text-foreground">What Our Customers Say</h3>
+        <p className="text-sm sm:text-base text-muted-foreground mt-3">
+          Read genuine reviews from verified shoppers who trust us for their home design needs.
         </p>
       </div>
 
