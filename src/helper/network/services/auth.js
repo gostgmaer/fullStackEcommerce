@@ -34,9 +34,6 @@ const authService = {
       {}
     );
   },
-  verifyEmailAddress: async (body) => {
-    return requests.post("/customer/auth/verify-email", body, {});
-  },
   verifyToken: async (body) => {
     return requests.post("/user/auth/session/refresh/token", body, {});
   },
