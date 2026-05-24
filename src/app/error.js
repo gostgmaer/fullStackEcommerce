@@ -47,7 +47,7 @@ const ErrorPage = ({ error, reset }) => {
           )}
           <Link
             href="/"
-            className="inline-flex items-center justify-center px-6 py-3 bg-muted dark:bg-slate-800 text-foreground font-semibold text-sm rounded-xl hover:bg-muted/80 dark:hover:bg-slate-700 active:scale-[0.98] transition-all duration-200 w-full sm:w-auto border border-border"
+            className="inline-flex items-center justify-center px-6 py-3 bg-muted text-foreground font-semibold text-sm rounded-xl hover:bg-muted/80 active:scale-[0.98] transition-all duration-200 w-full sm:w-auto border border-border"
           >
             Go Home
           </Link>

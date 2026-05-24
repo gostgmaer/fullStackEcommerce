@@ -13,7 +13,7 @@ const CartServices = {
     return requests.post("/cart/remove/:id", body, headers);
   },
   getCustomerCart: async (query, headers) => {
-    return requests.get(`/order`, query, headers);
+    return requests.get(`/cart`, query, headers);
   }
  
 };

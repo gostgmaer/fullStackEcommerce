@@ -20,7 +20,7 @@ const Common = ({ setModalOpen }) => {
 
   return (
     <>
-      <div className="overflow-hidden bg-white mx-auto">
+      <div className="overflow-hidden bg-card mx-auto">
         {showResetPassword ? (
           <ResetPassword
             setShowResetPassword={setShowResetPassword}

@@ -36,6 +36,10 @@ const NavBarTop = () => {
                 {content["Contact Us"]}
               </Link>
               <span className="text-border">|</span>
+              <Link href="/help-center" className="hover:text-primary transition-colors duration-200">
+                Help Center
+              </Link>
+              <span className="text-border">|</span>
               <Link
                 href="/user/my-account/dashboard"
                 className="hover:text-primary transition-colors duration-200"

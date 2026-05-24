@@ -795,7 +795,7 @@ const SingleProduct = ({ props }) => {
                     <div className="space-y-2">
                       <h4 className="font-semibold text-foreground text-sm">Easy Returns & Exchanges</h4>
                       <p className="text-sm">We offer a 7-day money-back guarantee if you are not fully satisfied. Simply ensure the packaging is intact and contact our support desk for return labels.</p>
-                      <p className="text-sm">Need help? Email us at support@ecommercestore.com for prompt support.</p>
+                      <p className="text-sm">Need help? Email us at <a href="mailto:support@ecommerce.com" className="text-primary hover:underline">support@ecommerce.com</a> for prompt support.</p>
                     </div>
                   </div>
                 </div>

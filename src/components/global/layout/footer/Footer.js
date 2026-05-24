@@ -103,6 +103,16 @@ const Footer = () => {
                   Returns & Refunds
                 </Link>
               </li>
+              <li className="flex items-baseline">
+                <Link href="/help-center" className="text-muted-foreground inline-block w-full hover:text-primary hover:translate-x-1 transition-all duration-200">
+                  Help Center
+                </Link>
+              </li>
+              <li className="flex items-baseline">
+                <Link href="/contact-us" className="text-muted-foreground inline-block w-full hover:text-primary hover:translate-x-1 transition-all duration-200">
+                  Contact Us
+                </Link>
+              </li>
             </ul>
           </div>
           <div className="pb-3.5 sm:pb-0 col-span-1 md:col-span-2 lg:col-span-3">

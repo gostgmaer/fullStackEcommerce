@@ -18,7 +18,7 @@ const wishlistServices = {
         return requests.delete("/wishlist/:id/remove", params, headers);
     },
     getCustomerwishlist: async (query, headers) => {
-        return requests.get(`/order`, query, headers);
+        return requests.get(`/wishlist/fetch`, query, headers);
     }
 
 };

@@ -22,7 +22,7 @@ const ProfileBlock = ({ user }) => {
         {/* Profile Info Section */}
         <div>
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">
+            <h3 className="text-lg font-bold text-foreground tracking-tight">
               Profile Information
             </h3>
             <Link
@@ -33,8 +33,8 @@ const ProfileBlock = ({ user }) => {
             </Link>
           </div>
           
-          <div className="bg-slate-50/50 dark:bg-slate-950/20 border border-slate-100 dark:border-slate-800 rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row items-center gap-5">
-            <div className="relative w-16 h-16 rounded-full border border-slate-200 dark:border-slate-700/80 shadow-sm overflow-hidden flex-shrink-0">
+          <div className="bg-muted/20 border border-border rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row items-center gap-5">
+            <div className="relative w-16 h-16 rounded-full border border-border shadow-sm overflow-hidden flex-shrink-0">
               <Image
                 src={userImage}
                 fill
@@ -44,15 +44,15 @@ const ProfileBlock = ({ user }) => {
               />
             </div>
             <div className="flex-grow text-center sm:text-left">
-              <h4 className="text-base font-extrabold text-slate-850 dark:text-slate-250 mb-1">
+              <h4 className="text-base font-extrabold text-foreground mb-1">
                 {user.firstName} {user.lastName}
               </h4>
-              <p className="text-xs font-semibold text-slate-450 dark:text-slate-500 mb-1">
+              <p className="text-xs font-semibold text-muted-foreground mb-1">
                 {user.email}
               </p>
               {user.phoneNumber && (
-                <p className="text-xs text-slate-500 dark:text-slate-450">
-                  Phone: <span className="font-bold text-slate-700 dark:text-slate-300">{user.phoneNumber}</span>
+                <p className="text-xs text-muted-foreground">
+                  Phone: <span className="font-bold text-foreground">{user.phoneNumber}</span>
                 </p>
               )}
             </div>
@@ -62,7 +62,7 @@ const ProfileBlock = ({ user }) => {
         {/* Address Book Section */}
         <div>
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight">
+            <h3 className="text-lg font-bold text-foreground tracking-tight">
               Address Book
             </h3>
             <Link 
@@ -80,8 +80,8 @@ const ProfileBlock = ({ user }) => {
               ))}
             </div>
           ) : (
-            <div className="bg-slate-50/50 dark:bg-slate-950/20 border border-dashed border-slate-200 dark:border-slate-800 rounded-2xl py-10 px-4 text-center">
-              <p className="text-xs text-slate-450 dark:text-slate-500 font-semibold mb-3">
+            <div className="bg-muted/20 border border-dashed border-border rounded-2xl py-10 px-4 text-center">
+              <p className="text-xs text-muted-foreground font-semibold mb-3">
                 No addresses found in your profile.
               </p>
               <Link 

@@ -76,18 +76,18 @@ const WishListCard = ({ data }) => {
   const isOutOfStock = data.quantity === 0;
 
   return (
-    <div className="group bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col relative overflow-hidden">
+    <div className="group bg-card border border-border rounded-2xl p-5 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col relative overflow-hidden">
       {/* Delete Button */}
       <button 
         onClick={() => handleRemoveFromWishlist(data?._id)} 
-        className="absolute top-4 right-4 p-2 bg-white dark:bg-slate-800 hover:bg-rose-50 dark:hover:bg-rose-950/30 text-slate-450 hover:text-red-500 rounded-xl transition-colors border border-slate-100 dark:border-slate-700/50 shadow-sm active:scale-95 z-10"
+        className="absolute top-4 right-4 p-2 bg-card hover:bg-destructive/10 text-muted-foreground hover:text-destructive rounded-xl transition-colors border border-border shadow-sm active:scale-95 z-10"
         aria-label="Remove from wishlist"
       >
         <IoTrashOutline className="text-sm" />
       </button>
 
       {/* Product Image Wrapper */}
-      <div className="relative aspect-square w-full bg-slate-50 dark:bg-slate-950 border border-slate-100/60 dark:border-slate-800 rounded-xl p-4 mb-4 flex items-center justify-center overflow-hidden">
+      <div className="relative aspect-square w-full bg-muted/30 border border-border rounded-xl p-4 mb-4 flex items-center justify-center overflow-hidden">
         {data.image && data.image[0] && (
           <Image
             src={data.image[0]}
@@ -110,37 +110,37 @@ const WishListCard = ({ data }) => {
       <div className="flex flex-col flex-grow">
         <Link
           href={`/product/${data.slug}`}
-          className="text-sm font-bold text-slate-850 dark:text-slate-200 hover:text-primary transition-colors line-clamp-2 leading-snug mb-2 !no-underline"
+          className="text-sm font-bold text-foreground hover:text-primary transition-colors line-clamp-2 leading-snug mb-2 !no-underline"
         >
           {data.title}
         </Link>
         
         <div className="flex items-baseline gap-2 mb-4">
-          <span className="text-lg font-black text-slate-950 dark:text-white">${data.price?.toFixed(2)}</span>
+          <span className="text-lg font-black text-foreground">₹{data.price?.toFixed(2)}</span>
           {data.originalPrice && data.originalPrice > data.price && (
-            <span className="text-xs text-slate-400 line-through">${data.originalPrice.toFixed(2)}</span>
+            <span className="text-xs text-muted-foreground line-through">₹{data.originalPrice.toFixed(2)}</span>
           )}
         </div>
 
         {/* Quantity Controls & Add to Cart */}
         <div className="mt-auto pt-2 flex flex-col gap-3">
-          <div className="flex items-center justify-between border border-slate-200 dark:border-slate-850 rounded-lg h-10 overflow-hidden bg-slate-50/50 dark:bg-slate-850">
+          <div className="flex items-center justify-between border border-border rounded-lg h-10 overflow-hidden bg-muted/30">
             <button
               onClick={() => setTotal(Math.max(1, total - 1))}
               disabled={total <= 1 || isOutOfStock}
-              className="flex items-center justify-center w-10 h-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors disabled:opacity-40"
+              className="flex items-center justify-center w-10 h-full hover:bg-muted transition-colors disabled:opacity-40"
             >
-              <IoRemoveOutline className="text-slate-600 dark:text-slate-350" />
+              <IoRemoveOutline className="text-muted-foreground" />
             </button>
-            <span className="font-extrabold text-xs text-slate-800 dark:text-slate-200 w-10 text-center">
+            <span className="font-extrabold text-xs text-foreground w-10 text-center">
               {total}
             </span>
             <button
               onClick={() => setTotal(total + 1)}
               disabled={isOutOfStock}
-              className="flex items-center justify-center w-10 h-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors disabled:opacity-40"
+              className="flex items-center justify-center w-10 h-full hover:bg-muted transition-colors disabled:opacity-40"
             >
-              <IoAddOutline className="text-slate-600 dark:text-slate-350" />
+              <IoAddOutline className="text-muted-foreground" />
             </button>
           </div>
 

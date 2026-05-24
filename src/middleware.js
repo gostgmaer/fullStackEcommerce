@@ -65,8 +65,14 @@ export async function middleware(request) {
   if (pathname.startsWith("/auth") && authorised) {
     var rawCallbackUrl = request.nextUrl.searchParams.get("callbackUrl");
 
+    // Prevent open redirect — only allow relative paths
+    const safeCallback =
+      rawCallbackUrl && rawCallbackUrl.startsWith("/") && !rawCallbackUrl.startsWith("//")
+        ? rawCallbackUrl
+        : "/";
+
     return NextResponse.redirect(
-      new URL(rawCallbackUrl || "/", request.nextUrl.origin)
+      new URL(safeCallback, request.nextUrl.origin)
     );
   }
 }

@@ -19,13 +19,13 @@ const NotFound = () => {
         </div>
 
         {/* Heading */}
-        <h1 className="text-5xl font-extrabold text-slate-900 dark:text-white mb-3 tracking-tight">
+        <h1 className="text-5xl font-extrabold text-foreground mb-3 tracking-tight">
           404
         </h1>
-        <h2 className="text-xl font-bold text-slate-700 dark:text-slate-200 mb-3">
+        <h2 className="text-xl font-bold text-foreground mb-3">
           Page Not Found
         </h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-8 max-w-sm mx-auto">
+        <p className="text-sm text-muted-foreground leading-relaxed mb-8 max-w-sm mx-auto">
           Oops! The page you&apos;re looking for doesn&apos;t exist or has been moved. Let&apos;s get you back on track.
         </p>
 
@@ -38,8 +38,8 @@ const NotFound = () => {
             Back to Home
           </Link>
           <Link
-            href="/product"
-            className="inline-flex items-center justify-center px-6 py-3 bg-muted dark:bg-slate-800 text-foreground font-semibold text-sm rounded-xl hover:bg-muted/80 dark:hover:bg-slate-700 active:scale-[0.98] transition-all duration-200 w-full sm:w-auto border border-border"
+            href="/product/search"
+            className="inline-flex items-center justify-center px-6 py-3 bg-muted text-foreground font-semibold text-sm rounded-xl hover:bg-muted/80 active:scale-[0.98] transition-all duration-200 w-full sm:w-auto border border-border"
           >
             Browse Products
           </Link>

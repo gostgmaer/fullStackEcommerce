@@ -1,4 +1,4 @@
-import { MdApps, MdFavorite, MdFeed, MdList, MdLockOpen, MdPages, MdPerson, MdSettings } from "react-icons/md";
+import { MdApps, MdFavorite, MdFeed, MdHelpOutline, MdList, MdLockOpen, MdPages, MdPerson, MdSettings } from "react-icons/md";
 
 export const UserMenu = [
 	{
@@ -34,6 +34,13 @@ export const UserMenu = [
 		),
 		title: 'Wishlist',
 		path: 'wishlist',
+	}, {
+		icon: (
+			<MdHelpOutline />
+		),
+		title: 'Help & Support',
+		path: '/help-center',
+		external: true,
 	},
 
 ];

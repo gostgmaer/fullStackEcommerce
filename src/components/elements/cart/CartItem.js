@@ -14,8 +14,8 @@ const CartItem = ({ item, currency }) => {
   const { handleIncreaseQuantity } = useAddToCart();
 
   return (
-    <div className="group w-full h-auto flex justify-start items-center bg-white py-3 px-4 border-b hover:bg-gray-50 transition-all border-gray-100 relative last:border-b-0">
-      <div className="relative flex rounded-full border border-gray-100 shadow-sm overflow-hidden flex-shrink-0 cursor-pointer mr-4 w-10 h-10">
+    <div className="group w-full h-auto flex justify-start items-center bg-card py-3 px-4 border-b hover:bg-muted/30 transition-all border-border relative last:border-b-0">
+      <div className="relative flex rounded-full border border-border shadow-sm overflow-hidden flex-shrink-0 cursor-pointer mr-4 w-10 h-10">
         <Image
           key={item.id}
           src={item.image}
@@ -44,7 +44,7 @@ const CartItem = ({ item, currency }) => {
               {(item.price * item.quantity).toFixed(2)}
             </span>
           </div>
-          <div className="h-8 w-22 md:w-24 lg:w-24 flex flex-wrap items-center justify-evenly p-1 border border-gray-100 bg-white text-gray-600 rounded-md">
+          <div className="h-8 w-22 md:w-24 lg:w-24 flex flex-wrap items-center justify-evenly p-1 border border-border bg-card text-muted-foreground rounded-md">
             <button
               onClick={() => updateItemQuantity(item.id, item.quantity - 1)}
             >

@@ -33,7 +33,7 @@ const OrderTable = ({ title }) => {
 
   const getStatusBadge = (statusVal) => {
     const normStatus = (statusVal || "").toLowerCase();
-    let bg = "bg-slate-50 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border-slate-200/50 dark:border-slate-750";
+    let bg = "bg-muted/30 text-foreground border-border/50";
     if (["completed", "delivered", "payment-received", "success", "paid"].includes(normStatus)) {
       bg = "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/20 dark:text-emerald-400 border-emerald-150/40 dark:border-emerald-900/30";
     } else if (["pending", "processing", "shipped", "in-transit", "ready-for-pickup", "order-accepted", "awaiting-fulfillment"].includes(normStatus)) {
@@ -54,7 +54,7 @@ const OrderTable = ({ title }) => {
       dataIndex: "invoice",
       key: "invoice",
       render: (index, item) => (
-        <span className="font-mono text-xs font-bold text-slate-700 dark:text-slate-350">
+        <span className="font-mono text-xs font-bold text-foreground">
           #{item.invoice || item._id?.substring(0, 8)}
         </span>
       ),
@@ -65,7 +65,7 @@ const OrderTable = ({ title }) => {
       key: "createdAt",
       sorter: (a, b) => a.createdAt - b.createdAt,
       render: (index, item) => (
-        <span className="text-slate-600 dark:text-slate-400">
+        <span className="text-muted-foreground">
           {dayjs(item.createdAt).format("MMM D, YYYY")}
         </span>
       ),
@@ -75,7 +75,7 @@ const OrderTable = ({ title }) => {
       dataIndex: "payment_method",
       key: "payment_method",
       render: (index, item) => (
-        <span className="text-xs font-medium text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-800 px-2 py-0.5 rounded">
+        <span className="text-xs font-medium text-muted-foreground bg-muted/30 border border-border px-2 py-0.5 rounded">
           {item.payment_method || "COD"}
         </span>
       ),
@@ -85,7 +85,7 @@ const OrderTable = ({ title }) => {
       dataIndex: "totalPrice",
       key: "totalPrice",
       render: (index, item) => (
-        <span className="font-bold text-slate-800 dark:text-slate-100">
+        <span className="font-bold text-foreground">
           ₹{(item.totalPrice || item.total || 0).toFixed(2)}
         </span>
       ),
@@ -127,10 +127,10 @@ const OrderTable = ({ title }) => {
     <div className="max-w-screen-2xl mx-auto ">
       <div className="rounded-xl ">
         <div className="flex flex-col">
-          {title && <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-6">{title}</h3>}
+          {title && <h3 className="text-lg font-bold text-foreground mb-6">{title}</h3>}
           <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="align-middle inline-block rounded-xl min-w-full pb-2 sm:px-6 lg:px-8">
-              <div className="overflow-hidden border-b last:border-b-0 border-slate-100 dark:border-slate-800/50 rounded-xl">
+              <div className="overflow-hidden border-b last:border-b-0 border-border rounded-xl">
                 {data?.results ? (
                   <CurrentTable
                     data={data.results}
