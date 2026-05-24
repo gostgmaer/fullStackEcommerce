@@ -1,3 +1,5 @@
+"use client";
+
 import { ToastContainer } from "react-toastify";
 import AnnouncementBar from "./navbar/AnnouncementBar";
 import NavBarTop from "./navbar/NavBarTop";

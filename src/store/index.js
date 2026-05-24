@@ -9,12 +9,28 @@ import { isOpenReducer } from './reducers/isOpenSlice';
 import { thunk } from 'redux-thunk';
 import { persistReducer, persistStore } from 'redux-persist';
 import storageSession from 'redux-persist/lib/storage/session';
-import  { productReducer } from './reducers/productSlice';
+import { createWebStorage } from 'redux-persist/lib/storage';
+import { productReducer } from './reducers/productSlice';
 import { paginationReducer } from './reducers/paginationSlice';
 import { queryReducer } from './reducers/querySlice';
 import { wishlistReducer } from './reducers/wishslice';
 import { settingReducer } from './reducers/settingsSlice';
 
+const createNoopStorage = () => {
+  return {
+    getItem(_key) {
+      return Promise.resolve(null);
+    },
+    setItem(_key, value) {
+      return Promise.resolve(value);
+    },
+    removeItem(_key) {
+      return Promise.resolve();
+    },
+  };
+};
+
+const storage = typeof window !== 'undefined' ? storageSession : createNoopStorage();
 
 const rootReducer = combineReducers({
 	cart: cartReducer,
@@ -33,7 +49,7 @@ const rootReducer = combineReducers({
   // Configuration for redux-persist to use sessionStorage
   const persistConfig = {
 	key: 'root',
-	storage: storageSession, // Session-based storage
+	storage, // Use conditional storage
 	whitelist: ['cart',"setting", 'wishlist','sidebar','user','isOpen','shoppingCard','products','pagination','queryParam'], // Only persist these reducers
   };
   

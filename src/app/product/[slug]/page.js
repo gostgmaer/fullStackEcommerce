@@ -9,7 +9,14 @@ import ProductServices from "@/helper/network/services/ProductServices";
 import AttributeServices from "@/helper/network/services/AttributeServices";
 
 export async function generateMetadata({ params, searchParams }, parent) {
-  const { results } = await ProductServices.getProductBySlug(params);
+  const product = await ProductServices.getProductBySlug(params);
+  const results = product?.results;
+
+  if (!results) {
+    return {
+      title: "Product Not Found | Ecommerce",
+    };
+  }
 
   return {
     title: "Ecommerce" + " | " + results.title,
@@ -25,152 +32,18 @@ export async function generateMetadata({ params, searchParams }, parent) {
 const ProductScreen = async ({ params, searchParams }) => {
   const data = await getRecord(params);
 
-  // useEffect(() => {
-  //   if (value) {
-  //     const result = product?.variants?.filter((variant) =>
-  //       Object.keys(selectVa).every((k) => selectVa[k] === variant[k])
-  //     );
-  //     const res = result?.map(
-  //       ({
-  //         originalPrice,
-  //         discount,
-  //         quantity,
-  //         inUse,
-  //         inUseOrder,
-  //         barcode,
-  //         sku,
-  //         productId,
-  //         image,
-  //         ...rest
-  //       }) => ({ ...rest })
-  //     );
-
-  //     const filterKey = Object.keys(Object.assign({}, ...res));
-  //     const selectVar = filterKey?.reduce(
-  //       (obj, key) => ({ ...obj, [key]: selectVariant[key] }),
-  //       {}
-  //     );
-  //     const newObj = Object.entries(selectVar).reduce(
-  //       (a, [k, v]) => (v ? ((a[k] = v), a) : a),
-  //       {}
-  //     );
-
-  //     const result2 = result?.find((v) =>
-  //       Object.keys(newObj).every((k) => newObj[k] === v[k])
-  //     );
-
-  //     if (result.length <= 0 || result2 === undefined) return setStock(0);
-
-  //     setVariants(result);
-  //     setSelectVariant(result2);
-  //     setSelectVa(result2);
-  //     setImg(result2?.image);
-  //     setPrice(Number(result2?.price));
-  //     setOriginalPrice(Number(result2?.originalPrice));
-  //     setStock(result2?.quantity);
-  //     setDiscount(Number(result2?.discount));
-  //   } else if (product?.variants?.length > 0) {
-  //     const result = product?.variants?.filter((variant) =>
-  //       Object.keys(selectVa).every((k) => selectVa[k] === variant[k])
-  //     );
-
-  //     setVariants(result);
-  //     setPrice(Number(product.variants[0]?.price));
-  //     setOriginalPrice(Number(product.variants[0]?.originalPrice));
-  //     setStock(product.variants[0]?.quantity);
-  //     setDiscount(Number(product.variants[0]?.discount));
-  //     setSelectVariant(product.variants[0]);
-  //     setSelectVa(product.variants[0]);
-  //     setImg(product.variants[0]?.image);
-  //   } else {
-  //     setPrice(Number(product?.prices?.price));
-  //     setOriginalPrice(Number(product?.prices?.originalPrice));
-  //     setStock(product?.stock);
-  //     setDiscount(Number(product?.prices?.discount));
-  //     setImg(product?.image[0]);
-  //   }
-  // }, [
-  //   product?.prices?.discount,
-  //   product?.prices?.originalPrice,
-  //   product?.prices?.price,
-  //   product?.stock,
-  //   product.variants,
-  //   selectVa,
-  //   selectVariant,
-  //   value,
-  // ]);
-
-  // useEffect(() => {
-  //   const res = Object.keys(Object.assign({}, ...product?.variants));
-  //   const varTitle = attributes?.filter((att) => res.includes(att?._id));
-
-  //   setVariantTitle(varTitle?.sort());
-  // }, [variants, attributes]);
-
-  // useEffect(() => {
-  //   setIsLoading(false);
-  // }, [product]);
-
-  // const handleAddToCart = (p) => {
-  //   if (p.variants.length === 1 && p.variants[0].quantity < 1)
-  //     return notifyError("Insufficient stock");
-  //   // if (notAvailable) return notifyError('This Variation Not Available Now!');
-  //   if (stock <= 0) return notifyError("Insufficient stock");
-
-  //   if (
-  //     product?.variants.map(
-  //       (variant) =>
-  //         Object.entries(variant).sort().toString() ===
-  //         Object.entries(selectVariant).sort().toString()
-  //     )
-  //   ) {
-  //     const newItem = {
-  //       ...p,
-  //       id: `${
-  //         p.variants.length <= 1
-  //           ? p._id
-  //           : p._id +
-  //             variantTitle
-  //               ?.map(
-  //                 // (att) => selectVariant[att.title.replace(/[^a-zA-Z0-9]/g, '')]
-  //                 (att) => selectVariant[att._id]
-  //               )
-  //               .join("-")
-  //       }`,
-
-  //       title: `${
-  //         p.variants.length <= 1
-  //           ? showingTranslateValue(product?.title, lang)
-  //           : showingTranslateValue(product?.title, lang) +
-  //             "-" +
-  //             variantTitle
-  //               ?.map(
-  //                 // (att) => selectVariant[att.title.replace(/[^a-zA-Z0-9]/g, '')]
-  //                 (att) =>
-  //                   att.variants?.find((v) => v._id === selectVariant[att._id])
-  //               )
-  //               .map((el) =>
-  //                 Object.keys(el?.name).includes(lang)
-  //                   ? el?.name[lang]
-  //                   : el?.name.en
-  //               )
-  //       }`,
-  //       variant: selectVariant,
-  //       price: price,
-  //       originalPrice: originalPrice,
-  //     };
-  //     handleAddItem(newItem);
-  //   } else {
-  //     return notifyError("Please select all variant first!");
-  //   }
-  // };
-
-  // const { t } = useTranslation();
-
-  // // category name slug
-  // const category_name = showingTranslateValue(product?.category?.name)
-  //   .toLowerCase()
-  //   .replace(/[^A-Z0-9]+/gi, "-");
+  if (!data || !data.product) {
+    return (
+      <Layout>
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold text-foreground mb-4">404</h1>
+            <p className="text-muted-foreground">Product not found</p>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <>
@@ -217,17 +90,20 @@ export const getRecord = async (params) => {
   var attributes = [];
   const product = await ProductServices.getProductBySlug(params);
 
-  if (product) {
-    related = await ProductServices.getRelatedProducts({
-      category: product.results.category._id,
-    });
+  if (product && product.results) {
+    if (product.results.category && product.results.category._id) {
+      related = await ProductServices.getRelatedProducts({
+        category: product.results.category._id,
+      });
+    }
     try {
       const attrsData = await AttributeServices.getShowingAttributes();
       attributes = attrsData?.results || attrsData || [];
     } catch (err) {
       console.error("Failed to fetch attributes:", err);
     }
+    return { product: product.results, related, attributes };
   }
-  return { product: product.results, related, attributes };
+  return null;
 };
 
