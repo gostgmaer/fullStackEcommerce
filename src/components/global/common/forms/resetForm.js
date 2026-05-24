@@ -8,9 +8,7 @@ import Input from "../../fields/input";
 import CustomerServices from "@/helper/network/services/CustomerServices";
 
 const ResetForm = ({ props }) => {
-  //console.log(props);
 
-  //console.log(token);
 
   const router = useRouter();
   const handleSubmit = async (values) => {

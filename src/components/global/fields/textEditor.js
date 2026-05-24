@@ -7,13 +7,10 @@
 
 // const TextEditor = () => {
 //   const { quill, quillRef } = useQuill();
-//   ///////console.log(quillRef);
 //   const changeValue = (e) => {
-//     ///////console.log(e);
 //   };
 
 //   useEffect(() => {
-//     ///////console.log(quill);
 //   }, [quill]);
 //   return (
 //     <div style={{ height: 300 }} className="flex flex-col justify-center px-40">

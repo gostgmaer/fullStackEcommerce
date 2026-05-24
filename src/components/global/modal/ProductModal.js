@@ -27,7 +27,6 @@ const ProductModal = ({
   const dispatch = useDispatch();
   const cart = useSelector((state) => state["cart"]);
   const cartData = cart.cartItems.find((cartItem) => cartItem.id === product._id);
-  /////console.log(cart, cartData);
 
   // const { setIsLoading, isLoading } = useContext(SidebarContext);
   // const { t, lang } = useTranslation("ns1");
@@ -46,7 +45,6 @@ const ProductModal = ({
   const [variants, setVariants] = useState([]);
   const [total, setTotal] = useState(cartData?.cartQuantity ? cartData.cartQuantity : 1)
   // useEffect(() => {
-  //   // /////console.log('value', value, product);
   //   if (value) {
   //     const result = product?.variants?.filter((variant) =>
   //       Object.keys(selectVa).every((k) => selectVa[k] === variant[k])
@@ -82,7 +80,6 @@ const ProductModal = ({
   //       Object.keys(newObj).every((k) => newObj[k] === v[k])
   //     );
 
-  //     // /////console.log("result2", result2);
 
   //     if (result.length <= 0 || result2 === undefined) return setStock(0);
 
@@ -127,7 +124,6 @@ const ProductModal = ({
   //   selectVariant,
   //   value,
   // ]);
-  // /////console.log("product", product);
 
   useEffect(() => {
 
@@ -173,7 +169,6 @@ const ProductModal = ({
   //         p.variants.length === 0 ? p.prices.originalPrice : originalPrice,
   //     };
 
-  //     // /////console.log("newItem", newItem);
 
   //     handleAddItem(newItem);
   //   } else {

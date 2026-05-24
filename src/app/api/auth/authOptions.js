@@ -51,9 +51,7 @@ export const authOptions = {
         // if (credentials?.["callbackUrl"]) {
         //   res.callbackUrl = credentials["callbackUrl"];
         // }
-        // console.log(res);
 
-        // console.log("Response from authService:", res);
 
         if (res && res.status == "OK" && res.accessToken) return res;
         return null;
@@ -186,24 +184,19 @@ export const authOptions = {
   // events: {
   //   async signIn(message) {
   //     // Called on successful sign in
-  //     // console.log("User signed in:", message);
   //   },
   //   async signOut(message) {
   //     // Called on sign out
-  //     console.log("User signed out:", message);
   //   },
   //   async error(message) {
   //     // Error handling
-  //     console.error("NextAuth error:", message);
   //   },
   // },
 
   // logger: {
   //   error(code, ...message) {
-  //     console.error("NextAuth error:", code, ...message);
   //   },
   //   warn(code, ...message) {
-  //     console.warn("NextAuth warning:", code, ...message);
   //   },
   //   debug(code, ...message) {
   //     console.debug("NextAuth debug:", code, ...message);

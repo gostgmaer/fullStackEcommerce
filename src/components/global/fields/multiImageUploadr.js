@@ -51,7 +51,6 @@ const MultiImageUploadr = ({ selectedFiles, setSelectedFiles, label }) => {
   };
 
   const onFileUpload = (file) => {
-    // ///////console.log(file);
     if (!file) return;
 
     const storageRef = ref(firebaseStorage, `/Images/${file?.name}`);
@@ -65,7 +64,6 @@ const MultiImageUploadr = ({ selectedFiles, setSelectedFiles, label }) => {
         );
       },
       (err) => {
-        ///////console.log(err);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((url) => {

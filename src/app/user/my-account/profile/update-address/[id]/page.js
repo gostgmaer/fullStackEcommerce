@@ -11,7 +11,6 @@ import React from 'react'
 
 const Index = async (props) => {
 
-  //  console.log(props);
     const session = await getServerSession(authOptions);
 
 

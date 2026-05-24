@@ -12,9 +12,6 @@ export const metadata = {
 
 const Index = async (params) => {
 //  const headersList = await headers()
-//   // console.log(params);
-//   console.log(headersList.forEach(element => {
-//     // console.log(element);
     
 //   }));
   

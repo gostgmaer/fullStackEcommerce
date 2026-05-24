@@ -51,11 +51,9 @@ import { useDispatch } from 'react-redux';
 //         };
 
 //         const rzp1 = new window['Razorpay'](options);
-//         //console.log(rzp1);
 
 //         rzp1.open(); // Open Razorpay payment window
 //     } catch (error) {
-//         console.error('Payment failed', error);
 //         // alert('Payment failed, please try again!');
 //         notifyerror(error)
 //     }

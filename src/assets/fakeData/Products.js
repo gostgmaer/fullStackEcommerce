@@ -38900,7 +38900,6 @@ export const categories = [
 
 
 export function getProductById(title) {
-  /////console.log(title);
 
   return popularProducts.find((product) => product.slug === title);
 }

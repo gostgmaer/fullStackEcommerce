@@ -13,7 +13,6 @@ import { CategoriesData } from "@/assets/fakeData/CategoriesData";
 
 const FeatureCategory = (props) => {
 
-  //console.log(props);
 
   const router = useRouter();
   // const { lang } = useTranslation("ns1"); // default namespace (optional)
@@ -25,10 +24,8 @@ const FeatureCategory = (props) => {
 
   // const data = CategoriesData
 
-  /////console.log(data[0]);
 
 
-  // /////console.log('category',data)
 
   // const handleCategoryClick = (id, categoryName) => {
   //   const category_name = categoryName

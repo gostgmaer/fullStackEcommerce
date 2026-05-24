@@ -12,11 +12,9 @@
 //     pathname.startsWith("/order")
 //   ) {
 //     if (!authorised) {
-//       console.log("req.url", req.nextUrl);
 //       // return NextResponse.redirect(new URL(`/auth/login`, req.url));
 
 //       const callbackUrl = encodeURIComponent(req.nextUrl.pathname);
-//       console.log(callbackUrl);
 
 //       // return NextResponse.redirect(
 //       //   `${origin}/auth/login?callbackUrl=${callbackUrl}`

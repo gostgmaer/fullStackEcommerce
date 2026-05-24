@@ -6,7 +6,6 @@ import Head from "next/head";
 import { redirect } from 'next/navigation';
 
 const Index = async (props) => {
-// /////console.log(props);
 
   const result = await getRecord(props)
   return (

@@ -49,7 +49,6 @@
 // }
 
 // async function cookiesStoreData(session: any) {
-//   console.log(session);
 
 //   const cookieStore = await cookies();
 //   (

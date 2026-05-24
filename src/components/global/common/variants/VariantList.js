@@ -18,7 +18,6 @@ const VariantList = ({
     });
     setSelectVa({ [att]: v });
   };
-  // /////console.log("option", );
 
   return (
     <>
@@ -52,7 +51,6 @@ const VariantList = ({
                           {el.name}
                         </option>
                       )
-                    // /////console.log('el', el._id === v[att] && el.name)
                   )
                 )
             )}
