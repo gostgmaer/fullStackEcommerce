@@ -80,7 +80,30 @@ const Footer = () => {
           </div>
           <div className="pb-3.5 sm:pb-0 col-span-1 md:col-span-2 lg:col-span-3">
             <h3 className="text-md lg:leading-7 font-medium mb-4 sm:mb-5 lg:mb-6 pb-0.5">
+              Customer Support
             </h3>
+            <ul className="text-sm flex flex-col space-y-3">
+              <li className="flex items-baseline">
+                <Link href="/track-order" className="text-muted-foreground inline-block w-full hover:text-primary transition-colors">
+                  Track Your Order
+                </Link>
+              </li>
+              <li className="flex items-baseline">
+                <Link href="/faqs" className="text-muted-foreground inline-block w-full hover:text-primary transition-colors">
+                  Frequently Asked Questions
+                </Link>
+              </li>
+              <li className="flex items-baseline">
+                <Link href="/shipping-policy" className="text-muted-foreground inline-block w-full hover:text-primary transition-colors">
+                  Shipping & Delivery
+                </Link>
+              </li>
+              <li className="flex items-baseline">
+                <Link href="/return-policy" className="text-muted-foreground inline-block w-full hover:text-primary transition-colors">
+                  Returns & Refunds
+                </Link>
+              </li>
+            </ul>
           </div>
           <div className="pb-3.5 sm:pb-0 col-span-1 md:col-span-2 lg:col-span-3">
             <Link href="/" className="mr-3 lg:mr-12 xl:mr-12" rel="noreferrer">
