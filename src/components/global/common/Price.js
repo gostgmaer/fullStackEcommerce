@@ -23,7 +23,7 @@ const Price = ({ product, price, card, currency, originalPrice }) => {
               }
             >
               {currency}
-              {parseFloat(originalPrice).toFixed(2)}
+              {parseFloat(originalPrice || 0).toFixed(2)}
             </del>
           ) : null}
         </>
@@ -37,7 +37,7 @@ const Price = ({ product, price, card, currency, originalPrice }) => {
             }
           >
             {currency}
-            {parseFloat(product?.prices?.price).toFixed(2)}
+            {parseFloat(product?.prices?.price || 0).toFixed(2)}
           </span>
           {originalPrice > price && card ? (
             <del
@@ -48,7 +48,7 @@ const Price = ({ product, price, card, currency, originalPrice }) => {
               }
             >
               {currency}
-              {parseFloat(originalPrice).toFixed(2)}
+              {parseFloat(originalPrice || 0).toFixed(2)}
             </del>
           ) : null}
         </>
