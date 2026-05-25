@@ -19,7 +19,7 @@ function FastDeliveryCard() {
             </span>
           </h2>
           <p className="text-base leading-relaxed text-muted-foreground font-medium max-w-lg mx-auto lg:mx-0">
-            Experience seamless, fully assembled delivery on all our signature collections. Let our expert team carefully set up your new living space so you don't have to lift a finger.
+            Experience seamless, fully assembled delivery on all our signature collections. Let our expert team carefully set up your new living space so you do not have to lift a finger.
           </p>
           <div className="pt-4">
             <Link

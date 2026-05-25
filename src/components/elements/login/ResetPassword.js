@@ -1,5 +1,5 @@
 import Input from "@/components/global/fields/input";
-import { post } from "@/helper/network";
+import CustomerServices from "@/helper/network/services/CustomerServices";
 import { notifyerror, notifySuccess } from "@/utils/notify/notice";
 import { loginValidationSchema } from "@/utils/validation/validation";
 import { useFormik } from "formik";
@@ -17,7 +17,7 @@ const ResetPassword = ({ setShowResetPassword, setModalOpen }) => {
 
   const handleSubmit = async (values) => {
     try {
-      const res = await post("/user/auth/forget-password", values);
+      const res = await CustomerServices.forgetPassword(values);
       if (res) {
         return res
       }

@@ -113,7 +113,7 @@ const sliderData = [
     title: 'Slider3Title',
     info: 'Slider3description',
     url: '/product/search?category=dining-kitchen',
-    image: 'https://images.unsplash.com/photo-1618220179428-22790b46a015?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
+    image: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80',
   },
 ];
 

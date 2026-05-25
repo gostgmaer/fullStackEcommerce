@@ -164,8 +164,11 @@ export default async function Home() {
           </div>
           <div className="w-full">
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-5 lg:gap-6">
-              {result.popular.results?.slice(0, 18).map((product, idx) => (
-                <div key={product._id} className="animate-fade-in-up" style={{ animationDelay: `${Math.min(idx * 0.05, 0.4)}s` }}>
+              {result.popular.results
+                ?.slice(0, 18)
+                .filter((product) => product && typeof product === "object")
+                .map((product, idx) => (
+                <div key={product?._id || product?.id || product?.slug || `popular-${idx}`} className="animate-fade-in-up" style={{ animationDelay: `${Math.min(idx * 0.05, 0.4)}s` }}>
                   <ProductCard
                     product={product}
                     attributes={attributes}
@@ -206,8 +209,11 @@ export default async function Home() {
           </div>
           <div className="w-full">
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-5 lg:gap-6">
-              {result.discount.results?.slice(0, 12).map((product, idx) => (
-                <div key={product._id} className="animate-fade-in-up" style={{ animationDelay: `${Math.min(idx * 0.05, 0.3)}s` }}>
+              {result.discount.results
+                ?.slice(0, 12)
+                .filter((product) => product && typeof product === "object")
+                .map((product, idx) => (
+                <div key={product?._id || product?.id || product?.slug || `discount-${idx}`} className="animate-fade-in-up" style={{ animationDelay: `${Math.min(idx * 0.05, 0.3)}s` }}>
                   <ProductCard
                     product={product}
                     attributes={attributes}

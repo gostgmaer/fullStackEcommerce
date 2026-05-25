@@ -11,26 +11,34 @@ import {
   secret,
 } from "@/config/setting";
 
+/**
+ * @param {import("next-auth/jwt").JWT & {
+ *   refreshToken?: string;
+ *   accessTokenExpires?: number;
+ * }} token
+ */
 async function refreshAccessToken(token) {
   try {
-    const response = await fetch(`${baseurl}/user/auth/session/refresh/token`, {
+    const response = await fetch(`${baseurl}/auth/refresh-token`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ refreshToken: token.refreshToken }),
     });
     const refreshedTokens = await response.json();
     if (!response.ok) throw new Error("Failed to refresh token");
+    const tokenData = refreshedTokens?.data || refreshedTokens;
     return {
       ...token,
-      accessToken: refreshedTokens.accessToken,
-      accessTokenExpires: Date.now() + refreshedTokens.expiresIn * 1000,
-      refreshToken: refreshedTokens.refreshToken ?? token.refreshToken,
+      accessToken: tokenData.accessToken,
+      accessTokenExpires: tokenData.expiresAt ? new Date(tokenData.expiresAt).getTime() : Date.now() + 60 * 60 * 1000,
+      refreshToken: tokenData.refreshToken ?? token.refreshToken,
     };
   } catch (error) {
     return { ...token, error: "RefreshAccessTokenError" };
   }
 }
 
+/** @type {import("next-auth").NextAuthOptions} */
 export const authOptions = {
   providers: [
     CredentialsProvider({
@@ -48,12 +56,8 @@ export const authOptions = {
         };
 
         const res = await authService.userLogin(payload);
-        // if (credentials?.["callbackUrl"]) {
-        //   res.callbackUrl = credentials["callbackUrl"];
-        // }
 
-
-        if (res && res.status == "OK" && res.accessToken) return res;
+        if (res && res.status === "OK" && res.accessToken) return res;
         return null;
       },
     }),
@@ -88,37 +92,35 @@ export const authOptions = {
 
   callbacks: {
     async signIn({ user, account, profile }) {
-      if (account?.provider === "github" && profile?.email) {
+      const provider = account?.provider;
+
+      if (provider && ["github", "google"].includes(provider) && profile?.email) {
         try {
-          const response = await fetch(`${baseurl}/user/auth/checkUser`, {
+          const response = await fetch(`${baseurl}/auth/social-auth`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              username: profile.email,
+              provider,
+              providerId: account?.providerAccountId || user.id,
+              identifier: profile.email,
               email: profile.email,
+              name: profile.name || user.name,
+              profile,
             }),
           });
-          let userData = await response.json();
-          if (userData["statusCode"] === "404") {
-            const createUserResponse = await fetch(
-              `${baseurl}/user/auth/social-register`,
-              {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  socialID: user.id,
-                  email: profile.email,
-                  profilePicture: user.image,
-                  username: profile.email,
-                }),
-              }
-            );
-            userData = await createUserResponse.json();
-          }
-          user.accessToken = userData.accessToken;
-          user.refreshToken = userData.refreshToken;
-          user.id_token = userData.id_token;
-          user.token_type = userData.token_type;
+          const userData = await response.json();
+          const payload = userData?.data || {};
+          const tokens = payload.tokens || {};
+          const socialUser = payload.user || {};
+
+          user.accessToken = tokens.accessToken;
+          user.refreshToken = tokens.refreshToken;
+          user.id_token = tokens.idToken;
+          user.token_type = tokens.tokenType;
+          user.userId = socialUser.id;
+          user.role = socialUser.role;
+          user.email = socialUser.email;
+          user.image = socialUser.image;
           return true;
         } catch (error) {
           console.error("Error during GitHub sign-in:", error);
@@ -137,6 +139,10 @@ export const authOptions = {
           refreshToken: user.refreshToken,
           id_token: user.id_token,
           token_type: user.token_type,
+          userId: user.user?.id || user.userId,
+          role: user.user?.role || user.role,
+          email: user.user?.email || user.email,
+          image: user.user?.image || user.image,
           accessTokenExpires: Date.now() + 60 * 60 * 1000, // 1 hour
         };
       }
@@ -153,14 +159,21 @@ export const authOptions = {
       session.refreshToken = token.refreshToken;
       session.id_token = token.id_token;
       session.token_type = token.token_type;
+      session.user = {
+        ...session.user,
+        id: token.userId,
+        role: token.role,
+        email: token.email || session.user?.email,
+        image: token.image || session.user?.image,
+      };
       return session;
     },
 
-  async redirect({ url, baseUrl }) {
-  if (url.startsWith("/")) return url;
-  if (new URL(url).origin === baseUrl) return url;
-  return baseUrl;
-}
+    async redirect({ url, baseUrl }) {
+      if (url.startsWith("/")) return url;
+      if (new URL(url).origin === baseUrl) return url;
+      return baseUrl;
+    },
 
     // async redirect({ url, baseUrl }) {
     //   // Allow relative URLs, otherwise redirect to baseUrl

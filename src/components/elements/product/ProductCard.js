@@ -11,6 +11,13 @@ import WishlistCard from "./wishList";
 const ProductCard = ({ product, attributes }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
+  const safeProduct = product && typeof product === "object" ? product : null;
+  const discountValue = Number(safeProduct?.prices?.discount ?? safeProduct?.discount ?? 0);
+
+  if (!safeProduct) {
+    return null;
+  }
+
   const handleModalOpen = (value) => {
     setModalOpen(value);
   };
@@ -31,7 +38,7 @@ const ProductCard = ({ product, attributes }) => {
         {/* Top Section: Badges & Image */}
         <div className="relative w-full pt-4 flex justify-center items-center bg-muted/10 dark:bg-muted/5 group-hover:bg-muted/15 transition-colors duration-400">
           <Stock stock={product.stock} card />
-          <Discount discount={Number(product.prices.discount)} product={product} slug={product.slug} modal={false} />
+          <Discount discount={Number.isFinite(discountValue) ? discountValue : 0} product={safeProduct} slug={safeProduct.slug} modal={false} />
           <WishlistCard data={product} />
 
           {product?.image?.[0] ? (

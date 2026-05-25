@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import { useSession } from "next-auth/react";
 import { setToken, storeCookiesOfObject } from "@/helper/functions";
-import { post } from "@/helper/network";
+import authService from "@/helper/network/services/auth";
 
 export const AuthContext = React.createContext(null);
 
@@ -47,23 +47,22 @@ export const AuthContextProvider = ({ children }) => {
 
 
   const handleLoginAuth = async (body) => {
-    // const res = await post("/user/auth/login", body);
     try {
-      const res = await post("/user/auth/login", body);
-      if (res.statusCode != 200) {
+      const res = await authService.userLogin(body);
+      if (res?.statusCode !== 200 || !res?.accessToken) {
         setAuthError(res);
       } else {
-        const decoded = jwtDecode(res.access_token);
-        const decodedrefersh = jwtDecode(res.refresh_token);
+        const decoded = jwtDecode(res.accessToken);
+        const decodedrefersh = jwtDecode(res.refreshToken);
         setToken(
           "accessToken",
-          res.access_token,
+          res.accessToken,
           decoded["exp"],
           "ACCESS_TOKEN"
         );
-        setToken("refreshToken", res.refresh_token, decodedrefersh["exp"]);
+        setToken("refreshToken", res.refreshToken, decodedrefersh["exp"]);
         setUserId(decoded);
-        setUser(jwtDecode(res.id_token));
+        setUser(res.user || {});
         setAuthError(undefined);
         router.push("/dashboard");
       }
@@ -73,8 +72,8 @@ export const AuthContextProvider = ({ children }) => {
 
   const Logout = async () => {
     try {
-      const res = await post("/user/auth/logout");
-      if (res.statusCode == "200") {
+      const res = await authService.userLogout();
+      if (res?.success || res?.statusCode === 200 || res?.statusCode === "200") {
         router.push("/auth/login");
         window.sessionStorage.clear();
         window.localStorage.clear();
@@ -126,13 +125,11 @@ export const AuthContextProvider = ({ children }) => {
     try {
       const refreshToken = Cookies.get("refreshToken");
       if (refreshToken) {
-        const res = await post("/user/auth/session/refresh/token", {
-          token: refreshToken,
-        });
-        const decoded = jwtDecode(res.access_token);
+        const res = await authService.verifyToken({ refreshToken });
+        const decoded = jwtDecode(res.accessToken);
         setToken(
           "accessToken",
-          res.access_token,
+          res.accessToken,
           decoded["exp"],
           "ACCESS_TOKEN"
         );
@@ -150,13 +147,11 @@ export const AuthContextProvider = ({ children }) => {
       try {
         const refreshToken = Cookies.get("refreshToken");
         if (refreshToken) {
-          const res = await post("/user/auth/session/refresh/token", {
-            token: refreshToken,
-          });
-          const decoded = jwtDecode(res.access_token);
+          const res = await authService.verifyToken({ refreshToken });
+          const decoded = jwtDecode(res.accessToken);
           setToken(
             "accessToken",
-            res.access_token,
+            res.accessToken,
             decoded["exp"],
             "ACCESS_TOKEN"
           );

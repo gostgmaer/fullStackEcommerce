@@ -22,7 +22,7 @@ const ConfirmForm = () => {
       if (token) {
         try {
           const confirm = await post(
-            `/user/auth/confirm-account/${token}`
+            `/auth/verify-email/${token}`
           );
           setUserData(confirm);
         } catch (error) {

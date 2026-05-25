@@ -1,6 +1,6 @@
 "use client";
 
-import { post } from "@/helper/network";
+import authService from "@/helper/network/services/auth";
 import { notifyerror, notifySuccess } from "@/utils/notify/notice";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -40,10 +40,11 @@ const RegisterForm = () => {
     try {
       const payload = {
         ...values,
-        username: getUsername(values.email)
+        username: getUsername(values.email),
+        confirmPassword: values.password,
       };
       
-      const res = await post("/user/auth/register", payload);
+      const res = await authService.userRegister(payload);
 
       if (res && res["statusCode"] === 201) {
         notifySuccess(res.message || "Registration successful!");

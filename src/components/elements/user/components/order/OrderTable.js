@@ -53,9 +53,9 @@ const OrderTable = ({ title }) => {
       title: "Invoice ID",
       dataIndex: "invoice",
       key: "invoice",
-      render: (index, item) => (
+      render: (value, record) => (
         <span className="font-mono text-xs font-bold text-foreground">
-          #{item.invoice || item._id?.substring(0, 8)}
+          #{record?.invoice || record?._id?.substring(0, 8) || "N/A"}
         </span>
       ),
     },
@@ -63,10 +63,10 @@ const OrderTable = ({ title }) => {
       title: "Order Time",
       dataIndex: "createdAt",
       key: "createdAt",
-      sorter: (a, b) => a.createdAt - b.createdAt,
-      render: (index, item) => (
+      sorter: (a, b) => new Date(a?.createdAt || 0).getTime() - new Date(b?.createdAt || 0).getTime(),
+      render: (value, record) => (
         <span className="text-muted-foreground">
-          {dayjs(item.createdAt).format("MMM D, YYYY")}
+          {record?.createdAt ? dayjs(record.createdAt).format("MMM D, YYYY") : "-"}
         </span>
       ),
     },
@@ -74,9 +74,9 @@ const OrderTable = ({ title }) => {
       title: "Payment Method",
       dataIndex: "payment_method",
       key: "payment_method",
-      render: (index, item) => (
+      render: (value, record) => (
         <span className="text-xs font-medium text-muted-foreground bg-muted/30 border border-border px-2 py-0.5 rounded">
-          {item.payment_method || "COD"}
+          {record?.payment_method || "COD"}
         </span>
       ),
     },
@@ -84,23 +84,27 @@ const OrderTable = ({ title }) => {
       title: "Total",
       dataIndex: "totalPrice",
       key: "totalPrice",
-      render: (index, item) => (
+      render: (value, record) => {
+        const amount = Number(record?.totalPrice ?? record?.total ?? 0);
+        const safeAmount = Number.isFinite(amount) ? amount : 0;
+        return (
         <span className="font-bold text-foreground">
-          ₹{(item.totalPrice || item.total || 0).toFixed(2)}
+          ₹{safeAmount.toFixed(2)}
         </span>
-      ),
+        );
+      },
     },
     {
       title: "Payment Status",
       dataIndex: "payment_status",
       key: "payment_status",
-      render: (index, item) => getStatusBadge(item.payment_status || "Pending"),
+      render: (value, record) => getStatusBadge(record?.payment_status || "Pending"),
     },
     {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      render: (index, item) => getStatusBadge(item.status || "Pending"),
+      render: (value, record) => getStatusBadge(record?.status || "Pending"),
     },
     {
       title: (
@@ -109,10 +113,10 @@ const OrderTable = ({ title }) => {
         </div>
       ),
       key: "actions",
-      render: (item, index) => (
+      render: (value, record) => (
         <div className="flex items-center justify-end gap-3 pe-4">
           <Link
-            href={`/user/my-account/my-orders/${item._id}`}
+            href={`/user/my-account/my-orders/${record?._id || record?.id || ""}`}
             className="px-3.5 py-1.5 bg-primary/10 text-xs text-primary hover:bg-primary hover:text-white transition-all font-semibold rounded-lg flex items-center gap-1 shadow-sm active:scale-95"
           >
             <FaEye />

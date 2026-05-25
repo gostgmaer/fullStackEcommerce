@@ -60,7 +60,10 @@ const CurrentTable = ({ data, tableColumn, pagination,checked }) => {
         className="[&_.rc-table-content]:overflow-x-auto rounded-t-none [&_table]:w-full [&_.rc-table-row:hover]:bg-slate-50/50 [&_.rc-table-row:hover]:dark:bg-slate-800/30 [&_.rc-table-row-expand-icon-cell]:w-14 [&_thead]:text-left [&_thead]:rtl:text-right [&_th.rc-table-cell]:text-sm [&_th.rc-table-cell]:w-max [&_th.rc-table-cell]:font-semibold [&_th.rc-table-cell]:tracking-wider text-slate-700 dark:text-slate-300 [&_th.rc-table-cell]:text-slate-500 [&_th.rc-table-cell]:dark:text-slate-400 [&_.rc-table-cell]:px-4 [&_th.rc-table-cell]:py-3 [&_td.rc-table-cell]:py-4 [&_thead_th]:bg-slate-50 [&_thead_th]:dark:bg-slate-800/80 [&_td.rc-table-cell]:border-b [&_td.rc-table-cell]:border-slate-100 [&_td.rc-table-cell]:dark:border-slate-800/80 [&_thead_.rc-table-row-expand-icon-cell]:bg-slate-50 [&_thead_.rc-table-row-expand-icon-cell]:dark:bg-slate-800/80 overflow-hidden rounded-xl border border-slate-100 dark:border-slate-800 text-sm shadow-sm [&_.rc-table-placeholder_.rc-table-expanded-row-fixed>div]:h-60 [&_.rc-table-placeholder_.rc-table-expanded-row-fixed>div]:justify-center [&_.rc-table-row:last-child_td.rc-table-cell]:border-b-0 [&_thead.rc-table-thead]:border-t-0 rc-table-ping-right [&_rc-table-cell]:capitalize rc-table-scroll-horizontal"
         columns={currentColumn}
         data={data}
-        rowKey={(record) => record._id}
+        rowKey={(record, index) => {
+          const key = record?._id ?? record?.id ?? index;
+          return String(key);
+        }}
       />
      {pagination && <PaginatedList totalItems={pagination.total} limit={pagination.limit} currentPage={pagination.page} setPage={pagination.setPage} setLimit={pagination.setLimit} />}
     </div>
