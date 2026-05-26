@@ -1,9 +1,14 @@
 
-import CouponServices from '@/helper/network/services/CouponServices';
+import CouponServices, {
+	clearStoredCouponCode,
+	getLocalCouponResult,
+	getStoredCouponCode,
+	persistCouponCode,
+} from '@/helper/network/services/CouponServices';
 import { decreaseCart, getTotals, incrementCart, removeFromCart } from '@/store/reducers/cartSlice';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { IoAddOutline, IoBag, IoRemoveOutline } from 'react-icons/io5';
 import { MdDelete } from 'react-icons/md';
 import { useSelector, useDispatch } from 'react-redux';
@@ -21,35 +26,86 @@ function OrderSummary({ code, setCode, shippingPrice = 0, discount, setDiscount 
 	const [message, setMessage] = useState("");
 	const [loading, setLoading] = useState(false);
 	// const [total, setTotal] = useState(cartTotalAmount);
-	const [isCoupon, setIsCoupon] = useState(false);
 
-	// Handle form submission
-	const handleApplyCoupon = async (e) => {
-		e.preventDefault();
-		const products = cart.cartItems.map(item => item._id || item.id).filter(Boolean);
-		const cartItems = cart.cartItems.map(item => ({
-			productId: item._id || item.id,
-			quantity: item.cartQuantity
-		}));
+	const applyCouponCode = useCallback(async (couponCode, options = {}) => {
+		const normalizedCode = String(couponCode || '').trim().toUpperCase();
+		const { silent = false } = options;
+
+		if (!normalizedCode) {
+			setDiscount(null);
+			if (!silent) {
+				setMessage('');
+			}
+			clearStoredCouponCode();
+			return false;
+		}
 
 		setLoading(true);
 		try {
-			const response = await CouponServices.applyCouponToProduct({ code, products, cart: { ...cart, cartItems: cartItems } });
+			const localCoupon = getLocalCouponResult(normalizedCode, cartTotalAmount);
+			if (localCoupon) {
+				setCode(localCoupon.code);
+				setDiscount(localCoupon.totals.totalDiscountedPrice);
+				persistCouponCode(localCoupon.code);
+				setMessage('');
+				return true;
+			}
+
+			const products = cart.cartItems.map(item => item._id || item.id).filter(Boolean);
+			const cartItems = cart.cartItems.map(item => ({
+				productId: item._id || item.id,
+				quantity: item.cartQuantity
+			}));
+
+			const response = await CouponServices.applyCouponToProduct({ code: normalizedCode, products, cart: { ...cart, cartItems: cartItems } });
 			const totals = response?.totals;
 			if (!totals || !Number.isFinite(Number(totals.totalDiscountedPrice))) {
 				throw new Error(response?.message || "Invalid coupon response.");
 			}
 
+			setCode(normalizedCode);
 			setDiscount(Number(totals.totalDiscountedPrice));
-			setIsCoupon(true);
+			persistCouponCode(normalizedCode);
 			setMessage("");
+			return true;
 		} catch (error) {
-			// Handle error (e.g., invalid coupon, expired, etc.)
 			setDiscount(null);
-			setMessage(error.response?.data?.message || error?.message || "Failed to apply coupon.");
+			if (!silent) {
+				setMessage(error.response?.data?.message || error?.message || "Failed to apply coupon.");
+			}
+			if (getStoredCouponCode() === normalizedCode) {
+				clearStoredCouponCode();
+			}
+			return false;
+		} finally {
+			setLoading(false);
 		}
-		setLoading(false);
+	}, [cart, cartTotalAmount, setCode, setDiscount]);
+
+	// Handle form submission
+	const handleApplyCoupon = async (e) => {
+		e.preventDefault();
+		await applyCouponCode(code);
 	};
+
+	useEffect(() => {
+		const storedCode = getStoredCouponCode();
+		const normalizedCode = String(code || '').trim().toUpperCase();
+
+		if (!storedCode || storedCode !== normalizedCode || discount !== null) {
+			return;
+		}
+
+		applyCouponCode(storedCode, { silent: true });
+	}, [applyCouponCode, code, discount]);
+
+	useEffect(() => {
+		if (discount === null || !code) {
+			return;
+		}
+
+		applyCouponCode(code, { silent: true });
+	}, [cartTotalAmount, code, discount, applyCouponCode]);
 
 	return (
 		<div className="md:w-full lg:w-2/5 lg:ml-10 xl:ml-14 md:ml-6 flex flex-col h-full md:sticky lg:sticky top-28 md:order-2 lg:order-2">

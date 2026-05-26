@@ -9,7 +9,12 @@ import { decreaseCart, getTotals, incrementCart, removeFromCart } from '@/store/
 import Layout from '@/components/global/layout/Layout';
 import Price from '@/components/global/common/Price';
 import ProductCard from '@/components/elements/product/ProductCard';
-import CouponServices from '@/helper/network/services/CouponServices';
+import CouponServices, {
+  clearStoredCouponCode,
+  getLocalCouponResult,
+  getStoredCouponCode,
+  persistCouponCode,
+} from '@/helper/network/services/CouponServices';
 import ProductServices from '@/helper/network/services/ProductServices';
 
 const CartPage = () => {
@@ -60,66 +65,60 @@ const CartPage = () => {
   const isFreeShipCoupon =
     isCartReady &&
     couponSuccess &&
-    typeof window !== 'undefined' &&
-    localStorage.getItem('cartCouponCode') === "FREESHIP";
+    getStoredCouponCode() === "FREESHIP";
   const shippingCost = (cartTotalAmount >= freeShippingThreshold || isFreeShipCoupon) ? 0 : 50.00;
   const progressPercent = Math.min((cartTotalAmount / freeShippingThreshold) * 100, 100);
   const remainingForFreeShipping = Math.max(freeShippingThreshold - cartTotalAmount, 0);
 
-  const simulateLocalCoupon = useCallback((codeStr) => {
-    const uppercaseCode = codeStr.toUpperCase().trim();
-    if (uppercaseCode === "SAVE10" || uppercaseCode === "WELCOME10") {
-      const discountAmt = cartTotalAmount * 0.10;
-      setCouponDiscount(discountAmt);
-      setCouponSuccess(true);
-      setCouponMessage(`WELCOME10 applied! 10% Off (-₹${discountAmt.toFixed(2)})`);
-      localStorage.setItem('cartCouponCode', uppercaseCode);
-    } else if (uppercaseCode === "FREESHIP") {
-      setCouponDiscount(0);
-      setCouponSuccess(true);
-      setCouponMessage("Free shipping code applied successfully!");
-      localStorage.setItem('cartCouponCode', uppercaseCode);
-    } else {
-      setCouponDiscount(0);
-      setCouponSuccess(false);
-      setCouponMessage("Invalid or expired coupon code.");
-      localStorage.removeItem('cartCouponCode');
-    }
-  }, [cartTotalAmount]);
-
   // Coupon validation
   const applyCoupon = useCallback(async (codeStr) => {
-    if (!codeStr) return;
+    const normalizedCode = String(codeStr || '').trim();
+    if (!normalizedCode) return;
+
     setLoadingCoupon(true);
     setCouponMessage("");
+
+    const localCoupon = getLocalCouponResult(normalizedCode, cartTotalAmount);
+    if (localCoupon) {
+      setCouponDiscount(localCoupon.totals.discountAmount);
+      setCouponSuccess(true);
+      setCouponMessage(localCoupon.message);
+      persistCouponCode(localCoupon.code);
+      setLoadingCoupon(false);
+      return;
+    }
+
     try {
-      const products = cart.cartItems.map(item => item._id);
+      const products = cart.cartItems.map(item => item._id).filter(Boolean);
       const cartItems = cart.cartItems.map(item => ({
         productId: item._id,
         quantity: item.cartQuantity
       }));
       
       const response = await CouponServices.applyCouponToProduct({
-        code: codeStr,
+        code: normalizedCode,
         products,
         cart: { ...cart, cartItems: cartItems }
       });
       
       if (response && response.totals) {
-        const finalPrice = response.totals.totalDiscountedPrice;
-        const discountAmt = Math.max(cartTotalAmount - finalPrice, 0);
+        const discountAmt = Number(response.totals.discountAmount ?? Math.max(cartTotalAmount - response.totals.totalDiscountedPrice, 0));
         setCouponDiscount(discountAmt);
         setCouponSuccess(true);
         setCouponMessage(`Discount Applied: -₹${discountAmt.toFixed(2)}`);
-        localStorage.setItem('cartCouponCode', codeStr);
+        persistCouponCode(normalizedCode);
       } else {
-        simulateLocalCoupon(codeStr);
+        throw new Error(response?.message || 'Invalid coupon response.');
       }
     } catch (err) {
-      simulateLocalCoupon(codeStr);
+      setCouponDiscount(0);
+      setCouponSuccess(false);
+      setCouponMessage(err?.response?.data?.message || err?.message || 'Invalid or expired coupon code.');
+      clearStoredCouponCode();
     }
+
     setLoadingCoupon(false);
-  }, [cart, cartTotalAmount, simulateLocalCoupon]);
+  }, [cart, cartTotalAmount]);
 
   const handleCouponSubmit = (e) => {
     e.preventDefault();
@@ -131,13 +130,13 @@ const CartPage = () => {
     setCouponDiscount(0);
     setCouponSuccess(false);
     setCouponMessage("");
-    localStorage.removeItem('cartCouponCode');
+    clearStoredCouponCode();
   };
 
   // Re-apply coupon when total changes to keep values sync'd
   useEffect(() => {
     if (!isCartReady || typeof window === 'undefined') return;
-    const storedCoupon = localStorage.getItem('cartCouponCode');
+    const storedCoupon = getStoredCouponCode();
     if (storedCoupon) {
       applyCoupon(storedCoupon);
     }

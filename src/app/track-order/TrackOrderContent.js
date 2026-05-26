@@ -68,22 +68,15 @@ export default function TrackOrderContent() {
     }
 
     try {
-      // Attempt to load order using guest call
-      const response = await OrderServices.getOrderById({ id: orderId.trim() });
-      
+      const response = await OrderServices.trackOrder({
+        orderId: orderId.trim(),
+        email: email.trim(),
+      });
+
       if (response && response.error) {
-        // Fallback for local development or if backend is offline/requires auth
         setError(`Unable to retrieve order: ${response.error}. Note: Try using the Demo Order below to test the tracking visual interface.`);
       } else if (response && response.results) {
-        const order = response.results;
-        
-        // Safety check to ensure guest matches order email
-        const orderEmail = order.email || order.userEmail || order.billingEmail || "";
-        if (orderEmail.toLowerCase().trim() !== email.toLowerCase().trim()) {
-          setError("Order ID found, but the email address does not match our records. Please verify your details.");
-        } else {
-          setOrderData(order);
-        }
+        setOrderData(response.results);
       } else {
         setError("Order not found. Please verify your Order ID and try again.");
       }
@@ -127,9 +120,9 @@ export default function TrackOrderContent() {
 
   const { steps, activeIndex } = orderData ? getTimelineSteps(orderData.status) : { steps: [], activeIndex: 0 };
 
-  const formatter = new Intl.NumberFormat("en-US", {
+  const formatter = new Intl.NumberFormat("en-IN", {
     style: "currency",
-    currency: "USD",
+    currency: "INR",
   });
 
   return (

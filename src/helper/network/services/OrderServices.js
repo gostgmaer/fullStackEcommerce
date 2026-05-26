@@ -1,4 +1,5 @@
 import requests from "./httpServices";
+import { isLocalCouponCode, normalizeCouponCode } from "./CouponServices";
 
 const getProfile = async (headers) => {
   const response = await requests.get("/auth/profile", {}, {}, headers, 0);
@@ -29,6 +30,45 @@ const normalizeOrderEntity = (response) => ({
   results: response?.data || response?.results || response,
 });
 
+const normalizeTrackedOrder = (order) => {
+  const shippingAddress = order?.shippingAddress || {};
+
+  return {
+    ...order,
+    streetAddress:
+      shippingAddress.addressLine1 ||
+      shippingAddress.street ||
+      order?.streetAddress ||
+      "",
+    city: shippingAddress.city || order?.city || "",
+    country: shippingAddress.country || order?.country || "",
+    zipPostal:
+      shippingAddress.postalCode ||
+      shippingAddress.zipPostal ||
+      order?.zipPostal ||
+      "",
+    items: (order?.items || []).map((item) => {
+      const unitPrice = Number(
+        item?.price ??
+          item?.product?.price ??
+          item?.product?.finalPrice ??
+          item?.product?.salePrice ??
+          item?.product?.basePrice ??
+          0
+      );
+
+      return {
+        ...item,
+        product: {
+          ...(item?.product || {}),
+          title: item?.product?.title || item?.title || "Product Item",
+          price: unitPrice,
+        },
+      };
+    }),
+  };
+};
+
 const getLineItemDiscountAmount = (item = {}) =>
   Number(item?.lineDiscountAmount ?? item?.discountAmount ?? 0);
 
@@ -56,6 +96,7 @@ const mapCartItemsToOrderItems = (items = []) =>
 const OrderServices = {
   addOrder: async (body, headers) => {
     const userId = await getUserId(headers);
+    const normalizedCouponCode = normalizeCouponCode(body.couponCode || body.couponcode);
     const payload = {
       user: userId,
       email: body.email,
@@ -66,7 +107,7 @@ const OrderServices = {
       shippingPrice: Number(body.shippingPrice || 0),
       taxAmount: Number(body.taxAmount || 0),
       discountAmount: Number(body.discountAmount ?? body.discount ?? 0),
-      couponCode: body.couponCode || body.couponcode,
+      couponCode: isLocalCouponCode(normalizedCouponCode) ? "" : normalizedCouponCode,
       payment_method: body.payment_method,
       additionalNotes: body.additionalNotes || body.notes || "",
       items: mapCartItemsToOrderItems(body.items || body.products || body.cartItems),
@@ -100,6 +141,17 @@ const OrderServices = {
   getOrderById: async (params, headers) => {
     const response = await requests.get(`/orders/:id`, {}, params, headers, 1);
     return normalizeOrderEntity(response);
+  },
+  trackOrder: async (body) => {
+    const response = await requests.post(`/orders/track`, body);
+    const normalizedOrder = normalizeTrackedOrder(response?.data || response?.result || response?.results || response);
+
+    return {
+      ...response,
+      data: normalizedOrder,
+      result: normalizedOrder,
+      results: normalizedOrder,
+    };
   },
 };
 

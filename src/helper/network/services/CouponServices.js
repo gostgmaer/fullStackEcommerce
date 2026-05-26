@@ -1,5 +1,67 @@
 import requests from "./httpServices";
 
+const LOCAL_COUPON_CODES = new Set(["SAVE10", "WELCOME10", "FREESHIP"]);
+
+export const normalizeCouponCode = (code = "") => String(code).trim().toUpperCase();
+
+export const isLocalCouponCode = (code = "") => LOCAL_COUPON_CODES.has(normalizeCouponCode(code));
+
+export const getStoredCouponCode = () => {
+  if (typeof window === "undefined") return "";
+  return normalizeCouponCode(localStorage.getItem("cartCouponCode") || "");
+};
+
+export const persistCouponCode = (code = "") => {
+  if (typeof window === "undefined") return;
+
+  const normalizedCode = normalizeCouponCode(code);
+  if (!normalizedCode) {
+    localStorage.removeItem("cartCouponCode");
+    return;
+  }
+
+  localStorage.setItem("cartCouponCode", normalizedCode);
+};
+
+export const clearStoredCouponCode = () => {
+  if (typeof window === "undefined") return;
+  localStorage.removeItem("cartCouponCode");
+};
+
+export const getLocalCouponResult = (code, subtotal = 0) => {
+  const normalizedCode = normalizeCouponCode(code);
+  const safeSubtotal = Number(Number(subtotal || 0).toFixed(2));
+
+  if (!isLocalCouponCode(normalizedCode)) {
+    return null;
+  }
+
+  if (normalizedCode === "FREESHIP") {
+    return {
+      code: normalizedCode,
+      message: "Free shipping code applied successfully!",
+      totals: {
+        totalPrice: safeSubtotal,
+        discountAmount: 0,
+        totalDiscountedPrice: safeSubtotal,
+      },
+    };
+  }
+
+  const discountAmount = Number((safeSubtotal * 0.1).toFixed(2));
+  const totalDiscountedPrice = Number(Math.max(safeSubtotal - discountAmount, 0).toFixed(2));
+
+  return {
+    code: normalizedCode,
+    message: `${normalizedCode} applied! 10% Off (-₹${discountAmount.toFixed(2)})`,
+    totals: {
+      totalPrice: safeSubtotal,
+      discountAmount,
+      totalDiscountedPrice,
+    },
+  };
+};
+
 const CouponServices = {
   // Get all coupons
   getAllCoupons: async () => {
