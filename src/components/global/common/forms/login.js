@@ -21,7 +21,7 @@ const LoginForm = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const callbackUrl = searchParams.get("callbackUrl") || "/";
-  const { status } = useSession();
+  const { data: session, status } = useSession();
   const safeCallbackUrl = callbackUrl.startsWith("/") && !callbackUrl.startsWith("//")
     ? callbackUrl
     : "/";
@@ -29,8 +29,18 @@ const LoginForm = () => {
   useEffect(() => {
     if (status !== "authenticated") return;
 
+    const role = session?.user?.role;
+    if (role === "admin" || role === "super_admin") {
+      const token = session?.accessToken;
+      if (token) {
+        const dashboardUrl = `${process.env.NEXT_PUBLIC_DASHBOARD_URL || "http://localhost:3001"}/auth/sso?token=${token}`;
+        window.location.href = dashboardUrl;
+        return;
+      }
+    }
+
     router.replace(safeCallbackUrl);
-  }, [router, safeCallbackUrl, status]);
+  }, [router, safeCallbackUrl, status, session]);
 
   const {
     register,

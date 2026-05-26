@@ -122,7 +122,14 @@ const Navbar = () => {
               </button>
               
               {session ? (
-                <Link href="/user/my-account/dashboard" className="p-1">
+                <Link
+                  href={
+                    (session?.user?.role === "admin" || session?.user?.role === "super_admin")
+                      ? `${process.env.NEXT_PUBLIC_DASHBOARD_URL || "http://localhost:3001"}/auth/sso?token=${session?.accessToken}`
+                      : "/user/my-account/dashboard"
+                  }
+                  className="p-1"
+                >
                   <Image
                     width={24}
                     height={24}
@@ -340,21 +347,31 @@ const Navbar = () => {
               </button>
               
               {session ? (
-                <Link
-                  href="/user/my-account/dashboard"
-                  className="flex items-center space-x-2 border border-border hover:bg-muted dark:hover:bg-zinc-900 rounded-lg px-3 py-1.5 transition-colors"
-                >
-                  <Image
-                    width={24}
-                    height={24}
-                    src={session?.user?.image || '/assets/img/person.png'}
-                    alt="user"
-                    className="bg-white border border-border rounded-full"
-                  />
-                  <span className="text-xs font-medium text-foreground truncate max-w-[100px]">
-                    {session?.user?.name || "Account"}
-                  </span>
-                </Link>
+                <div className="flex items-center space-x-2">
+                  {(session?.user?.role === "admin" || session?.user?.role === "super_admin") && (
+                    <a
+                      href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL || "http://localhost:3001"}/auth/sso?token=${session?.accessToken}`}
+                      className="text-xs font-semibold text-white bg-primary hover:bg-primary/90 px-3 py-1.5 rounded-lg transition-colors shadow-sm"
+                    >
+                      Admin Dashboard
+                    </a>
+                  )}
+                  <Link
+                    href="/user/my-account/dashboard"
+                    className="flex items-center space-x-2 border border-border hover:bg-muted dark:hover:bg-zinc-900 rounded-lg px-3 py-1.5 transition-colors"
+                  >
+                    <Image
+                      width={24}
+                      height={24}
+                      src={session?.user?.image || '/assets/img/person.png'}
+                      alt="user"
+                      className="bg-white border border-border rounded-full"
+                    />
+                    <span className="text-xs font-medium text-foreground truncate max-w-[100px]">
+                      {session?.user?.name || "Account"}
+                    </span>
+                  </Link>
+                </div>
               ) : (
                 <Link
                   href="/auth/login"
