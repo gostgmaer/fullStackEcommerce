@@ -230,5 +230,5 @@ export const authOptions = {
     logo: "/vercel.svg",
   },
 
-  debug: process.env.NODE_ENV === "development",
+  debug: process.env.NEXTAUTH_DEBUG === "true",
 };

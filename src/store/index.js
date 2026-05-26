@@ -8,8 +8,7 @@ import { sidebarReducer } from './reducers/sidebarSlice';
 import { isOpenReducer } from './reducers/isOpenSlice';
 import { thunk } from 'redux-thunk';
 import { persistReducer, persistStore } from 'redux-persist';
-import storageSession from 'redux-persist/lib/storage/session';
-import { createWebStorage } from 'redux-persist/lib/storage';
+import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 import { productReducer } from './reducers/productSlice';
 import { paginationReducer } from './reducers/paginationSlice';
 import { queryReducer } from './reducers/querySlice';
@@ -30,7 +29,7 @@ const createNoopStorage = () => {
   };
 };
 
-const storage = typeof window !== 'undefined' ? storageSession : createNoopStorage();
+const storage = typeof window !== 'undefined' ? createWebStorage('session') : createNoopStorage();
 
 const rootReducer = combineReducers({
 	cart: cartReducer,
