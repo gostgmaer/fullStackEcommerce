@@ -61,6 +61,8 @@ const OrderServices = {
       phone: body.phone,
       shippingMethod: body.shippingMethod || "standard",
       shippingPrice: Number(body.shippingPrice || 0),
+      taxAmount: Number(body.taxAmount || 0),
+      discountAmount: Number(body.discountAmount ?? body.discount ?? 0),
       couponCode: body.couponCode || body.couponcode,
       payment_method: body.payment_method,
       additionalNotes: body.additionalNotes || body.notes || "",

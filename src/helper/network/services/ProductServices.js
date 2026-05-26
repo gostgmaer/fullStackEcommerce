@@ -19,11 +19,38 @@ const normalizeDescription = (product) => {
   return product?.shortDescription || "";
 };
 
-const normalizeProduct = (product) => {
+const normalizeImages = (product) => {
+  if (Array.isArray(product?.image)) {
+    return product.image;
+  }
+
+  if (product?.image) {
+    return [product.image];
+  }
+
+  if (Array.isArray(product?.images)) {
+    const urls = product.images
+      .map((entry) => (typeof entry === "string" ? entry : entry?.url))
+      .filter(Boolean);
+
+    if (urls.length) {
+      return urls;
+    }
+  }
+
+  return [PLACEHOLDER_IMAGE];
+};
+
+export const normalizeProduct = (product) => {
   if (!product || typeof product !== "object") return product;
 
   const id = product._id || product.id;
   const descriptions = normalizeDescription(product);
+  const title = product.title || product.name || product.productName || "";
+  const quantity = numberOr(
+    product.quantity ?? product.stock ?? product.inventory ?? product.detailedStockStatus?.quantity,
+    0
+  );
   const originalPrice = numberOr(
     product.prices?.originalPrice ?? product.basePrice ?? product.originalPrice ?? product.price ?? product.finalPrice,
     0
@@ -36,21 +63,20 @@ const normalizeProduct = (product) => {
     product.prices?.discount ?? product.discountValue ?? product.discountPercent,
     0
   );
-  const image = Array.isArray(product.image)
-    ? product.image
-    : product.image
-      ? [product.image]
-      : [PLACEHOLDER_IMAGE];
+  const image = normalizeImages(product);
 
   return {
     ...product,
     _id: id,
     id,
+    title,
+    slug: product.slug || product.handle || "",
     descriptionData: product.descriptions,
     descriptions,
     image: image.length ? image : [PLACEHOLDER_IMAGE],
-    stock: numberOr(product.stock ?? product.inventory, 0),
-    quantity: numberOr(product.quantity ?? product.stock ?? product.inventory, 0),
+    stock: numberOr(product.stock ?? product.inventory ?? product.detailedStockStatus?.quantity, 0),
+    quantity,
+    unit: product.unit || product.saleUnit || product.measurementUnit || "item",
     price,
     originalPrice,
     discount,

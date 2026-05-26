@@ -1,6 +1,7 @@
 
 import requests from "./httpServices";
 import { baseurl } from "@/config/setting";
+import { normalizeProduct } from "./ProductServices";
 
 /** @typedef {Record<string, string>} RequestHeaders */
 /** @typedef {{ [key: string]: any }} WishlistPayload */
@@ -27,11 +28,17 @@ const normalizeWishlistResponse = (response) => {
             : Array.isArray(data)
                 ? data
                 : [];
+    /** @param {any} item */
+    const normalizeWishlistItem = (item) => ({
+        ...item,
+        product: normalizeProduct(item?.product),
+    });
+    const normalizedList = list.map(normalizeWishlistItem);
 
     return {
         ...response,
-        result: list,
-        results: list,
+        result: normalizedList,
+        results: normalizedList,
     };
 };
 

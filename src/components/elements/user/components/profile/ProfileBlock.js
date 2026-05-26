@@ -13,7 +13,7 @@ const ProfileBlock = ({ user }) => {
     );
   }
 
-  const userImage = user.image || "https://res.cloudinary.com/ahossain/image/upload/v1655097002/placeholder_avatar_fivcda.png";
+  const userImage = user.image || "/assets/img/person.png";
 
   return (
     <div className="overflow-hidden">

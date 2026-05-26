@@ -12,6 +12,12 @@ const initialState = {
   cartTaxAmount: 0,
 };
 
+const getCartItemId = (item) => item?.id || item?._id;
+
+const getCartItemPrice = (item) => Number(item?.price ?? item?.prices?.price ?? 0);
+
+const getCartItemStockLimit = (item) => Number(item?.stock ?? item?.quantity ?? 999);
+
 
 // export const saveCartToBackend = createAsyncThunk(
 //   'cart/saveCartToBackend',
@@ -44,12 +50,13 @@ export const CartSlice = createSlice({
 
   reducers: {
     addToCart(state, action) {
+      const payloadId = getCartItemId(action.payload);
 
       const product = state.cartItems.findIndex(
-        (item) => item.id === action.payload.id
+        (item) => getCartItemId(item) === payloadId
       );
 
-      const stockLimit = action.payload.stock || action.payload.quantity || 999;
+      const stockLimit = getCartItemStockLimit(action.payload);
 
       if (product >= 0) {
         if (state.cartItems[product].cartQuantity >= stockLimit) {
@@ -58,7 +65,7 @@ export const CartSlice = createSlice({
         }
         state.cartItems[product].cartQuantity += 1;
         const cartData = {
-          productId: action.payload.id,
+          productId: payloadId,
           quantity: state.cartItems[product].cartQuantity,
         };
 
@@ -77,17 +84,19 @@ export const CartSlice = createSlice({
     },
 
     removeFromCart(state, action) {
+      const payloadId = getCartItemId(action.payload);
       const prevLength = state.cartItems.length;
       state.cartItems = state.cartItems.filter(
-        (item) => item.id !== action.payload.id
+        (item) => getCartItemId(item) !== payloadId
       );
       if (state.cartItems.length < prevLength) {
         notifyerror("Product removed from cart!");
       }
     },
     decreaseCart(state, action) {
+      const payloadId = getCartItemId(action.payload);
       const itemIndex = state.cartItems.findIndex(
-        (item) => item.id === action.payload.id
+        (item) => getCartItemId(item) === payloadId
       );
 
       if (itemIndex < 0) return;
@@ -100,10 +109,11 @@ export const CartSlice = createSlice({
       notifywarning("Cart quantity reduced!");
     },
     incrementCart(state, action) {
+      const payloadId = getCartItemId(action.payload);
       const product = state.cartItems.findIndex(
-        (item) => item.id === action.payload.id
+        (item) => getCartItemId(item) === payloadId
       );
-      const stockLimit = action.payload.stock || action.payload.quantity || 999;
+      const stockLimit = getCartItemStockLimit(action.payload);
 
       if (product >= 0) {
         if (state.cartItems[product].cartQuantity >= stockLimit) {
@@ -124,11 +134,12 @@ export const CartSlice = createSlice({
      // localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
     addByIncrement(state, action) {
+      const payloadId = getCartItemId(action.payload.product);
       const product = state.cartItems.findIndex(
-        (item) => item.id === action.payload.product.id
+        (item) => getCartItemId(item) === payloadId
       );
-      const stockLimit = action.payload.product.stock || action.payload.product.quantity || 999;
-      const requestedQuantity = action.payload.cartQuantity === 1 ? 1 : action.payload.cartQuantity;
+      const stockLimit = getCartItemStockLimit(action.payload.product);
+      const requestedQuantity = Number(action.payload.cartQuantity) > 0 ? Number(action.payload.cartQuantity) : 1;
 
       if (product >= 0) {
         if (state.cartItems[product].cartQuantity + requestedQuantity > stockLimit) {
@@ -156,11 +167,8 @@ export const CartSlice = createSlice({
     getTotals(state, action) {
       let { total, quantity } = state.cartItems.reduce(
         (cartTotal, cartItem) => {
-          
-          const { prices, cartQuantity } = cartItem;
-         
-          
-          const itemTotal = prices.price * cartQuantity;
+          const cartQuantity = Number(cartItem?.cartQuantity) || 0;
+          const itemTotal = getCartItemPrice(cartItem) * cartQuantity;
 
           cartTotal.total += itemTotal;
           cartTotal.quantity += cartQuantity;

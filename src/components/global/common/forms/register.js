@@ -11,12 +11,31 @@ import Input from "../../fields/input";
 import { signIn } from "next-auth/react";
 import { FaGithub } from "react-icons/fa";
 import { getUsername } from "@/helper/functions";
+import zxcvbn from "zxcvbn";
+
+const passwordSchema = z
+  .string()
+  .min(8, "Password must be at least 8 characters long")
+  .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+  .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+  .regex(/\d/, "Password must contain at least one number")
+  .regex(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]/, "Password must contain at least one special character")
+  .superRefine((value, ctx) => {
+    const analysis = zxcvbn(value);
+
+    if (analysis.score < 3) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Password is too weak. Use a longer, less common password.",
+      });
+    }
+  });
 
 const registerSchema = z.object({
   firstName: z.string().min(1, "First Name is required"),
   lastName: z.string().min(1, "Last Name is required"),
   email: z.string().min(1, "Email is required").email("Invalid email address"),
-  password: z.string().min(1, "Password is required").min(8, "Password must be at least 8 characters long"),
+  password: passwordSchema,
 });
 
 const RegisterForm = () => {
@@ -50,7 +69,7 @@ const RegisterForm = () => {
         notifySuccess(res.message || "Registration successful!");
         router.push("/auth/login");
       } else {
-        notifyerror(res?.["message"] || "Registration failed.");
+        notifyerror(res?.["message"] || res?.error || "Registration failed.");
       }
     } catch (error) {
       notifyerror(error?.message || "An error occurred during registration.");

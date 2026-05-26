@@ -108,7 +108,7 @@ export default async function Home() {
       <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
         {/* Hero Section with Carousel */}
         <div className="bg-gradient-to-b from-muted/40 via-muted/10 to-background dark:from-muted/10 dark:via-background dark:to-background border-b border-border/40 relative overflow-hidden">
-          <div className="absolute inset-0 bg-[url('https://res.cloudinary.com/ahossain/image/upload/v1697204480/pattern_bg_hzt68z.png')] opacity-[0.03] dark:opacity-[0.02] pointer-events-none mix-blend-overlay"></div>
+          <div className="absolute inset-0 bg-[url('/cta-bg.png')] opacity-[0.03] dark:opacity-[0.02] pointer-events-none mix-blend-overlay"></div>
           <div className="absolute top-0 right-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl pointer-events-none"></div>
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
           <div className="mx-auto py-8 lg:py-12 max-w-screen-2xl px-4 sm:px-10 relative z-10">
