@@ -3,57 +3,58 @@ import requests from "./httpServices";
 const CouponServices = {
   // Get all coupons
   getAllCoupons: async () => {
-    return requests.get("/coupon");
+    return requests.get("/coupons");
   },
 
   // Get only enabled (showing) coupons
   getShowingCoupons: async () => {
-    return requests.get("/coupon/show");
+    return requests.get("/coupons/active");
   },
 
   // Get a single coupon by ID
   getCouponById: async (id) => {
-    return requests.get(`/coupon/${id}`);
+    return requests.get(`/coupons/${id}`);
   },
 
   // Add a new coupon
   addCoupon: async (couponData) => {
-    return requests.post("/coupon/add", couponData);
+    return requests.post("/coupons", couponData);
   },
 
   // Add multiple coupons
   addAllCoupons: async (couponsData) => {
-    return requests.post("/coupon/add/all", couponsData);
+    return requests.post("/coupons/bulk", couponsData);
   },
 
   // Apply coupon to product
-  applyCouponToProduct: async (data) => {
-    return requests.post("/coupon/apply", data);
+  applyCouponToProduct: async (data, headers = {}) => {
+    const response = await requests.post("/coupons/apply", data, headers);
+    return response?.data || response;
   },
 
   // Update a single coupon by ID
   updateCouponById: async (id, couponData) => {
-    return requests.put(`/coupon/${id}`, couponData);
+    return requests.put(`/coupons/${id}`, couponData);
   },
 
   // Update multiple coupons
   updateManyCoupons: async (couponsData) => {
-    return requests.patch("/coupon/update/many", couponsData);
+    return requests.patch("/coupons/bulk/update", couponsData);
   },
 
   // Show/hide a coupon (update status)
   updateCouponStatus: async (id, status) => {
-    return requests.put(`/coupon/status/${id}`, { status });
+    return requests.put(`/coupons/${id}/status`, { status });
   },
 
   // Delete a single coupon by ID
   deleteCouponById: async (id) => {
-    return requests.delete(`/coupon/${id}`);
+    return requests.delete(`/coupons/${id}`);
   },
 
   // Delete multiple coupons
   deleteManyCoupons: async (couponsData) => {
-    return requests.patch("/coupon/delete/many", couponsData);
+    return requests.patch("/coupons/bulk/delete", couponsData);
   },
 };
 

@@ -26,23 +26,27 @@ function OrderSummary({ code, setCode, shippingPrice = 0, discount, setDiscount 
 	// Handle form submission
 	const handleApplyCoupon = async (e) => {
 		e.preventDefault();
-		const products = cart.cartItems.map(item => item._id);
+		const products = cart.cartItems.map(item => item._id || item.id).filter(Boolean);
 		const cartItems = cart.cartItems.map(item => ({
-			productId: item._id,
+			productId: item._id || item.id,
 			quantity: item.cartQuantity
 		}));
 
 		setLoading(true);
 		try {
 			const response = await CouponServices.applyCouponToProduct({ code, products, cart: { ...cart, cartItems: cartItems } });
-			// Handle success response (e.g., show discount, update UI, etc.)
-			// setTotal(response.totals.totalPrice)
-			setDiscount(response.totals.totalDiscountedPrice)
-			setIsCoupon(true)
-			// setMessage(`Coupon applied successfully! Discount: ${response.data.discount}`);
+			const totals = response?.totals;
+			if (!totals || !Number.isFinite(Number(totals.totalDiscountedPrice))) {
+				throw new Error(response?.message || "Invalid coupon response.");
+			}
+
+			setDiscount(Number(totals.totalDiscountedPrice));
+			setIsCoupon(true);
+			setMessage("");
 		} catch (error) {
 			// Handle error (e.g., invalid coupon, expired, etc.)
-			setMessage(error.response?.data?.message || "Failed to apply coupon.");
+			setDiscount(null);
+			setMessage(error.response?.data?.message || error?.message || "Failed to apply coupon.");
 		}
 		setLoading(false);
 	};

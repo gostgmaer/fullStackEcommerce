@@ -1,19 +1,64 @@
 import requests from "./httpServices";
 
+const PLACEHOLDER_IMAGE = "https://res.cloudinary.com/ahossain/image/upload/v1655097002/placeholder_kvepfp.png";
+
+const numberOr = (value, fallback = 0) => {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : fallback;
+};
+
+const normalizeProduct = (product) => {
+  if (!product || typeof product !== "object") return product;
+
+  const id = product._id || product.id;
+  const originalPrice = numberOr(
+    product.prices?.originalPrice ?? product.basePrice ?? product.originalPrice ?? product.price ?? product.finalPrice,
+    0
+  );
+  const price = numberOr(
+    product.prices?.price ?? product.finalPrice ?? product.salePrice ?? product.price ?? product.basePrice,
+    originalPrice
+  );
+  const discount = numberOr(
+    product.prices?.discount ?? product.discountValue ?? product.discountPercent,
+    0
+  );
+  const image = Array.isArray(product.image)
+    ? product.image
+    : product.image
+      ? [product.image]
+      : [PLACEHOLDER_IMAGE];
+
+  return {
+    ...product,
+    _id: id,
+    id,
+    image: image.length ? image : [PLACEHOLDER_IMAGE],
+    stock: numberOr(product.stock ?? product.inventory, 0),
+    prices: {
+      ...(product.prices || {}),
+      price,
+      originalPrice,
+      discount,
+    },
+  };
+};
+
 const normalizeCollectionResponse = (response) => {
   const data = response?.data;
 
   if (data?.result) {
+    const results = data.result.map(normalizeProduct);
     return {
       ...response,
-      results: data.result,
-      result: data.result,
-      total: data.pagination?.total || data.result.length,
+      results,
+      result: results,
+      total: data.pagination?.total || results.length,
       pagination: data.pagination,
     };
   }
 
-  const results = Array.isArray(data) ? data : data ? [data] : [];
+  const results = (Array.isArray(data) ? data : data ? [data] : []).map(normalizeProduct);
   return {
     ...response,
     results,
@@ -24,8 +69,8 @@ const normalizeCollectionResponse = (response) => {
 
 const normalizeEntityResponse = (response) => ({
   ...response,
-  results: response?.data || response?.results || response,
-  result: response?.data || response?.result || response,
+  results: normalizeProduct(response?.data || response?.results || response),
+  result: normalizeProduct(response?.data || response?.result || response),
 });
 
 const ProductServices = {

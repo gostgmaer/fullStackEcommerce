@@ -43,7 +43,7 @@ const CheckoutBlock = () => {
     const [code, setCode] = useState("");
     const [csc, setCsc] = useState(null);
     const [activeStep, setActiveStep] = useState(1);
-    const [discount, setDiscount] = useState(0);
+    const [discount, setDiscount] = useState(null);
 
     const router = useRouter();
     const dispatch = useDispatch();
@@ -163,9 +163,9 @@ const CheckoutBlock = () => {
             ...values,
             couponcode: code,
             cartTotalAmount,
-            discount: discount,
+            discount: discount !== null ? Math.max(cartTotalAmount - discount, 0) : 0,
             taxAmount: cartTaxAmount,
-            totalPrice: Number(cartTotalAmount + shPrice + cartTaxAmount - discount),
+            totalPrice: Number((discount !== null ? discount : cartTotalAmount) + shPrice + cartTaxAmount),
         };
 
         const { payment_method } = data;
@@ -187,7 +187,12 @@ const CheckoutBlock = () => {
 
                 case 'COD':
                     notifySuccess(requests.message);
-                    router.push(`/order/${requests.result._id}`);
+                    const orderResult = requests?.result || requests?.data?.result || requests?.data;
+                    const orderId = orderResult?._id || orderResult?.id || orderResult?.order_id;
+                    if (!orderId) {
+                        throw new Error("Order created but no order identifier was returned.");
+                    }
+                    router.push(`/order/${orderId}`);
                     dispatch(emptyCart());
                     break;
 
