@@ -22,16 +22,15 @@ const LoginForm = () => {
   const router = useRouter();
   const callbackUrl = searchParams.get("callbackUrl") || "/";
   const { status } = useSession();
+  const safeCallbackUrl = callbackUrl.startsWith("/") && !callbackUrl.startsWith("//")
+    ? callbackUrl
+    : "/";
 
   useEffect(() => {
     if (status !== "authenticated") return;
 
-    const nextPath = callbackUrl.startsWith("/") && !callbackUrl.startsWith("//")
-      ? callbackUrl
-      : "/";
-
-    router.replace(nextPath || "/");
-  }, [callbackUrl, router, status]);
+    router.replace(safeCallbackUrl);
+  }, [router, safeCallbackUrl, status]);
 
   const {
     register,
@@ -54,20 +53,7 @@ const LoginForm = () => {
       });
 
       if (res?.ok) {
-        if (res.url) {
-          if (res.url.startsWith("/")) {
-            router.push(res.url || "/");
-          } else {
-            try {
-              const fullUrl = new URL(res.url, window.location.origin);
-              router.push(`${fullUrl.pathname}${fullUrl.search}` || "/");
-            } catch (_error) {
-              router.push("/");
-            }
-          }
-        } else {
-          router.push("/");
-        }
+        router.replace(safeCallbackUrl);
       } else {
         notifyerror(res?.error || "Invalid credentials", 5000);
       }

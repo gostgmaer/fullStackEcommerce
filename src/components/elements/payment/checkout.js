@@ -203,10 +203,17 @@ const CheckoutBlock = () => {
         const { payment_method } = data;
 
         try {
-            const requests = await OrderServices.addOrder(data, { "Authorization": `Bearer ${session?.["accessToken"]}` });
+            const authHeaders = session?.accessToken
+                ? { "Authorization": `Bearer ${session.accessToken}` }
+                : {};
+            const requests = await OrderServices.addOrder(data, authHeaders);
 
             switch (payment_method) {
                 case 'RazorPay':
+                    if (!session?.accessToken) {
+                        notifyerror('Please login to use RazorPay. Guests can place Cash on Delivery orders.');
+                        return;
+                    }
                     const response = await RazorpayPayment(requests, session, {
                         name: `${values.firstName} ${values.lastName}`,
                         email: values.email,
@@ -221,10 +228,19 @@ const CheckoutBlock = () => {
                     notifySuccess(requests.message);
                     const orderResult = requests?.result || requests?.data?.result || requests?.data;
                     const orderId = orderResult?._id || orderResult?.id || orderResult?.order_id;
+                    const trackingId = orderResult?.invoice || orderResult?.order_id || orderId;
                     if (!orderId) {
                         throw new Error("Order created but no order identifier was returned.");
                     }
-                    router.push(`/order/${orderId}`);
+                    if (session?.accessToken) {
+                        router.push(`/order/${orderId}`);
+                    } else {
+                        const params = new URLSearchParams({
+                            orderId: trackingId,
+                            email: values.email,
+                        });
+                        router.push(`/track-order?${params.toString()}`);
+                    }
                     dispatch(emptyCart());
                     break;
 
@@ -473,13 +489,16 @@ const CheckoutBlock = () => {
                                                         <MdCreditCard className="text-2xl text-muted-foreground" />
                                                         <div>
                                                             <h4 className="font-bold text-sm text-foreground">RazorPay Secure</h4>
-                                                            <p className="text-xs text-muted-foreground mt-0.5">Cards, NetBanking, UPI</p>
+                                                            <p className="text-xs text-muted-foreground mt-0.5">
+                                                                {session?.accessToken ? 'Cards, NetBanking, UPI' : 'Login required for online payment'}
+                                                            </p>
                                                         </div>
                                                     </div>
                                                     <input
                                                         type="radio"
                                                         value="RazorPay"
                                                         {...register("payment_method")}
+                                                        disabled={!session?.accessToken}
                                                         className="form-radio text-primary focus:ring-primary/20"
                                                     />
                                                 </label>

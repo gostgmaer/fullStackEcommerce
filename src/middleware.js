@@ -49,7 +49,6 @@ export async function middleware(request) {
   const { pathname } = request.nextUrl;
   if (
     pathname.startsWith("/user") ||
-    pathname === "/checkout" ||
     pathname.startsWith("/order")
   ) {
     if (!authorised) {

@@ -7,6 +7,10 @@ const getProfile = async (headers) => {
 };
 
 const getUserId = async (headers) => {
+  if (!headers?.Authorization) {
+    return null;
+  }
+
   const profile = await getProfile(headers);
   return profile?._id || profile?.id;
 };
@@ -98,7 +102,6 @@ const OrderServices = {
     const userId = await getUserId(headers);
     const normalizedCouponCode = normalizeCouponCode(body.couponCode || body.couponcode);
     const payload = {
-      user: userId,
       email: body.email,
       firstName: body.firstName,
       lastName: body.lastName,
@@ -124,6 +127,10 @@ const OrderServices = {
         country: body.country,
       },
     };
+
+    if (userId) {
+      payload.user = userId;
+    }
 
     return requests.post("/orders", payload, headers);
   },

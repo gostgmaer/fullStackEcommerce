@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import dayjs from "dayjs";
 import { IoSearchOutline, IoMailOutline, IoCardOutline, IoLocationOutline, IoTimeOutline, IoChevronForwardOutline, IoWarningOutline } from "react-icons/io5";
 import OrderServices from "@/helper/network/services/OrderServices";
@@ -41,6 +42,7 @@ const MOCK_ORDER = {
 };
 
 export default function TrackOrderContent() {
+  const searchParams = useSearchParams();
   const [orderId, setOrderId] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
@@ -94,6 +96,50 @@ export default function TrackOrderContent() {
     setOrderData(MOCK_ORDER);
     setError("");
   };
+
+  useEffect(() => {
+    const initialOrderId = searchParams.get("orderId") || "";
+    const initialEmail = searchParams.get("email") || "";
+
+    if (!initialOrderId || !initialEmail) {
+      return;
+    }
+
+    setOrderId(initialOrderId);
+    setEmail(initialEmail);
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (!orderId || !email || orderData || loading) {
+      return;
+    }
+
+    const autoTrack = async () => {
+      setLoading(true);
+      setError("");
+
+      try {
+        const response = await OrderServices.trackOrder({
+          orderId: orderId.trim(),
+          email: email.trim(),
+        });
+
+        if (response && response.error) {
+          setError(`Unable to retrieve order: ${response.error}. Note: Try using the Demo Order below to test the tracking visual interface.`);
+        } else if (response && response.results) {
+          setOrderData(response.results);
+        } else {
+          setError("Order not found. Please verify your Order ID and try again.");
+        }
+      } catch (_error) {
+        setError("An unexpected error occurred while fetching order details. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    void autoTrack();
+  }, [email, loading, orderData, orderId]);
 
   // Helper to determine status order & timeline steps
   const getTimelineSteps = (status = "pending") => {

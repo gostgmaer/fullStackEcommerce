@@ -80,7 +80,7 @@ export const authOptions = {
 
   secret,
   pages: {
-    signIn: "/auth/signin",
+    signIn: "/auth/login",
     signOut: "/",
   },
 
@@ -171,7 +171,7 @@ export const authOptions = {
 
     async redirect({ url, baseUrl }) {
       if (!url) return baseUrl;
-      if (url.startsWith("/")) return url;
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
 
       try {
         const resolvedUrl = new URL(url, baseUrl);
