@@ -16,13 +16,18 @@ const Index = async (props) => {
 
   // @ts-ignore
   const session = await getServerSession(authOptions);
+  const headers = { "Authorization": `Bearer ${session?.["accessToken"]}` };
 
   if (!session?.accessToken) {
     redirect('/auth/login');
   }
 
-  const profile = await CustomerServices.getProfile(null, { "Authorization": `Bearer ${session["accessToken"]}` })
+  const [profile, addresses] = await Promise.all([
+    CustomerServices.getProfile(null, headers),
+    CustomerServices.fetchCustomerAddress(headers, { limit: 100 }),
+  ]);
   const user = profile?.result || profile?.data || profile;
+  const normalizedAddresses = addresses?.results || addresses?.result || addresses?.data || [];
 
 
   return (
@@ -31,7 +36,7 @@ const Index = async (props) => {
       <Userlayout>
 
        <div>
-        <ProfileBlock user={user}/>
+        <ProfileBlock user={{ ...user, address: normalizedAddresses }}/>
        
        </div>
       </Userlayout>

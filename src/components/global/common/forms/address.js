@@ -33,6 +33,19 @@ const AddressForm = ({ currAddress }) => {
     const params = useParams();
     const route = useRouter();
 
+    const getDefaultValues = (address) => ({
+        firstName: address ? address.firstName : "",
+        lastName: address ? address.lastName : "",
+        phone: address ? address.phone : "",
+        email: address ? address.email : "",
+        address: address ? address.address : "",
+        country: address ? address.country : "",
+        state: address ? address.state : "",
+        city: address ? address.city : "",
+        postalCode: address ? address.postalCode : "123456",
+        type: address ? address.type : "Shipping",
+    });
+
     useEffect(() => {
         import('country-state-city').then((mod) => {
             setCsc(mod);
@@ -49,22 +62,18 @@ const AddressForm = ({ currAddress }) => {
         handleSubmit,
         watch,
         setValue,
+        reset,
         formState: { errors, isSubmitting }
     } = useForm({
         resolver: zodResolver(addressSchema),
-        defaultValues: {
-            firstName: currAddress ? currAddress.firstName : "",
-            lastName: currAddress ? currAddress.lastName : "",
-            phone: currAddress ? currAddress.phone : "",
-            email: currAddress ? currAddress.email : "",
-            address: currAddress ? currAddress.address : "",
-            country: currAddress ? currAddress.country : "",
-            state: currAddress ? currAddress.state : "",
-            city: currAddress ? currAddress.city : "",
-            postalCode: currAddress ? currAddress.postalCode : "123456",
-            type: currAddress ? currAddress.type : "Shipping",
-        }
+        defaultValues: getDefaultValues(currAddress)
     });
+
+    useEffect(() => {
+        if (currAddress && csc) {
+            reset(getDefaultValues(currAddress));
+        }
+    }, [currAddress, csc, reset]);
 
     const countryVal = watch("country");
     const stateVal = watch("state");
