@@ -16,6 +16,10 @@ const getProductBySlugCached = cache(async (params) => {
 export async function generateMetadata({ params, searchParams }, parent) {
   const product = await getProductBySlugCached(params);
   const results = product?.results;
+  const description =
+    typeof results?.descriptions === "string"
+      ? results.descriptions
+      : results?.descriptions?.long || results?.shortDescription || results?.descriptions?.extra || "";
 
   if (!results) {
     return {
@@ -25,10 +29,10 @@ export async function generateMetadata({ params, searchParams }, parent) {
 
   return {
     title: "Ecommerce" + " | " + results.title,
-    description: results.descriptions,
+    description,
     openGraph: {
       title: results.title,
-      description: results.descriptions,
+      description,
       images: results.image,
     },
   };

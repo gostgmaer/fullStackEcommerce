@@ -15,6 +15,9 @@ function OrderElement({ order }) {
   const route = useRouter();
 
   const data = order?.results;
+  const shippingAddress = data?.shippingAddress || {};
+  const displayOrderId = data?.order_id || data?._id;
+  const displayInvoice = data?.invoice || data?._id?.substring(0, 8);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -138,7 +141,7 @@ function OrderElement({ order }) {
               <div>
                 <h1 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white uppercase mb-2">Invoice</h1>
                 <p className="text-xs font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
-                  Order ID: <span className="text-slate-650 dark:text-slate-350">#{data._id}</span>
+                  Order ID: <span className="text-slate-650 dark:text-slate-350">#{displayOrderId}</span>
                 </p>
               </div>
               <div className="text-left sm:text-right">
@@ -166,7 +169,7 @@ function OrderElement({ order }) {
                   Invoice No.
                 </span>
                 <span className="font-mono font-bold text-slate-700 dark:text-slate-300">
-                  #{data.invoice || data._id?.substring(0, 8)}
+                  #{displayInvoice}
                 </span>
               </div>
               <div className="flex flex-col sm:items-end sm:text-right">
@@ -177,8 +180,8 @@ function OrderElement({ order }) {
                   {data.firstName} {data.lastName}
                 </span>
                 <span className="text-xs text-slate-450 dark:text-slate-400 leading-relaxed mt-0.5">
-                  {data.streetAddress},<br />
-                  {data.city}, {data.country}, {data.zipPostal}
+                  {shippingAddress.addressLine1 || "Address not available"},<br />
+                  {shippingAddress.city || ""}{shippingAddress.city && shippingAddress.country ? ", " : ""}{shippingAddress.country || ""}{shippingAddress.postalCode ? `, ${shippingAddress.postalCode}` : ""}
                 </span>
               </div>
             </div>
@@ -197,23 +200,35 @@ function OrderElement({ order }) {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-850">
-                {data.items?.map((item, index) => (
-                  <tr key={index} className="hover:bg-slate-50/30 dark:hover:bg-slate-800/10">
-                    <td className="px-4 py-4 font-medium text-slate-400 dark:text-slate-500">{index + 1}</td>
-                    <td className="px-4 py-4 font-bold text-slate-800 dark:text-slate-200">
-                      {item.product?.title || "Product Item"}
-                    </td>
-                    <td className="px-4 py-4 text-center font-semibold text-slate-900 dark:text-white">
-                      {item.quantity}
-                    </td>
-                    <td className="px-4 py-4 text-center font-semibold">
-                      {formatter.format(item.product?.price || 0)}
-                    </td>
-                    <td className="px-4 py-4 text-right font-extrabold text-slate-900 dark:text-white">
-                      {formatter.format((item.product?.price || 0) * item.quantity)}
-                    </td>
-                  </tr>
-                ))}
+                {data.items?.map((item, index) => {
+                  const unitPrice = Number(
+                    item?.price ??
+                      item?.product?.finalPrice ??
+                      item?.product?.salePrice ??
+                      item?.product?.basePrice ??
+                      0
+                  );
+                  const quantity = Number(item?.quantity ?? 0);
+                  const itemKey = item?._id || item?.product?._id || index;
+
+                  return (
+                    <tr key={itemKey} className="hover:bg-slate-50/30 dark:hover:bg-slate-800/10">
+                      <td className="px-4 py-4 font-medium text-slate-400 dark:text-slate-500">{index + 1}</td>
+                      <td className="px-4 py-4 font-bold text-slate-800 dark:text-slate-200">
+                        {item?.product?.title || item?.title || "Product Item"}
+                      </td>
+                      <td className="px-4 py-4 text-center font-semibold text-slate-900 dark:text-white">
+                        {quantity}
+                      </td>
+                      <td className="px-4 py-4 text-center font-semibold">
+                        {formatter.format(unitPrice)}
+                      </td>
+                      <td className="px-4 py-4 text-right font-extrabold text-slate-900 dark:text-white">
+                        {formatter.format(unitPrice * quantity)}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
@@ -242,7 +257,7 @@ function OrderElement({ order }) {
                   Discount
                 </span>
                 <span className="font-semibold text-slate-600 dark:text-slate-400">
-                  {formatter.format(data.discount || 0)}
+                  {formatter.format(data.discountAmount ?? data.discount ?? 0)}
                 </span>
               </div>
               <div className="flex flex-col">
@@ -258,7 +273,7 @@ function OrderElement({ order }) {
                   Total Amount
                 </span>
                 <span className="text-2xl font-black text-primary">
-                  {formatter.format(data.totalPrice || data.total || 0)}
+                  {formatter.format(data.total ?? data.totalPrice ?? 0)}
                 </span>
               </div>
             </div>

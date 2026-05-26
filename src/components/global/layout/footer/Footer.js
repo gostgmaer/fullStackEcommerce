@@ -117,7 +117,7 @@ const Footer = () => {
           </div>
           <div className="pb-3.5 sm:pb-0 col-span-1 md:col-span-2 lg:col-span-3">
             <Link href="/" className="mr-3 lg:mr-12 xl:mr-12" rel="noreferrer">
-              <Image width={110} height={40} src="/logo/logo-color.svg" alt="logo" />
+              <Image width={110} height={40} src="/logo/logo-color.svg" alt="logo" style={{ width: "auto", height: "auto" }} />
             </Link>
             <p className="leading-7 font-sans text-sm text-muted-foreground mt-3">
               <span>

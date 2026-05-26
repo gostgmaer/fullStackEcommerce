@@ -20,6 +20,39 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 
+/**
+ * @typedef {Object} CheckoutFormValues
+ * @property {string} firstName
+ * @property {string} lastName
+ * @property {string} email
+ * @property {string} phone
+ * @property {string} address
+ * @property {string} city
+ * @property {string} country
+ * @property {string} zipCode
+ * @property {'COD'|'RazorPay'} payment_method
+ * @property {string=} additionalNotes
+ * @property {boolean} termsAccepted
+ */
+
+/**
+ * @typedef {Object} CountryOption
+ * @property {string} name
+ */
+
+/** @param {any} state */
+const selectCart = (state) => state?.cart || {};
+
+/** @param {unknown} error */
+const getErrorMessage = (error) => {
+    if (error && typeof error === 'object') {
+        const requestError = /** @type {{ response?: { data?: { message?: string } }, message?: string }} */ (error);
+        return requestError.response?.data?.message || requestError.message || 'Something went wrong.';
+    }
+
+    return 'Something went wrong.';
+};
+
 const checkoutSchema = z.object({
   firstName: z.string().min(1, 'First Name is required!'),
   lastName: z.string().min(1, 'Last name is required!'),
@@ -29,9 +62,7 @@ const checkoutSchema = z.object({
   city: z.string().min(1, 'City is required!'),
   country: z.string().min(1, 'Country is required!'),
   zipCode: z.string().min(1, 'ZIP / Postal is required!'),
-  payment_method: z.enum(['COD', 'RazorPay'], {
-    errorMap: () => ({ message: 'Payment Method is required!' }),
-  }),
+    payment_method: z.enum(['COD', 'RazorPay'], 'Payment Method is required!'),
   additionalNotes: z.string().optional(),
   termsAccepted: z.boolean().refine(val => val === true, {
     message: 'You must accept the terms and conditions',
@@ -41,22 +72,22 @@ const checkoutSchema = z.object({
 const CheckoutBlock = () => {
     const { data: session } = useSession();
     const [code, setCode] = useState("");
-    const [csc, setCsc] = useState(null);
+    const [countries, setCountries] = useState(/** @type {CountryOption[]} */ ([]));
     const [activeStep, setActiveStep] = useState(1);
     const [discount, setDiscount] = useState(null);
 
     const router = useRouter();
     const dispatch = useDispatch();
-    const { cartTotalAmount, cartTaxAmount } = useSelector((state) => state['cart']);
-    const { ...item } = useSelector((state) => state["cart"]);
+    const item = useSelector(selectCart);
+    const { cartTotalAmount = 0, cartTaxAmount = 0 } = item;
     const Id = uuidv4();
 
     const isFreeShipCoupon = code?.toUpperCase().trim() === "FREESHIP";
     const shippingPrice = (cartTotalAmount >= 500 || isFreeShipCoupon) ? 0 : 50;
 
     useEffect(() => {
-        import('country-state-city').then((mod) => {
-            setCsc(mod);
+        import('country-state-city').then(({ Country }) => {
+            setCountries(Country.getAllCountries());
         });
         window.scrollTo(0, 0);
 
@@ -84,7 +115,7 @@ const CheckoutBlock = () => {
             city: "",
             country: "",
             zipCode: "",
-            payment_method: "",
+            payment_method: undefined,
             additionalNotes: "",
             termsAccepted: false,
         }
@@ -107,7 +138,7 @@ const CheckoutBlock = () => {
                             city: defaultAddress.city || "",
                             country: defaultAddress.country || "",
                             zipCode: defaultAddress.zipPostal || "",
-                            payment_method: "",
+                            payment_method: undefined,
                             additionalNotes: "",
                             termsAccepted: false,
                         });
@@ -125,7 +156,7 @@ const CheckoutBlock = () => {
                     city: "",
                     country: "",
                     zipCode: "",
-                    payment_method: "",
+                    payment_method: undefined,
                     additionalNotes: "",
                     termsAccepted: false,
                 });
@@ -149,6 +180,7 @@ const CheckoutBlock = () => {
         }
     };
 
+    /** @param {CheckoutFormValues} values */
     const onchangeSubmit = async (values) => {
         if (cartTotalAmount < 50) {
             return notifyerror('Order Items must worth more than ₹50');
@@ -200,7 +232,7 @@ const CheckoutBlock = () => {
                     notifyerror("Invalid payment method");
             }
         } catch (error) {
-            notifyerror(error?.response?.data?.message || error?.message || "Something went wrong.");
+            notifyerror(getErrorMessage(error));
         }
     };
 
@@ -351,7 +383,7 @@ const CheckoutBlock = () => {
                                             <Select label={"Country"} additionalAttrs={{
                                                 ...register("country"),
                                                 autoComplete: "country-name",
-                                            }} id={"country"} options={csc ? csc.Country.getAllCountries() : []} optionkeys={{ key: "name", value: "name" }} placeholder={"Country"} />
+                                            }} id={"country"} options={countries} optionkeys={{ key: "name", value: "name" }} placeholder={"Country"} />
                                             {errors.country && (
                                                 <p className="text-red-500 text-xs mt-1 font-medium">{errors.country.message}</p>
                                             )}

@@ -172,9 +172,13 @@ const CartPage = () => {
 
                   {/* Table Items */}
                   <div className="divide-y divide-border/30">
-                    {cart.cartItems.map((item, index) => (
+                    {cart.cartItems.map((item, index) => {
+                      const itemKey = item.id || item._id || item.slug || index;
+                      const unitPrice = Number(item.price ?? item.prices?.price ?? 0);
+
+                      return (
                       <div
-                        key={index}
+                      key={itemKey}
                         className="grid grid-cols-12 gap-4 items-center px-6 py-5 hover:bg-muted/10 transition-colors"
                       >
                         {/* Image + Title */}
@@ -214,7 +218,7 @@ const CartPage = () => {
                             Price
                           </span>
                           <span className="text-sm font-semibold text-foreground">
-                            ₹{Number(item.price).toFixed(2)}
+							₹{unitPrice.toFixed(2)}
                           </span>
                         </div>
 
@@ -248,7 +252,7 @@ const CartPage = () => {
                           </span>
                           <div className="text-right">
                             <span className="text-sm font-bold text-foreground block">
-                              ₹{(item.price * item.cartQuantity).toFixed(2)}
+								₹{(unitPrice * item.cartQuantity).toFixed(2)}
                             </span>
                             <button
                               onClick={() => dispatch(removeFromCart(item))}
@@ -260,7 +264,8 @@ const CartPage = () => {
                           </div>
                         </div>
                       </div>
-                    ))}
+					  );
+					})}
                   </div>
                 </div>
 

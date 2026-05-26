@@ -3,7 +3,11 @@
 import { applyDiscount } from "@/helper/functions";
 
 const Discount = ({ discount = 1, product, slug, modal }) => {
-  const discountVal = product?.prices ? applyDiscount(product.prices.originalPrice, product.prices.discount) : 0;
+  const originalPrice = Number(product?.prices?.originalPrice ?? product?.originalPrice ?? 0);
+  const discountRate = Number(product?.prices?.discount ?? product?.discount ?? 0);
+  const discountVal = originalPrice > 0 && discountRate > 0
+    ? applyDiscount(originalPrice, discountRate)
+    : 0;
 
   if (discountVal <= 0) return null;
 

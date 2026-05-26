@@ -7,10 +7,23 @@ const numberOr = (value, fallback = 0) => {
   return Number.isFinite(parsed) ? parsed : fallback;
 };
 
+const normalizeDescription = (product) => {
+  if (typeof product?.descriptions === "string") {
+    return product.descriptions;
+  }
+
+  if (product?.descriptions && typeof product.descriptions === "object") {
+    return product.descriptions.long || product.descriptions.extra || product.shortDescription || "";
+  }
+
+  return product?.shortDescription || "";
+};
+
 const normalizeProduct = (product) => {
   if (!product || typeof product !== "object") return product;
 
   const id = product._id || product.id;
+  const descriptions = normalizeDescription(product);
   const originalPrice = numberOr(
     product.prices?.originalPrice ?? product.basePrice ?? product.originalPrice ?? product.price ?? product.finalPrice,
     0
@@ -33,8 +46,14 @@ const normalizeProduct = (product) => {
     ...product,
     _id: id,
     id,
+    descriptionData: product.descriptions,
+    descriptions,
     image: image.length ? image : [PLACEHOLDER_IMAGE],
     stock: numberOr(product.stock ?? product.inventory, 0),
+    quantity: numberOr(product.quantity ?? product.stock ?? product.inventory, 0),
+    price,
+    originalPrice,
+    discount,
     prices: {
       ...(product.prices || {}),
       price,

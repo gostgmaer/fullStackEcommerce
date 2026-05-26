@@ -67,9 +67,11 @@ function OrderSummary({ code, setCode, shippingPrice = 0, discount, setDiscount 
 						</div>
 					) : (
 						cart.cartItems.map((cartItem, index) => {
+							const cartItemKey = cartItem.id || cartItem._id || cartItem.slug || index;
+							const unitPrice = Number(cartItem.price ?? cartItem.prices?.price ?? 0);
 							return (
 								<div
-									key={index}
+									key={cartItemKey}
 									className="group w-full h-auto flex justify-start items-center bg-card py-3.5 px-4 border-b hover:bg-muted/30 transition-all border-border/40 relative last:border-b-0"
 								>
 									<div className="relative flex rounded-full border border-border/40 shadow-sm overflow-hidden flex-shrink-0 cursor-pointer mr-4 bg-white">
@@ -89,12 +91,12 @@ function OrderSummary({ code, setCode, shippingPrice = 0, discount, setDiscount 
 											{cartItem.title}
 										</Link>
 										<span className="text-xs text-muted-foreground mb-1">
-											Item Price ₹{cartItem.price.toFixed(2)}
+											Item Price ₹{unitPrice.toFixed(2)}
 										</span>
 										<div className="flex items-center justify-between">
 											<div className="font-bold text-sm md:text-base leading-5">
 												<span className="text-foreground">
-													₹{(cartItem.price * cartItem.cartQuantity).toFixed(2)}
+													₹{(unitPrice * cartItem.cartQuantity).toFixed(2)}
 												</span>
 											</div>
 											<div className="h-8 flex flex-wrap items-center justify-evenly p-1 border border-border bg-muted/40 text-muted-foreground rounded-lg">

@@ -100,6 +100,7 @@ const Navbar = () => {
                 height={32}
                 src={mounted && theme === "dark" ? "/logo/logo-light.svg" : "/logo/logo-color.svg"}
                 alt="logo"
+                style={{ width: "auto", height: "auto" }}
                 priority
               />
             </Link>
@@ -228,6 +229,7 @@ const Navbar = () => {
                 height={40}
                 src={mounted && theme === "dark" ? "/logo/logo-light.svg" : "/logo/logo-color.svg"}
                 alt="logo"
+                style={{ width: "auto", height: "auto" }}
                 priority
               />
             </Link>

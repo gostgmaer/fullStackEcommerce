@@ -1,9 +1,6 @@
 import { razorPayPublic } from '@/config/setting';
 import OrderServices from '@/helper/network/services/OrderServices';
-import { emptyCart } from '@/store/reducers/cartSlice';
-import { notifyerror, notifySuccess } from '@/utils/notify/notice';
-import { useRouter } from 'next/navigation';
-import { useDispatch } from 'react-redux';
+import { notifyerror } from '@/utils/notify/notice';
 
 // const RazorpayPayment = async (requests, session) => {
 
@@ -62,10 +59,17 @@ import { useDispatch } from 'react-redux';
 
 
 // };
-
-
 const RazorpayPayment = async (requests, session, userData = {}) => {
     try {
+        if (!razorPayPublic) {
+            throw new Error('Razorpay is not configured for this environment.');
+        }
+
+        const isScriptReady = await loadRazorpayScript();
+        if (!isScriptReady || typeof window === 'undefined' || typeof window.Razorpay !== 'function') {
+            throw new Error('Razorpay checkout failed to load.');
+        }
+
         // Step 1: Create order on the backend
         const { id: order_id, amount, currency, payment_method } = requests["result"];
 
@@ -114,7 +118,7 @@ const RazorpayPayment = async (requests, session, userData = {}) => {
                 },
             };
 
-            const rzp1 = new window['Razorpay'](options);
+            const rzp1 = new window.Razorpay(options);
             rzp1.open(); // Open Razorpay payment window
         });
     } catch (error) {
@@ -122,6 +126,34 @@ const RazorpayPayment = async (requests, session, userData = {}) => {
         notifyerror('Payment initiation failed, please try again!');
         return Promise.reject(error); // Reject the promise in case of failure
     }
+};
+
+const loadRazorpayScript = async () => {
+    if (typeof window === 'undefined') {
+        return false;
+    }
+
+    if (typeof window.Razorpay === 'function') {
+        return true;
+    }
+
+    return new Promise((resolve) => {
+        const existingScript = document.querySelector('script[data-razorpay-checkout="true"]');
+
+        if (existingScript) {
+            existingScript.addEventListener('load', () => resolve(true), { once: true });
+            existingScript.addEventListener('error', () => resolve(false), { once: true });
+            return;
+        }
+
+        const script = document.createElement('script');
+        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+        script.async = true;
+        script.dataset.razorpayCheckout = 'true';
+        script.onload = () => resolve(true);
+        script.onerror = () => resolve(false);
+        document.body.appendChild(script);
+    });
 };
 
 

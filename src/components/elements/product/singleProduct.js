@@ -19,6 +19,10 @@ const SingleProduct = ({ props }) => {
   const router = useRouter();
   const { data: session, status } = useSession();
   const { product, related, attributes = [] } = props;
+  const productDescription =
+    typeof product?.descriptions === 'string'
+      ? product.descriptions
+      : product?.descriptions?.long || product?.shortDescription || product?.descriptions?.extra || 'No description available for this product.';
 
   // Quantity Counter
   const [total, setTotal] = useState(1);
@@ -467,7 +471,7 @@ const SingleProduct = ({ props }) => {
 
                     {/* Short Description */}
                     <div>
-                      <p className="text-sm leading-relaxed text-muted-foreground">{product.descriptions}</p>
+                      <p className="text-sm leading-relaxed text-muted-foreground">{productDescription}</p>
                     </div>
 
                     {/* Variant Selectors */}
@@ -688,7 +692,7 @@ const SingleProduct = ({ props }) => {
               {activeTab === "description" && (
                 <div className="space-y-4">
                   <h3 className="text-lg font-bold text-foreground">Product Description</h3>
-                  <p>{product?.descriptions || "No description available for this product."}</p>
+                  <p>{productDescription}</p>
                   <p className="mt-2 text-muted-foreground/80">
                     This premium product has been carefully formulated, checked for quality, and packaged to ensure customer satisfaction. Enjoy high performance, durability, and elegance in daily use.
                   </p>

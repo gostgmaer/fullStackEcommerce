@@ -18,6 +18,7 @@ const Index = async (props) => {
   // @ts-ignore
   const session = await getServerSession(authOptions);
   const profile = await CustomerServices.getProfile(null, { "Authorization": `Bearer ${session?.["accessToken"]}` })
+  const user = profile?.result || profile?.data || profile;
 
 
   return (
@@ -25,7 +26,7 @@ const Index = async (props) => {
 
       <Userlayout>
 
-        <UpdateProfile user={profile["result"]} />
+        <UpdateProfile user={user} />
       </Userlayout>
 
     </Layout>

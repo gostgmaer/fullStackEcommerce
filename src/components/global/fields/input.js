@@ -9,12 +9,12 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
  * Props:
  *  - label      {string}  Optional label text (no colon appended)
  *  - type       {string}  Input type (text, email, password, …)
- *  - id         {string}  id & name attribute
- *  - icon       {node}    Optional leading icon element
- *  - classes    {string}  Extra classes appended to the <input>
- *  - additionalAttrs {object} Spread onto <input> (register, placeholder, etc.)
+ *  - id         {string=} id & name attribute
+ *  - icon       {React.ReactNode=} Optional leading icon element
+ *  - classes    {string=} Extra classes appended to the <input>
+ *  - additionalAttrs {object=} Spread onto <input> (register, placeholder, etc.)
  */
-const Input = ({ label, type, additionalAttrs = {}, classes, icon, id }) => {
+const Input = ({ label, type, additionalAttrs = {}, classes = "", icon = null, id }) => {
   const [showPassword, setShowPassword] = useState(false);
   const inputId = id || (label ? label.trim().replace(/\s+/g, "_").toLowerCase() : undefined);
   const isPassword = type === "password";

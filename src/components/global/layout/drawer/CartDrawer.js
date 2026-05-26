@@ -68,81 +68,85 @@ const CartDrawer = ({ setOpen }) => {
           </div>
         ) : (
           <div className="divide-y divide-border/60">
-            {cart.cartItems.map((data, index) => (
-              <div
-                key={index}
-                className="group flex items-center gap-3 px-4 py-3.5 hover:bg-muted/30 transition-colors"
-              >
-                {/* Product Image */}
-                <div className="relative flex-shrink-0 w-14 h-14 rounded-xl overflow-hidden border border-border/60 bg-muted/30">
-                  <Image
-                    src={data.image[0]}
-                    fill
-                    sizes="56px"
-                    alt={data.title}
-                    className="object-cover"
-                  />
-                </div>
+            {cart.cartItems.map((data, index) => {
+              const itemKey = data.id || data._id || data.slug || index;
+              const unitPrice = Number(data.price ?? data.prices?.price ?? 0);
 
-                {/* Product Info */}
-                <div className="flex-1 min-w-0">
-                  <Link
-                    href={`/product/${data.slug}`}
-                    onClick={() => setOpen(false)}
-                    className="block text-sm font-semibold text-foreground hover:text-primary transition-colors truncate leading-snug mb-0.5"
-                  >
-                    {data.title}
-                  </Link>
-                  <p className="text-xs text-muted-foreground mb-2">
-                    ${data.price.toFixed(2)} each
-                  </p>
+              return (
+                <div
+                  key={itemKey}
+                  className="group flex items-center gap-3 px-4 py-3.5 hover:bg-muted/30 transition-colors"
+                >
+                  {/* Product Image */}
+                  <div className="relative flex-shrink-0 w-14 h-14 rounded-xl overflow-hidden border border-border/60 bg-muted/30">
+                    <Image
+                      src={data.image[0]}
+                      fill
+                      sizes="56px"
+                      alt={data.title}
+                      className="object-cover"
+                    />
+                  </div>
 
-                  {/* Quantity + Price row */}
-                  <div className="flex items-center justify-between gap-2">
-                    {/* Quantity stepper */}
-                    <div className="flex items-center gap-1 bg-muted/60 border border-border/60 rounded-lg px-1 h-7">
-                      <button
-                        onClick={() => dispatch(decreaseCart(data))}
-                        aria-label="Decrease quantity"
-                        className="w-5 h-5 flex items-center justify-center rounded hover:bg-muted text-foreground transition-colors"
-                      >
-                        <IoRemoveOutline className="w-3.5 h-3.5" />
-                      </button>
-                      <span className="text-xs font-bold text-foreground min-w-[16px] text-center px-0.5">
-                        {data.cartQuantity}
+                  {/* Product Info */}
+                  <div className="flex-1 min-w-0">
+                    <Link
+                      href={`/product/${data.slug}`}
+                      onClick={() => setOpen(false)}
+                      className="block text-sm font-semibold text-foreground hover:text-primary transition-colors truncate leading-snug mb-0.5"
+                    >
+                      {data.title}
+                    </Link>
+                    <p className="text-xs text-muted-foreground mb-2">
+                      ${unitPrice.toFixed(2)} each
+                    </p>
+
+                    {/* Quantity + Price row */}
+                    <div className="flex items-center justify-between gap-2">
+                      {/* Quantity stepper */}
+                      <div className="flex items-center gap-1 bg-muted/60 border border-border/60 rounded-lg px-1 h-7">
+                        <button
+                          onClick={() => dispatch(decreaseCart(data))}
+                          aria-label="Decrease quantity"
+                          className="w-5 h-5 flex items-center justify-center rounded hover:bg-muted text-foreground transition-colors"
+                        >
+                          <IoRemoveOutline className="w-3.5 h-3.5" />
+                        </button>
+                        <span className="text-xs font-bold text-foreground min-w-[16px] text-center px-0.5">
+                          {data.cartQuantity}
+                        </span>
+                        <button
+                          onClick={() => dispatch(incrementCart(data))}
+                          aria-label="Increase quantity"
+                          className="w-5 h-5 flex items-center justify-center rounded hover:bg-muted text-foreground transition-colors"
+                        >
+                          <IoAddOutline className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+
+                      {/* Line total */}
+                      <span className="text-sm font-bold text-foreground">
+                        ${(unitPrice * data.cartQuantity).toFixed(2)}
                       </span>
+
+                      {/* Remove */}
                       <button
-                        onClick={() => dispatch(incrementCart(data))}
-                        aria-label="Increase quantity"
-                        className="w-5 h-5 flex items-center justify-center rounded hover:bg-muted text-foreground transition-colors"
+                        onClick={() => dispatch(removeFromCart(data))}
+                        aria-label={`Remove ${data.title}`}
+                        className="p-1 text-muted-foreground hover:text-destructive transition-colors rounded"
                       >
-                        <IoAddOutline className="w-3.5 h-3.5" />
+                        <MdDelete className="w-4 h-4" />
                       </button>
                     </div>
-
-                    {/* Line total */}
-                    <span className="text-sm font-bold text-foreground">
-                      ${(data.price * data.cartQuantity).toFixed(2)}
-                    </span>
-
-                    {/* Remove */}
-                    <button
-                      onClick={() => dispatch(removeFromCart(data))}
-                      aria-label={`Remove ${data.title}`}
-                      className="p-1 text-muted-foreground hover:text-destructive transition-colors rounded"
-                    >
-                      <MdDelete className="w-4 h-4" />
-                    </button>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>
 
       {/* Footer — Checkout CTA */}
-      {cart.cartItems.length > 0 && (
         <div className="flex-shrink-0 p-4 border-t border-border/60 bg-background space-y-3 animate-fade-in">
           {/* Subtotal */}
           <div className="flex items-center justify-between text-sm">
@@ -168,7 +172,6 @@ const CartDrawer = ({ setOpen }) => {
             Continue Shopping
           </button>
         </div>
-      )}
     </div>
   );
 };

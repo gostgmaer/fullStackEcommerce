@@ -31,10 +31,23 @@ const normalizeOrderEntity = (response) => ({
 
 const mapCartItemsToOrderItems = (items = []) =>
   items.map((item) => ({
-    product: item?.product || item?.productId || item?._id || item?.id,
-    quantity: Number(item?.quantity || 1),
-    price: Number(item?.price || item?.prices?.price || 0),
-    discount: Number(item?.discount || 0),
+    product:
+      item?.product?._id ||
+      item?.product?.id ||
+      item?.product ||
+      item?.productId ||
+      item?._id ||
+      item?.id,
+    quantity: Number(item?.cartQuantity ?? item?.quantity ?? 1),
+    price: Number(
+      item?.price ??
+        item?.prices?.price ??
+        item?.product?.finalPrice ??
+        item?.product?.salePrice ??
+        item?.product?.basePrice ??
+        0
+    ),
+    discount: Number(item?.discount ?? item?.product?.discountValue ?? 0),
   }));
 
 const OrderServices = {

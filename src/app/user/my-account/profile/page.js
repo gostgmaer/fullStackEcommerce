@@ -22,6 +22,7 @@ const Index = async (props) => {
   }
 
   const profile = await CustomerServices.getProfile(null, { "Authorization": `Bearer ${session["accessToken"]}` })
+  const user = profile?.result || profile?.data || profile;
 
 
   return (
@@ -30,7 +31,7 @@ const Index = async (props) => {
       <Userlayout>
 
        <div>
-        <ProfileBlock user={profile["result"]}/>
+        <ProfileBlock user={user}/>
        
        </div>
       </Userlayout>

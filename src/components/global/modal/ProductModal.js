@@ -27,6 +27,10 @@ const ProductModal = ({
   const dispatch = useDispatch();
   const cart = useSelector((state) => state["cart"]);
   const cartData = cart.cartItems.find((cartItem) => cartItem.id === product._id);
+  const productDescription =
+    typeof product?.descriptions === "string"
+      ? product.descriptions
+      : product?.descriptions?.long || product?.shortDescription || product?.descriptions?.extra || "No description available for this product.";
 
   // const { setIsLoading, isLoading } = useContext(SidebarContext);
   // const { t, lang } = useTranslation("ns1");
@@ -244,7 +248,7 @@ const ProductModal = ({
               </div>
               <p className="text-sm leading-6 text-muted-foreground md:leading-6">
 
-                {product?.descriptions}
+                {productDescription}
               </p>
               <div className="flex items-center my-4">
                 <Price
