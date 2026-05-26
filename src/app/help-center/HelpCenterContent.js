@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import {
@@ -14,6 +14,7 @@ import {
   FiPhoneCall,
   FiSearch,
   FiShield,
+  FiPaperclip,
   FiTag,
   FiTruck,
   FiUser,
@@ -160,6 +161,19 @@ const emptyTrackerForm = {
   email: "",
 };
 
+const ALLOWED_ATTACHMENT_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "application/pdf",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "text/plain",
+];
+
+const MAX_ATTACHMENT_BYTES = 5 * 1024 * 1024;
+const MAX_ATTACHMENT_COUNT = 5;
+
 const inputClassName =
   "w-full rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/15";
 
@@ -184,6 +198,13 @@ const formatDate = (value) => {
   }).format(new Date(value));
 };
 
+const formatFileSize = (bytes) => {
+  const size = Number(bytes || 0);
+  if (!size) return "0 KB";
+  if (size >= 1024 * 1024) return `${(size / (1024 * 1024)).toFixed(1)} MB`;
+  return `${Math.max(1, Math.round(size / 1024))} KB`;
+};
+
 const getStatusMeta = (status) => STATUS_META[status] || {
   label: toTitle(status || "new") || "New",
   badge: "bg-slate-500/10 text-slate-700 dark:text-slate-300 border-slate-500/20",
@@ -196,6 +217,69 @@ const splitSessionName = (name) => {
     firstName: parts[0] || "",
     lastName: parts.slice(1).join(" "),
   };
+};
+
+const AttachmentList = ({ attachments = [], title = "Attachments" }) => {
+  if (!attachments.length) return null;
+
+  return (
+    <div className="rounded-2xl border border-border bg-muted/20 p-4">
+      <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{title}</p>
+      <div className="mt-3 space-y-2">
+        {attachments.map((attachment, index) => (
+          <a
+            key={`${attachment.url || attachment.filename}-${index}`}
+            href={attachment.url}
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center justify-between gap-3 rounded-xl border border-border bg-card px-3 py-2 text-sm text-foreground transition hover:border-primary/40 hover:text-primary"
+          >
+            <span className="inline-flex min-w-0 items-center gap-2">
+              <FiPaperclip className="h-4 w-4 shrink-0" />
+              <span className="truncate">{attachment.filename}</span>
+            </span>
+            <span className="shrink-0 text-xs text-muted-foreground">{formatFileSize(attachment.size)}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const ReplyHistory = ({ replies = [] }) => {
+  if (!replies.length) {
+    return (
+      <div className="rounded-2xl border border-dashed border-border bg-muted/20 p-4 text-sm text-muted-foreground">
+        No public replies yet. Your original request is logged and support updates will appear here.
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-2xl border border-border bg-muted/20 p-4">
+      <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Reply History</p>
+      <div className="mt-4 space-y-4">
+        {replies.map((reply, index) => {
+          const isSupportReply = reply.authorType === "support";
+          return (
+            <div key={`${reply.createdAt || index}-${reply.authorName || reply.authorType}`} className="relative pl-6">
+              <span className={`absolute left-0 top-1.5 h-2.5 w-2.5 rounded-full ${isSupportReply ? "bg-primary" : "bg-emerald-500"}`} />
+              <div className="rounded-2xl border border-border bg-card p-4">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <p className="text-sm font-semibold text-foreground">
+                    {reply.authorName || (isSupportReply ? "Support Team" : "Customer")}
+                  </p>
+                  <span className="text-xs text-muted-foreground">{formatDate(reply.createdAt)}</span>
+                </div>
+                <p className="mt-2 text-sm leading-6 text-foreground/90">{reply.message}</p>
+                <AttachmentList attachments={reply.attachments || []} title="Files" />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
 };
 
 const TicketSummary = ({ title, ticket }) => {
@@ -250,18 +334,23 @@ const TicketSummary = ({ title, ticket }) => {
         </div>
         <p className="mt-2 text-sm text-foreground leading-6">{ticket.description}</p>
       </div>
+
+      <AttachmentList attachments={ticket.attachments || []} />
+      <ReplyHistory replies={ticket.publicReplies || []} />
     </div>
   );
 };
 
 const HelpCenterContent = () => {
   const { data: session } = useSession();
+  const attachmentInputRef = useRef(null);
   const [ticketForm, setTicketForm] = useState(emptyTicketForm);
   const [trackerForm, setTrackerForm] = useState(emptyTrackerForm);
   const [isSubmittingTicket, setIsSubmittingTicket] = useState(false);
   const [isTrackingTicket, setIsTrackingTicket] = useState(false);
   const [createdTicket, setCreatedTicket] = useState(null);
   const [trackedTicket, setTrackedTicket] = useState(null);
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
   useEffect(() => {
     if (!session?.user) return;
@@ -291,6 +380,37 @@ const HelpCenterContent = () => {
     setTrackerForm((current) => ({ ...current, [name]: value }));
   };
 
+  const handleAttachmentChange = (event) => {
+    const files = Array.from(event.target.files || []);
+
+    if (!files.length) {
+      setSelectedFiles([]);
+      return;
+    }
+
+    if (files.length > MAX_ATTACHMENT_COUNT) {
+      notifyerror(`You can upload up to ${MAX_ATTACHMENT_COUNT} attachments per ticket.`, 5000);
+      event.target.value = "";
+      return;
+    }
+
+    const invalidFile = files.find(
+      (file) => !ALLOWED_ATTACHMENT_TYPES.includes(file.type) || file.size > MAX_ATTACHMENT_BYTES
+    );
+
+    if (invalidFile) {
+      notifyerror("Attachments must be JPG, PNG, WEBP, PDF, DOC, DOCX, or TXT files up to 5 MB each.", 5000);
+      event.target.value = "";
+      return;
+    }
+
+    setSelectedFiles(files);
+  };
+
+  const removeSelectedFile = (fileName) => {
+    setSelectedFiles((current) => current.filter((file) => file.name !== fileName));
+  };
+
   const validateTicketForm = () => {
     if (!ticketForm.firstName.trim()) return "First name is required.";
     if (!ticketForm.lastName.trim()) return "Last name is required.";
@@ -312,7 +432,10 @@ const HelpCenterContent = () => {
     }
 
     setIsSubmittingTicket(true);
-    const response = await SupportTicketService.createTicket(ticketForm);
+    const response = await SupportTicketService.createTicket({
+      ...ticketForm,
+      attachments: selectedFiles,
+    });
     setIsSubmittingTicket(false);
 
     if (response?.error) {
@@ -336,6 +459,10 @@ const HelpCenterContent = () => {
       preferredContactMethod: current.preferredContactMethod,
       category: current.category,
     }));
+    setSelectedFiles([]);
+    if (attachmentInputRef.current) {
+      attachmentInputRef.current.value = "";
+    }
     notifySuccess(response?.message || `Ticket ${ticket?.ticketId || ticket?.inquiryNumber} created successfully.`);
   };
 
@@ -526,6 +653,40 @@ const HelpCenterContent = () => {
                   className={`${inputClassName} min-h-[144px] resize-y`}
                   placeholder="Explain what happened, what you expected, and any details that would help support resolve it faster."
                 />
+              </div>
+
+              <div className="md:col-span-2">
+                <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted-foreground" htmlFor="attachments">
+                  Attachments
+                </label>
+                <input
+                  ref={attachmentInputRef}
+                  id="attachments"
+                  type="file"
+                  multiple
+                  accept=".jpg,.jpeg,.png,.webp,.pdf,.doc,.docx,.txt"
+                  onChange={handleAttachmentChange}
+                  className={`${inputClassName} file:mr-3 file:rounded-lg file:border-0 file:bg-primary/10 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-primary`}
+                />
+                <p className="mt-2 text-xs text-muted-foreground">
+                  Up to 5 attachments, 5 MB each. Screenshots, PDFs, invoices, and text notes are supported.
+                </p>
+                {selectedFiles.length ? (
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {selectedFiles.map((file) => (
+                      <button
+                        key={file.name}
+                        type="button"
+                        onClick={() => removeSelectedFile(file.name)}
+                        className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/20 px-3 py-1.5 text-xs text-foreground transition hover:border-primary/40 hover:text-primary"
+                      >
+                        <FiPaperclip className="h-3.5 w-3.5" />
+                        <span>{file.name}</span>
+                        <span className="text-muted-foreground">{formatFileSize(file.size)}</span>
+                      </button>
+                    ))}
+                  </div>
+                ) : null}
               </div>
 
               <button
