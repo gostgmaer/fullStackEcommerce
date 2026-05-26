@@ -170,8 +170,16 @@ export const authOptions = {
     },
 
     async redirect({ url, baseUrl }) {
+      if (!url) return baseUrl;
       if (url.startsWith("/")) return url;
-      if (new URL(url).origin === baseUrl) return url;
+
+      try {
+        const resolvedUrl = new URL(url, baseUrl);
+        if (resolvedUrl.origin === baseUrl) return resolvedUrl.toString();
+      } catch (_error) {
+        return baseUrl;
+      }
+
       return baseUrl;
     },
 

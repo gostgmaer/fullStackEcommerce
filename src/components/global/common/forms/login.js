@@ -44,8 +44,16 @@ const LoginForm = () => {
 
       if (res?.ok) {
         if (res.url) {
-          const fullUrl = new URL(res.url, window.location.origin);
-          router.push(fullUrl.pathname || "/");
+          if (res.url.startsWith("/")) {
+            router.push(res.url || "/");
+          } else {
+            try {
+              const fullUrl = new URL(res.url, window.location.origin);
+              router.push(`${fullUrl.pathname}${fullUrl.search}` || "/");
+            } catch (_error) {
+              router.push("/");
+            }
+          }
         } else {
           router.push("/");
         }

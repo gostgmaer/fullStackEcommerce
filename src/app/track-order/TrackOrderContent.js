@@ -119,6 +119,7 @@ export default function TrackOrderContent() {
   };
 
   const { steps, activeIndex } = orderData ? getTimelineSteps(orderData.status) : { steps: [], activeIndex: 0 };
+  const displayOrderId = orderData?.invoice || orderData?.order_id || orderData?._id || "";
 
   const formatter = new Intl.NumberFormat("en-IN", {
     style: "currency",
@@ -228,7 +229,7 @@ export default function TrackOrderContent() {
                 Order Tracking
               </p>
               <h4 className="text-lg font-bold font-mono text-foreground mt-1">
-                Order #{orderData._id}
+                Order #{displayOrderId}
               </h4>
               <p className="text-sm text-muted-foreground mt-1">
                 Placed on {dayjs(orderData.createdAt).format("MMMM DD, YYYY [at] h:mm A")}

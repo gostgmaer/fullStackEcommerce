@@ -13,6 +13,11 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
   generator: "Next.js",
   applicationName: "Ecommerce App",
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
   referrer: "origin-when-cross-origin",
   keywords: ["Next.js", "React", "JavaScript", "node", "Kishor Sarkar"],
   authors: [{ name: "Kishor Sarkar", url: "https://nextjs.org" }],
@@ -99,7 +104,9 @@ export default function RootLayout({ children }) {
   return (
     <NextAuthProvider>
       <html lang="en" suppressHydrationWarning={true}>
-        <head></head>
+        <head>
+          <link rel="icon" href="/favicon.png" sizes="any" />
+        </head>
 
         <body className={inter.className}>
           <StoreProvider>
