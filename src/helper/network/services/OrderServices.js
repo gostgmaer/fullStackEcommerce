@@ -29,6 +29,9 @@ const normalizeOrderEntity = (response) => ({
   results: response?.data || response?.results || response,
 });
 
+const getLineItemDiscountAmount = (item = {}) =>
+  Number(item?.lineDiscountAmount ?? item?.discountAmount ?? 0);
+
 const mapCartItemsToOrderItems = (items = []) =>
   items.map((item) => ({
     product:
@@ -47,7 +50,7 @@ const mapCartItemsToOrderItems = (items = []) =>
         item?.product?.basePrice ??
         0
     ),
-    discount: Number(item?.discount ?? item?.product?.discountValue ?? 0),
+    discount: getLineItemDiscountAmount(item),
   }));
 
 const OrderServices = {

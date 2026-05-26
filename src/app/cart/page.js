@@ -14,8 +14,10 @@ import ProductServices from '@/helper/network/services/ProductServices';
 
 const CartPage = () => {
   const cart = useSelector((state) => state["cart"]);
+  const isPersistReady = useSelector((state) => state._persist?.rehydrated ?? false);
   const { cartTotalAmount, cartTaxAmount } = useSelector((state) => state["cart"]);
   const dispatch = useDispatch();
+  const [hasMounted, setHasMounted] = useState(false);
 
   // Coupon States
   const [couponCode, setCouponCode] = useState("");
@@ -28,8 +30,15 @@ const CartPage = () => {
   const [recommendations, setRecommendations] = useState([]);
 
   useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  const isCartReady = hasMounted && isPersistReady;
+
+  useEffect(() => {
+    if (!isCartReady) return;
     dispatch(getTotals());
-  }, [cart, dispatch]);
+  }, [cart, dispatch, isCartReady]);
 
   // Load recommendations
   useEffect(() => {
@@ -48,7 +57,11 @@ const CartPage = () => {
 
   // Shipping Calculations
   const freeShippingThreshold = 500;
-  const isFreeShipCoupon = couponSuccess && localStorage.getItem('cartCouponCode') === "FREESHIP";
+  const isFreeShipCoupon =
+    isCartReady &&
+    couponSuccess &&
+    typeof window !== 'undefined' &&
+    localStorage.getItem('cartCouponCode') === "FREESHIP";
   const shippingCost = (cartTotalAmount >= freeShippingThreshold || isFreeShipCoupon) ? 0 : 50.00;
   const progressPercent = Math.min((cartTotalAmount / freeShippingThreshold) * 100, 100);
   const remainingForFreeShipping = Math.max(freeShippingThreshold - cartTotalAmount, 0);
@@ -123,13 +136,28 @@ const CartPage = () => {
 
   // Re-apply coupon when total changes to keep values sync'd
   useEffect(() => {
+    if (!isCartReady || typeof window === 'undefined') return;
     const storedCoupon = localStorage.getItem('cartCouponCode');
     if (storedCoupon) {
       applyCoupon(storedCoupon);
     }
-  }, [cartTotalAmount, applyCoupon]);
+  }, [cartTotalAmount, applyCoupon, isCartReady]);
 
   const finalTotal = Math.max(cartTotalAmount + shippingCost + cartTaxAmount - couponDiscount, 0);
+
+  if (!isCartReady) {
+    return (
+      <Layout>
+        <div className="min-h-screen bg-background py-8 lg:py-12 transition-colors duration-200 text-foreground">
+          <div className="mx-auto max-w-screen-2xl px-4 sm:px-10">
+            <div className="flex min-h-[320px] items-center justify-center rounded-2xl border border-border/40 bg-card text-sm font-semibold text-muted-foreground shadow-sm">
+              Loading cart...
+            </div>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
