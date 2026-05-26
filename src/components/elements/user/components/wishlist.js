@@ -45,7 +45,7 @@ const Blockwishlist = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {wishlist.map((item, index) => (
               item?.product && (
-                <WishListCard key={index} data={item.product} />
+                <WishListCard key={index} data={item.product} priority={index === 0} />
               )
             ))}
           </div>
@@ -57,7 +57,7 @@ const Blockwishlist = () => {
 
 export default Blockwishlist;
 
-const WishListCard = ({ data }) => {
+const WishListCard = ({ data, priority = false }) => {
   const dispatch = useDispatch();
   const [total, setTotal] = useState(1);
   const { data: session } = useSession();
@@ -93,6 +93,7 @@ const WishListCard = ({ data }) => {
             src={data.image[0]}
             alt={data.title}
             fill
+            priority={priority}
             sizes="(max-width: 768px) 100vw, 33vw"
             className="object-contain rounded-lg p-2 group-hover:scale-105 transition-transform duration-300"
           />

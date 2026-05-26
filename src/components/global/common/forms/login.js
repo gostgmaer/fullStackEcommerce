@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -21,6 +21,17 @@ const LoginForm = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const callbackUrl = searchParams.get("callbackUrl") || "/";
+  const { status } = useSession();
+
+  useEffect(() => {
+    if (status !== "authenticated") return;
+
+    const nextPath = callbackUrl.startsWith("/") && !callbackUrl.startsWith("//")
+      ? callbackUrl
+      : "/";
+
+    router.replace(nextPath || "/");
+  }, [callbackUrl, router, status]);
 
   const {
     register,

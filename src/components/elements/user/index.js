@@ -1,7 +1,7 @@
 "use client";
 
 import { UserMenu } from '@/assets/fakeData/UserMenu'
-import { signOut } from 'next-auth/react';
+import { handleSignOut } from '@/components/global/common/signout';
 import Link from 'next/link'
 import { usePathname } from 'next/navigation';
 import React from 'react'
@@ -41,7 +41,7 @@ const Userlayout = ({children}) => {
 
               <div className="border-l border-border pl-3 flex-shrink-0">
                 <button
-                  onClick={() => signOut()}
+                  onClick={() => handleSignOut()}
                   className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold text-destructive hover:bg-destructive/10 transition-all duration-200"
                 >
                   <MdLockOpen className="text-base" />

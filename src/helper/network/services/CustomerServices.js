@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Country, State } from "country-state-city";
 import requests from "./httpServices";
 
@@ -185,6 +186,12 @@ const CustomerServices = {
   },
   updateCustomerAddress: async (headers, body,params) => {
     return requests.patch(`/addresses/:id`, normalizeAddressPayload(body), params, headers);
+  },
+  setCustomerAddressDefault: async (headers, params) => {
+    return requests.patch(`/addresses/:id/set-default`, {}, params, headers);
+  },
+  deleteCustomerAddress: async (headers, params) => {
+    return requests.delete(`/addresses/:id`, params, headers);
   },
   fetchCustomerAddress: async (headers,query) => {
     const response = await requests.get(`/addresses`, query, {}, headers, 0);
