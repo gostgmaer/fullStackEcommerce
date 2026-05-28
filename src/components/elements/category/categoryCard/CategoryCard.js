@@ -9,7 +9,7 @@ import categoryCard3 from "../../../../assets/img/categoryCard3.jpg";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { searchAction } from "@/store/reducers/searchSlice";
+import { searchAction, searchProducts } from "@/store/reducers/searchSlice";
 
 
 
@@ -41,6 +41,7 @@ const CategoryCard = () => {
         : value.split("-").join(" ");
       
    dispatch(searchAction({ value: category, path: "Category" }));
+   dispatch(searchProducts({ value: category, path: "Category" }));
   };
 
   return (

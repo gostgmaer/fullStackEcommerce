@@ -8,7 +8,6 @@ import { IoChevronForwardSharp } from "react-icons/io5";
 // import CategoryServices from "@services/CategoryServices";
 // import useTranslation from "next-translate/useTranslation";
 // import { useContext } from "react";
-import { CategoriesData } from "@/assets/fakeData/CategoriesData";
 // import { showingTranslateValue } from "@utils/translate";
 
 const FeatureCategory = (props) => {

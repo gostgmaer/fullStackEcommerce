@@ -4,7 +4,7 @@ import PageHeading from "@/components/global/layout/heading/pageHeading";
 import Coupon from "@/components/elements/coupon/Coupon";
 import ProductCard from "@/components/elements/product/ProductCard";
 import ProductServices from "@/helper/network/services/ProductServices";
-import { attributes } from "@/assets/fakeData/Products";
+import AttributeServices from "@/helper/network/services/AttributeServices";
 import OfferTimerWrapper from "./OfferTimerWrapper";
 
 export const metadata = {
@@ -15,9 +15,14 @@ export const metadata = {
 const Offer = async () => {
   // Fetch discounted products
   let discountProductsList = [];
+  let attributes = [];
   try {
-    const response = await ProductServices.getDiscountedProducts();
+    const [response, attrs] = await Promise.all([
+      ProductServices.getDiscountedProducts(),
+      AttributeServices.getShowingAttributes(),
+    ]);
     discountProductsList = response?.results || [];
+    attributes = attrs || [];
   } catch (error) {
     console.error("Failed to fetch discounted products:", error);
   }

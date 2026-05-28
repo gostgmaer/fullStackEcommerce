@@ -1,6 +1,6 @@
 "use client";
 
-import { UserMenu } from '@/assets/fakeData/UserMenu'
+import { UserMenu } from '@/config/userMenu'
 import { handleSignOut } from '@/components/global/common/signout';
 import Link from 'next/link'
 import { usePathname } from 'next/navigation';

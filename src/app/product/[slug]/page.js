@@ -1,7 +1,3 @@
-import {
-  getProductByChildrenCategory,
-  getProductById,
-} from "@/assets/fakeData/Products";
 import SingleProduct from "@/components/elements/product/singleProduct";
 import Layout from "@/components/global/layout/Layout";
 

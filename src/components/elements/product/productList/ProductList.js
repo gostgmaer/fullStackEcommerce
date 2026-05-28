@@ -4,8 +4,8 @@ import React, { useEffect, useMemo, useState, Suspense } from "react";
 import { Select } from "@/components/global/fields/SelectField";
 import Pagination from "@/components/global/common/pagination/Pagination";
 import ProductCard from "../ProductCard";
-import { attributes } from "@/assets/fakeData/Products";
 import { useDispatch, useSelector } from "react-redux";
+import AttributeServices from "@/helper/network/services/AttributeServices";
 import { fetchProducts } from "@/store/reducers/productSlice";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Placeholder } from "rsuite";
@@ -21,19 +21,17 @@ const sortByOptions = [
   { value: "popularity", label: "Popularity" },
 ];
 
-const FALLBACK_CATEGORIES = [
-  { _id: "fresh-veg-id", title: "Fresh Vegetables", slug: "fresh-vegetable" },
-  { _id: "fish-meat-id", title: "Fish & Meat", slug: "fish--meat" },
-  { _id: "bread-bakery-id", title: "Bread & Bakery", slug: "biscuits--cakes" },
-  { _id: "drinks-id", title: "Soft Drinks", slug: "drinks" },
-  { _id: "baby-care-id", title: "Baby Care", slug: "baby-care" },
-  { _id: "beauty-health-id", title: "Beauty & Health", slug: "beauty--health" }
-];
-
 const ProductListContent = () => {
   const qdata = useSearchParams();
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const [attributes, setAttributes] = useState([]);
+
+  // Load attributes for ProductCard
+  useEffect(() => {
+    AttributeServices.getShowingAttributes().then(setAttributes).catch(console.error);
+  }, []);
 
   // Search parameters from URL
   const q = useMemo(() => {

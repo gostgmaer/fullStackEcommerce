@@ -1,10 +1,10 @@
 "use client"
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import dayjs from "dayjs";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
-import { CouponData } from "@/assets/fakeData/coupon";
+import CouponServices from "@/helper/network/services/CouponServices";
 import OfferTimer from "./OfferTimer";
 import dynamic from "next/dynamic";
 
@@ -13,9 +13,20 @@ const Coupon = ({ couponInHome }) => {
 
   const [copiedCode, setCopiedCode] = useState("");
   const [copied, setCopied] = useState(false);
-  const error= false
+  const [data, setData] = useState([]);
+  const [error, setError] = useState(false);
 
-  const data = CouponData
+  useEffect(() => {
+    CouponServices.getShowingCoupons()
+      .then((res) => {
+        const coupons = res?.data || res?.results || res || [];
+        setData(Array.isArray(coupons) ? coupons : []);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch coupons:", err);
+        setError(true);
+      });
+  }, []);
   // const { data: globalSetting } = useAsync(SettingServices.getGlobalSetting);
 
   // const currency = globalSetting?.default_currency || "$";

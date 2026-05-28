@@ -1,5 +1,4 @@
 
-import { attributes, } from "@/assets/fakeData/Products";
 import { content } from "@/assets/jsonfile/content";
 import Banner from "@/components/elements/banner/Banner";
 import FastDeliveryCard from "@/components/elements/banner/FastDeliveryCard";
@@ -11,6 +10,7 @@ import ProductCard from "@/components/elements/product/ProductCard";
 import Layout from "@/components/global/layout/Layout";
 import CategoryServices from "@/helper/network/services/CategoryServices";
 import ProductServices from "@/helper/network/services/ProductServices";
+import AttributeServices from "@/helper/network/services/AttributeServices";
 import { TrustBar, Testimonials, NewsletterSignup } from "@/components/elements/home/HomeUpgrades";
 import RecentlyViewed from "@/components/elements/product/RecentlyViewed";
 
@@ -102,6 +102,7 @@ export const metadata = {
 export default async function Home() {
 
   const result = await getAllRecord()
+  const attributes = result.attributes || [];
 
   return (
     <Layout  >
@@ -240,11 +241,12 @@ export default async function Home() {
 
 
 export const getAllRecord = async () => {
-  const [popular, discount, category] = await Promise.all([
+  const [popular, discount, category, attributes] = await Promise.all([
     ProductServices.getPopularProducts(),
     ProductServices.getDiscountedProducts(),
     CategoryServices.getShowingCategory(),
+    AttributeServices.getShowingAttributes(),
   ]);
 
-  return { popular, discount, category };
+  return { popular, discount, category, attributes };
 };
