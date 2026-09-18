@@ -98,7 +98,7 @@ const wishlistServices = {
         const userId = await getUserId(headers);
         const productId = params?.id || params?.productId;
 
-        await requests.delete(`/wishlists/:userId/:productId`, { userId, productId }, headers);
+        await requests.delete(`/wishlists/${userId}/${productId}`, {}, headers);
         return wishlistServices.fetchWishlist(headers);
     },
     /** @param {WishlistPayload} query @param {RequestHeaders=} headers */

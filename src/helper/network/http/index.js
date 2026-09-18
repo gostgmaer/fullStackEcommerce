@@ -1,4 +1,5 @@
 import { baseurl } from "@/config/setting";
+import Cookies from "js-cookie";
 
 export async function fetchData(endpoint, options = {}) {
   try {
@@ -39,9 +40,13 @@ export async function fetchData(endpoint, options = {}) {
       url += `?${queryString}`;
     }
 
-    // Prepare headers
+    // Prepare headers with automatic token fallback
+    const cookieToken = typeof window !== "undefined" ? Cookies.get("accessToken") || Cookies.get("token") : null;
+    const authHeader = headers?.Authorization || headers?.authorization || (cookieToken ? `Bearer ${cookieToken}` : undefined);
+
     const mergedHeaders = {
       "Content-Type": "application/json",
+      ...(authHeader ? { Authorization: authHeader } : {}),
       ...headers,
     };
 
